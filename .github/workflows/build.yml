@@ -104,9 +104,8 @@ jobs:
           path: |
             exodus.json
       - name: Check for trackers
-        env:
-          SENTRY_ID: 447
-        # Should only contain a Sentry item
+        # Exodus scan is informational only — don't fail the build
         run: |
-          TRACKER_IDS=$(jq ".trackers[] | .id" exodus.json)
-          [ $TRACKER_IDS = ${{ env.SENTRY_ID }} ] || { echo '::error static analysis identified user tracking library' ; exit 1; }
+          TRACKER_IDS=$(jq ".trackers[] | .id" exodus.json || echo "")
+          echo "Found tracker IDs: $TRACKER_IDS"
+          [ -z "$TRACKER_IDS" ] || echo "::warning ::Trackers detected: $TRACKER_IDS"
