@@ -1061,7 +1061,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                         ?: sessionParams.homeServerConnectionConfig?.homeServerUri?.toString()
                     ?: run {
                         _viewEvents.post(MessageComposerViewEvents.ShowMessage(
-                            stringProvider.getString(CommonStrings.error_unknown)
+                            stringProvider.getString(CommonStrings.unknown_error)
                         ))
                         return@launch
                     }
@@ -1125,7 +1125,7 @@ class MessageComposerViewModel @AssistedInject constructor(
             } catch (e: Exception) {
                 Timber.e(e, "JumpToDate failed")
                 _viewEvents.post(MessageComposerViewEvents.ShowMessage(
-                    stringProvider.getString(CommonStrings.error_unknown)
+                    stringProvider.getString(CommonStrings.unknown_error)
                 ))
             }
         }
