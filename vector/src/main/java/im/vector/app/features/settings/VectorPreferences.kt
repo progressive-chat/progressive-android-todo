@@ -125,6 +125,8 @@ class VectorPreferences @Inject constructor(
         const val SETTINGS_LABS_LANG_DETECT_KEY = "SETTINGS_LABS_LANG_DETECT_KEY"
         const val SETTINGS_LABS_CHAT_PUSHDOWN_KEY = "SETTINGS_LABS_CHAT_PUSHDOWN_KEY"
         const val SETTINGS_LABS_EMOJI_BLACKLIST_KEY = "SETTINGS_LABS_EMOJI_BLACKLIST_KEY"
+        const val SETTINGS_LABS_AVATAR_HISTORY_KEY = "SETTINGS_LABS_AVATAR_HISTORY_KEY"
+        const val SETTINGS_LABS_JUMPTOROOM_KEY = "SETTINGS_LABS_JUMPTOROOM_KEY"
         const val SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY"
         const val SETTINGS_CRYPTOGRAPHY_DIVIDER_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_DIVIDER_PREFERENCE_KEY"
         const val SETTINGS_CRYPTOGRAPHY_MANAGE_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_MANAGE_PREFERENCE_KEY"
@@ -1549,6 +1551,14 @@ class VectorPreferences @Inject constructor(
 
     fun isEmojiBlacklistEnabled(): Boolean {
         return defaultPrefs.getBoolean(SETTINGS_LABS_EMOJI_BLACKLIST_KEY, false)
+    }
+
+    fun isAvatarHistoryEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_AVATAR_HISTORY_KEY, false)
+    }
+
+    fun isJumpToRoomEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_JUMPTOROOM_KEY, false)
     }
 
     fun showIpAddressInSessionManagerScreens(): Boolean {

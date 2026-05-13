@@ -46,6 +46,7 @@ add_library(
     src/room_analytics.cpp
     src/chat_tools.cpp
     src/lang_detect.cpp
+    src/avatar_history.cpp
     src/jni_bridge.cpp
 )
 

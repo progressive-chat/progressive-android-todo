@@ -472,6 +472,22 @@ object ProgressiveNative {
     @JvmStatic external fun nativeEmojiBlacklistExport(): String
     @JvmStatic external fun nativeEmojiBlacklistImport(json: String)
 
+    // --- Avatar History ---
+
+    @JvmStatic external fun nativeAvatarAddChange(mxcUrl: String, eventId: String, timestamp: Long)
+    @JvmStatic external fun nativeAvatarExportJson(): String
+    @JvmStatic external fun nativeAvatarClear()
+
+    // --- Jump to Date with Time ---
+
+    @JvmStatic external fun nativeParseJumpToDate(input: String): String
+
+    // --- Room Matching ---
+
+    @JvmStatic external fun nativeMatchRooms(query: String, roomsJson: String): String
+    @JvmStatic external fun nativeIsRoomId(input: String): Boolean
+    @JvmStatic external fun nativeIsRoomAlias(input: String): Boolean
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

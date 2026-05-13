@@ -62,7 +62,7 @@ enum class Command(
     JOIN_SPACE("/joinSpace", null, "spaceId", CommonStrings.command_description_join_space, true, false),
     LEAVE_ROOM("/leave", null, "<roomId?>", CommonStrings.command_description_leave_room, true, false),
     UPGRADE_ROOM("/upgraderoom", null, "newVersion", CommonStrings.command_description_upgrade_room, true, false),
-    JUMP_TO_DATE("/jumptodate", null, "<YYYY-MM-DD>", CommonStrings.command_description_jump_to_date, false, true),
+    JUMP_TO_DATE("/jumptodate", null, "<YYYY-MM-DD> [HH:MM]", CommonStrings.command_description_jump_to_date, false, true),
     TABLE_FLIP("/tableflip", null, "<message>", CommonStrings.command_description_table_flip, false, true);
 
     val allAliases = arrayOf(command, *aliases.orEmpty())

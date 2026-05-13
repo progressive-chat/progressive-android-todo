@@ -488,4 +488,16 @@
         android:summary="@string/labs_enable_emoji_blacklist_summary"
         android:title="@string/labs_enable_emoji_blacklist" />
 
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:key="SETTINGS_LABS_AVATAR_HISTORY_KEY"
+        android:summary="@string/labs_enable_avatar_history_summary"
+        android:title="@string/labs_enable_avatar_history" />
+
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:key="SETTINGS_LABS_JUMPTOROOM_KEY"
+        android:summary="@string/labs_enable_jumptoroom_summary"
+        android:title="@string/labs_enable_jumptoroom" />
+
 </androidx.preference.PreferenceScreen>

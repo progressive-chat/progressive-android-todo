@@ -39,6 +39,7 @@
 #include "progressive/room_analytics.hpp"
 #include "progressive/chat_tools.hpp"
 #include "progressive/lang_detect.hpp"
+#include "progressive/avatar_history.hpp"
 
 // --- Singleton keyword filter ---
 static progressive::KeywordFilter g_keywordFilter;
@@ -102,6 +103,9 @@ static progressive::ChatPushDownManager g_chatPushDown;
 
 // --- Singleton emoji blacklist ---
 static progressive::EmojiBlacklist g_emojiBlacklist;
+
+// --- Singleton avatar history ---
+static progressive::AvatarHistory g_avatarHistory;
 
 #define LOG_TAG "ProgressiveNative"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
@@ -2604,6 +2608,167 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeEmojiBlacklistImp
     auto json = std::string(env->GetStringUTFChars(jJson, nullptr));
     env->ReleaseStringUTFChars(jJson, json.c_str());
     g_emojiBlacklist.importJson(json);
+}
+
+// --- Avatar History ---
+
+JNIEXPORT void JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeAvatarAddChange(
+    JNIEnv* env, jclass, jstring jMxcUrl, jstring jEventId, jlong jTimestamp
+) {
+    auto mxc = jMxcUrl ? std::string(env->GetStringUTFChars(jMxcUrl, nullptr)) : "";
+    auto eid = jEventId ? std::string(env->GetStringUTFChars(jEventId, nullptr)) : "";
+    if (jMxcUrl)  env->ReleaseStringUTFChars(jMxcUrl, mxc.c_str());
+    if (jEventId) env->ReleaseStringUTFChars(jEventId, eid.c_str());
+    g_avatarHistory.addChange(mxc, eid, jTimestamp);
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeAvatarExportJson(
+    JNIEnv* env, jclass
+) {
+    auto json = g_avatarHistory.exportJson();
+    return env->NewStringUTF(json.c_str());
+}
+
+JNIEXPORT void JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeAvatarClear(
+    JNIEnv*, jclass
+) {
+    g_avatarHistory.clear();
+}
+
+// --- Jump to Date with Time ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseJumpToDate(
+    JNIEnv* env, jclass, jstring jInput
+) {
+    auto input = jInput ? std::string(env->GetStringUTFChars(jInput, nullptr)) : "";
+    if (jInput) env->ReleaseStringUTFChars(jInput, input.c_str());
+
+    auto target = progressive::parseJumpToDate(input);
+
+    auto esc = [](const std::string& s) -> std::string {
+        std::string out;
+        for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
+        return out;
+    };
+
+    std::ostringstream json;
+    json << R"({"valid": )" << (target.valid ? "true" : "false");
+    json << R"(,"timestampMs": )" << target.timestampMs;
+    json << R"(,"hasTime": )" << (target.hasTime ? "true" : "false");
+    if (!target.error.empty()) json << R"(,"error": ")" << esc(target.error) << R"(")";
+    json << R"(,"year": )" << target.year;
+    json << R"(,"month": )" << target.month;
+    json << R"(,"day": )" << target.day;
+    json << R"(,"hour": )" << target.hour;
+    json << R"(,"minute": )" << target.minute;
+    json << R"(,"formatted": ")" << progressive::formatJumpTarget(target) << R"(")";
+    json << "}";
+    return env->NewStringUTF(json.str().c_str());
+}
+
+// --- Room Matching ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeMatchRooms(
+    JNIEnv* env, jclass, jstring jQuery, jstring jRoomsJson
+) {
+    auto query = jQuery ? std::string(env->GetStringUTFChars(jQuery, nullptr)) : "";
+    auto rjson = jRoomsJson ? std::string(env->GetStringUTFChars(jRoomsJson, nullptr)) : "[]";
+    if (jQuery)  env->ReleaseStringUTFChars(jQuery, query.c_str());
+    if (jRoomsJson) env->ReleaseStringUTFChars(jRoomsJson, rjson.c_str());
+
+    // Parse rooms JSON array
+    std::vector<RoomMatch> rooms;
+    if (rjson != "[]") {
+        size_t pos = 0;
+        while (true) {
+            pos = rjson.find("\"roomId\"", pos);
+            if (pos == std::string::npos) break;
+            auto objStart = rjson.rfind('{', pos);
+            if (objStart == std::string::npos) break;
+            int depth = 0;
+            auto objEnd = objStart;
+            while (objEnd < rjson.size()) {
+                if (rjson[objEnd] == '{') ++depth;
+                else if (rjson[objEnd] == '}') --depth;
+                if (depth == 0) break;
+                ++objEnd;
+            }
+            if (objEnd >= rjson.size()) break;
+
+            std::string obj = rjson.substr(objStart, objEnd - objStart + 1);
+            RoomMatch rm;
+
+            auto ridSearch = std::string("\"roomId\": \"");
+            auto ridPos = obj.find(ridSearch);
+            if (ridPos != std::string::npos) {
+                ridPos += ridSearch.size();
+                auto ridEnd = obj.find('"', ridPos);
+                if (ridEnd != std::string::npos) rm.roomId = obj.substr(ridPos, ridEnd - ridPos);
+            }
+
+            auto rnSearch = std::string("\"roomName\": \"");
+            auto rnPos = obj.find(rnSearch);
+            if (rnPos != std::string::npos) {
+                rnPos += rnSearch.size();
+                auto rnEnd = obj.find('"', rnPos);
+                if (rnEnd != std::string::npos) rm.roomName = obj.substr(rnPos, rnEnd - rnPos);
+            }
+
+            auto caSearch = std::string("\"canonicalAlias\": \"");
+            auto caPos = obj.find(caSearch);
+            if (caPos != std::string::npos) {
+                caPos += caSearch.size();
+                auto caEnd = obj.find('"', caPos);
+                if (caEnd != std::string::npos) rm.canonicalAlias = obj.substr(caPos, caEnd - caPos);
+            }
+
+            if (!rm.roomId.empty()) rooms.push_back(rm);
+            pos = objEnd + 1;
+        }
+    }
+
+    auto matches = progressive::matchRooms(query, rooms);
+
+    auto esc = [](const std::string& s) -> std::string {
+        std::string out;
+        for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
+        return out;
+    };
+
+    std::ostringstream json;
+    json << "[";
+    for (size_t i = 0; i < matches.size(); ++i) {
+        if (i > 0) json << ",";
+        json << R"({"roomId": ")" << esc(matches[i].roomId) << R"(")";
+        json << R"(,"roomName": ")" << esc(matches[i].roomName) << R"(")";
+        json << R"(,"alias": ")" << esc(matches[i].canonicalAlias) << R"(")";
+        json << R"(,"score": )" << matches[i].score << "}";
+    }
+    json << "]";
+    return env->NewStringUTF(json.str().c_str());
+}
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomId(
+    JNIEnv* env, jclass, jstring jInput
+) {
+    auto input = jInput ? std::string(env->GetStringUTFChars(jInput, nullptr)) : "";
+    if (jInput) env->ReleaseStringUTFChars(jInput, input.c_str());
+    return progressive::isRoomId(input) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomAlias(
+    JNIEnv* env, jclass, jstring jInput
+) {
+    auto input = jInput ? std::string(env->GetStringUTFChars(jInput, nullptr)) : "";
+    if (jInput) env->ReleaseStringUTFChars(jInput, input.c_str());
+    return progressive::isRoomAlias(input) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"
