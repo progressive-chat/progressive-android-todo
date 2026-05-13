@@ -732,6 +732,11 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeIsValidRecoveryKey(key: String): Boolean
 
+    // --- Device Manager ---
+
+    @JvmStatic external fun nativeFormatDeviceLastSeen(lastSeenMs: Long): String
+    @JvmStatic external fun nativeIsDeviceInactive(lastSeenMs: Long): Boolean
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

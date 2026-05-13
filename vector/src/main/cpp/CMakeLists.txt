@@ -96,6 +96,7 @@ add_library(
     src/widget_utils.cpp
     src/sso_utils.cpp
     src/backup_utils.cpp
+    src/device_manager.cpp
     # src/olm.cpp  # Uncomment when libolm is added to the build
     src/jni_bridge.cpp
 )

@@ -83,6 +83,7 @@
 #include "progressive/widget_utils.hpp"
 #include "progressive/sso_utils.hpp"
 #include "progressive/backup_utils.hpp"
+#include "progressive/device_manager.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4103,6 +4104,23 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsValidRecoveryKe
     auto key = jKey ? std::string(env->GetStringUTFChars(jKey, nullptr)) : "";
     if (jKey) env->ReleaseStringUTFChars(jKey, key.c_str());
     return progressive::isValidRecoveryKey(key) ? JNI_TRUE : JNI_FALSE;
+}
+
+// --- Device Manager ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatDeviceLastSeen(
+    JNIEnv* env, jclass, jlong jLastSeenMs
+) {
+    auto s = progressive::formatDeviceLastSeen(jLastSeenMs);
+    return env->NewStringUTF(s.c_str());
+}
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsDeviceInactive(
+    JNIEnv*, jclass, jlong jLastSeenMs
+) {
+    return progressive::isDeviceInactive(jLastSeenMs) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"
