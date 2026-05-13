@@ -754,6 +754,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeFormatMembership(membershipStr: String): String
 
+    // --- Event Validator ---
+
+    @JvmStatic external fun nativeValidateEvent(eventId: String, eventType: String, senderId: String, contentJson: String, originTs: String, blockedUsersJson: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

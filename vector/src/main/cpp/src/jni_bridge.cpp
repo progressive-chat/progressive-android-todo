@@ -88,6 +88,7 @@
 #include "progressive/room_permissions.hpp"
 #include "progressive/room_summary.hpp"
 #include "progressive/membership_utils.hpp"
+#include "progressive/event_validator.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4190,6 +4191,46 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatMembership(
     if (jMembershipStr) env->ReleaseStringUTFChars(jMembershipStr, ms.c_str());
     auto s = progressive::formatMembership(progressive::parseMembership(ms));
     return env->NewStringUTF(s.c_str());
+}
+
+// --- Event Validator ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeValidateEvent(
+    JNIEnv* env, jclass,
+    jstring jEventId, jstring jEventType, jstring jSenderId,
+    jstring jContentJson, jstring jOriginTs, jstring jBlockedUsersJson
+) {
+    auto eventId     = jEventId ? std::string(env->GetStringUTFChars(jEventId, nullptr)) : "";
+    auto eventType   = jEventType ? std::string(env->GetStringUTFChars(jEventType, nullptr)) : "";
+    auto senderId    = jSenderId ? std::string(env->GetStringUTFChars(jSenderId, nullptr)) : "";
+    auto contentJson = jContentJson ? std::string(env->GetStringUTFChars(jContentJson, nullptr)) : "";
+    auto originTs    = jOriginTs ? std::string(env->GetStringUTFChars(jOriginTs, nullptr)) : "";
+    auto blockedJson = jBlockedUsersJson ? std::string(env->GetStringUTFChars(jBlockedUsersJson, nullptr)) : "[]";
+
+    if (jEventId)     env->ReleaseStringUTFChars(jEventId, eventId.c_str());
+    if (jEventType)   env->ReleaseStringUTFChars(jEventType, eventType.c_str());
+    if (jSenderId)    env->ReleaseStringUTFChars(jSenderId, senderId.c_str());
+    if (jContentJson) env->ReleaseStringUTFChars(jContentJson, contentJson.c_str());
+    if (jOriginTs)    env->ReleaseStringUTFChars(jOriginTs, originTs.c_str());
+    if (jBlockedUsersJson) env->ReleaseStringUTFChars(jBlockedUsersJson, blockedJson.c_str());
+
+    // Parse blocked users
+    std::vector<std::string> blocked;
+    size_t pos = 0;
+    while (true) {
+        pos = blockedJson.find('"', pos);
+        if (pos == std::string::npos) break;
+        ++pos;
+        auto end = blockedJson.find('"', pos);
+        if (end == std::string::npos) break;
+        blocked.push_back(blockedJson.substr(pos, end - pos));
+        pos = end + 1;
+    }
+
+    auto result = progressive::validateEvent(eventId, eventType, senderId, contentJson, originTs, blocked);
+    auto json = progressive::eventValidationToJson(result);
+    return env->NewStringUTF(json.c_str());
 }
 
 } // extern "C"
