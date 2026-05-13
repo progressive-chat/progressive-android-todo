@@ -629,6 +629,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeValidatePassword(password: String): String
 
+    // --- Spellcheck ---
+
+    @JvmStatic external fun nativeEditDistance(a: String, b: String): Int
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

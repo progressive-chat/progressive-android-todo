@@ -59,6 +59,7 @@
 #include "progressive/waveform.hpp"
 #include "progressive/session_timeout.hpp"
 #include "progressive/password_validator.hpp"
+#include "progressive/spellcheck.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -3597,6 +3598,19 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeValidatePassword(
     json << R"(,"crackTime": ")" << progressive::formatCrackTime(progressive::estimateCrackTimeSeconds(pass)) << R"(")";
     json << "}";
     return env->NewStringUTF(json.str().c_str());
+}
+
+// --- Spellcheck ---
+
+JNIEXPORT jint JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeEditDistance(
+    JNIEnv* env, jclass, jstring jA, jstring jB
+) {
+    auto a = jA ? std::string(env->GetStringUTFChars(jA, nullptr)) : "";
+    auto b = jB ? std::string(env->GetStringUTFChars(jB, nullptr)) : "";
+    if (jA) env->ReleaseStringUTFChars(jA, a.c_str());
+    if (jB) env->ReleaseStringUTFChars(jB, b.c_str());
+    return progressive::SpellChecker::editDistance(a, b);
 }
 
 } // extern "C"

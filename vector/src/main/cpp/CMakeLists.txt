@@ -66,6 +66,7 @@ add_library(
     src/waveform.cpp
     src/session_timeout.cpp
     src/password_validator.cpp
+    src/spellcheck.cpp
     src/jni_bridge.cpp
 )
 
