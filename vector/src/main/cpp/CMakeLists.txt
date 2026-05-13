@@ -86,6 +86,7 @@ add_library(
     src/sync_analyzer.cpp
     src/user_rating.cpp
     src/event_timeline.cpp
+    src/room_directory.cpp
     src/jni_bridge.cpp
 )
 

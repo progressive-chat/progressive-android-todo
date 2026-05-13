@@ -716,6 +716,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeFormatGroupLabel(timestampMs: Long): String
 
+    // --- Room Directory ---
+
+    @JvmStatic external fun nativeExtractServers(roomsJson: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

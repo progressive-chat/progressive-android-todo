@@ -79,6 +79,7 @@
 #include "progressive/sync_analyzer.hpp"
 #include "progressive/user_rating.hpp"
 #include "progressive/event_timeline.hpp"
+#include "progressive/room_directory.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4015,6 +4016,43 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatGroupLabel(
 ) {
     auto s = progressive::formatGroupLabel(jTimestampMs);
     return env->NewStringUTF(s.c_str());
+}
+
+// --- Room Directory ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeExtractServers(
+    JNIEnv* env, jclass, jstring jRoomsJson
+) {
+    auto json = jRoomsJson ? std::string(env->GetStringUTFChars(jRoomsJson, nullptr)) : "[]";
+    if (jRoomsJson) env->ReleaseStringUTFChars(jRoomsJson, json.c_str());
+
+    // Quick parse: extract :server from roomId fields
+    std::unordered_set<std::string> servers;
+    size_t pos = 0;
+    while (true) {
+        pos = json.find(":matrix", pos);
+        if (pos == std::string::npos) break;
+        auto start = pos + 1;
+        auto end = json.find_first_of("\"/,}", start);
+        if (end != std::string::npos) {
+            servers.insert(json.substr(start, end - start));
+        }
+        pos = end;
+    }
+
+    auto esc = [](const std::string& s) -> std::string {
+        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+    };
+    std::ostringstream out;
+    out << "[";
+    size_t i = 0;
+    for (const auto& s : servers) {
+        if (i++ > 0) out << ",";
+        out << R"(")" << esc(s) << R"(")";
+    }
+    out << "]";
+    return env->NewStringUTF(out.str().c_str());
 }
 
 } // extern "C"
