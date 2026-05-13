@@ -69,8 +69,7 @@ OlmAccountResult OlmAccount::create() {
     auto random = generateRandomBytes(randLen);
     int rc = olm_create_account(acc, random.data(), random.size());
     if (rc == -1) {
-        const char* err;
-        olm_account_last_error(acc, &err);
+        const char* err = olm_account_last_error(acc);
         result.error = OlmError::UnknownError;
         return result;
     }
@@ -145,10 +144,9 @@ OlmAccountResult OlmAccount::pickle(const std::string& key) {
 OlmAccountResult OlmAccount::unpickle(const std::string& key, const std::string& pickle) {
     OlmAccountResult result;
     auto* acc = static_cast<COlmAccount*>(account_);
-    int rc = olm_unpickle_account(acc, key.data(), key.size(), pickle.data(), pickle.size());
-    if (rc == -1) {
-        const char* err;
-        olm_account_last_error(acc, &err);
+    size_t rc = olm_unpickle_account(acc, key.data(), key.size(), (void*)pickle.data(), pickle.size());
+    if (rc == static_cast<size_t>(-1)) {
+        const char* err = olm_account_last_error(acc);
         result.error = OlmError::BadAccountKey;
         return result;
     }
@@ -216,8 +214,7 @@ OlmSessionResult OlmSession::createOutbound(OlmAccount& account,
         theirOneTimeKey.data(), theirOneTimeKey.size(),
         random.data(), random.size());
     if (rc == static_cast<size_t>(-1)) {
-        const char* err;
-        olm_session_last_error(sess, &err);
+        const char* err = olm_session_last_error(sess);
         result.error = OlmError::BadMessageFormat;
         return result;
     }
@@ -231,8 +228,7 @@ OlmSessionResult OlmSession::createInbound(OlmAccount& account, const std::strin
     auto* acc = static_cast<COlmAccount*>(account.account_);
     size_t rc = olm_create_inbound_session(sess, acc, (void*)preKeyMessage.data(), preKeyMessage.size());
     if (rc == static_cast<size_t>(-1)) {
-        const char* err;
-        olm_session_last_error(sess, &err);
+        const char* err = olm_session_last_error(sess);
         result.error = OlmError::BadMessageFormat;
         return result;
     }
@@ -282,8 +278,7 @@ OlmSessionResult OlmSession::decrypt(const std::string& encryptedMessage, int me
     size_t written = olm_decrypt(sess, messageType,
         encryptedMessage.data(), encryptedMessage.size(), &pt[0], ptLen);
     if (written == static_cast<size_t>(-1)) {
-        const char* err;
-        olm_session_last_error(sess, &err);
+        const char* err = olm_session_last_error(sess);
         result.error = OlmError::BadMessageMac;
         result.data = std::string(err);
         return result;

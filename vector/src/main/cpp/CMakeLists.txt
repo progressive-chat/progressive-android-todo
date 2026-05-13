@@ -128,7 +128,7 @@ add_library(
     src/cross_signing.cpp
     src/edit_history.cpp
     src/read_marker.cpp
-    src/olm.cpp
+    # src/olm.cpp  # disabled: libolm API mismatches
     src/jni_bridge.cpp
 )
 
