@@ -580,6 +580,12 @@ object ProgressiveNative {
     @JvmStatic external fun nativeDesyncTrackEvent(eventId: String, serverName: String, timestamp: Long)
     @JvmStatic external fun nativeDesyncCheck(roomId: String, currentServer: String): String
 
+    // --- Latency Tracker ---
+
+    @JvmStatic external fun nativeLatencyRecord(latencyMs: Double, server: String, endpoint: String, success: Boolean)
+    @JvmStatic external fun nativeLatencyStats(): String
+    @JvmStatic external fun nativeLatencyStatsText(): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

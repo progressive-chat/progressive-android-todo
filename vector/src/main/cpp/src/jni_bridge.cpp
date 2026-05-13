@@ -51,6 +51,7 @@
 #include "progressive/notif_priority.hpp"
 #include "progressive/matrix_patterns.hpp"
 #include "progressive/desync_detector.hpp"
+#include "progressive/latency_stats.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -136,6 +137,9 @@ static progressive::ProfileSwiper g_profileSwiper;
 
 // --- Singleton desync detector ---
 static progressive::DesyncDetector g_desyncDetector;
+
+// --- Singleton latency tracker ---
+static progressive::LatencyTracker g_latencyTracker;
 
 #define LOG_TAG "ProgressiveNative"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
@@ -547,20 +551,6 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeCacheGetContext(
 
     auto json = g_eventCache.getContextData(eventId);
     return env->NewStringUTF(json.c_str());
-}
-
-/*
- * Class: im.vector.app.features.jumptodate.ProgressiveNative
- * Method: nativeCacheClear
- * Signature: ()V
- */
-JNIEXPORT void JNICALL
-Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeCacheClear(
-    JNIEnv* /* env */,
-    jclass /* this */
-) {
-    g_eventCache.clear();
-    LOGD("EventCache cleared");
 }
 
 /*
@@ -2792,14 +2782,6 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomId(
     return progressive::isRoomId(input) ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jboolean JNICALL
-Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomAlias(
-    JNIEnv* env, jclass, jstring jInput
-) {
-    auto input = jInput ? std::string(env->GetStringUTFChars(jInput, nullptr)) : "";
-    if (jInput) env->ReleaseStringUTFChars(jInput, input.c_str());
-    return progressive::isRoomAlias(input) ? JNI_TRUE : JNI_FALSE;
-}
 
 // --- Event Links ---
 
@@ -2845,14 +2827,6 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatResolvedEve
     return env->NewStringUTF(s.c_str());
 }
 
-JNIEXPORT jboolean JNICALL
-Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsEventId(
-    JNIEnv* env, jclass, jstring jText
-) {
-    auto text = jText ? std::string(env->GetStringUTFChars(jText, nullptr)) : "";
-    if (jText) env->ReleaseStringUTFChars(jText, text.c_str());
-    return progressive::isEventId(text) ? JNI_TRUE : JNI_FALSE;
-}
 
 // --- Timestamps with Seconds ---
 
@@ -3451,6 +3425,38 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeDesyncCheck(
     auto report = g_desyncDetector.checkDesync(rid, cs);
     auto json = progressive::DesyncDetector::reportToJson(report);
     return env->NewStringUTF(json.c_str());
+}
+
+// --- Latency Tracker ---
+
+JNIEXPORT void JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeLatencyRecord(
+    JNIEnv* env, jclass,
+    jdouble jLatencyMs, jstring jServer, jstring jEndpoint, jboolean jSuccess
+) {
+    auto server = jServer ? std::string(env->GetStringUTFChars(jServer, nullptr)) : "";
+    auto endpoint = jEndpoint ? std::string(env->GetStringUTFChars(jEndpoint, nullptr)) : "";
+    if (jServer) env->ReleaseStringUTFChars(jServer, server.c_str());
+    if (jEndpoint) env->ReleaseStringUTFChars(jEndpoint, endpoint.c_str());
+    g_latencyTracker.record(jLatencyMs, server, endpoint, jSuccess);
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeLatencyStats(
+    JNIEnv* env, jclass
+) {
+    auto stats = g_latencyTracker.computeStats();
+    auto json = progressive::LatencyTracker::statsToJson(stats);
+    return env->NewStringUTF(json.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeLatencyStatsText(
+    JNIEnv* env, jclass
+) {
+    auto stats = g_latencyTracker.computeStats();
+    auto text = progressive::LatencyTracker::statsToText(stats);
+    return env->NewStringUTF(text.c_str());
 }
 
 } // extern "C"

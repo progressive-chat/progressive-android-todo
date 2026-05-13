@@ -55,7 +55,7 @@ public:
     bool shouldCheck(int64_t lastCheckMs, int intervalMinutes) const;
 
     void clear();
-    size_t eventCount() const { return events_.size(); }
+    size_t eventCount() const { return eventTimestamps_.size(); }
 
 private:
     // key: serverName → set of eventIds
