@@ -86,9 +86,16 @@ add_library(
     src/sync_analyzer.cpp
     src/user_rating.cpp
     src/event_timeline.cpp
+# --- libolm E2EE crypto (C/C++ native) ---
+# To enable, uncomment and add libolm source:
+#   add_subdirectory(${CMAKE_SOURCE_DIR}/../libolm ${CMAKE_BINARY_DIR}/libolm)
+#   target_link_libraries(progressive_native olm)
+#   target_compile_definitions(progressive_native PRIVATE PROGRESSIVE_HAS_OLM=1)
+
     src/room_directory.cpp
     src/widget_utils.cpp
     src/sso_utils.cpp
+    # src/olm.cpp  # Uncomment when libolm is added to the build
     src/jni_bridge.cpp
 )
 
