@@ -185,8 +185,4 @@ bool isHomeserverUrl(const std::string& url) {
            url.find("_matrix") != std::string::npos;
 }
 
-std::string buildWellKnownUrl(const std::string& serverName) {
-    return "https://" + serverName + "/.well-known/matrix/client";
-}
-
 } // namespace progressive

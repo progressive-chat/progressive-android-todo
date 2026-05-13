@@ -167,10 +167,6 @@ std::string formatJumpTarget(const JumpToDateTarget& target) {
 // ---- Room Matching ----
 
 
-bool isRoomAlias(const std::string& input) {
-    return input.size() > 1 && input[0] == '#' && input.find(':') != std::string::npos;
-}
-
 double fuzzyScore(const std::string& query, const std::string& candidate) {
     if (query.empty()) return 0.0;
     if (candidate.empty()) return 0.0;

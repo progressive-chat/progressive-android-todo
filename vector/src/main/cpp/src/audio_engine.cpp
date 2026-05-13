@@ -5,23 +5,6 @@
 
 namespace progressive {
 
-std::string formatDuration(int64_t ms) {
-    if (ms < 0) ms = 0;
-    int64_t totalSec = ms / 1000;
-    int64_t hours = totalSec / 3600;
-    int64_t minutes = (totalSec % 3600) / 60;
-    int64_t seconds = totalSec % 60;
-
-    std::ostringstream oss;
-    if (hours > 0) {
-        oss << hours << ":" << std::setfill('0') << std::setw(2) << minutes
-            << ":" << std::setw(2) << seconds;
-    } else {
-        oss << minutes << ":" << std::setfill('0') << std::setw(2) << seconds;
-    }
-    return oss.str();
-}
-
 std::string formatPositionInfo(int64_t positionMs, int64_t durationMs) {
     return formatDuration(positionMs) + " / " + formatDuration(durationMs);
 }

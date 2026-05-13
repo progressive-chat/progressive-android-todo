@@ -122,10 +122,6 @@ bool isAmbiguousName(const std::string& name1, const std::string& name2) {
     return n1 == n2;
 }
 
-std::string disambiguateName(const std::string& displayName, const std::string& mxid) {
-    return displayName + " (" + mxid + ")";
-}
-
 bool isValidDisplayName(const std::string& name) {
     if (name.empty() || name.size() > 100) return false;
     // Must not be only whitespace
