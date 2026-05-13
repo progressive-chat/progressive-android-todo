@@ -3129,6 +3129,9 @@
      <string name="labs_enable_duplicate_names">Show MXID for duplicate names</string>
      <string name="labs_enable_duplicate_names_summary">When multiple users share the same display name, show their MXID in brackets. Per-user override in profile.</string>
      <string name="profile_hide_mxid">Hide MXID next to nickname</string>
+     <string name="labs_enable_read_receipts_cpp">C++ read receipts</string>
+     <string name="labs_enable_read_receipts_cpp_summary">Use C++ native computation for read receipt display ordering and overflow. Configurable max visible avatars (default 20).</string>
+     <string name="read_receipts_max_visible">Max visible read receipts</string>
      <string name="jump_to_source">Jump to source</string>
 
 

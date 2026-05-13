@@ -415,6 +415,12 @@ object ProgressiveNative {
     @JvmStatic external fun nativeMxidVisibilityIsVisible(mxid: String): Boolean
     @JvmStatic external fun nativeMxidVisibilityExport(): String
 
+    // --- Read Receipts ---
+
+    @JvmStatic external fun nativeComputeReceiptDisplay(receiptsJson: String, maxVisible: Int): String
+    @JvmStatic external fun nativeFormatOverflowLabel(count: Int): String
+    @JvmStatic external fun nativeFormatReceiptAccessibility(visibleJson: String, overflow: Int): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

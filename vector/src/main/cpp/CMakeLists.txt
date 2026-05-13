@@ -42,6 +42,7 @@ add_library(
     src/room_mirror.cpp
     src/input_tools.cpp
     src/llm.cpp
+    src/read_receipts.cpp
     src/jni_bridge.cpp
 )
 

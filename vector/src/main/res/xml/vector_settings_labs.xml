@@ -421,4 +421,17 @@
         android:summary="@string/labs_enable_duplicate_names_summary"
         android:title="@string/labs_enable_duplicate_names" />
 
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:key="SETTINGS_LABS_READ_RECEIPTS_KEY"
+        android:summary="@string/labs_enable_read_receipts_cpp_summary"
+        android:title="@string/labs_enable_read_receipts_cpp" />
+
+    <im.vector.app.core.preference.VectorEditTextPreference
+        android:defaultValue="20"
+        android:dependency="SETTINGS_LABS_READ_RECEIPTS_KEY"
+        android:inputType="number"
+        android:key="SETTINGS_READ_RECEIPTS_MAX_VISIBLE"
+        android:title="@string/read_receipts_max_visible" />
+
 </androidx.preference.PreferenceScreen>

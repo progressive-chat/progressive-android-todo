@@ -35,6 +35,7 @@
 #include "progressive/room_mirror.hpp"
 #include "progressive/input_tools.hpp"
 #include "progressive/llm.hpp"
+#include "progressive/read_receipts.hpp"
 
 // --- Singleton keyword filter ---
 static progressive::KeywordFilter g_keywordFilter;
@@ -2182,6 +2183,126 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeMxidVisibilityExp
 ) {
     auto json = g_mxidVisibility.exportJson();
     return env->NewStringUTF(json.c_str());
+}
+
+// --- Read Receipts ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeComputeReceiptDisplay(
+    JNIEnv* env, jclass,
+    jstring jReceiptsJson, jint jMaxVisible
+) {
+    auto json = jReceiptsJson ? std::string(env->GetStringUTFChars(jReceiptsJson, nullptr)) : "[]";
+    if (jReceiptsJson) env->ReleaseStringUTFChars(jReceiptsJson, json.c_str());
+
+    // Parse JSON array of receipts
+    std::vector<ReceiptEntry> receipts;
+    if (json != "[]") {
+        size_t pos = 0;
+        while (true) {
+            pos = json.find("userId", pos);
+            if (pos == std::string::npos) break;
+
+            // Find the containing object
+            auto objStart = json.rfind('{', pos);
+            if (objStart == std::string::npos) break;
+
+            int depth = 0;
+            auto objEnd = objStart;
+            while (objEnd < json.size()) {
+                if (json[objEnd] == '{') ++depth;
+                else if (json[objEnd] == '}') --depth;
+                if (depth == 0) break;
+                ++objEnd;
+            }
+            if (objEnd >= json.size()) break;
+
+            std::string obj = json.substr(objStart, objEnd - objStart + 1);
+
+            ReceiptEntry entry;
+
+            auto uidSearch = std::string("\"userId\": \"");
+            auto uidPos = obj.find(uidSearch);
+            if (uidPos != std::string::npos) {
+                uidPos += uidSearch.size();
+                auto uidEnd = obj.find('"', uidPos);
+                if (uidEnd != std::string::npos)
+                    entry.userId = obj.substr(uidPos, uidEnd - uidPos);
+            }
+
+            auto dnSearch = std::string("\"displayName\": \"");
+            auto dnPos = obj.find(dnSearch);
+            if (dnPos != std::string::npos) {
+                dnPos += dnSearch.size();
+                auto dnEnd = obj.find('"', dnPos);
+                if (dnEnd != std::string::npos)
+                    entry.displayName = obj.substr(dnPos, dnEnd - dnPos);
+            }
+
+            auto avSearch = std::string("\"avatarUrl\": \"");
+            auto avPos = obj.find(avSearch);
+            if (avPos != std::string::npos) {
+                avPos += avSearch.size();
+                auto avEnd = obj.find('"', avPos);
+                if (avEnd != std::string::npos)
+                    entry.avatarUrl = obj.substr(avPos, avEnd - avPos);
+            }
+
+            auto tsSearch = std::string("\"timestamp\": ");
+            auto tsPos = obj.find(tsSearch);
+            if (tsPos != std::string::npos) {
+                tsPos += tsSearch.size();
+                while (tsPos < obj.size() && (obj[tsPos] == ' ' || obj[tsPos] == '\t')) ++tsPos;
+                auto tsEnd = tsPos;
+                while (tsEnd < obj.size() && obj[tsEnd] >= '0' && obj[tsEnd] <= '9') ++tsEnd;
+                if (tsEnd > tsPos) {
+                    entry.timestamp = std::stoll(obj.substr(tsPos, tsEnd - tsPos));
+                }
+            }
+
+            if (!entry.userId.empty()) receipts.push_back(entry);
+            pos = objEnd + 1;
+        }
+    }
+
+    auto display = progressive::computeReceiptDisplay(receipts, jMaxVisible);
+    auto result = progressive::receiptDisplayToJson(display);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatOverflowLabel(
+    JNIEnv* env, jclass, jint jCount
+) {
+    auto s = progressive::formatOverflowLabel(jCount);
+    return env->NewStringUTF(s.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatReceiptAccessibility(
+    JNIEnv* env, jclass, jstring jVisibleJson, jint jOverflow
+) {
+    // Parse visible entries JSON
+    auto json = jVisibleJson ? std::string(env->GetStringUTFChars(jVisibleJson, nullptr)) : "[]";
+    if (jVisibleJson) env->ReleaseStringUTFChars(jVisibleJson, json.c_str());
+
+    std::vector<ReceiptEntry> entries;
+    // Simplified: assume array of {"displayName": "..."}
+    size_t pos = 0;
+    while (true) {
+        pos = json.find("displayName", pos);
+        if (pos == std::string::npos) break;
+        auto qStart = json.find('"', pos + 14);
+        if (qStart == std::string::npos) break;
+        ++qStart;
+        auto qEnd = json.find('"', qStart);
+        if (qEnd == std::string::npos) break;
+        entries.push_back({.displayName = json.substr(qStart, qEnd - qStart)});
+        pos = qEnd;
+    }
+
+    auto s = progressive::formatReceiptAccessibility(entries, jOverflow);
+    return env->NewStringUTF(s.c_str());
 }
 
 } // extern "C"

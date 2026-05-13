@@ -114,6 +114,8 @@ class VectorPreferences @Inject constructor(
         const val SETTINGS_LABS_AUTO_REPLACE_KEY = "SETTINGS_LABS_AUTO_REPLACE_KEY"
         const val SETTINGS_LABS_LLM_SLASH_KEY = "SETTINGS_LABS_LLM_SLASH_KEY"
         const val SETTINGS_LABS_DUPLICATE_NAMES_KEY = "SETTINGS_LABS_DUPLICATE_NAMES_KEY"
+        const val SETTINGS_LABS_READ_RECEIPTS_KEY = "SETTINGS_LABS_READ_RECEIPTS_KEY"
+        const val SETTINGS_READ_RECEIPTS_MAX_VISIBLE = "SETTINGS_READ_RECEIPTS_MAX_VISIBLE"
         const val SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY"
         const val SETTINGS_CRYPTOGRAPHY_DIVIDER_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_DIVIDER_PREFERENCE_KEY"
         const val SETTINGS_CRYPTOGRAPHY_MANAGE_PREFERENCE_KEY = "SETTINGS_CRYPTOGRAPHY_MANAGE_PREFERENCE_KEY"
@@ -1494,6 +1496,14 @@ class VectorPreferences @Inject constructor(
 
     fun isDuplicateNamesEnabled(): Boolean {
         return defaultPrefs.getBoolean(SETTINGS_LABS_DUPLICATE_NAMES_KEY, false)
+    }
+
+    fun isReadReceiptsCppEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_READ_RECEIPTS_KEY, false)
+    }
+
+    fun getReadReceiptsMaxVisible(): Int {
+        return defaultPrefs.getInt(SETTINGS_READ_RECEIPTS_MAX_VISIBLE, 20)
     }
 
     fun showIpAddressInSessionManagerScreens(): Boolean {

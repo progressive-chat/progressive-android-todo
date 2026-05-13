@@ -21,7 +21,12 @@ import im.vector.app.features.home.room.detail.timeline.item.toMatrixItem
 import im.vector.lib.strings.CommonPlurals
 import im.vector.lib.strings.CommonStrings
 
-private const val MAX_RECEIPT_DISPLAYED = 3
+/**
+ * Max visible read receipt avatars before showing "+N".
+ * Default increased from 3 to 20 for Progressive Chat.
+ * User-configurable via Labs setting.
+ */
+var maxReceiptDisplayed: Int = 20
 
 class ReadReceiptsView @JvmOverloads constructor(
         context: Context,
@@ -36,8 +41,24 @@ class ReadReceiptsView @JvmOverloads constructor(
         views = ViewReadReceiptsBinding.bind(this)
     }
 
+    // Dynamic avatar views for expanded limits
+    private val dynamicAvatars = mutableListOf<ImageView>()
+
     private val receiptAvatars: List<ImageView> by lazy {
         listOf(views.receiptAvatar1, views.receiptAvatar2, views.receiptAvatar3)
+    }
+
+    private fun ensureAvatars(count: Int) {
+        val existing = receiptAvatars + dynamicAvatars
+        val avatarSize = resources.getDimensionPixelSize(R.dimen.item_event_message_state_size)
+        while (existing.size < count) {
+            val iv = ImageView(context).apply {
+                layoutParams = LayoutParams(avatarSize, avatarSize)
+                setPadding(0, 0, -(4 * resources.displayMetrics.density).toInt(), 0)
+            }
+            dynamicAvatars.add(iv)
+            addView(iv, 0) // insert at beginning for right-to-left ordering
+        }
     }
 
     private fun setupView() {
@@ -46,22 +67,31 @@ class ReadReceiptsView @JvmOverloads constructor(
     }
 
     fun render(readReceipts: List<ReadReceiptData>, avatarRenderer: AvatarRenderer) {
-        receiptAvatars.forEach { it.isVisible = false }
+        val maxDisplay = maxReceiptDisplayed.coerceAtLeast(1)
+        ensureAvatars(maxDisplay)
 
-        readReceipts.take(MAX_RECEIPT_DISPLAYED).forEachIndexed { index, receiptData ->
-            receiptAvatars[index].isVisible = true
-            avatarRenderer.render(receiptData.toMatrixItem(), receiptAvatars[index])
+        // Hide all first
+        receiptAvatars.forEach { it.isVisible = false }
+        dynamicAvatars.forEach { it.isVisible = false }
+
+        val allAvatars = receiptAvatars + dynamicAvatars
+
+        readReceipts.take(maxDisplay).forEachIndexed { index, receiptData ->
+            if (index < allAvatars.size) {
+                allAvatars[index].isVisible = true
+                avatarRenderer.render(receiptData.toMatrixItem(), allAvatars[index])
+            }
         }
 
         val displayNames = readReceipts
                 .mapNotNull { it.displayName }
                 .filter { it.isNotBlank() }
-                .take(MAX_RECEIPT_DISPLAYED)
+                .take(maxDisplay)
 
-        if (readReceipts.size > MAX_RECEIPT_DISPLAYED) {
+        if (readReceipts.size > maxDisplay) {
             views.receiptMore.visibility = View.VISIBLE
             views.receiptMore.text = context.getString(
-                    CommonStrings.x_plus, readReceipts.size - MAX_RECEIPT_DISPLAYED
+                    CommonStrings.x_plus, readReceipts.size - maxDisplay
             )
         } else {
             views.receiptMore.visibility = View.GONE
