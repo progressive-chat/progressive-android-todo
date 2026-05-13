@@ -63,6 +63,7 @@ add_library(
     src/color_utils.cpp
     src/e2ee_utils.cpp
     src/thumbnail.cpp
+    src/waveform.cpp
     src/jni_bridge.cpp
 )
 

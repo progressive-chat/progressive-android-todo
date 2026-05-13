@@ -56,6 +56,7 @@
 #include "progressive/color_utils.hpp"
 #include "progressive/e2ee_utils.hpp"
 #include "progressive/thumbnail.hpp"
+#include "progressive/waveform.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -3518,6 +3519,23 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeBuildThumbnailUrl
     if (jMethod) env->ReleaseStringUTFChars(jMethod, method.c_str());
     auto s = progressive::buildThumbnailUrl(mxc, jW, jH, method, jAnim);
     return env->NewStringUTF(s.c_str());
+}
+
+// --- Waveform ---
+
+JNIEXPORT jint JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeSuggestBarCount(
+    JNIEnv*, jclass, jlong jDurationMs
+) {
+    return progressive::suggestBarCount(jDurationMs);
+}
+
+JNIEXPORT jdouble JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeComputeRmsVolume(
+    JNIEnv*, jclass, jintArray jSamples
+) {
+    // This would need to read jintArray samples — placeholder
+    return 0.0;
 }
 
 } // extern "C"

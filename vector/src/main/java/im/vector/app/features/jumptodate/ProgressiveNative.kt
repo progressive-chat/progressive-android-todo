@@ -615,6 +615,11 @@ object ProgressiveNative {
     @JvmStatic external fun nativeComputeThumbnail(srcW: Int, srcH: Int, maxW: Int, maxH: Int, upscale: Boolean, quality: Int): String
     @JvmStatic external fun nativeBuildThumbnailUrl(mxcUri: String, w: Int, h: Int, method: String, animated: Boolean): String
 
+    // --- Waveform ---
+
+    @JvmStatic external fun nativeSuggestBarCount(durationMs: Long): Int
+    @JvmStatic external fun nativeComputeRmsVolume(samples: IntArray): Double
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(
