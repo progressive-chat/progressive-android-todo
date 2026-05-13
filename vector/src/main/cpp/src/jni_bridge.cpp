@@ -89,6 +89,7 @@
 #include "progressive/room_summary.hpp"
 #include "progressive/membership_utils.hpp"
 #include "progressive/event_validator.hpp"
+#include "progressive/room_encryption.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4231,6 +4232,17 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeValidateEvent(
     auto result = progressive::validateEvent(eventId, eventType, senderId, contentJson, originTs, blocked);
     auto json = progressive::eventValidationToJson(result);
     return env->NewStringUTF(json.c_str());
+}
+
+// --- Room Encryption ---
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomEncrypted(
+    JNIEnv* env, jclass, jstring jStateJson
+) {
+    auto json = jStateJson ? std::string(env->GetStringUTFChars(jStateJson, nullptr)) : "";
+    if (jStateJson) env->ReleaseStringUTFChars(jStateJson, json.c_str());
+    return progressive::isRoomEncrypted(json) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"

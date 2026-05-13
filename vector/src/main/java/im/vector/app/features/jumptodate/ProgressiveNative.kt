@@ -758,6 +758,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeValidateEvent(eventId: String, eventType: String, senderId: String, contentJson: String, originTs: String, blockedUsersJson: String): String
 
+    // --- Room Encryption ---
+
+    @JvmStatic external fun nativeIsRoomEncrypted(stateJson: String): Boolean
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(
