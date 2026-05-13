@@ -854,6 +854,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeBuildEventPermalink(roomId: String, eventId: String): String
 
+    // --- Network Monitor ---
+
+    @JvmStatic external fun nativeGetRecommendedMediaQuality(type: Int, connected: Boolean, metered: Boolean, signal: Int, latency: Double, loss: Double): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

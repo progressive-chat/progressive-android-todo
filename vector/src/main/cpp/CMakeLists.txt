@@ -119,6 +119,7 @@ add_library(
     src/sync_utils.cpp
     src/event_display.cpp
     src/permalink.cpp
+    src/network_monitor.cpp
     src/olm.cpp
     src/jni_bridge.cpp
 )

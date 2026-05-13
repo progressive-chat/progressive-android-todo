@@ -110,6 +110,7 @@
 #include "progressive/sync_utils.hpp"
 #include "progressive/event_display.hpp"
 #include "progressive/permalink.hpp"
+#include "progressive/network_monitor.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -4620,6 +4621,22 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeBuildEventPermali
     if (jRoomId) env->ReleaseStringUTFChars(jRoomId, roomId.c_str());
     if (jEventId) env->ReleaseStringUTFChars(jEventId, eventId.c_str());
     auto s = progressive::buildEventPermalink(roomId, eventId);
+    return env->NewStringUTF(s.c_str());
+}
+
+// --- Network Monitor ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeGetRecommendedMediaQuality(
+    JNIEnv* env, jclass,
+    jint jType, jboolean jConnected, jboolean jMetered,
+    jint jSignal, jdouble jLatency, jdouble jLoss
+) {
+    auto quality = progressive::computeNetworkQuality(
+        static_cast<NetworkType>(jType), jConnected, jMetered, false,
+        jSignal, jLatency, jLoss
+    );
+    auto s = progressive::getRecommendedMediaQuality(quality);
     return env->NewStringUTF(s.c_str());
 }
 
