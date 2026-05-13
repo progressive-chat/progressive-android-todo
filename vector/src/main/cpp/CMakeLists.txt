@@ -12,7 +12,6 @@ add_library(
     src/relation.cpp
     src/exporter.cpp
     src/eventcache.cpp
-    src/eventdb.cpp
     src/translate.cpp
     src/proxy.cpp
     src/yggdrasil.cpp
@@ -59,11 +58,7 @@ target_include_directories(
 
 find_library(log_lib log)
 
-# SQLite3 - available in Android NDK sysroot
-find_library(sqlite3_lib sqlite3)
-
 target_link_libraries(
     progressive_native
     ${log_lib}
-    ${sqlite3_lib}
 )
