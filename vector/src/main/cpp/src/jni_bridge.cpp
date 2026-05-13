@@ -113,6 +113,7 @@
 #include "progressive/network_monitor.hpp"
 #include "progressive/client_info.hpp"
 #include "progressive/keyshare.hpp"
+#include "progressive/displayname_utils.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -4678,6 +4679,28 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeBuildKeyRequestBo
     if (jDeviceId)  env->ReleaseStringUTFChars(jDeviceId, deviceId.c_str());
 
     auto s = progressive::buildKeyRequestBody(roomId, sessionId, senderKey, algorithm, requestId, deviceId);
+    return env->NewStringUTF(s.c_str());
+}
+
+// --- Display Name ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeUserIdToDisplayName(
+    JNIEnv* env, jclass, jstring jUserId
+) {
+    auto userId = jUserId ? std::string(env->GetStringUTFChars(jUserId, nullptr)) : "";
+    if (jUserId) env->ReleaseStringUTFChars(jUserId, userId.c_str());
+    auto s = progressive::userIdToDisplayName(userId);
+    return env->NewStringUTF(s.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeUserIdToColor(
+    JNIEnv* env, jclass, jstring jUserId
+) {
+    auto userId = jUserId ? std::string(env->GetStringUTFChars(jUserId, nullptr)) : "";
+    if (jUserId) env->ReleaseStringUTFChars(jUserId, userId.c_str());
+    auto s = progressive::userIdToColor(userId);
     return env->NewStringUTF(s.c_str());
 }
 

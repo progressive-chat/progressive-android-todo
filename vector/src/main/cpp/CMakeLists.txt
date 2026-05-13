@@ -122,6 +122,7 @@ add_library(
     src/network_monitor.cpp
     src/client_info.cpp
     src/keyshare.cpp
+    src/displayname_utils.cpp
     src/olm.cpp
     src/jni_bridge.cpp
 )

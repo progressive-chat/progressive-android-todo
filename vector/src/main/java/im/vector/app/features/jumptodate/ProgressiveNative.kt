@@ -866,6 +866,11 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeBuildKeyRequestBody(roomId: String, sessionId: String, senderKey: String, algorithm: String, requestId: String, deviceId: String): String
 
+    // --- Display Name ---
+
+    @JvmStatic external fun nativeUserIdToDisplayName(userId: String): String
+    @JvmStatic external fun nativeUserIdToColor(userId: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(
