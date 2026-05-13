@@ -61,6 +61,7 @@
 #include "progressive/password_validator.hpp"
 #include "progressive/spellcheck.hpp"
 #include "progressive/draft_manager.hpp"
+#include "progressive/link_preview.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -3637,6 +3638,17 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatTypingText(
 
     auto s = progressive::formatTypingText(names);
     return env->NewStringUTF(s.c_str());
+}
+
+// --- Link Preview ---
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsImageUrl(
+    JNIEnv* env, jclass, jstring jUrl
+) {
+    auto url = jUrl ? std::string(env->GetStringUTFChars(jUrl, nullptr)) : "";
+    if (jUrl) env->ReleaseStringUTFChars(jUrl, url.c_str());
+    return progressive::isImageUrl(url) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"

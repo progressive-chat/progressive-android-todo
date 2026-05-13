@@ -68,6 +68,7 @@ add_library(
     src/password_validator.cpp
     src/spellcheck.cpp
     src/draft_manager.cpp
+    src/link_preview.cpp
     src/jni_bridge.cpp
 )
 

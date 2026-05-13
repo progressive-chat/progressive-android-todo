@@ -637,6 +637,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeFormatTypingText(namesJson: String): String
 
+    // --- Link Preview ---
+
+    @JvmStatic external fun nativeIsImageUrl(url: String): Boolean
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(
