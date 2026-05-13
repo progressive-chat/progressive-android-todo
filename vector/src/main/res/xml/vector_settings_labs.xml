@@ -160,4 +160,10 @@
         android:summary="@string/labs_enable_chat_export_summary"
         android:title="@string/labs_enable_chat_export" />
 
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:key="SETTINGS_LABS_SKIP_AVATAR_CROP_KEY"
+        android:summary="@string/labs_skip_avatar_crop_summary"
+        android:title="@string/labs_skip_avatar_crop" />
+
 </androidx.preference.PreferenceScreen>

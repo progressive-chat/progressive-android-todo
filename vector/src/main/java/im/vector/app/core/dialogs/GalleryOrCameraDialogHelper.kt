@@ -22,6 +22,7 @@ import im.vector.app.core.utils.checkPermissions
 import im.vector.app.core.utils.onPermissionDeniedDialog
 import im.vector.app.core.utils.registerForPermissionsResult
 import im.vector.app.features.media.createUCropWithDefaultSettings
+import im.vector.app.features.settings.VectorPreferences
 import im.vector.lib.core.utils.timer.Clock
 import im.vector.lib.multipicker.MultiPicker
 import im.vector.lib.multipicker.entity.MultiPickerImageType
@@ -39,6 +40,8 @@ class GalleryOrCameraDialogHelper(
         private val fragment: Fragment,
         private val colorProvider: ColorProvider,
         private val clock: Clock,
+        private val vectorPreferences: VectorPreferences,
+        private val skipCrop: Boolean = false,
 ) {
     interface Listener {
         fun onImageReady(uri: Uri?)
@@ -84,6 +87,10 @@ class GalleryOrCameraDialogHelper(
     }
 
     private fun startUCrop(image: MultiPickerImageType) {
+        if (skipCrop || vectorPreferences.isSkipAvatarCropEnabled()) {
+            listener.onImageReady(image.contentUri)
+            return
+        }
         val destinationFile = File(activity.cacheDir, image.displayName.insertBeforeLast("_e_${clock.epochMillis()}"))
         val uri = image.contentUri
         createUCropWithDefaultSettings(colorProvider, uri, destinationFile.toUri(), fragment.getString(CommonStrings.rotate_and_crop_screen_title))
