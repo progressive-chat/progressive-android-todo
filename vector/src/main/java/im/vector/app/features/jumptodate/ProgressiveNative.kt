@@ -720,6 +720,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeExtractServers(roomsJson: String): String
 
+    // --- Widget Utils ---
+
+    @JvmStatic external fun nativeGetWidgetTypeName(type: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

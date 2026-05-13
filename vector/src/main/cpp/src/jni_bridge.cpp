@@ -80,6 +80,7 @@
 #include "progressive/user_rating.hpp"
 #include "progressive/event_timeline.hpp"
 #include "progressive/room_directory.hpp"
+#include "progressive/widget_utils.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4053,6 +4054,18 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeExtractServers(
     }
     out << "]";
     return env->NewStringUTF(out.str().c_str());
+}
+
+// --- Widget Utils ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeGetWidgetTypeName(
+    JNIEnv* env, jclass, jstring jType
+) {
+    auto type = jType ? std::string(env->GetStringUTFChars(jType, nullptr)) : "";
+    if (jType) env->ReleaseStringUTFChars(jType, type.c_str());
+    auto s = progressive::getWidgetTypeName(type);
+    return env->NewStringUTF(s.c_str());
 }
 
 } // extern "C"

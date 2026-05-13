@@ -87,6 +87,7 @@ add_library(
     src/user_rating.cpp
     src/event_timeline.cpp
     src/room_directory.cpp
+    src/widget_utils.cpp
     src/jni_bridge.cpp
 )
 
