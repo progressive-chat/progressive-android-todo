@@ -1,6 +1,8 @@
 #include "progressive/network_stats.hpp"
 #include <sstream>
 #include <algorithm>
+#include <chrono>
+#include <cmath>
 #include <cmath>
 
 namespace progressive {
