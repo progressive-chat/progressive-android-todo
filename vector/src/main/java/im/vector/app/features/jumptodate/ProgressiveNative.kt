@@ -762,6 +762,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeIsRoomEncrypted(stateJson: String): Boolean
 
+    // --- Login Utils ---
+
+    @JvmStatic external fun nativeBuildLoginBody(userId: String, password: String, deviceName: String, deviceId: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(

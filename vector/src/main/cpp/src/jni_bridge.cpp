@@ -90,6 +90,7 @@
 #include "progressive/membership_utils.hpp"
 #include "progressive/event_validator.hpp"
 #include "progressive/room_encryption.hpp"
+#include "progressive/login_utils.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4243,6 +4244,28 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsRoomEncrypted(
     auto json = jStateJson ? std::string(env->GetStringUTFChars(jStateJson, nullptr)) : "";
     if (jStateJson) env->ReleaseStringUTFChars(jStateJson, json.c_str());
     return progressive::isRoomEncrypted(json) ? JNI_TRUE : JNI_FALSE;
+}
+
+// --- Login Utils ---
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeBuildLoginBody(
+    JNIEnv* env, jclass,
+    jstring jUserId, jstring jPassword, jstring jDeviceName, jstring jDeviceId
+) {
+    LoginParams params;
+    params.userId     = jUserId ? std::string(env->GetStringUTFChars(jUserId, nullptr)) : "";
+    params.password   = jPassword ? std::string(env->GetStringUTFChars(jPassword, nullptr)) : "";
+    params.deviceName = jDeviceName ? std::string(env->GetStringUTFChars(jDeviceName, nullptr)) : "";
+    params.deviceId   = jDeviceId ? std::string(env->GetStringUTFChars(jDeviceId, nullptr)) : "";
+
+    if (jUserId)     env->ReleaseStringUTFChars(jUserId, params.userId.c_str());
+    if (jPassword)   env->ReleaseStringUTFChars(jPassword, params.password.c_str());
+    if (jDeviceName) env->ReleaseStringUTFChars(jDeviceName, params.deviceName.c_str());
+    if (jDeviceId)   env->ReleaseStringUTFChars(jDeviceId, params.deviceId.c_str());
+
+    auto s = progressive::buildLoginBody(params);
+    return env->NewStringUTF(s.c_str());
 }
 
 } // extern "C"
