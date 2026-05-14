@@ -106,6 +106,7 @@ add_library(
     src/login_utils.cpp
     src/account_utils.cpp
     src/connection_monitor.cpp
+    src/create_room.cpp
     src/push_rules.cpp
     src/raw_service.cpp
     src/space_utils.cpp
