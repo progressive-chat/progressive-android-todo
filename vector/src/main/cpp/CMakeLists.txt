@@ -25,6 +25,7 @@ add_library(
     src/user_mask.cpp
     src/chunked_upload.cpp
     src/chat_features.cpp
+    src/debug_service.cpp
     src/invitation_hide.cpp
     src/thread_aggregator.cpp
     src/user_messages.cpp
@@ -58,6 +59,7 @@ add_library(
     src/matrix_patterns.cpp
     src/desync_detector.cpp
     src/latency_stats.cpp
+    src/lightweight_settings.cpp
     src/string_utils.cpp
     src/location_sharing.cpp
     src/color_utils.cpp
@@ -102,6 +104,7 @@ add_library(
     src/account_utils.cpp
     src/connection_monitor.cpp
     src/push_rules.cpp
+    src/raw_service.cpp
     src/space_utils.cpp
     src/event_relations.cpp
     src/e2ee_decoration.cpp
