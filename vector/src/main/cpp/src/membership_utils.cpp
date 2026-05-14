@@ -195,4 +195,37 @@ std::string memberListToJson(const MemberListInfo& list) {
     return json.str();
 }
 
+// ==== Member Sorting (from RoomMemberListComparator.kt:14-52) ====
+// Original: compare by powerLevel desc, then displayName asc CI, then userId asc
+
+bool memberCompare(const MemberInfo& a, const MemberInfo& b) {
+    // Sort by power level (higher = first)
+    if (a.powerLevel != b.powerLevel) return a.powerLevel > b.powerLevel;
+
+    const auto& aName = a.displayName;
+    const auto& bName = b.displayName;
+
+    // If both have names, compare case-insensitive
+    if (!aName.empty() && !bName.empty()) {
+        // Case-insensitive compare
+        auto al = aName, bl = bName;
+        for (char& c : al) c = std::tolower(static_cast<unsigned char>(c));
+        for (char& c : bl) c = std::tolower(static_cast<unsigned char>(c));
+        if (al != bl) return al < bl;
+        // Same name → compare userId
+        return a.userId < b.userId;
+    }
+
+    // One has no display name — named members first
+    if (aName.empty() && !bName.empty()) return false;
+    if (!aName.empty() && bName.empty()) return true;
+
+    // Both unnamed → compare userId
+    return a.userId < b.userId;
+}
+
+void sortMembersByPowerAndName(std::vector<MemberInfo>& members) {
+    std::sort(members.begin(), members.end(), memberCompare);
+}
+
 } // namespace progressive

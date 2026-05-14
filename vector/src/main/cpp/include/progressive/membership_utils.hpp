@@ -79,6 +79,12 @@ void sortMembers(std::vector<MemberInfo>& members, const std::string& sortBy);
 // Format member list stats as JSON.
 std::string memberListToJson(const MemberListInfo& list);
 
+// ---- Member Sorting (from RoomMemberListComparator.kt 53L) ----
+// Sort by: power level (high→low) → display name (case-insensitive) → userId
+
+void sortMembersByPowerAndName(std::vector<MemberInfo>& members);
+bool memberCompare(const MemberInfo& a, const MemberInfo& b);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_MEMBERSHIP_UTILS_HPP
