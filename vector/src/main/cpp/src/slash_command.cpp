@@ -290,7 +290,7 @@ ParsedCommand parseSlashCommand(const std::string& text, const std::string& form
             }
             break;
 
-        case SlashCommandId::ChangeTopic:
+        case SlashCommandId::Topic:
             if (!message.empty()) {
                 result.resultType = ParseResultType::ChangeTopic;
                 result.message = message;
