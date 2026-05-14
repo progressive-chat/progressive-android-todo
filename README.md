@@ -94,6 +94,12 @@ Standard Android build with NDK/CMake for native C++:
 
 CI builds F-Droid arm32 (armeabi-v7a, works on all devices). Requires Android SDK, NDK 21.3+, CMake 3.22+.
 
+## System Requirements
+
+- **Minimum:** Android smartphone with **1 GB RAM**
+- Exact memory requirements will be precisely determined as the C++ native core matures — current figures are preliminary and may be revised
+- Android 5.0 (API 21) or newer
+
 ## How You Can Help
 
 Progressive Chat is in active development. We have months of debugging and polishing ahead before the first stable release. Here's how you can contribute:
