@@ -50,6 +50,18 @@ std::string urlDecode(const std::string& input);
 struct MxcInfo { std::string serverName; std::string mediaId; };
 MxcInfo parseMxcUrl(const std::string& mxcUrl);
 
+// Check if a string is a valid URL (can be parsed).
+// From: org.matrix.android.sdk.internal.util.UrlUtils.kt (50L)
+bool isValidUrl(const std::string& url);
+
+// Ensure string starts with "https://" if it doesn't already have a protocol.
+// "matrix.org" → "https://matrix.org", "http://..." → unchanged, "" → ""
+std::string ensureProtocol(const std::string& url);
+
+// Ensure string ends with "/" (unless empty).
+// "https://example.com" → "https://example.com/"
+std::string ensureTrailingSlash(const std::string& url);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_URL_TOOLS_HPP

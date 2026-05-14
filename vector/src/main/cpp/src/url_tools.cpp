@@ -154,4 +154,28 @@ MxcInfo parseMxcUrl(const std::string& mxcUrl) {
     return result;
 }
 
+// ==== URL Utilities (from UrlUtils.kt:21-50) ====
+bool isValidUrl(const std::string& url) {
+    auto protoEnd = url.find("://");
+    if (protoEnd == std::string::npos || protoEnd < 2) return false;
+    for (size_t i = 0; i < protoEnd; ++i) {
+        char c = url[i];
+        if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+              (c >= '0' && c <= '9') || c == '+' || c == '-' || c == '.')) return false;
+    }
+    return url.size() > protoEnd + 3;
+}
+
+std::string ensureProtocol(const std::string& url) {
+    if (url.empty()) return url;
+    if (url.find("http") == 0) return url;
+    return "https://" + url;
+}
+
+std::string ensureTrailingSlash(const std::string& url) {
+    if (url.empty()) return url;
+    if (url.back() == '/') return url;
+    return url + "/";
+}
+
 } // namespace progressive
