@@ -1035,6 +1035,14 @@ object ProgressiveNative {
     @JvmStatic external fun nativeIsMxcUri(url: String): Boolean
     @JvmStatic external fun nativeFormatFileSize(bytes: Long): String
 
+    // --- Room State Parsers ---
+    // Ported from: RoomJoinRules.kt, RoomHistoryVisibility.kt, RoomGuestAccess.kt, RoomCreate.kt
+
+    @JvmStatic external fun nativeParseJoinRules(contentJson: String): String
+    @JvmStatic external fun nativeParseHistoryVisibility(contentJson: String): String
+    @JvmStatic external fun nativeParseGuestAccess(contentJson: String): String
+    @JvmStatic external fun nativeParseRoomCreate(contentJson: String): String
+
     // --- Kotlin fallbacks for Slash Commands ---
 
     fun parseSlashCommandFallback(text: String): JSONObject {

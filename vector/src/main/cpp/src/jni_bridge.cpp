@@ -127,6 +127,7 @@
 #include "progressive/room_sort.hpp"
 #include "progressive/key_backup.hpp"
 #include "progressive/content_utils.hpp"
+#include "progressive/room_state.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -4857,6 +4858,53 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatFileSize(
 ) {
     auto s = progressive::formatFileSize(jBytes);
     return env->NewStringUTF(s.c_str());
+}
+
+// --- Room State Parsers (JoinRules, HistoryVisibility, GuestAccess, Create) ---
+// Ported from: RoomJoinRules.kt, RoomHistoryVisibility.kt, RoomGuestAccess.kt, RoomCreate.kt
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseJoinRules(
+    JNIEnv* env, jclass, jstring jContentJson
+) {
+    auto json = jContentJson ? std::string(env->GetStringUTFChars(jContentJson, nullptr)) : "{}";
+    if (jContentJson) env->ReleaseStringUTFChars(jContentJson, json.c_str());
+    auto rules = progressive::parseJoinRules(json);
+    auto result = progressive::joinRulesToJson(rules);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseHistoryVisibility(
+    JNIEnv* env, jclass, jstring jContentJson
+) {
+    auto json = jContentJson ? std::string(env->GetStringUTFChars(jContentJson, nullptr)) : "{}";
+    if (jContentJson) env->ReleaseStringUTFChars(jContentJson, json.c_str());
+    auto vis = progressive::parseHistoryVisibility(json);
+    auto result = progressive::historyVisibilityToJson(vis);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseGuestAccess(
+    JNIEnv* env, jclass, jstring jContentJson
+) {
+    auto json = jContentJson ? std::string(env->GetStringUTFChars(jContentJson, nullptr)) : "{}";
+    if (jContentJson) env->ReleaseStringUTFChars(jContentJson, json.c_str());
+    auto access = progressive::parseGuestAccess(json);
+    auto result = progressive::guestAccessToJson(access);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseRoomCreate(
+    JNIEnv* env, jclass, jstring jContentJson
+) {
+    auto json = jContentJson ? std::string(env->GetStringUTFChars(jContentJson, nullptr)) : "{}";
+    if (jContentJson) env->ReleaseStringUTFChars(jContentJson, json.c_str());
+    auto create = progressive::parseRoomCreate(json);
+    auto result = progressive::roomCreateToJson(create);
+    return env->NewStringUTF(result.c_str());
 }
 
 // --- Sync Utils ---
