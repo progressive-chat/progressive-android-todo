@@ -9,6 +9,25 @@ namespace progressive {
 // Login type — from LoginType.kt (40L)
 enum class LoginType { Password, Sso, Unsupported, Custom, Direct, Unknown, Qr };
 
+// ---- Registration Flow (from RegistrationFlowResponse.kt 115L) ----
+struct RegistrationStage {
+    std::string type;        // "m.login.recaptcha", "m.login.dummy", etc.
+    bool isMandatory = false;
+    std::string publicKey;   // reCAPTCHA public key
+    bool isEmail = false;
+    bool isMsisdn = false;
+};
+
+struct RegistrationFlowResult {
+    std::vector<RegistrationStage> missingStages;    // still need to complete
+    std::vector<RegistrationStage> completedStages;  // already done
+    std::string session;
+    bool hasStages = false;
+};
+
+// Parse registration flow response into stages.
+RegistrationFlowResult parseRegistrationFlow(const std::string& json);
+
 // ---- Login Flow Utilities ----
 
 struct LoginFlow {

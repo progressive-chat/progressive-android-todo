@@ -176,4 +176,120 @@ std::string buildWellKnownUrl(const std::string& domain) {
     return "https://" + domain + "/.well-known/matrix/client";
 }
 
+// ==== Registration Flow Parser (from RegistrationFlowResponse.kt:78-115) ====
+
+RegistrationFlowResult parseRegistrationFlow(const std::string& json) {
+    RegistrationFlowResult result;
+
+    auto extractStr = [&](const std::string& key) -> std::string {
+        auto search = "\"" + key + "\":\"";
+        auto pos = json.find(search);
+        if (pos == std::string::npos) { search = "\"" + key + "\": \""; pos = json.find(search); }
+        if (pos == std::string::npos) return "";
+        pos += search.size();
+        auto end = json.find('"', pos);
+        return (end != std::string::npos) ? json.substr(pos, end - pos) : "";
+    };
+
+    result.session = extractStr("session");
+
+    // Parse completed stages
+    auto compPos = json.find("\"completed\"");
+    if (compPos != std::string::npos) {
+        auto bracket = json.find('[', compPos);
+        if (bracket != std::string::npos) {
+            size_t pos = bracket + 1;
+            while (pos < json.size()) {
+                if (json[pos] == '"') {
+                    size_t end = json.find('"', pos + 1);
+                    if (end != std::string::npos) {
+                        RegistrationStage s;
+                        s.type = json.substr(pos + 1, end - pos - 1);
+                        s.isMandatory = true;
+                        result.completedStages.push_back(s);
+                        pos = end + 1;
+                        continue;
+                    }
+                }
+                if (json[pos] == ']') break;
+                pos++;
+            }
+        }
+    }
+
+    // Parse flows for missing stages
+    auto flowsPos = json.find("\"flows\"");
+    if (flowsPos != std::string::npos) {
+        auto bracket = json.find('[', flowsPos);
+        if (bracket != std::string::npos) {
+            size_t pos = bracket + 1;
+            while (pos < json.size()) {
+                if (json[pos] == '{') {
+                    // Find "stages" inside this flow object
+                    auto stagesPos = json.find("\"stages\"", pos);
+                    if (stagesPos != std::string::npos && stagesPos < pos + 500) {
+                        auto sb = json.find('[', stagesPos);
+                        if (sb != std::string::npos && sb < pos + 600) {
+                            size_t sp = sb + 1;
+                            while (sp < json.size()) {
+                                if (json[sp] == '"') {
+                                    size_t se = json.find('"', sp + 1);
+                                    if (se != std::string::npos) {
+                                        std::string stageType = json.substr(sp + 1, se - sp - 1);
+                                        // Check if already completed
+                                        bool alreadyDone = false;
+                                        for (const auto& cs : result.completedStages) {
+                                            if (cs.type == stageType) { alreadyDone = true; break; }
+                                        }
+                                        if (!alreadyDone) {
+                                            RegistrationStage s;
+                                            s.type = stageType;
+                                            s.isMandatory = true;
+                                            s.isEmail = (stageType == "m.login.email.identity");
+                                            s.isMsisdn = (stageType == "m.login.msisdn");
+                                            // Extract reCAPTCHA public key
+                                            if (stageType == "m.login.recaptcha") {
+                                                auto pkPos = json.find("\"public_key\"", sp);
+                                                if (pkPos != std::string::npos && pkPos < se + 200) {
+                                                    auto colon = json.find(':', pkPos);
+                                                    if (colon != std::string::npos) {
+                                                        auto q = json.find('"', colon);
+                                                        if (q != std::string::npos) {
+                                                            auto qe = json.find('"', q + 1);
+                                                            if (qe != std::string::npos)
+                                                                s.publicKey = json.substr(q + 1, qe - q - 1);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            result.missingStages.push_back(s);
+                                        }
+                                        sp = se + 1;
+                                        continue;
+                                    }
+                                }
+                                if (json[sp] == ']') break;
+                                sp++;
+                            }
+                        }
+                    }
+                    // Skip to end of this flow object
+                    int depth = 1;
+                    pos++;
+                    while (pos < json.size() && depth > 0) {
+                        if (json[pos] == '{') depth++;
+                        else if (json[pos] == '}') depth--;
+                        pos++;
+                    }
+                    continue;
+                }
+                pos++;
+            }
+        }
+    }
+
+    result.hasStages = !result.missingStages.empty() || !result.completedStages.empty();
+    return result;
+}
+
 } // namespace progressive
