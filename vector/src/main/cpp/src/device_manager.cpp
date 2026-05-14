@@ -205,4 +205,47 @@ std::string buildSessionRenameBody(const std::string& sessionId, const std::stri
     return R"({"session_id": ")" + esc(sessionId) + R"(", "display_name": ")" + esc(newName) + R"("})";
 }
 
+// ==== Device Crypto (from CryptoDeviceInfo.kt:46-59) ====
+std::string extractDeviceFingerprint(const std::string& deviceId, const std::string& keysJson) {
+    // Original: keys?.takeIf { deviceId.isNotBlank() }?.get("ed25519:$deviceId")
+    if (deviceId.empty()) return "";
+    std::string key = "ed25519:" + deviceId;
+    auto search = "\"" + key + "\":\"";
+    auto pos = keysJson.find(search);
+    if (pos == std::string::npos) {
+        search = "\"" + key + "\": \"";
+        pos = keysJson.find(search);
+    }
+    if (pos == std::string::npos) return "";
+    pos += search.size();
+    auto end = keysJson.find('"', pos);
+    return (end != std::string::npos) ? keysJson.substr(pos, end - pos) : "";
+}
+
+std::string extractDeviceIdentityKey(const std::string& deviceId, const std::string& keysJson) {
+    // Original: keys?.takeIf { deviceId.isNotBlank() }?.get("curve25519:$deviceId")
+    if (deviceId.empty()) return "";
+    std::string key = "curve25519:" + deviceId;
+    auto search = "\"" + key + "\":\"";
+    auto pos = keysJson.find(search);
+    if (pos == std::string::npos) {
+        search = "\"" + key + "\": \"";
+        pos = keysJson.find(search);
+    }
+    if (pos == std::string::npos) return "";
+    pos += search.size();
+    auto end = keysJson.find('"', pos);
+    return (end != std::string::npos) ? keysJson.substr(pos, end - pos) : "";
+}
+
+std::string formatFingerprint(const std::string& fingerprint) {
+    // Chunk into groups of 4 for readability
+    std::ostringstream out;
+    for (size_t i = 0; i < fingerprint.size(); ++i) {
+        if (i > 0 && i % 4 == 0) out << ' ';
+        out << static_cast<char>(std::toupper(static_cast<unsigned char>(fingerprint[i])));
+    }
+    return out.str();
+}
+
 } // namespace progressive

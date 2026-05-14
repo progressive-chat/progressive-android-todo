@@ -61,6 +61,16 @@ std::string getDeviceRecommendation(const DeviceInfo& device);
 // Sort devices (by name, by last seen, by verification).
 void sortDevices(std::vector<DeviceInfo>& devices, const std::string& sortBy);
 
+// ---- Device Crypto (from CryptoDeviceInfo.kt 78L) ----
+// Extract ed25519 fingerprint from device keys map.
+std::string extractDeviceFingerprint(const std::string& deviceId, const std::string& keysJson);
+
+// Extract curve25519 identity key from device keys map.
+std::string extractDeviceIdentityKey(const std::string& deviceId, const std::string& keysJson);
+
+// Format fingerprint for display: chunk into groups of 4.
+std::string formatFingerprint(const std::string& fingerprint);
+
 // ---- Session Rename ----
 
 struct SessionRename {
