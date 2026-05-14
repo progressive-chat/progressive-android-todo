@@ -134,6 +134,7 @@ add_library(
     src/power_levels.cpp
     src/well_known.cpp
     src/room_sort.cpp
+    src/key_backup.cpp
     # src/olm.cpp  # disabled: libolm API mismatches
     src/jni_bridge.cpp
 )

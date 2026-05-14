@@ -1019,6 +1019,14 @@ object ProgressiveNative {
     @JvmStatic external fun nativeGetRoomSortKey(lastEventTs: Long, notifCount: Int, highlightCount: Int, isDirect: Boolean, hasUnread: Boolean, tagStr: String, priority: Int): Int
     @JvmStatic external fun nativeGetRoomSectionName(tagStr: String, isDirect: Boolean): String
 
+    // --- Key Backup / Recovery ---
+    // Ported from: KeysBackup.kt, KeysBackupSetupSharedViewModel.kt
+
+    @JvmStatic external fun nativeFormatRecoveryKey(raw: String): String
+    @JvmStatic external fun nativeValidateRecoveryKey(key: String): String
+    @JvmStatic external fun nativeParseKeyBackupVersion(json: String): String
+    @JvmStatic external fun nativeIsValidPassphrase(passphrase: String): Boolean
+
     // --- Kotlin fallbacks for Slash Commands ---
 
     fun parseSlashCommandFallback(text: String): JSONObject {

@@ -125,6 +125,7 @@
 #include "progressive/power_levels.hpp"
 #include "progressive/well_known.hpp"
 #include "progressive/room_sort.hpp"
+#include "progressive/key_backup.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -4761,6 +4762,57 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeGetRoomSectionNam
     auto tag = progressive::parseRoomTag(tagStr);
     auto name = progressive::getRoomSectionName(tag, jIsDirect);
     return env->NewStringUTF(name.c_str());
+}
+
+// --- Key Backup / Recovery ---
+// Ported from: KeysBackup.kt, KeysBackupSetupSharedViewModel.kt
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeFormatRecoveryKey(
+    JNIEnv* env, jclass, jstring jRaw
+) {
+    auto raw = jRaw ? std::string(env->GetStringUTFChars(jRaw, nullptr)) : "";
+    if (jRaw) env->ReleaseStringUTFChars(jRaw, raw.c_str());
+    auto formatted = progressive::formatRecoveryKey(raw);
+    return env->NewStringUTF(formatted.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeValidateRecoveryKey(
+    JNIEnv* env, jclass, jstring jKey
+) {
+    auto key = jKey ? std::string(env->GetStringUTFChars(jKey, nullptr)) : "";
+    if (jKey) env->ReleaseStringUTFChars(jKey, key.c_str());
+    auto result = progressive::validateRecoveryKey(key);
+    auto esc = [](const std::string& s) -> std::string {
+        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+    };
+    std::ostringstream json;
+    json << R"({"valid": )" << (result.valid ? "true" : "false");
+    json << R"(,"status": )" << static_cast<int>(result.status);
+    json << R"(,"raw": ")" << esc(result.raw) << R"(")";
+    json << "}";
+    return env->NewStringUTF(json.str().c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseKeyBackupVersion(
+    JNIEnv* env, jclass, jstring jJson
+) {
+    auto json = jJson ? std::string(env->GetStringUTFChars(jJson, nullptr)) : "{}";
+    if (jJson) env->ReleaseStringUTFChars(jJson, json.c_str());
+    auto backup = progressive::parseKeyBackupVersion(json);
+    auto result = progressive::keyBackupVersionToJson(backup);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsValidPassphrase(
+    JNIEnv* env, jclass, jstring jPassphrase
+) {
+    auto pass = jPassphrase ? std::string(env->GetStringUTFChars(jPassphrase, nullptr)) : "";
+    if (jPassphrase) env->ReleaseStringUTFChars(jPassphrase, pass.c_str());
+    return progressive::isValidPassphrase(pass);
 }
 
 // --- Sync Utils ---
