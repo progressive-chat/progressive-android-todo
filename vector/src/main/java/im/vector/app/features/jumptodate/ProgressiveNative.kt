@@ -1054,6 +1054,12 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeCanEditPendingMessage(localId: String, state: Int): String
 
+    // --- Sender Notification Filter ---
+    // Per-room: choose which senders trigger notifications
+
+    @JvmStatic external fun nativeShouldNotifyForSender(settingsJson: String, senderId: String, hasMention: Boolean, hasHighlight: Boolean): Boolean
+    @JvmStatic external fun nativeToggleMuteSender(settingsJson: String, senderId: String, mute: Boolean): String
+
     // --- Content Utils (MXC URLs, Message Types) ---
     // Ported from: ContentUrlResolver.kt, MessageContent.kt
 

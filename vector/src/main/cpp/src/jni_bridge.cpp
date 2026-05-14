@@ -136,6 +136,7 @@
 #include "progressive/matrix_error.hpp"
 #include "progressive/agent_executor.hpp"
 #include "progressive/push_condition.hpp"
+#include "progressive/sender_notif_filter.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -1486,6 +1487,37 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeCanEditPendingMes
     msg.state = static_cast<progressive::MessageSendState>(jState);
     bool can = progressive::canEditPendingMessage(msg);
     return env->NewStringUTF(can ? "true" : "false");
+}
+
+// --- Sender Notification Filter ---
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeShouldNotifyForSender(
+    JNIEnv* env, jclass, jstring jSettingsJson, jstring jSenderId, jboolean jHasMention, jboolean jHasHighlight
+) {
+    auto settingsJson = jSettingsJson ? std::string(env->GetStringUTFChars(jSettingsJson, nullptr)) : "{}";
+    auto sender = jSenderId ? std::string(env->GetStringUTFChars(jSenderId, nullptr)) : "";
+    if (jSettingsJson) env->ReleaseStringUTFChars(jSettingsJson, settingsJson.c_str());
+    if (jSenderId) env->ReleaseStringUTFChars(jSenderId, sender.c_str());
+
+    auto settings = progressive::parseSenderNotifSettings(settingsJson);
+    return progressive::shouldNotifyForSender(settings, sender, jHasMention, jHasHighlight);
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeToggleMuteSender(
+    JNIEnv* env, jclass, jstring jSettingsJson, jstring jSenderId, jboolean jMute
+) {
+    auto json = jSettingsJson ? std::string(env->GetStringUTFChars(jSettingsJson, nullptr)) : "{}";
+    auto sender = jSenderId ? std::string(env->GetStringUTFChars(jSenderId, nullptr)) : "";
+    if (jSettingsJson) env->ReleaseStringUTFChars(jSettingsJson, json.c_str());
+    if (jSenderId) env->ReleaseStringUTFChars(jSenderId, sender.c_str());
+
+    auto settings = progressive::parseSenderNotifSettings(json);
+    if (jMute) progressive::muteSender(settings, sender);
+    else progressive::unmuteSender(settings, sender);
+    auto result = progressive::senderNotifSettingsToJson(settings);
+    return env->NewStringUTF(result.c_str());
 }
 
 } // extern "C"
