@@ -77,57 +77,148 @@ RecoveryKey validateRecoveryKey(const std::string& key) {
 }
 
 std::string extractCurveKeyFromRecoveryKey(const std::string& recoveryKey) {
-    auto validated = validateRecoveryKey(recoveryKey);
-    if (!validated.valid) return "";
-
-    // Recovery key format (base58):
-    // [prefix 1B] [private key 32B] [checksum 4B] → total 37 bytes → ~58 base58 chars
-    //
-    // Original Kotlin (KeysBackup.kt):
-    //   fun extractCurveKeyFromRecoveryKey(key: String): String? {
-    //       val decoded = key.base58decode()
-    //       return decoded?.copyOfRange(1, 33)?.base64encode()
+    // Original Kotlin (RecoveryKey.kt:77-121):
+    //   fun extractCurveKeyFromRecoveryKey(recoveryKey: String?): ByteArray? {
+    //       val spaceFreeRecoveryKey = recoveryKey.replace("\\s".toRegex(), "")
+    //       val b58DecodedKey = base58decode(spaceFreeRecoveryKey)
+    //       if (b58DecodedKey.size != RECOVERY_KEY_LENGTH) return null  // 35
+    //       if (b58DecodedKey[0] != CHAR_0) return null  // 0x8B
+    //       if (b58DecodedKey[1] != CHAR_1) return null  // 0x01
+    //       // Parity check: XOR of all bytes must be 0
+    //       var parity: Byte = 0
+    //       for (i in 0 until RECOVERY_KEY_LENGTH) parity = parity xor b58DecodedKey[i]
+    //       if (parity != 0.toByte()) return null
+    //       // Extract key: bytes 2..34 (skip 2 header + 1 parity)
+    //       return b58DecodedKey.copyOfRange(2, b58DecodedKey.size - 1)
     //   }
 
-    // Decode base58
-    auto base58Decode = [](const std::string& input) -> std::string {
-        std::string result;
-        // Multiply-and-add algorithm for base58
-        std::vector<int> digits;
-        for (char c : input) {
-            int value = 0;
-            for (int i = 0; BASE58_ALPHABET[i]; ++i) {
-                if (BASE58_ALPHABET[i] == c) { value = i; break; }
-            }
-            int carry = value;
-            for (size_t j = 0; j < digits.size(); ++j) {
-                carry += digits[j] * 58;
-                digits[j] = carry & 0xFF;
-                carry >>= 8;
-            }
-            while (carry > 0) {
-                digits.push_back(carry & 0xFF);
-                carry >>= 8;
-            }
-        }
-        // Add leading zero bytes for each leading '1' in input
-        for (char c : input) {
-            if (c == '1') digits.push_back(0);
-            else break;
-        }
-        // Reverse digits
-        for (auto it = digits.rbegin(); it != digits.rend(); ++it) {
-            result += static_cast<char>(*it);
-        }
-        return result;
-    };
+    if (recoveryKey.empty()) return "";
 
-    auto decoded = base58Decode(validated.raw);
+    // Step 1: Remove whitespace
+    std::string spaceFree;
+    for (char c : recoveryKey) {
+        if (c != ' ' && c != '\t' && c != '\n' && c != '\r') spaceFree += c;
+    }
+    if (spaceFree.empty()) return "";
 
-    // Skip prefix byte (1), take 32 bytes for Curve25519 key
-    if (decoded.size() < 33) return "";
+    // Step 2: Base58 decode
+    auto decoded = base58Decode(spaceFree);
+    const int RECOVERY_KEY_LENGTH = 35; // 2 header + 32 key + 1 parity
 
-    return decoded.substr(1, 32);
+    // Step 3: Check length
+    if (static_cast<int>(decoded.size()) != RECOVERY_KEY_LENGTH) return "";
+
+    // Step 4: Check header bytes
+    const unsigned char CHAR_0 = 0x8B;
+    const unsigned char CHAR_1 = 0x01;
+    if (static_cast<unsigned char>(decoded[0]) != CHAR_0) return "";
+    if (static_cast<unsigned char>(decoded[1]) != CHAR_1) return "";
+
+    // Step 5: Parity check — XOR of all bytes must be 0
+    unsigned char parity = 0;
+    for (int i = 0; i < RECOVERY_KEY_LENGTH; ++i) {
+        parity ^= static_cast<unsigned char>(decoded[i]);
+    }
+    if (parity != 0) return "";
+
+    // Step 6: Extract key bytes (skip 2 header bytes, skip 1 parity byte at end)
+    return decoded.substr(2, 32);
+}
+
+std::string computeRecoveryKey(const std::string& curve25519Key) {
+    // Original Kotlin (RecoveryKey.kt:48-69):
+    //   fun computeRecoveryKey(curve25519Key: ByteArray): String {
+    //       val data = ByteArray(curve25519Key.size + 3)
+    //       data[0] = CHAR_0  // 0x8B
+    //       data[1] = CHAR_1  // 0x01
+    //       var parity: Byte = CHAR_0 xor CHAR_1
+    //       for (i in curve25519Key.indices) {
+    //           data[i + 2] = curve25519Key[i]
+    //           parity = parity xor curve25519Key[i]
+    //       }
+    //       data[curve25519Key.size + 2] = parity
+    //       return base58encode(data)
+    //   }
+
+    if (curve25519Key.size() != 32) return "";
+
+    const unsigned char CHAR_0 = 0x8B;
+    const unsigned char CHAR_1 = 0x01;
+
+    // Build data: [CHAR_0] [CHAR_1] [key 32B] [parity 1B] = 35 bytes
+    std::string data;
+    data += static_cast<char>(CHAR_0);
+    data += static_cast<char>(CHAR_1);
+    data += curve25519Key;
+
+    // Compute parity
+    unsigned char parity = CHAR_0 ^ CHAR_1;
+    for (unsigned char c : curve25519Key) {
+        parity ^= c;
+    }
+    data += static_cast<char>(parity);
+
+    return base58Encode(data);
+}
+
+std::string base58Encode(const std::string& data) {
+    // Convert binary to base58
+    std::vector<int> digits;
+    for (size_t i = 0; i < data.size(); ++i) {
+        unsigned char byte = static_cast<unsigned char>(data[i]);
+        int carry = byte;
+        for (size_t j = 0; j < digits.size(); ++j) {
+            carry += digits[j] * 256;
+            digits[j] = carry % 58;
+            carry /= 58;
+        }
+        while (carry > 0) {
+            digits.push_back(carry % 58);
+            carry /= 58;
+        }
+    }
+
+    // Add leading '1' for each leading zero byte
+    std::string result;
+    for (size_t i = 0; i < data.size() && data[i] == 0; ++i) {
+        result += '1';
+    }
+
+    // Convert digits to base58 chars (reverse order)
+    for (auto it = digits.rbegin(); it != digits.rend(); ++it) {
+        result += BASE58_ALPHABET[*it];
+    }
+
+    return result;
+}
+
+std::string base58Decode(const std::string& input) {
+    std::string result;
+    std::vector<int> digits;
+    for (char c : input) {
+        int value = 0;
+        for (int i = 0; BASE58_ALPHABET[i]; ++i) {
+            if (BASE58_ALPHABET[i] == c) { value = i; break; }
+        }
+        int carry = value;
+        for (size_t j = 0; j < digits.size(); ++j) {
+            carry += digits[j] * 58;
+            digits[j] = carry & 0xFF;
+            carry >>= 8;
+        }
+        while (carry > 0) {
+            digits.push_back(carry & 0xFF);
+            carry >>= 8;
+        }
+    }
+    for (char c : input) {
+        if (c == '1') digits.push_back(0);
+        else break;
+    }
+    for (auto it = digits.rbegin(); it != digits.rend(); ++it) {
+        result += static_cast<char>(*it);
+    }
+    return result;
 }
 
 bool validateRecoveryKeyChecksum(const std::string& rawKey) {

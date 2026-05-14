@@ -4809,6 +4809,16 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsValidPassphrase
     return progressive::isValidPassphrase(pass);
 }
 
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeComputeRecoveryKey(
+    JNIEnv* env, jclass, jstring jCurve25519Key
+) {
+    auto key = jCurve25519Key ? std::string(env->GetStringUTFChars(jCurve25519Key, nullptr)) : "";
+    if (jCurve25519Key) env->ReleaseStringUTFChars(jCurve25519Key, key.c_str());
+    auto recoveryKey = progressive::computeRecoveryKey(key);
+    return env->NewStringUTF(recoveryKey.c_str());
+}
+
 // --- Content Utils (MXC URLs, Message Types) ---
 // Ported from: ContentUrlResolver.kt, MessageContent.kt, ContentDownloadStateBinder.kt
 

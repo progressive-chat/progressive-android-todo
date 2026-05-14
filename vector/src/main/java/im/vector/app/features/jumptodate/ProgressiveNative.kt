@@ -1026,6 +1026,7 @@ object ProgressiveNative {
     @JvmStatic external fun nativeValidateRecoveryKey(key: String): String
     @JvmStatic external fun nativeParseKeyBackupVersion(json: String): String
     @JvmStatic external fun nativeIsValidPassphrase(passphrase: String): Boolean
+    @JvmStatic external fun nativeComputeRecoveryKey(curve25519Key: String): String
 
     // --- Content Utils (MXC URLs, Message Types) ---
     // Ported from: ContentUrlResolver.kt, MessageContent.kt

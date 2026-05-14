@@ -8,9 +8,15 @@
 namespace progressive {
 
 // ---- Key Backup / Recovery Key Formatter ----
-// Ported from: org.matrix.android.sdk.internal.crypto.keysbackup.KeysBackup.kt
-//              im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel.kt
-//              org.matrix.android.sdk.internal.crypto.keysbackup.util.extractCurveKeyFromRecoveryKey
+// Faithful port from original Kotlin:
+//   org.matrix.android.sdk.api.session.crypto.keysbackup.RecoveryKey.kt (121 lines)
+//   org.matrix.android.sdk.internal.crypto.keysbackup.KeysBackup.kt
+//   im.vector.app.features.crypto.keysbackup.setup.KeysBackupSetupSharedViewModel.kt
+//
+// Recovery key format (from MSC1219):
+//   [header 0x8B] [header 0x01] [curve25519 key 32B] [parity 1B]
+//   → 35 bytes total → base58 encoded → ~58 chars
+//   Parity = XOR of all 35 bytes, must equal 0 for valid key
 
 // Recovery key status after parsing
 enum class RecoveryKeyStatus {
@@ -50,10 +56,24 @@ RecoveryKey validateRecoveryKey(const std::string& key);
 bool isValidBase58Char(char c);
 
 // Decode a recovery key to extract the Curve25519 private key.
-// The recovery key encodes: prefix(1 byte) + private_key(32 bytes) + checksum(4 bytes)
-// Encoded in base58.
+// Recovery key format: [0x8B][0x01][key 32B][parity 1B] → base58
+// Validates header bytes and XOR parity check.
 // Returns empty string if invalid.
+// Original Kotlin (RecoveryKey.kt:extractCurveKeyFromRecoveryKey):
+//   fun extractCurveKeyFromRecoveryKey(recoveryKey: String?): ByteArray?
 std::string extractCurveKeyFromRecoveryKey(const std::string& recoveryKey);
+
+// Compute a recovery key from a Curve25519 key (32 bytes).
+// Appends header (0x8B, 0x01) and parity byte, then base58 encodes.
+// Original Kotlin (RecoveryKey.kt:computeRecoveryKey):
+//   fun computeRecoveryKey(curve25519Key: ByteArray): String
+std::string computeRecoveryKey(const std::string& curve25519Key);
+
+// Encode binary data to base58 string.
+std::string base58Encode(const std::string& data);
+
+// Decode base58 string to binary data.
+std::string base58Decode(const std::string& input);
 
 // Validate the checksum of a recovery key.
 // The last 4 bytes of the decoded data are a SHA-256 checksum.
