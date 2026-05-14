@@ -121,6 +121,7 @@
 #include "progressive/read_marker.hpp"
 #include "progressive/slash_command.hpp"
 #include "progressive/typing_monitor.hpp"
+#include "progressive/url_preview.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -5016,6 +5017,64 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsUserTyping(
 
     // Quick check: is the userId in the JSON?
     return json.find("\"userId\": \"" + userId + "\"") != std::string::npos;
+}
+
+// --- URL Preview / OpenGraph ---
+// Ported from: UrlPreviewer.kt, EventHtmlRenderer.kt
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseUrlPreview(
+    JNIEnv* env, jclass, jstring jHtml, jstring jBaseUrl
+) {
+    auto html = jHtml ? std::string(env->GetStringUTFChars(jHtml, nullptr)) : "";
+    auto baseUrl = jBaseUrl ? std::string(env->GetStringUTFChars(jBaseUrl, nullptr)) : "";
+    if (jHtml) env->ReleaseStringUTFChars(jHtml, html.c_str());
+    if (jBaseUrl) env->ReleaseStringUTFChars(jBaseUrl, baseUrl.c_str());
+
+    auto preview = progressive::parseUrlPreview(html, baseUrl);
+    auto json = progressive::urlPreviewToJson(preview);
+    return env->NewStringUTF(json.str().c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeExtractHtmlTitle(
+    JNIEnv* env, jclass, jstring jHtml
+) {
+    auto html = jHtml ? std::string(env->GetStringUTFChars(jHtml, nullptr)) : "";
+    if (jHtml) env->ReleaseStringUTFChars(jHtml, html.c_str());
+    auto title = progressive::extractHtmlTitle(html);
+    return env->NewStringUTF(title.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeResolveUrl(
+    JNIEnv* env, jclass, jstring jBaseUrl, jstring jRelative
+) {
+    auto base = jBaseUrl ? std::string(env->GetStringUTFChars(jBaseUrl, nullptr)) : "";
+    auto rel = jRelative ? std::string(env->GetStringUTFChars(jRelative, nullptr)) : "";
+    if (jBaseUrl) env->ReleaseStringUTFChars(jBaseUrl, base.c_str());
+    if (jRelative) env->ReleaseStringUTFChars(jRelative, rel.c_str());
+    auto resolved = progressive::resolveUrl(base, rel);
+    return env->NewStringUTF(resolved.c_str());
+}
+
+JNIEXPORT jboolean JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeIsImageUrl(
+    JNIEnv* env, jclass, jstring jUrl
+) {
+    auto url = jUrl ? std::string(env->GetStringUTFChars(jUrl, nullptr)) : "";
+    if (jUrl) env->ReleaseStringUTFChars(jUrl, url.c_str());
+    return progressive::isImageUrl(url);
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeStripHtmlTags(
+    JNIEnv* env, jclass, jstring jHtml
+) {
+    auto html = jHtml ? std::string(env->GetStringUTFChars(jHtml, nullptr)) : "";
+    if (jHtml) env->ReleaseStringUTFChars(jHtml, html.c_str());
+    auto stripped = progressive::stripHtmlTags(html);
+    return env->NewStringUTF(stripped.c_str());
 }
 
 } // extern "C"
