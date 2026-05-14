@@ -60,6 +60,34 @@ bool isPhoneNumber(const std::string& input);
 // Check if a string is a valid email address.
 bool isValidEmail(const std::string& input);
 
+// Extract server name (domain) from a Matrix ID.
+// Original Kotlin (MatrixPatterns.kt:extractServerNameFromId):
+//   matrixId?.substringAfter(":", missingDelimiterValue = "")?.takeIf { it.isNotEmpty() }
+// "@alice:matrix.org" → "matrix.org"
+// "!room:matrix.org:8448" → "matrix.org:8448"
+std::string extractServerNameFromId(const std::string& matrixId);
+
+// Extract user name (localpart) from a Matrix user ID.
+// Original Kotlin: matrixId.removePrefix("@").substringBefore(":")
+// "@alice:matrix.org" → "alice"
+std::string extractUserNameFromId(const std::string& matrixId);
+
+// Check if an order string is valid (ASCII printable, < 50 chars).
+// Original Kotlin: order != null && order.length < 50 && order matches ORDER_STRING_REGEX
+// ORDER_STRING_REGEX = "[ -~]+" (ASCII printable chars: space through ~)
+bool isValidOrderString(const std::string& order);
+
+// Generate a candidate room alias from a room name.
+// Original Kotlin (MatrixPatterns.kt:candidateAliasFromRoomName):
+//   roomName.lowercase().replaceSpaceChars("_").removeInvalidRoomNameChars()
+//       .take(maxAliasLocalPartLength(domain))
+// "My Room Name" → "my_room_name"
+std::string candidateAliasFromRoomName(const std::string& roomName, const std::string& domain, int maxAliasLength = 100);
+
+// Check if a string is a valid Matrix permalink (both matrix.to and app permalink).
+// Original Kotlin: PATTERN_CONTAIN_MATRIX_TO_PERMALINK.containsMatchIn(str) || PATTERN_CONTAIN_APP_PERMALINK.containsMatchIn(str)
+bool isPermalink(const std::string& url);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_MATRIX_PATTERNS_HPP

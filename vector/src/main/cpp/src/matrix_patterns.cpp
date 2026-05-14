@@ -116,4 +116,76 @@ bool isValidEmail(const std::string& input) {
     return std::regex_match(input, re);
 }
 
+// ---- New functions from MatrixPatterns.kt lines 159-204 ----
+
+std::string extractServerNameFromId(const std::string& matrixId) {
+    // Original Kotlin: matrixId?.substringAfter(":", missingDelimiterValue = "")?.takeIf { it.isNotEmpty() }
+    auto colon = matrixId.find(':');
+    if (colon == std::string::npos) return "";
+    std::string server = matrixId.substr(colon + 1);
+    return server.empty() ? "" : server;
+}
+
+std::string extractUserNameFromId(const std::string& matrixId) {
+    // Original Kotlin:
+    //   fun extractUserNameFromId(matrixId: String): String? {
+    //       return if (isUserId(matrixId)) {
+    //           matrixId.removePrefix("@").substringBefore(":", "")
+    //       } else null
+    //   }
+    if (!isUserId(matrixId)) return "";
+    std::string localpart = matrixId;
+    if (!localpart.empty() && localpart[0] == '@') localpart.erase(0, 1);
+    auto colon = localpart.find(':');
+    if (colon != std::string::npos) localpart = localpart.substr(0, colon);
+    return localpart;
+}
+
+bool isValidOrderString(const std::string& order) {
+    // Original Kotlin: order != null && order.length < 50 && order matches ORDER_STRING_REGEX
+    // ORDER_STRING_REGEX = "[ -~]+" — ASCII printable characters (0x20-0x7E)
+    if (order.empty() || order.size() >= 50) return false;
+    for (unsigned char c : order) {
+        if (c < 0x20 || c > 0x7E) return false;
+    }
+    return true;
+}
+
+std::string candidateAliasFromRoomName(const std::string& roomName, const std::string& domain, int maxAliasLength) {
+    // Original Kotlin (MatrixPatterns.kt:candidateAliasFromRoomName):
+    //   roomName.lowercase()
+    //       .replaceSpaceChars("_")
+    //       .removeInvalidRoomNameChars()
+    //       .take(MatrixConstants.maxAliasLocalPartLength(domain))
+    std::string result;
+
+    // Lowercase and replace spaces with underscore
+    for (char c : roomName) {
+        unsigned char uc = static_cast<unsigned char>(c);
+        if (std::isspace(uc)) {
+            // Collapse multiple spaces into single underscore
+            if (!result.empty() && result.back() != '_') result += '_';
+        } else if (std::isalnum(uc) || c == '_' || c == '.' || c == '%' || c == '#' || c == '@' || c == '=' || c == '+' || c == '-') {
+            result += static_cast<char>(std::tolower(uc));
+        }
+        // Skip invalid characters (removeInvalidRoomNameChars)
+    }
+
+    // Trim leading/trailing underscores
+    while (!result.empty() && result.front() == '_') result.erase(0, 1);
+    while (!result.empty() && result.back() == '_') result.pop_back();
+
+    // Truncate to max alias localpart length
+    if (static_cast<int>(result.size()) > maxAliasLength) {
+        result = result.substr(0, maxAliasLength);
+    }
+
+    return result;
+}
+
+bool isPermalink(const std::string& url) {
+    // Original Kotlin: PATTERN_CONTAIN_MATRIX_TO_PERMALINK.containsMatchIn(str) || PATTERN_CONTAIN_APP_PERMALINK.containsMatchIn(str)
+    return isMatrixToPermalink(url) || isAppPermalink(url);
+}
+
 } // namespace progressive
