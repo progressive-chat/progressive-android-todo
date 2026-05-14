@@ -116,6 +116,20 @@ std::string formatFileSize(int64_t bytes);
 // Format message content as JSON for the Kotlin UI layer.
 std::string messageContentToJson(const MessageContent& content);
 
+// ---- Reply Text Extraction (from ContentUtils.kt) ----
+// Extract useful text from a reply body, removing quoted lines.
+// Original Kotlin (ContentUtils.kt:extractUsefulTextFromReply):
+//   Removes lines starting with ">" (quote prefix) until blank line, returns rest.
+std::string extractUsefulTextFromReply(const std::string& repliedBody);
+
+// Extract useful text from HTML reply body.
+// Original: removes <mx-reply>...</mx-reply> block
+std::string extractUsefulTextFromHtmlReply(const std::string& repliedHtmlBody, const std::string& mxReplyStartTag = "<mx-reply>", const std::string& mxReplyEndTag = "</mx-reply>");
+
+// Format spoiler text from HTML.
+// Converts <span data-mx-spoiler>text</span> to █████
+std::string formatSpoilerTextFromHtml(const std::string& formattedBody);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_CONTENT_UTILS_HPP

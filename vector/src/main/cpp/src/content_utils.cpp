@@ -282,4 +282,114 @@ std::string messageContentToJson(const MessageContent& content) {
     return json.str();
 }
 
+// ==== Reply Text Extraction (from ContentUtils.kt:23-50) ====
+// Original Kotlin:
+//   fun extractUsefulTextFromReply(repliedBody: String): String {
+//       val lines = repliedBody.lines()
+//       var wellFormed = repliedBody.startsWith(">")
+//       var endOfPreviousFound = false
+//       val usefulLines = ArrayList<String>()
+//       lines.forEach {
+//           if (it == "") { endOfPreviousFound = true; return@forEach }
+//           if (!endOfPreviousFound) {
+//               wellFormed = wellFormed && it.startsWith(">")
+//           } else { usefulLines.add(it) }
+//       }
+//       return usefulLines.joinToString("\n").takeIf { wellFormed } ?: repliedBody
+//   }
+
+std::string extractUsefulTextFromReply(const std::string& repliedBody) {
+    if (repliedBody.empty()) return "";
+
+    // Split into lines
+    std::vector<std::string> lines;
+    std::string current;
+    for (char c : repliedBody) {
+        if (c == '\n') { lines.push_back(current); current.clear(); }
+        else current += c;
+    }
+    if (!current.empty()) lines.push_back(current);
+
+    // Original: wellFormed = repliedBody.startsWith(">")
+    bool wellFormed = !lines.empty() && !lines[0].empty() && lines[0][0] == '>';
+    bool endOfPreviousFound = false;
+    std::string usefulText;
+
+    for (const auto& line : lines) {
+        // Original: if (it == "") { endOfPreviousFound = true; return@forEach }
+        if (line.empty()) {
+            endOfPreviousFound = true;
+            continue;
+        }
+        if (!endOfPreviousFound) {
+            // Original: wellFormed = wellFormed && it.startsWith(">")
+            wellFormed = wellFormed && !line.empty() && line[0] == '>';
+        } else {
+            if (!usefulText.empty()) usefulText += '\n';
+            usefulText += line;
+        }
+    }
+
+    // Original: return usefulLines.joinToString("\n").takeIf { wellFormed } ?: repliedBody
+    return wellFormed ? usefulText : repliedBody;
+}
+
+std::string extractUsefulTextFromHtmlReply(
+    const std::string& repliedHtmlBody,
+    const std::string& mxReplyStartTag,
+    const std::string& mxReplyEndTag)
+{
+    // Original: if (repliedBody.startsWith(MX_REPLY_START_TAG))
+    if (repliedHtmlBody.find(mxReplyStartTag) != 0) return repliedHtmlBody;
+
+    auto closingTagIndex = repliedHtmlBody.rfind(mxReplyEndTag);
+    if (closingTagIndex == std::string::npos) return repliedHtmlBody;
+
+    std::string result = repliedHtmlBody.substr(closingTagIndex + mxReplyEndTag.size());
+    // Trim leading whitespace
+    while (!result.empty() && result[0] == ' ') result.erase(0, 1);
+    while (!result.empty() && result[0] == '\n') result.erase(0, 1);
+    return result;
+}
+
+std::string formatSpoilerTextFromHtml(const std::string& formattedBody) {
+    // Original: replaces <span data-mx-spoiler>content</span> with spoiler chars
+    // Replaces content between <span data-mx-spoiler> and </span> with block chars
+    std::string result;
+    const std::string SPOILER_OPEN = "<span data-mx-spoiler>";
+    const std::string SPOILER_CLOSE = "</span>";
+    const char SPOILER_CHAR = '\xDB'; // █
+
+    size_t pos = 0;
+    while (pos < formattedBody.size()) {
+        auto openPos = formattedBody.find(SPOILER_OPEN, pos);
+        if (openPos == std::string::npos) {
+            result += formattedBody.substr(pos);
+            break;
+        }
+
+        result += formattedBody.substr(pos, openPos - pos);
+        openPos += SPOILER_OPEN.size();
+
+        auto closePos = formattedBody.find(SPOILER_CLOSE, openPos);
+        if (closePos == std::string::npos) {
+            result += formattedBody.substr(openPos - SPOILER_OPEN.size());
+            pos = openPos;
+            continue;
+        }
+
+        // Count visible characters between tags
+        std::string content = formattedBody.substr(openPos, closePos - openPos);
+        size_t visibleChars = 0;
+        bool inTag = false;
+        for (char c : content) { if (c == '<') inTag = true; else if (c == '>') inTag = false; else if (!inTag) visibleChars++; }
+
+        // Replace with spoiler chars
+        result += std::string(visibleChars, SPOILER_CHAR);
+        pos = closePos + SPOILER_CLOSE.size();
+    }
+
+    return result;
+}
+
 } // namespace progressive
