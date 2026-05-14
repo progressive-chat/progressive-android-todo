@@ -174,4 +174,53 @@ std::string credentialsToJson(const Credentials& creds);
 std::string sessionParamsToJson(const SessionParams& params);
 std::string userPresenceToJson(const UserPresence& presence);
 
+// ==== Secure Storage (SSSS) ====
+//
+// Original Kotlin: securestorage/SecretStorageKeyContent.kt, EncryptedSecretContent.kt,
+//   KeyInfoResult.kt, SharedSecretStorageError.kt
+
+struct SsssPassphrase {
+    std::string algorithm;       // "m.pbkdf2"
+    int iterations = 500000;
+    std::string salt;            // base64
+};
+
+struct SecretStorageKeyContent {
+    std::string algorithm;       // "m.secret_storage.v1.curve25519-aes-sha2"
+    std::string name;            // human-readable key name
+    SsssPassphrase passphrase;   // for passphrase-based keys
+    std::string publicKey;       // base64
+};
+
+struct EncryptedSecretContent {
+    std::string ciphertext;      // unpadded base64
+    std::string mac;             // integrity check
+    std::string ephemeral;       // ephemeral key
+    std::string iv;              // initialization vector
+};
+
+enum class SecureStorageErrorType {
+    UNKNOWN_SECRET = 0, UNKNOWN_KEY = 1, UNKNOWN_ALGORITHM = 2,
+    UNSUPPORTED_ALGORITHM = 3, SECRET_NOT_ENCRYPTED = 4,
+    BAD_KEY_FORMAT = 5, PARSING_ERROR = 6, BAD_MAC = 7, BAD_CIPHERTEXT = 8,
+    OTHER = 9
+};
+
+struct SecureStorageError {
+    SecureStorageErrorType type = SecureStorageErrorType::OTHER;
+    std::string detail;          // secret name, key ID, algorithm name, etc.
+};
+
+struct KeyInfoResult {
+    bool success = false;
+    SecretStorageKeyContent content;
+    SecureStorageError error;
+};
+
+// ==== JSON Parsing ====
+
+SecretStorageKeyContent parseSecretStorageKey(const std::string& json);
+EncryptedSecretContent parseEncryptedSecret(const std::string& json);
+KeyInfoResult parseKeyInfoResult(const std::string& json);
+
 } // namespace progressive

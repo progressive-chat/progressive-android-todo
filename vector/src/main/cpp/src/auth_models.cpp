@@ -193,4 +193,37 @@ std::string userPresenceToJson(const UserPresence& presence) {
     return json;
 }
 
+// ==== Secure Storage Parsing ====
+
+SecretStorageKeyContent parseSecretStorageKey(const std::string& json) {
+    SecretStorageKeyContent k;
+    k.algorithm = extractJsonString(json, "algorithm");
+    k.name = extractJsonString(json, "name");
+    k.publicKey = extractJsonString(json, "pubkey");
+    auto ppJson = extractJsonObject(json, "passphrase");
+    if (!ppJson.empty()) {
+        k.passphrase.algorithm = extractJsonString(ppJson, "algorithm");
+        k.passphrase.iterations = static_cast<int>(extractJsonInt64(ppJson, "iterations"));
+        if (k.passphrase.iterations <= 0) k.passphrase.iterations = 500000;
+        k.passphrase.salt = extractJsonString(ppJson, "salt");
+    }
+    return k;
+}
+
+EncryptedSecretContent parseEncryptedSecret(const std::string& json) {
+    EncryptedSecretContent c;
+    c.ciphertext = extractJsonString(json, "ciphertext");
+    c.mac = extractJsonString(json, "mac");
+    c.ephemeral = extractJsonString(json, "ephemeral");
+    c.iv = extractJsonString(json, "iv");
+    return c;
+}
+
+KeyInfoResult parseKeyInfoResult(const std::string& json) {
+    KeyInfoResult r;
+    r.success = extractJsonBool(json, "success");
+    if (r.success) r.content = parseSecretStorageKey(json);
+    return r;
+}
+
 } // namespace progressive

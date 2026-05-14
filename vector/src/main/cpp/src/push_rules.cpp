@@ -207,4 +207,203 @@ bool canShareHistory(const std::string& roomVisibility) {
     return roomVisibility == "world_readable" || roomVisibility == "shared";
 }
 
+// ==== Push Rules Domain Implementation ====
+
+ConditionKind RestPushCondition::getKind() const {
+    if (kind == "event_match") return ConditionKind::EVENT_MATCH;
+    if (kind == "contains_display_name") return ConditionKind::CONTAINS_DISPLAY_NAME;
+    if (kind == "room_member_count") return ConditionKind::ROOM_MEMBER_COUNT;
+    if (kind == "sender_notification_permission") return ConditionKind::SENDER_NOTIFICATION_PERM;
+    return ConditionKind::UNRECOGNISED;
+}
+
+bool RestPushRule::shouldNotify() const {
+    for (const auto& a : actionsRaw)
+        if (a == "notify") return true;
+    return false;
+}
+
+bool RestPushRule::shouldNotNotify() const {
+    return actionsRaw.empty()
+        || (actionsRaw.size() == 1 && actionsRaw[0] == "dont_notify");
+}
+
+std::vector<RestPushRule> RuleSet::getAllRules() const {
+    // Original Kotlin: order by priority: override > content > room > sender > underride
+    std::vector<RestPushRule> all;
+    all.insert(all.end(), overrideRules.begin(), overrideRules.end());
+    all.insert(all.end(), contentRules.begin(), contentRules.end());
+    all.insert(all.end(), roomRules.begin(), roomRules.end());
+    all.insert(all.end(), senderRules.begin(), senderRules.end());
+    all.insert(all.end(), underrideRules.begin(), underrideRules.end());
+    return all;
+}
+
+RestPushRule RuleSet::findDefaultRule(const std::string& ruleId, RuleSetKey* outKind) const {
+    // Original Kotlin: RULE_ID_CONTAIN_USER_NAME is special (content rules)
+    if (ruleId == ".m.rule.contains_user_name") {
+        for (const auto& r : contentRules) {
+            if (r.ruleId == ruleId) {
+                if (outKind) *outKind = RuleSetKey::CONTENT;
+                return r;
+            }
+        }
+    }
+    for (const auto& r : overrideRules) {
+        if (r.ruleId == ruleId) { if (outKind) *outKind = RuleSetKey::OVERRIDE; return r; }
+    }
+    for (const auto& r : underrideRules) {
+        if (r.ruleId == ruleId) { if (outKind) *outKind = RuleSetKey::UNDERRIDE; return r; }
+    }
+    return {};
+}
+
+// ==== JSON Parsing ====
+
+static std::string extractJsonString(const std::string& json, const std::string& key) {
+    auto pos = json.find("\"" + key + "\"");
+    if (pos == std::string::npos) return "";
+    pos = json.find(':', pos);
+    if (pos == std::string::npos) return "";
+    pos++;
+    while (pos < json.size() && (json[pos] == ' ' || json[pos] == '\t')) pos++;
+    if (pos >= json.size() || json[pos] != '"') return "";
+    pos++;
+    size_t end = pos;
+    while (end < json.size() && json[end] != '"') { if (json[end] == '\\') end++; end++; }
+    return json.substr(pos, end - pos);
+}
+
+static bool extractJsonBool(const std::string& json, const std::string& key) {
+    auto pos = json.find("\"" + key + "\"");
+    if (pos == std::string::npos) return false;
+    pos = json.find(':', pos);
+    if (pos == std::string::npos) return false;
+    pos++;
+    while (pos < json.size() && (json[pos] == ' ' || json[pos] == '\t')) pos++;
+    return json.compare(pos, 4, "true") == 0;
+}
+
+static std::string extractJsonObject(const std::string& json, const std::string& key) {
+    auto pos = json.find("\"" + key + "\"");
+    if (pos == std::string::npos) return "";
+    pos = json.find(':', pos);
+    if (pos == std::string::npos) return "";
+    pos++;
+    while (pos < json.size() && (json[pos] == ' ' || json[pos] == '\t')) pos++;
+    if (pos >= json.size() || json[pos] != '{') return "";
+    int depth = 1;
+    size_t start = pos;
+    pos++;
+    while (pos < json.size() && depth > 0) {
+        if (json[pos] == '{') depth++;
+        else if (json[pos] == '}') depth--;
+        pos++;
+    }
+    return json.substr(start, pos - start);
+}
+
+static RestPushCondition parseOneCondition(const std::string& json) {
+    RestPushCondition c;
+    c.kind = extractJsonString(json, "kind");
+    c.key = extractJsonString(json, "key");
+    c.pattern = extractJsonString(json, "pattern");
+    c.iz = extractJsonString(json, "is");
+    return c;
+}
+
+static RestPushRule parseOneRule(const std::string& json) {
+    RestPushRule r;
+    r.ruleId = extractJsonString(json, "rule_id");
+    r.isDefault = extractJsonBool(json, "default");
+    r.enabled = extractJsonBool(json, "enabled");
+    r.pattern = extractJsonString(json, "pattern");
+
+    // Parse conditions array
+    auto condPos = json.find("\"conditions\"");
+    if (condPos != std::string::npos) {
+        condPos = json.find('[', condPos);
+        if (condPos != std::string::npos) {
+            condPos++;
+            while (condPos < json.size()) {
+                while (condPos < json.size() && (json[condPos] == ' ' || json[condPos] == ',' || json[condPos] == '\n')) condPos++;
+                if (condPos >= json.size() || json[condPos] == ']') break;
+                if (json[condPos] == '{') {
+                    int d = 1;
+                    size_t start = condPos;
+                    condPos++;
+                    while (condPos < json.size() && d > 0) {
+                        if (json[condPos] == '{') d++;
+                        else if (json[condPos] == '}') d--;
+                        condPos++;
+                    }
+                    r.conditions.push_back(parseOneCondition(json.substr(start, condPos - start)));
+                }
+            }
+        }
+    }
+
+    // Parse actions array (keep raw for now)
+    auto actPos = json.find("\"actions\"");
+    if (actPos != std::string::npos) {
+        actPos = json.find('[', actPos);
+        if (actPos != std::string::npos) {
+            size_t pos = actPos + 1;
+            while (pos < json.size()) {
+                while (pos < json.size() && (json[pos] == ' ' || json[pos] == ',' || json[pos] == '\n')) pos++;
+                if (pos >= json.size() || json[pos] == ']') break;
+                if (json[pos] == '"') {
+                    pos++;
+                    size_t end = pos;
+                    while (end < json.size() && json[end] != '"') end++;
+                    r.actionsRaw.push_back(json.substr(pos, end - pos));
+                    pos = end + 1;
+                } else if (json[pos] == '{') {
+                    int d = 1;
+                    size_t start = pos;
+                    pos++;
+                    while (pos < json.size() && d > 0) { if (json[pos] == '{') d++; else if (json[pos] == '}') d--; pos++; }
+                    r.actionsRaw.push_back(json.substr(start, pos - start));
+                } else { pos++; }
+            }
+        }
+    }
+
+    return r;
+}
+
+RuleSet parseRuleSet(const std::string& json) {
+    RuleSet rs;
+    auto parseList = [&](const std::string& key) -> std::vector<RestPushRule> {
+        std::vector<RestPushRule> result;
+        auto pos = json.find("\"" + key + "\"");
+        if (pos == std::string::npos) return result;
+        pos = json.find('[', pos);
+        if (pos == std::string::npos) return result;
+        pos++;
+        while (pos < json.size()) {
+            while (pos < json.size() && (json[pos] == ' ' || json[pos] == ',' || json[pos] == '\n')) pos++;
+            if (pos >= json.size() || json[pos] == ']') break;
+            if (json[pos] == '{') {
+                int d = 1;
+                size_t start = pos;
+                pos++;
+                while (pos < json.size() && d > 0) { if (json[pos] == '{') d++; else if (json[pos] == '}') d--; pos++; }
+                result.push_back(parseOneRule(json.substr(start, pos - start)));
+            }
+        }
+        return result;
+    };
+    rs.contentRules = parseList("content");
+    rs.overrideRules = parseList("override");
+    rs.roomRules = parseList("room");
+    rs.senderRules = parseList("sender");
+    rs.underrideRules = parseList("underride");
+    return rs;
+}
+
+std::string ruleSetToJson(const RuleSet&) {
+    return "{}"; // placeholder — full serialization when needed
+}
+
 } // namespace progressive

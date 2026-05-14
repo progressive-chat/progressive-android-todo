@@ -67,6 +67,96 @@ std::string formatMsc3061Status(bool isShared, const std::string& visibilitySett
 // Check room visibility setting for history sharing eligibility.
 bool canShareHistory(const std::string& roomVisibility);
 
+// ==== Push Rules Domain Models ====
+//
+// Original Kotlin: pushrules/RuleIds.kt, Kind.kt, RuleScope.kt, Action.kt
+
+namespace RuleIds {
+    constexpr const char* DISABLE_ALL = ".m.rule.master";
+    constexpr const char* SUPPRESS_BOTS = ".m.rule.suppress_notices";
+    constexpr const char* INVITE_ME = ".m.rule.invite_for_me";
+    constexpr const char* PEOPLE_JOIN_LEAVE = ".m.rule.member_event";
+    constexpr const char* CONTAIN_DISPLAY_NAME = ".m.rule.contains_display_name";
+    constexpr const char* TOMBSTONE = ".m.rule.tombstone";
+    constexpr const char* ROOM_NOTIF = ".m.rule.roomnotif";
+    constexpr const char* CONTAIN_USER_NAME = ".m.rule.contains_user_name";
+    constexpr const char* KEYWORDS = "_keywords";
+    constexpr const char* CALL = ".m.rule.call";
+    constexpr const char* ONE_TO_ONE_ENCRYPTED = ".m.rule.encrypted_room_one_to_one";
+    constexpr const char* ONE_TO_ONE = ".m.rule.room_one_to_one";
+    constexpr const char* ALL_OTHER = ".m.rule.message";
+    constexpr const char* ENCRYPTED = ".m.rule.encrypted";
+    constexpr const char* POLL_START = ".m.rule.poll_start";
+    constexpr const char* POLL_END = ".m.rule.poll_end";
+    constexpr const char* FALLBACK = ".m.rule.fallback";
+    constexpr const char* REACTION = ".m.rule.reaction";
+}
+
+enum class ConditionKind {
+    EVENT_MATCH = 0,             // "event_match"
+    CONTAINS_DISPLAY_NAME = 1,   // "contains_display_name"
+    ROOM_MEMBER_COUNT = 2,       // "room_member_count"
+    SENDER_NOTIFICATION_PERM = 3,// "sender_notification_permission"
+    UNRECOGNISED = 4
+};
+
+namespace RuleScope { constexpr const char* GLOBAL = "global"; }
+
+// Push rule action types
+enum class PushActionType {
+    NOTIFY = 0, DONT_NOTIFY = 1, COALESCE = 2,
+    SET_TWEAK_SOUND = 3, SET_TWEAK_HIGHLIGHT = 4
+};
+
+struct PushAction {
+    PushActionType type = PushActionType::NOTIFY;
+    std::string sound;           // for SET_TWEAK_SOUND ("default", "ring", or custom URI)
+    bool highlight = true;       // for SET_TWEAK_HIGHLIGHT
+};
+
+// ==== Push Rules REST Models ====
+//
+// Original Kotlin: pushrules/rest/RuleSet.kt, rest/PushRule.kt, rest/PushCondition.kt
+
+struct RestPushCondition {
+    std::string kind;            // "kind" — "event_match", "contains_display_name", etc.
+    std::string key;             // "key" — dot-separated field path
+    std::string pattern;         // "pattern" — glob pattern
+    std::string iz;              // "is" — value for room_member_count conditions
+
+    ConditionKind getKind() const;
+    bool isValid() const { return !kind.empty(); }
+};
+
+struct RestPushRule {
+    std::vector<std::string> actionsRaw;     // "actions" — raw JSON list
+    bool isDefault = false;                  // "default"
+    bool enabled = true;                     // "enabled"
+    std::string ruleId;                      // "rule_id"
+    std::vector<RestPushCondition> conditions; // "conditions"
+    std::string pattern;                     // "pattern" — for content rules
+
+    bool shouldNotify() const;
+    bool shouldNotNotify() const;
+};
+
+enum class RuleSetKey { CONTENT = 0, OVERRIDE = 1, ROOM = 2, SENDER = 3, UNDERRIDE = 4 };
+
+struct RuleSet {
+    std::vector<RestPushRule> contentRules;    // "content"
+    std::vector<RestPushRule> overrideRules;   // "override"
+    std::vector<RestPushRule> roomRules;       // "room"
+    std::vector<RestPushRule> senderRules;     // "sender"
+    std::vector<RestPushRule> underrideRules;  // "underride"
+
+    // Original Kotlin: getAllRules() ordered by priority
+    std::vector<RestPushRule> getAllRules() const;
+    RestPushRule findDefaultRule(const std::string& ruleId, RuleSetKey* outKind = nullptr) const;
+};
+
+RuleSet parseRuleSet(const std::string& json);
+std::string ruleSetToJson(const RuleSet& rs);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_PUSH_RULES_HPP
