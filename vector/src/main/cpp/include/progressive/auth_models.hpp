@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdint>
 #include <unordered_map>
+#include "progressive/event_models.hpp"
 
 namespace progressive {
 
