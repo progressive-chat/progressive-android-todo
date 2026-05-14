@@ -1043,6 +1043,13 @@ object ProgressiveNative {
     @JvmStatic external fun nativeParseGuestAccess(contentJson: String): String
     @JvmStatic external fun nativeParseRoomCreate(contentJson: String): String
 
+    // --- Login Flow Parser ---
+    // Ported from: LoginWizard.kt, LoginFlow.kt, LoginFlowTypes.kt
+
+    @JvmStatic external fun nativeParseLoginFlows(json: String): String
+    @JvmStatic external fun nativeGetLoginFlowDescription(type: String): String
+    @JvmStatic external fun nativeGetSsoProviderIcon(providerId: String): String
+
     // --- Kotlin fallbacks for Slash Commands ---
 
     fun parseSlashCommandFallback(text: String): JSONObject {

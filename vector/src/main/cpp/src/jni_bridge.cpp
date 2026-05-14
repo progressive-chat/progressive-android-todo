@@ -128,6 +128,7 @@
 #include "progressive/key_backup.hpp"
 #include "progressive/content_utils.hpp"
 #include "progressive/room_state.hpp"
+#include "progressive/login_flow.hpp"
 #include "progressive/verification_utils.hpp"
 #include "progressive/account_utils.hpp"
 #include <sstream>
@@ -4905,6 +4906,47 @@ Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseRoomCreate(
     auto create = progressive::parseRoomCreate(json);
     auto result = progressive::roomCreateToJson(create);
     return env->NewStringUTF(result.c_str());
+}
+
+// --- Login Flow Parser ---
+// Ported from: LoginWizard.kt, LoginFlow.kt, LoginFlowTypes.kt
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeParseLoginFlows(
+    JNIEnv* env, jclass, jstring jJson
+) {
+    auto json = jJson ? std::string(env->GetStringUTFChars(jJson, nullptr)) : "{}";
+    if (jJson) env->ReleaseStringUTFChars(jJson, json.c_str());
+    auto result = progressive::parseLoginFlows(json);
+    auto out = progressive::loginFlowsToJson(result);
+    return env->NewStringUTF(out.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeGetLoginFlowDescription(
+    JNIEnv* env, jclass, jstring jType
+) {
+    auto type = jType ? std::string(env->GetStringUTFChars(jType, nullptr)) : "";
+    if (jType) env->ReleaseStringUTFChars(jType, type.c_str());
+
+    progressive::LoginFlowType flowType = progressive::LoginFlowType::Unknown;
+    if (type == "m.login.password") flowType = progressive::LoginFlowType::Password;
+    else if (type == "m.login.sso") flowType = progressive::LoginFlowType::Sso;
+    else if (type == "m.login.token") flowType = progressive::LoginFlowType::Token;
+    else if (type == "m.login.email.code") flowType = progressive::LoginFlowType::EmailCode;
+
+    auto desc = progressive::loginFlowTypeDescription(flowType);
+    return env->NewStringUTF(desc.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_im_vector_app_features_jumptodate_ProgressiveNative_nativeGetSsoProviderIcon(
+    JNIEnv* env, jclass, jstring jProviderId
+) {
+    auto id = jProviderId ? std::string(env->GetStringUTFChars(jProviderId, nullptr)) : "";
+    if (jProviderId) env->ReleaseStringUTFChars(jProviderId, id.c_str());
+    auto icon = progressive::getSsoProviderIcon(id);
+    return env->NewStringUTF(icon.c_str());
 }
 
 // --- Sync Utils ---
