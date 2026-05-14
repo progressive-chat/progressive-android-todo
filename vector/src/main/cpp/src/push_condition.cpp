@@ -278,4 +278,118 @@ bool evaluateDisplayNameCondition(const std::string& eventJson, const std::strin
     return caseInsensitiveFind(body, displayName);
 }
 
+// ==== Push Rule & Rule Set (from PushRule.kt:62-142 + RuleSet.kt:39-70) ====
+
+PushRule parsePushRule(const std::string& json) {
+    PushRule rule;
+
+    auto extractStr = [&](const std::string& key) -> std::string {
+        auto search = "\"" + key + "\":\"";
+        auto pos = json.find(search);
+        if (pos == std::string::npos) {
+            search = "\"" + key + "\": \"";
+            pos = json.find(search);
+        }
+        if (pos == std::string::npos) return "";
+        pos += search.size();
+        auto end = json.find('"', pos);
+        return (end != std::string::npos) ? json.substr(pos, end - pos) : "";
+    };
+
+    rule.ruleId = extractStr("rule_id");
+    rule.pattern = extractStr("pattern");
+    rule.enabled = json.find("\"enabled\": false") == std::string::npos;
+    rule.isDefault = json.find("\"default\": true") != std::string::npos;
+
+    // Parse actions array
+    // Original: actions: List<Any> — can be strings or Action objects
+    auto actsPos = json.find("\"actions\"");
+    if (actsPos != std::string::npos) {
+        auto bracket = json.find('[', actsPos);
+        if (bracket != std::string::npos) {
+            size_t pos = bracket + 1;
+            while (pos < json.size()) {
+                if (json[pos] == '"') {
+                    size_t end = json.find('"', pos + 1);
+                    if (end != std::string::npos) {
+                        std::string action = json.substr(pos + 1, end - pos - 1);
+                        rule.actions.push_back(action);
+                        pos = end + 1;
+                        continue;
+                    }
+                }
+                if (json[pos] == ']') break;
+                pos++;
+            }
+        }
+    }
+
+    // Determine notify/highlight from actions
+    rule.shouldNotify = true;
+    for (const auto& a : rule.actions) {
+        if (a == "dont_notify") rule.shouldNotify = false;
+        if (a == "notify") rule.shouldNotify = true;
+        if (a == "highlight") rule.shouldHighlight = true;
+        if (a == "sound") {
+            // Find sound value in the next object
+            auto soundPos = json.find("\"value\"", pos);
+            if (soundPos != std::string::npos) {
+                auto colon = json.find(':', soundPos);
+                if (colon != std::string::npos) {
+                    auto q = json.find('"', colon);
+                    if (q != std::string::npos) {
+                        auto qe = json.find('"', q + 1);
+                        if (qe != std::string::npos) {
+                            rule.notificationSound = json.substr(q + 1, qe - q - 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return rule;
+}
+
+PushRule setPushRuleSound(const PushRule& rule, const std::string& sound) {
+    PushRule updated = rule;
+    updated.notificationSound = sound;
+    return updated;
+}
+
+PushRule setPushRuleHighlight(const PushRule& rule, bool highlight) {
+    PushRule updated = rule;
+    updated.shouldHighlight = highlight;
+    return updated;
+}
+
+PushRule setPushRuleNotify(const PushRule& rule, bool notify) {
+    // Original: if (notify) add ACTION_NOTIFY, remove ACTION_DONT_NOTIFY
+    PushRule updated = rule;
+    updated.shouldNotify = notify;
+    // Remove existing notify/dont_notify
+    std::vector<std::string> newActions;
+    for (const auto& a : updated.actions) {
+        if (a != "notify" && a != "dont_notify") newActions.push_back(a);
+    }
+    if (notify) newActions.push_back("notify");
+    updated.actions = newActions;
+    return updated;
+}
+
+std::string pushRuleToJson(const PushRule& rule) {
+    auto esc = [](const std::string& s) -> std::string {
+        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+    };
+    std::ostringstream json;
+    json << R"({"ruleId": ")" << esc(rule.ruleId) << R"(",)";
+    json << R"("enabled": )" << (rule.enabled ? "true" : "false") << ",";
+    json << R"("isDefault": )" << (rule.isDefault ? "true" : "false") << ",";
+    json << R"("shouldNotify": )" << (rule.shouldNotify ? "true" : "false") << ",";
+    json << R"("shouldHighlight": )" << (rule.shouldHighlight ? "true" : "false") << ",";
+    json << R"("notificationSound": ")" << esc(rule.notificationSound) << R"(")";
+    json << "}";
+    return json.str();
+}
+
 } // namespace progressive
