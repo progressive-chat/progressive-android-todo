@@ -30,7 +30,7 @@ struct EncryptedFileKey {
     // Original Kotlin (EncryptedFileKey.kt:isValid):
     //   alg == "A256CTR" && ext == true && keyOps contains encrypt+decrypt
     //   && kty == "oct" && k is not blank
-    bool isValid();
+    bool isValid() const;
 };
 
 struct EncryptedFileInfo {
@@ -45,7 +45,7 @@ struct EncryptedFileInfo {
     // Original Kotlin (EncryptedFileInfo.kt:isValid):
     //   url not blank, key.isValid(), iv not blank,
     //   hashes contains "sha256", v == "v2"
-    bool isValid();
+    bool isValid() const;
 };
 
 // Parse an EncryptedFileKey from a JSON object.

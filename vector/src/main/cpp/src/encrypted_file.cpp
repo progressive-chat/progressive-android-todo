@@ -4,7 +4,7 @@
 namespace progressive {
 
 // ==== EncryptedFileKey Validation (from EncryptedFileKey.kt:57-79) ====
-bool EncryptedFileKey::isValid() {
+bool EncryptedFileKey::isValid() const {
     if (alg != "A256CTR") return false;
     if (!ext) return false;
     bool hasEncrypt = false, hasDecrypt = false;
@@ -18,7 +18,7 @@ bool EncryptedFileKey::isValid() {
     return true;
 }
 
-bool EncryptedFileInfo::isValid() {
+bool EncryptedFileInfo::isValid() const {
     if (url.empty()) return false;
     if (!key.isValid()) return false;
     if (iv.empty()) return false;
