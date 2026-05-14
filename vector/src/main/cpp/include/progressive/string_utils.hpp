@@ -59,6 +59,11 @@ int estimateReadingTimeSeconds(const std::string& input);
 // Extract the first N words from a string.
 std::string firstNWords(const std::string& input, int n);
 
+// Format a count to short decimal: 42 → "42", 1234 → "1.2k", 12345 → "12k", 1.5M → "1.5M"
+// Faithful port from im.vector.app.core.utils.TextUtils.kt (147L): formatCountToShortDecimal
+// Original: TreeMap of {1000:"k", 1000000:"M", 1000000000:"G"} → floorEntry
+std::string formatCountToShortDecimal(int64_t value);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_STRING_UTILS_HPP

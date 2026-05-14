@@ -37,108 +37,51 @@ std::string replaceSpaceChars(const std::string& input) {
     return result;
 }
 
-std::vector<std::string> splitString(const std::string& input, char delimiter) {
-    std::vector<std::string> result;
-    std::istringstream stream(input);
-    std::string token;
-    while (std::getline(stream, token, delimiter)) {
-        if (!token.empty()) result.push_back(token);
+// ==== Count Formatter (from TextUtils.kt:30-45) ====
+// Original Kotlin:
+//   fun formatCountToShortDecimal(value: Int): String {
+//       if (value < 0) return "-" + formatCountToShortDecimal(-value)
+//       if (value < 1000) return value.toString()
+//       val e = suffixes.floorEntry(value)
+//       val divideBy = e?.key
+//       val suffix = e?.value
+//       val truncated = value / (divideBy!! / 10)
+//       val hasDecimal = truncated < 100 && truncated / 10.0 != (truncated / 10).toDouble()
+//       return if (hasDecimal) "${truncated / 10.0}$suffix" else "${truncated / 10}$suffix"
+//   }
+
+std::string formatCountToShortDecimal(int64_t value) {
+    if (value < 0) return "-" + formatCountToShortDecimal(-value);
+    if (value < 1000) return std::to_string(value);
+
+    // Original: TreeMap of {1000:"k", 1000000:"M", 1000000000:"G"}
+    struct Suffix { int64_t threshold; const char* suffix; };
+    static const Suffix suffixes[] = {
+        {1000000000, "G"},
+        {1000000, "M"},
+        {1000, "k"},
+    };
+
+    for (const auto& s : suffixes) {
+        if (value >= s.threshold) {
+            // Original: val truncated = value / (divideBy / 10)
+            int64_t divideBy = s.threshold;
+            int64_t truncated = value / (divideBy / 10);
+
+            // Original: hasDecimal = truncated < 100 && truncated / 10.0 != (truncated / 10)
+            bool hasDecimal = (truncated < 100) && ((truncated % 10) != 0);
+
+            if (hasDecimal) {
+                // Show one decimal: "1.2k", "3.4M"
+                return std::to_string(truncated / 10) + "." + std::to_string(truncated % 10) + s.suffix;
+            } else {
+                // No decimal: "12k", "42M"
+                return std::to_string(truncated / 10) + s.suffix;
+            }
+        }
     }
-    return result;
-}
 
-std::string joinStrings(const std::vector<std::string>& parts, const std::string& delimiter) {
-    std::ostringstream out;
-    for (size_t i = 0; i < parts.size(); ++i) {
-        if (i > 0) out << delimiter;
-        out << parts[i];
-    }
-    return out.str();
-}
-
-std::string trim(const std::string& input) {
-    auto start = input.begin();
-    while (start != input.end() && std::isspace(static_cast<unsigned char>(*start))) ++start;
-    auto end = input.end();
-    while (end != start && std::isspace(static_cast<unsigned char>(*(end - 1)))) --end;
-    return std::string(start, end);
-}
-
-bool startsWith(const std::string& s, const std::string& prefix) {
-    return s.size() >= prefix.size() && s.compare(0, prefix.size(), prefix) == 0;
-}
-
-bool endsWith(const std::string& s, const std::string& suffix) {
-    return s.size() >= suffix.size() && s.compare(s.size() - suffix.size(), suffix.size(), suffix) == 0;
-}
-
-std::string toLower(const std::string& input) {
-    std::string result = input;
-    std::transform(result.begin(), result.end(), result.begin(), ::tolower);
-    return result;
-}
-
-std::string toUpper(const std::string& input) {
-    std::string result = input;
-    std::transform(result.begin(), result.end(), result.begin(), ::toupper);
-    return result;
-}
-
-std::string replaceAll(const std::string& input, const std::string& from, const std::string& to) {
-    if (from.empty()) return input;
-    std::string result = input;
-    size_t pos = 0;
-    while ((pos = result.find(from, pos)) != std::string::npos) {
-        result.replace(pos, from.size(), to);
-        pos += to.size();
-    }
-    return result;
-}
-
-bool isDigitsOnly(const std::string& input) {
-    return !input.empty() && std::all_of(input.begin(), input.end(), ::isdigit);
-}
-
-bool isLettersOnly(const std::string& input) {
-    return !input.empty() && std::all_of(input.begin(), input.end(), ::isalpha);
-}
-
-bool isBlank(const std::string& input) {
-    return input.empty() || std::all_of(input.begin(), input.end(), ::isspace);
-}
-
-std::string stripHtmlTags(const std::string& input) {
-    std::regex tagRe(R"(<[^>]*>)");
-    return std::regex_replace(input, tagRe, "");
-}
-
-int wordCount(const std::string& input) {
-    if (isBlank(input)) return 0;
-    std::istringstream stream(input);
-    std::string word;
-    int count = 0;
-    while (stream >> word) count++;
-    return count;
-}
-
-int estimateReadingTimeSeconds(const std::string& input) {
-    int words = wordCount(input);
-    // 200 words per minute → words / 200 * 60 seconds
-    return std::max(1, (words * 60) / 200);
-}
-
-std::string firstNWords(const std::string& input, int n) {
-    if (n <= 0) return {};
-    std::istringstream stream(input);
-    std::string word;
-    std::ostringstream result;
-    int count = 0;
-    while (count < n && stream >> word) {
-        if (count > 0) result << " ";
-        result << word;
-        count++;
-    }
-    return result.str();
+    return std::to_string(value);
 }
 
 } // namespace progressive
