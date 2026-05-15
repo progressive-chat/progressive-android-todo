@@ -92,12 +92,12 @@ static std::vector<uint8_t> sha256Raw(const uint8_t* data, size_t len) {
     return hash;
 }
 
-std::string sha256(const std::string& input) {
+std::string sha256Hex(const std::string& input) {
     auto hash = sha256Raw(reinterpret_cast<const uint8_t*>(input.data()), input.size());
     return std::string(hash.begin(), hash.end());
 }
 
-std::string sha256(const std::vector<uint8_t>& data) {
+std::string sha256Hex(const std::vector<uint8_t>& data) {
     auto hash = sha256Raw(data.data(), data.size());
     return std::string(hash.begin(), hash.end());
 }
@@ -170,7 +170,7 @@ std::string hmacSha256(const std::string& key, const std::string& message) {
     const size_t blockSize = 64;
     std::string keyBlock = key;
     if (keyBlock.size() > blockSize) {
-        keyBlock = sha256(keyBlock);
+        keyBlock = sha256Hex(keyBlock);
     }
     keyBlock.resize(blockSize, 0);
 
@@ -181,7 +181,7 @@ std::string hmacSha256(const std::string& key, const std::string& message) {
     }
 
     auto innerHash = sha256Raw(reinterpret_cast<const uint8_t*>(iKeyPad.data() + message.size()), 0);
-    // Actually: sha256(iKeyPad + message)
+    // Actually: sha256Hex(iKeyPad + message)
     std::string inner = iKeyPad + message;
     auto innerRaw = sha256Raw(reinterpret_cast<const uint8_t*>(inner.data()), inner.size());
     std::string outer = oKeyPad + std::string(innerRaw.begin(), innerRaw.end());

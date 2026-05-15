@@ -8,8 +8,8 @@
 namespace progressive {
 
 // SHA-256 hash of a string or bytes.
-std::string sha256(const std::string& input);
-std::string sha256(const std::vector<uint8_t>& data);
+std::string sha256Hex(const std::string& input);
+std::string sha256Hex(const std::vector<uint8_t>& data);
 
 // SHA-256 hex digest.
 std::string sha256Hex(const std::string& input);
