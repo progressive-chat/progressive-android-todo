@@ -99,16 +99,16 @@ bool setUnifiedPushPusher(const UnifiedPushPusherConfig& config,
 
 UnifiedPushMessage parseUnifiedPushMessage(const std::string& json) {
     // Helper: extract JSON string value
-    auto extract = [&](const std::string& key) -> std::string {
-        auto pos = json.find("\"" + key + "\"");
+    auto extractFrom = [](const std::string& src, const std::string& key) -> std::string {
+        auto pos = src.find("\"" + key + "\"");
         if (pos == std::string::npos) return "";
-        pos = json.find(':', pos);
+        pos = src.find(':', pos);
         if (pos == std::string::npos) return "";
         pos++;
-        while (pos < json.size() && (json[pos] == ' ' || json[pos] == '\t' || json[pos] == '"')) pos++;
+        while (pos < src.size() && (src[pos] == ' ' || src[pos] == '\t' || src[pos] == '"')) pos++;
         size_t end = pos;
-        while (end < json.size() && json[end] != '"') { if (json[end] == '\\') end++; end++; }
-        return json.substr(pos, end - pos);
+        while (end < src.size() && src[end] != '"') { if (src[end] == '\\') end++; end++; }
+        return src.substr(pos, end - pos);
     };
 
     UnifiedPushMessage msg;
@@ -130,9 +130,9 @@ UnifiedPushMessage parseUnifiedPushMessage(const std::string& json) {
     }
     std::string notifJson = json.substr(start, notifPos - start);
 
-    msg.eventId = extract(notifJson, "event_id");
-    msg.roomId = extract(notifJson, "room_id");
-    msg.sender = extract(notifJson, "sender");
+    msg.eventId = extractFrom(notifJson, "event_id");
+    msg.roomId = extractFrom(notifJson, "room_id");
+    msg.sender = extractFrom(notifJson, "sender");
 
     // Extract counts
     auto countsPos = notifJson.find("\"counts\"");
@@ -164,7 +164,7 @@ UnifiedPushMessage parseUnifiedPushMessage(const std::string& json) {
         }
     }
 
-    msg.contentJson = extract(notifJson, "content");
+    msg.contentJson = extractFrom(notifJson, "content");
     msg.valid = !msg.eventId.empty() && !msg.roomId.empty();
 
     return msg;
