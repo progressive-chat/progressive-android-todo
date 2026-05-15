@@ -1857,7 +1857,7 @@ JNI_FUNC(jboolean, nativeHasPower)(JNIEnv* env, jclass, jstring jPlJson, jstring
             if (up != std::string::npos) {
                 up++; while (up < json.size() && (json[up] == ' ' || json[up] == '\t')) up++;
                 int lv = 0; while (up < json.size() && json[up] >= '0' && json[up] <= '9') { lv = lv*10+(json[up]-'0'); up++; }
-                pl.users[uid] = lv;
+                pl.userOverrides[uid] = lv;
             }
         }
     }
@@ -1961,29 +1961,80 @@ JNI_FUNC(jstring, nativeParseSpaceChildren)(JNIEnv* env, jclass, jstring jJson) 
 // --- E2EE Decoration ---
 
 JNI_FUNC(jstring, nativeGetE2eeIconName)(JNIEnv* env, jclass, jstring jState) {
-    auto result = progressive::getE2eeIconName(jStr(env, jState));
+    auto s = jStr(env, jState);
+    progressive::E2eeState st = progressive::E2eeState::None;
+    if (s == "verified") st = progressive::E2eeState::Verified;
+    else if (s == "unverified") st = progressive::E2eeState::Unverified;
+    else if (s == "warning") st = progressive::E2eeState::Warning;
+    else if (s == "error") st = progressive::E2eeState::Error;
+    else if (s == "blacklisted") st = progressive::E2eeState::Blacklisted;
+    auto result = progressive::getE2eeIconName(st);
     return env->NewStringUTF(result.c_str());
 }
 
 JNI_FUNC(jstring, nativeGetE2eeColor)(JNIEnv* env, jclass, jstring jState) {
-    auto result = progressive::getE2eeColor(jStr(env, jState));
+    auto s = jStr(env, jState);
+    progressive::E2eeState st = progressive::E2eeState::None;
+    if (s == "verified") st = progressive::E2eeState::Verified;
+    else if (s == "unverified") st = progressive::E2eeState::Unverified;
+    else if (s == "warning") st = progressive::E2eeState::Warning;
+    else if (s == "error") st = progressive::E2eeState::Error;
+    else if (s == "blacklisted") st = progressive::E2eeState::Blacklisted;
+    auto result = progressive::getE2eeColor(st);
     return env->NewStringUTF(result.c_str());
 }
 
 // --- Backup Utilities ---
 
-JNI_FUNC(jstring, nativeBuildCreateBackupBody)(JNIEnv* env, jclass) {
-    auto result = progressive::buildCreateBackupBody();
+JNI_FUNC(jstring, nativeBuildCreateBackupBody)(JNIEnv* env, jclass, jstring jAlgo, jstring jAuth) {
+    auto result = progressive::buildCreateBackupBody(jStr(env, jAlgo), jStr(env, jAuth));
     return env->NewStringUTF(result.c_str());
 }
 
-JNI_FUNC(jstring, nativeFormatBackupStats)(JNIEnv* env, jclass, jint jKeys, jint jRooms, jlong jBytes) {
-    auto result = progressive::formatBackupStats(jKeys, jRooms, jBytes);
+JNI_FUNC(jstring, nativeFormatBackupStats)(JNIEnv* env, jclass, jstring jInfoJson) {
+    progressive::BackupInfo info;
+    auto json = jStr(env, jInfoJson);
+    // Manual parse of BackupInfo from JSON
+    auto extractStr = [&](const std::string& key) -> std::string {
+        auto p = json.find("\"" + key + "\"");
+        if (p == std::string::npos) return "";
+        p = json.find(':', p); if (p == std::string::npos) return "";
+        p++; while (p < json.size() && (json[p] == ' ' || json[p] == '\t')) p++;
+        if (p >= json.size() || json[p] != '"') return "";
+        p++; size_t e = p;
+        while (e < json.size() && json[e] != '"') { if (json[e] == '\\') e++; e++; }
+        return json.substr(p, e - p);
+    };
+    auto extractInt = [&](const std::string& key) -> int {
+        auto p = json.find("\"" + key + "\"");
+        if (p == std::string::npos) return 0;
+        p = json.find(':', p); if (p == std::string::npos) return 0;
+        p++; while (p < json.size() && (json[p] == ' ' || json[p] == '\t')) p++;
+        int v = 0; while (p < json.size() && json[p] >= '0' && json[p] <= '9') { v=v*10+(json[p]-'0'); p++; }
+        return v;
+    };
+    info.version = extractStr("version");
+    info.algorithm = extractStr("algorithm");
+    info.totalKeys = extractInt("total_keys");
+    info.backedUpKeys = extractInt("backed_up_keys");
+    auto result = progressive::formatBackupStats(info);
     return env->NewStringUTF(result.c_str());
 }
 
-JNI_FUNC(jboolean, nativeNeedsBackupAttention)(JNIEnv* env, jclass, jlong jLastBackupMs, jint jKeysTotal, jint jKeysBackedUp) {
-    return progressive::needsBackupAttention(jLastBackupMs, jKeysTotal, jKeysBackedUp) ? JNI_TRUE : JNI_FALSE;
+JNI_FUNC(jboolean, nativeNeedsBackupAttention)(JNIEnv* env, jclass, jstring jInfoJson) {
+    progressive::BackupInfo info;
+    auto json = jStr(env, jInfoJson);
+    auto extractInt = [&](const std::string& key) -> int {
+        auto p = json.find("\"" + key + "\"");
+        if (p == std::string::npos) return 0;
+        p = json.find(':', p); if (p == std::string::npos) return 0;
+        p++; while (p < json.size() && (json[p] == ' ' || json[p] == '\t')) p++;
+        int v = 0; while (p < json.size() && json[p] >= '0' && json[p] <= '9') { v=v*10+(json[p]-'0'); p++; }
+        return v;
+    };
+    info.totalKeys = extractInt("total_keys");
+    info.backedUpKeys = extractInt("backed_up_keys");
+    return progressive::needsBackupAttention(info) ? JNI_TRUE : JNI_FALSE;
 }
 
 // --- Read Marker / Notifications ---

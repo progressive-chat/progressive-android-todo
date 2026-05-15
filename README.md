@@ -100,7 +100,8 @@ CI builds F-Droid arm32 (armeabi-v7a, works on all devices). Requires Android SD
 
 - **Minimum:** Android smartphone with **1 GB RAM**
 - Exact memory requirements will be precisely determined as the C++ native core matures — current figures are preliminary and may be revised
-- Android 5.0 (API 21) or newer
+- Android 5.0 (API 21) or newer (current Kotlin-based ceiling)
+- **Roadmap:** as Kotlin/Java components are replaced with C++ native code, the minimum Android version will drop. Target is **Android 4.4 (API 19)**, possibly as low as **Android 2.3 (API 9)** depending on technical obstacles, resource constraints, and priorities encountered during the port
 
 ## How You Can Help
 

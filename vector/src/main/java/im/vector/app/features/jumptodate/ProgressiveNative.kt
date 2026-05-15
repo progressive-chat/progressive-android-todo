@@ -1424,9 +1424,9 @@ object ProgressiveNative {
 
     // --- Backup Utilities ---
 
-    @JvmStatic external fun nativeBuildCreateBackupBody(): String
-    @JvmStatic external fun nativeFormatBackupStats(keys: Int, rooms: Int, bytes: Long): String
-    @JvmStatic external fun nativeNeedsBackupAttention(lastBackupMs: Long, keysTotal: Int, keysBackedUp: Int): Boolean
+    @JvmStatic external fun nativeBuildCreateBackupBody(algorithm: String, authData: String): String
+    @JvmStatic external fun nativeFormatBackupStats(infoJson: String): String
+    @JvmStatic external fun nativeNeedsBackupAttention(infoJson: String): Boolean
 
     // --- Read Marker / Notifications ---
 
@@ -2439,11 +2439,14 @@ object ProgressiveNative {
     }
 
     // --- Backup fallbacks ---
-    @JvmStatic fun nativeBuildCreateBackupBodyFallback(): String = """{"algorithm":"m.megolm_backup.v1.curve25519-aes-sha2"}"""
-    @JvmStatic fun nativeFormatBackupStatsFallback(keys: Int, rooms: Int, bytes: Long): String =
-        "$keys keys across $rooms rooms (${bytes / 1024} KB)"
-    @JvmStatic fun nativeNeedsBackupAttentionFallback(lastBackupMs: Long, keysTotal: Int, keysBackedUp: Int): Boolean =
-        keysTotal > 0 && keysBackedUp < keysTotal
+    @JvmStatic fun nativeBuildCreateBackupBodyFallback(algorithm: String, authData: String): String =
+        """{"algorithm":"$algorithm","auth_data":$authData}"""
+    @JvmStatic fun nativeFormatBackupStatsFallback(infoJson: String): String = "Backup stats"
+    @JvmStatic fun nativeNeedsBackupAttentionFallback(infoJson: String): Boolean {
+        val total = Regex("\"total_keys\":(\\d+)").find(infoJson)?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        val backed = Regex("\"backed_up_keys\":(\\d+)").find(infoJson)?.groupValues?.get(1)?.toIntOrNull() ?: 0
+        return total > 0 && backed < total
+    }
 
     // --- Room Notif Settings fallback ---
     @JvmStatic fun nativeBuildRoomNotifSettingsBodyFallback(mode: String): String = """{"actions":["$mode"]}"""
