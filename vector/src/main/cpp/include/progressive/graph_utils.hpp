@@ -901,4 +901,31 @@ inline std::string appendParamsToUrl(const std::string& url, const std::unordere
     return result;
 }
 
+// ==== Matrix Constants ====
+constexpr int ALIAS_MAX_LENGTH = 255;
+inline int maxAliasLocalPartLength(const std::string& domain) {
+    return std::max(0, ALIAS_MAX_LENGTH - 2 - static_cast<int>(domain.size())); // # + :
+}
+
+// ==== Verification State ====
+// Original Kotlin (EVerificationState.kt:22-34)
+enum class EVerificationState {
+    WAITING_FOR_READY = 0, REQUESTED = 1, READY = 2, STARTED = 3,
+    WE_STARTED = 4, WAITING_FOR_DONE = 5, DONE = 6, CANCELLED = 7,
+    HANDLED_BY_OTHER_SESSION = 8
+};
+
+// ==== Location Info ====
+struct LocationInfo {
+    std::string geoUri;         // RFC5870: "geo:40.05,29.24;u=30"
+    std::string description;    // "Big Ben, London, UK"
+};
+
+// ==== Pagination Result Boundaries ====
+struct ResultBoundaries {
+    bool frontLoaded = false;
+    bool endLoaded = false;
+    bool zeroItemLoaded = false;
+};
+
 } // namespace progressive
