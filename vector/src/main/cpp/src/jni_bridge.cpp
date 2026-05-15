@@ -137,6 +137,11 @@
 #include "progressive/key_backup.hpp"
 #include "progressive/room_encryption.hpp"
 #include "progressive/event_display.hpp"
+#include "progressive/date_utils.hpp"
+#include "progressive/presence_utils.hpp"
+#include "progressive/device_naming.hpp"
+#include "progressive/account_utils.hpp"
+#include "progressive/login_utils.hpp"
 #include "progressive/cross_signing.hpp"
 #include "progressive/edit_history.hpp"
 #include "progressive/read_marker.hpp"
@@ -1584,6 +1589,42 @@ JNI_FUNC(jboolean, nativeIsValidUserId)(JNIEnv* env, jclass, jstring jUserId) {
     if (id.empty() || id[0] != '@') return JNI_FALSE;
     auto colon = id.find(':');
     return colon != std::string::npos && colon > 1 && colon < id.size() - 1;
+}
+
+// --- Date & Time Utilities ---
+
+JNI_FUNC(jstring, nativeFormatDuration)(JNIEnv* env, jclass, jlong jMs) {
+    auto result = progressive::formatDuration(jMs);
+    return env->NewStringUTF(result.c_str());
+}
+
+// --- Presence Utilities ---
+
+JNI_FUNC(jstring, nativeFormatPresence)(JNIEnv* env, jclass, jstring jPresence, jlong jLastActiveMs) {
+    auto ps = jStr(env, jPresence);
+    progressive::Presence p = progressive::Presence::OFFLINE;
+    if (ps == "online") p = progressive::Presence::ONLINE;
+    else if (ps == "unavailable") p = progressive::Presence::UNAVAILABLE;
+    auto result = progressive::formatPresenceWithTime(p, jLastActiveMs);
+    return env->NewStringUTF(result.c_str());
+}
+
+// --- Device Naming ---
+
+JNI_FUNC(jstring, nativeBuildDeviceDisplayName)(JNIEnv* env, jclass, jstring jApp, jstring jModel) {
+    auto result = progressive::buildDeviceDisplayName(jStr(env, jApp), jStr(env, jModel));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeGenerateDeviceName)(JNIEnv* env, jclass, jstring jModel, jstring jOs) {
+    auto result = progressive::generateDeviceName(jStr(env, jModel), jStr(env, jOs));
+    return env->NewStringUTF(result.c_str());
+}
+
+// --- Account Validation ---
+
+JNI_FUNC(jboolean, nativeIsValidDisplayName)(JNIEnv* env, jclass, jstring jName, jint jMax) {
+    return progressive::isValidDisplayName(jStr(env, jName), jMax) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"

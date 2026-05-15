@@ -1311,9 +1311,11 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeShouldShowTimestamp(currentSender: String, currentTs: Long, previousTs: Long, showAll: Boolean): Boolean
 
-    // --- User ID Validation ---
+    @JvmStatic external fun nativeGenerateDeviceName(model: String, osVersion: String): String
 
-    @JvmStatic external fun nativeIsValidUserId(userId: String): Boolean
+    // --- Account Validation ---
+
+    @JvmStatic external fun nativeIsValidDisplayName(name: String, maxLen: Int): Boolean
 
     // --- OIDC / MAS Authentication ---
 
@@ -2106,6 +2108,23 @@ object ProgressiveNative {
 
     // --- User ID fallback ---
     @JvmStatic fun nativeIsValidUserIdFallback(userId: String): Boolean = userId.startsWith("@") && userId.contains(":")
+
+    // --- Date & Time fallbacks ---
+    @JvmStatic fun nativeFormatDurationFallback(durationMs: Long): String {
+        val sec = durationMs / 1000
+        if (sec < 60) return "${sec}s"
+        val min = sec / 60
+        if (min < 60) return "${min}m ${sec % 60}s"
+        return "${min / 60}h ${min % 60}m"
+    }
+    @JvmStatic fun nativeFormatPresenceFallback(presence: String, lastActiveMs: Long): String = when(presence) {
+        "online" -> "Online"
+        "unavailable" -> "Idle"
+        else -> "Offline"
+    }
+    @JvmStatic fun nativeBuildDeviceDisplayNameFallback(appName: String, deviceModel: String): String = "$appName ($deviceModel)"
+    @JvmStatic fun nativeGenerateDeviceNameFallback(model: String, osVersion: String): String = "Progressive Chat ($model, Android $osVersion)"
+    @JvmStatic fun nativeIsValidDisplayNameFallback(name: String, maxLen: Int): Boolean = name.isNotEmpty() && name.length <= maxLen
 
     // --- Native SQLite DB fallbacks ---
     @JvmStatic fun nativeSqliteDbOpenFallback(dbPath: String, key: String): Boolean =
