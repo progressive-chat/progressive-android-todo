@@ -1197,6 +1197,14 @@ object ProgressiveNative {
         }
     }
 
+    // --- Room Counter (multi-account room counting, join-order numbering, export) ---
+
+    @JvmStatic external fun nativeCountRooms(roomsJson: String, accountCount: Int, uniqueOnly: Boolean, perAccountSplit: Boolean): String
+    @JvmStatic external fun nativeAssignJoinOrder(roomsJson: String, accountCount: Int): String
+    @JvmStatic external fun nativeSwapAccountOrder(accountsJson: String, posA: Int, posB: Int): String
+    @JvmStatic external fun nativeIsDumpBetter(candidateEventCount: Int, candidateStartMs: Long, candidateEndMs: Long, baselineEventCount: Int, baselineStartMs: Long, baselineEndMs: Long, candidateHasGaps: Boolean, baselineHasGaps: Boolean): Boolean
+    @JvmStatic external fun nativePrioritizeExportServers(serversJson: String): String
+
     // --- Pure Kotlin fallback implementations ---
 
     fun validateAndBuildFallback(
@@ -1524,6 +1532,74 @@ object ProgressiveNative {
         } catch (e: Exception) {
             return result.put("success", false).put("error", "Failed to parse response")
         }
+    }
+
+    // --- Room Counter fallbacks ---
+
+    @JvmStatic fun countRoomsFallback(roomsJson: String, accountCount: Int, uniqueOnly: Boolean, perAccountSplit: Boolean): String {
+        try {
+            val rooms = JSONArray(roomsJson)
+            val counts = IntArray(accountCount)
+            for (i in 0 until rooms.length()) {
+                val r = rooms.getJSONObject(i)
+                val acc = r.optInt("accountIndex", 0)
+                if (acc in 0 until accountCount) counts[acc]++
+            }
+            val total = counts.sum()
+            if (perAccountSplit) return counts.joinToString("+")
+            return "($total)"
+        } catch (e: Exception) { return "(0)" }
+    }
+
+    @JvmStatic fun assignJoinOrderFallback(roomsJson: String, accountCount: Int): String {
+        try {
+            val rooms = JSONArray(roomsJson)
+            val counters = IntArray(accountCount)
+            var global = 0
+            for (i in 0 until rooms.length()) {
+                val r = rooms.getJSONObject(i)
+                val acc = r.optInt("accountIndex", 0)
+                if (acc in 0 until accountCount) counters[acc]++
+                r.put("joinOrder", if (acc in 0 until accountCount) counters[acc] else 0)
+                global++
+                r.put("globalJoinOrder", global)
+            }
+            return rooms.toString()
+        } catch (e: Exception) { return "[]" }
+    }
+
+    @JvmStatic fun swapAccountOrderFallback(accountsJson: String, posA: Int, posB: Int): String {
+        try {
+            val arr = JSONArray(accountsJson)
+            if (posA in 0 until arr.length() && posB in 0 until arr.length()) {
+                val tmp = arr.getJSONObject(posA).optInt("orderIndex", 0)
+                arr.getJSONObject(posA).put("orderIndex", arr.getJSONObject(posB).optInt("orderIndex", 0))
+                arr.getJSONObject(posB).put("orderIndex", tmp)
+            }
+            return arr.toString()
+        } catch (e: Exception) { return accountsJson }
+    }
+
+    @JvmStatic fun isDumpBetterFallback(candidateEventCount: Int, candidateStartMs: Long, candidateEndMs: Long, baselineEventCount: Int, baselineStartMs: Long, baselineEndMs: Long, candidateHasGaps: Boolean, baselineHasGaps: Boolean): Boolean {
+        if (candidateHasGaps && !baselineHasGaps) return false
+        if (!candidateHasGaps || baselineHasGaps) {
+            if (candidateEventCount > baselineEventCount) return true
+            if (candidateEventCount == baselineEventCount && candidateStartMs <= baselineStartMs && candidateEndMs >= baselineEndMs) return true
+        }
+        return false
+    }
+
+    @JvmStatic fun prioritizeServersFallback(serversJson: String): String {
+        try {
+            val servers = JSONArray(serversJson)
+            val active = mutableListOf<JSONObject>()
+            for (i in 0 until servers.length()) {
+                val s = servers.getJSONObject(i)
+                if (!s.optBoolean("excluded", false)) active.add(s)
+            }
+            active.sortBy { it.optInt("priority", 0) }
+            return JSONArray(active).toString()
+        } catch (e: Exception) { return serversJson }
     }
 
 }
