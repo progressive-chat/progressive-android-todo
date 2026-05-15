@@ -172,4 +172,90 @@ inline std::string base64ToUnpaddedBase64(const std::string& base64) {
     return result;
 }
 
+// ==== String Utilities ====
+//
+// Original Kotlin (Strings.kt, Booleans.kt, UrlUtils.kt):
+//   fun CharSequence.ensurePrefix(prefix), fun CharSequence.isEmail(),
+//   fun StringBuilder.appendNl(str), fun String.ensureNotEmpty()
+//   fun Boolean?.orTrue() / orFalse()
+//   fun String.ensureTrailingSlash(), fun String.ensureProtocol(http)
+
+inline bool isEmail(const std::string& s) {
+    // Simple email validation: contains exactly one @, has localpart and domain
+    auto at = s.find('@');
+    if (at == std::string::npos || at == 0 || at == s.size() - 1) return false;
+    if (s.find('@', at + 1) != std::string::npos) return false; // only one @
+    return s.find('.', at) != std::string::npos; // domain must have dot
+}
+
+inline std::string ensurePrefix(const std::string& s, const std::string& prefix) {
+    if (s.compare(0, prefix.size(), prefix) == 0) return s;
+    return prefix + s;
+}
+
+inline std::string ensureTrailingSlash(const std::string& url) {
+    if (!url.empty() && url.back() != '/') return url + "/";
+    return url;
+}
+
+inline std::string ensureProtocol(const std::string& url, const std::string& protocol = "https") {
+    if (url.find("://") != std::string::npos) return url;
+    return protocol + "://" + url;
+}
+
+// ==== Waveform Sanitizer ====
+//
+// Original Kotlin (WaveFormSanitizer.kt:24-86):
+//   fun sanitize(waveForm: List<Int>?): List<Int>?
+//   - Ensure 30-120 values (upsample/downsample)
+//   - Make all values positive (abs)
+//   - Clamp max to 1024 (proportional reduction)
+//
+// Constants from original:
+//   MIN_NUMBER_OF_VALUES = 30, MAX_NUMBER_OF_VALUES = 120, MAX_VALUE = 1024
+
+constexpr int WAVEFORM_MIN_VALUES = 30;
+constexpr int WAVEFORM_MAX_VALUES = 120;
+constexpr int WAVEFORM_MAX_AMP = 1024;
+
+inline std::vector<int> sanitizeWaveform(const std::vector<int>& waveForm) {
+    if (waveForm.empty()) return {};
+
+    std::vector<int> sizeInRange;
+
+    // Original Kotlin: upsampling if too few values
+    if ((int)waveForm.size() < WAVEFORM_MIN_VALUES) {
+        int repeatTimes = (WAVEFORM_MIN_VALUES + (int)waveForm.size() - 1) / (int)waveForm.size();
+        for (int val : waveForm) {
+            for (int r = 0; r < repeatTimes; r++) sizeInRange.push_back(val);
+        }
+    }
+    // Original Kotlin: downsampling if too many values
+    else if ((int)waveForm.size() > WAVEFORM_MAX_VALUES) {
+        int keepOneOf = ((int)waveForm.size() + WAVEFORM_MAX_VALUES - 1) / WAVEFORM_MAX_VALUES;
+        for (size_t i = 0; i < waveForm.size(); i++) {
+            if (i % keepOneOf == 0) sizeInRange.push_back(waveForm[i]);
+        }
+    } else {
+        sizeInRange = waveForm;
+    }
+
+    // Original Kotlin: ensure all positive (abs)
+    std::vector<int> positiveList;
+    for (int v : sizeInRange) positiveList.push_back(v < 0 ? -v : v);
+
+    // Original Kotlin: clamp max to 1024
+    int maxVal = 0;
+    for (int v : positiveList) if (v > maxVal) maxVal = v;
+    if (maxVal == 0) maxVal = WAVEFORM_MAX_AMP;
+
+    if (maxVal > WAVEFORM_MAX_AMP) {
+        std::vector<int> finalList;
+        for (int v : positiveList) finalList.push_back(v * WAVEFORM_MAX_AMP / maxVal);
+        return finalList;
+    }
+
+    return positiveList;
+}
+
 } // namespace progressive
