@@ -11,4 +11,20 @@
     <attr name="vctr_markdown_block_background_color" format="color" />
     <attr name="vctr_spoiler_background_color" format="color" />
 
+    <!-- ShieldChat message styling -->
+    <attr name="colorAccentPale" format="color" />
+    <attr name="sc_message_bg_incoming" format="color" />
+    <attr name="sc_message_bg_outgoing" format="color" />
+    <attr name="sc_notice_bg_incoming" format="color" />
+    <attr name="sc_notice_bg_outgoing" format="color" />
+    <attr name="sc_notice_text_color" format="color" />
+    <attr name="sc_notice_secondary_text_color" format="color" />
+    <attr name="sc_tombstone_text_color" format="color" />
+    <attr name="sc_tombstone_bg" format="color" />
+    <attr name="sc_e2e_badge_bg" format="color" />
+    <attr name="sc_e2e_badge_text" format="color" />
+    <attr name="sc_read_receipts_bg" format="color" />
+    <attr name="sc_fab_scrim_color" format="color" />
+    <attr name="sc_link_color" format="color" />
+
 </resources>
