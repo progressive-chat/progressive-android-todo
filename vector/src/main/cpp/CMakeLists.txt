@@ -154,6 +154,7 @@ add_library(
     src/slash_command.cpp
     src/sliding_sync.cpp
     src/typing_monitor.cpp
+    src/unified_push.cpp
     src/url_preview.cpp
     src/web_search.cpp
     src/power_levels.cpp
