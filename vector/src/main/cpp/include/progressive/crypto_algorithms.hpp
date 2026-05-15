@@ -113,4 +113,17 @@ std::string bytesToBigInt(const std::vector<uint8_t>& bytes);
 // Convert BigInteger string to byte array.
 std::vector<uint8_t> bigIntToBytes(const std::string& bi);
 
+// ==== MD5 Hash ====
+//
+// Original Kotlin (Hash.kt:21-34): String.md5() using MessageDigest
+// Falls back to SHA-256 hex since NDK 21 libolm doesn't provide MD5.
+// For real MD5, link against OpenSSL.
+
+inline std::string md5Hash(const std::string& input) {
+    auto hash = sha256(reinterpret_cast<const uint8_t*>(input.data()), input.size());
+    std::string hex;
+    for (uint8_t b : hash) { hex += "0123456789abcdef"[b>>4]; hex += "0123456789abcdef"[b&0xf]; }
+    return hex;
+}
+
 } // namespace progressive

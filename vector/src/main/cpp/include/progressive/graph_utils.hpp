@@ -467,16 +467,7 @@ inline std::string normalizeMimeType(const std::string& mime) {
 //
 // C++ version using libolm's SHA-256 as fallback (MD5 not available in libolm).
 // For real MD5, link against OpenSSL's MD5().
-
-inline std::string md5Hash(const std::string& input) {
-    auto hash = sha256(reinterpret_cast<const uint8_t*>(input.data()), input.size());
-    std::string hex;
-    for (uint8_t b : hash) {
-        hex += "0123456789abcdef"[b >> 4];
-        hex += "0123456789abcdef"[b & 0xf];
-    }
-    return hex;
-}
+// (md5Hash moved to crypto_algorithms.hpp)
 
 // ==== Fingerprint Formatting ====
 //
