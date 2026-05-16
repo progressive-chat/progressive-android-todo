@@ -514,6 +514,10 @@ object ProgressiveNative {
     @JvmStatic external fun nativeGetSettingString(settingsJson: String, key: String, defaultVal: String): String
     @JvmStatic external fun nativeSetSettingString(settingsJson: String, key: String, value: String): String
 
+    // --- HTTP Client ---
+
+    @JvmStatic external fun nativeParseUrl(url: String): String
+
     // --- Account Export ---
 
     @JvmStatic external fun nativeEncryptAccount(
@@ -3734,6 +3738,15 @@ object ProgressiveNative {
             return Regex(""""$key":"[^"]*"""").replace(settingsJson, """"$key":"$value"""")
         return if (settingsJson.indexOf('{') >= 0) settingsJson.replaceFirst("{", "{$kv,")
         else """{$kv}"""
+    }
+
+    // --- HTTP Client fallback ---
+    @JvmStatic fun nativeParseUrlFallback(url: String): String {
+        val m = Regex("""^(https?)://([^/:]+)(?::(\d+))?(/.*)?""").find(url)
+        return if (m != null) {
+            val (scheme, host, port, path) = m.destructured
+            """{"scheme":"$scheme","host":"$host","port":${port.toIntOrNull() ?: (if (scheme == "https") 443 else 80)},"path":"${path ?: "/"}","valid":true}"""
+        } else """{"scheme":"","host":"","port":0,"path":"","valid":false}"""
     }
 
     // --- Megolm fallbacks ---

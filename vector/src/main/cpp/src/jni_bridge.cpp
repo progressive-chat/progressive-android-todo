@@ -4268,6 +4268,19 @@ JNI_FUNC(jstring, nativeSetSettingString)(JNIEnv* env, jclass, jstring jJson, js
     return env->NewStringUTF(r.c_str());
 }
 
+// --- HTTP Client ---
+
+JNI_FUNC(jstring, nativeParseUrl)(JNIEnv* env, jclass, jstring jUrl) {
+    auto u = progressive::parseUrl(jStr(env, jUrl));
+    std::ostringstream os;
+    os << R"({"scheme":")" << u.scheme
+       << R"(","host":")" << u.host
+       << R"(","port":)" << u.port
+       << R"(,"path":")" << u.path
+       << R"(","valid":)" << (u.valid ? "true" : "false") << "}";
+    return env->NewStringUTF(os.str().c_str());
+}
+
 // --- Megolm Decryptor ---
 // Controlled by Labs: SETTINGS_LABS_NATIVE_CRYPTO
 
