@@ -3610,6 +3610,13 @@ JNI_FUNC(jstring, nativeFormatRedactionNotice)(JNIEnv* env, jclass, jstring jRea
     auto result = progressive::formatRedactionNotice(jStr(env, jReason), jSelf, jState);
     return env->NewStringUTF(result.c_str());
 }
+
+// --- Key Backup ---
+
+JNI_FUNC(jstring, nativeValidateAndFormatRecoveryKey)(JNIEnv* env, jclass, jstring jRawKey) {
+    auto result = progressive::validateAndFormatRecoveryKey(jStr(env, jRawKey));
+    return env->NewStringUTF(result.c_str());
+}
     }
     result.isEnded = json.find("\"closed\":true") != std::string::npos;
 

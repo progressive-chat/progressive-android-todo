@@ -124,4 +124,24 @@ bool hasCrossSigningSecrets(const std::string& accountDataJson) {
     return accountDataJson.find("m.cross_signing.master") != std::string::npos;
 }
 
+std::string validateAndFormatRecoveryKey(const std::string& rawKey) {
+    std::string clean;
+    for (char c : rawKey) if (c != ' ') clean += c;
+
+    std::ostringstream os;
+    if (!isValidRecoveryKey(rawKey)) {
+        os << R"({"valid":false,"formatted":"","error":"Invalid recovery key format"})";
+        return os.str();
+    }
+
+    std::string formatted;
+    for (size_t i = 0; i < clean.size(); i++) {
+        if (i > 0 && i % 4 == 0) formatted += ' ';
+        formatted += clean[i];
+    }
+
+    os << R"({"valid":true,"formatted":")" << formatted << R"(","error":""})";
+    return os.str();
+}
+
 } // namespace progressive

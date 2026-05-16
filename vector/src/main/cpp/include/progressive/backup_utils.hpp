@@ -65,6 +65,10 @@ std::string buildStoreSecretBody(const std::string& secretId, const std::string&
 // Check if cross-signing secrets are stored.
 bool hasCrossSigningSecrets(const std::string& accountDataJson);
 
+// Validate and format a backup recovery key.
+// Returns JSON: {"valid":bool, "formatted":"EsTj 4fGz...", "error":"..."}
+std::string validateAndFormatRecoveryKey(const std::string& rawKey);
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_BACKUP_UTILS_HPP

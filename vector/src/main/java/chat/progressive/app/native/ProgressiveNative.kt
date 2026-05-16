@@ -398,6 +398,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeFormatRedactionNotice(reason: String, redactedBySelf: Boolean, isStateEvent: Boolean): String
 
+    // --- Key Backup ---
+
+    @JvmStatic external fun nativeValidateAndFormatRecoveryKey(rawKey: String): String
+
     // --- Member / Call Notices ---
 
     @JvmStatic external fun nativeFormatMemberNotice(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String
@@ -3437,6 +3441,13 @@ object ProgressiveNative {
         if (isStateEvent) "This event is no longer available"
         else if (redactedBySelf) if (reason.isEmpty()) "You removed this message" else "You removed this message: $reason"
         else if (reason.isEmpty()) "Message removed" else "Message removed: $reason"
+
+    // --- Key Backup fallback ---
+    @JvmStatic fun nativeValidateAndFormatRecoveryKeyFallback(rawKey: String): String {
+        val clean = rawKey.replace(" ", "")
+        return if (clean.length < 40) """{"valid":false,"formatted":"","error":"Invalid key"}"""
+        else """{"valid":true,"formatted":"${clean.chunked(4).joinToString(" ")}","error":""}"""
+    }
 
     // --- Member/Call/Edit fallbacks ---
     @JvmStatic fun nativeFormatMemberNoticeFallback(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String {
