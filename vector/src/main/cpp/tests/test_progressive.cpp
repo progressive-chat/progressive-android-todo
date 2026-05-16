@@ -11,6 +11,8 @@
 #include "progressive/event_relations.hpp"
 #include "progressive/push_rules.hpp"
 #include "progressive/content_scanner.hpp"
+#include "progressive/password_validator.hpp"
+#include "progressive/notif_format.hpp"
 #include <cstring>
 
 // ==== SHA-256 verification (E2EE foundation) ====
@@ -236,6 +238,39 @@ static void test_must_accept_tos() {
     ASSERT_FALSE(progressive::mustAcceptTos(R"({"errcode":"M_FORBIDDEN"})"));
 }
 
+// ==== Password validation ====
+static void test_password_meets_minimum() {
+    ASSERT_TRUE(progressive::meetsMinimumRequirements("Abcdefg1"));   // 8+ chars, upper, lower, digit
+    ASSERT_FALSE(progressive::meetsMinimumRequirements("short"));     // too short
+    ASSERT_FALSE(progressive::meetsMinimumRequirements("abcdefgh"));  // no upper/digit
+}
+
+static void test_password_count_char_classes() {
+    ASSERT_EQ(progressive::countCharClasses("a"), 1);        // lower only
+    ASSERT_EQ(progressive::countCharClasses("aA"), 2);       // lower + upper
+    ASSERT_EQ(progressive::countCharClasses("aA1"), 3);      // lower + upper + digit
+    ASSERT_EQ(progressive::countCharClasses("aA1!"), 4);     // all four classes
+}
+
+static void test_password_strength_label() {
+    ASSERT_STREQ(progressive::getStrengthLabel(85), "Strong");
+    ASSERT_STREQ(progressive::getStrengthLabel(65), "Good");
+    ASSERT_STREQ(progressive::getStrengthLabel(45), "Fair");
+    ASSERT_STREQ(progressive::getStrengthLabel(25), "Weak");
+}
+
+// ==== Notification formatting ====
+static void test_format_badge_text() {
+    ASSERT_STREQ(progressive::formatBadgeText(0), "");
+    ASSERT_STREQ(progressive::formatBadgeText(5), "5");
+    ASSERT_STREQ(progressive::formatBadgeText(100), "99+");
+}
+
+static void test_total_unread_count() {
+    ASSERT_EQ(progressive::getTotalUnreadCount(3, 2), 5);
+    ASSERT_EQ(progressive::getTotalUnreadCount(0, 0), 0);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -289,6 +324,13 @@ int main() {
     ADD_TEST(runner, test_is_known_push_rule_kind);
     ADD_TEST(runner, test_is_server_notice);
     ADD_TEST(runner, test_must_accept_tos);
+    
+    printf("\n-- Password & Notifications --\n");
+    ADD_TEST(runner, test_password_meets_minimum);
+    ADD_TEST(runner, test_password_count_char_classes);
+    ADD_TEST(runner, test_password_strength_label);
+    ADD_TEST(runner, test_format_badge_text);
+    ADD_TEST(runner, test_total_unread_count);
     
     return runner.summary();
 }
