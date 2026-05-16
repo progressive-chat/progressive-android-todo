@@ -1413,7 +1413,6 @@ object ProgressiveNative {
 
     // --- Notifications / Badge ---
 
-    @JvmStatic external fun nativeFormatBadgeText(totalCount: Int): String
 
     // --- Presence ---
 
@@ -1440,7 +1439,6 @@ object ProgressiveNative {
 
     // --- Space Utilities ---
 
-    @JvmStatic external fun nativeBuildSpaceChildContent(suggested: Boolean, order: String, autoJoin: Boolean, canonical: Boolean): String
     @JvmStatic external fun nativeBuildSpaceParentContent(parentSpaceId: String, canonical: Boolean): String
 
     // --- Widget Utilities ---
@@ -1453,12 +1451,10 @@ object ProgressiveNative {
 
     // --- Recovery Key ---
 
-    @JvmStatic external fun nativeComputeRecoveryKey(curve25519Key: String): String
     @JvmStatic external fun nativeExtractCurveKeyFromRecoveryKey(recoveryKey: String): String
 
     // --- Membership ---
 
-    @JvmStatic external fun nativeFormatMembership(membership: String): String
     @JvmStatic external fun nativeIsActiveMember(membership: String): Boolean
 
     // --- WebRTC / Calls ---
@@ -1468,7 +1464,6 @@ object ProgressiveNative {
 
     // --- Content Scanner / ToS ---
 
-    @JvmStatic external fun nativeIsServerNotice(eventContentJson: String): Boolean
     @JvmStatic external fun nativeMustAcceptTos(responseJson: String): Boolean
     @JvmStatic external fun nativeBuildTosAcceptBody(version: String): String
 
@@ -1479,7 +1474,6 @@ object ProgressiveNative {
 
     // --- Password Validator ---
 
-    @JvmStatic external fun nativeValidatePassword(password: String): String
     @JvmStatic external fun nativeComputePasswordStrength(password: String): Int
     @JvmStatic external fun nativeGetStrengthLabel(strength: Int): String
     @JvmStatic external fun nativeGeneratePasswordFeedback(password: String): String
