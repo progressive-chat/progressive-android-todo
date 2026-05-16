@@ -4602,4 +4602,29 @@ JNI_FUNC(jstring, nativeMessageFileToJson)(JNIEnv* env, jclass, jstring jContent
     return env->NewStringUTF(r.c_str());
 }
 
+// --- Crypto Models ---
+
+JNI_FUNC(jstring, nativeDeviceInfoToJson)(JNIEnv* env, jclass, jstring jDeviceJson) {
+    auto json = jStr(env, jDeviceJson);
+    progressive::DeviceInfo d;
+    auto es = [&](const std::string& k) -> std::string {
+        auto pp = json.find("\"" + k + "\""); if (pp == std::string::npos) return "";
+        pp = json.find('"', pp + k.size() + 2); if (pp == std::string::npos) return "";
+        pp++; size_t e = pp; while (e < json.size() && json[e] != '"') e++;
+        return json.substr(pp, e - pp);
+    };
+    auto ei = [&](const std::string& k) -> int64_t {
+        auto pp = json.find("\"" + k + "\""); if (pp == std::string::npos) return 0;
+        pp = json.find(':', pp); if (pp == std::string::npos) return 0;
+        pp++; while (pp < json.size() && (json[pp] == ' ' || json[pp] == '\t')) pp++;
+        int64_t v = 0; while (pp < json.size() && json[pp] >= '0' && json[pp] <= '9') { v=v*10+(json[pp]-'0'); pp++; }
+        return v;
+    };
+    d.userId = es("user_id"); d.deviceId = es("device_id"); d.displayName = es("display_name");
+    d.lastSeenIp = es("last_seen_ip"); d.lastSeenUserAgent = es("last_seen_user_agent");
+    d.lastSeenTs = ei("last_seen_ts");
+    auto r = progressive::deviceInfoToJson(d);
+    return env->NewStringUTF(r.c_str());
+}
+
 } // extern "C"

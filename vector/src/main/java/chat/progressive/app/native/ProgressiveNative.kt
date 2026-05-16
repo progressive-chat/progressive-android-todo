@@ -1331,6 +1331,10 @@ object ProgressiveNative {
     @JvmStatic external fun nativeMessageAudioToJson(contentJson: String): String
     @JvmStatic external fun nativeMessageFileToJson(contentJson: String): String
 
+    // --- Crypto Models ---
+
+    @JvmStatic external fun nativeDeviceInfoToJson(deviceJson: String): String
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -3836,6 +3840,9 @@ object ProgressiveNative {
     @JvmStatic fun nativeMessageVideoToJsonFallback(contentJson: String): String = contentJson
     @JvmStatic fun nativeMessageAudioToJsonFallback(contentJson: String): String = contentJson
     @JvmStatic fun nativeMessageFileToJsonFallback(contentJson: String): String = contentJson
+
+    // --- Crypto Models fallback ---
+    @JvmStatic fun nativeDeviceInfoToJsonFallback(deviceJson: String): String = deviceJson
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")
