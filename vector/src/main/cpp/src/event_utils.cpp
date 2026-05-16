@@ -279,29 +279,55 @@ std::string formatMemberNotice(
     std::string sender = sentByCurrentUser ? "You" : senderName;
     std::string room = isDirectMessage ? "chat" : "room";
 
+    // Membership change events
     if (membership == "join") {
-        if (prevMembership == "invite" && !sameUser) {
-            return target + " accepted the invitation" + (reason.empty() ? "" : ": " + reason);
+        if (prevMembership == "invite") {
+            if (sameUser) return target + " accepted the invitation to this " + room;
+            return target + " accepted the invitation from " + sender;
+        }
+        if (prevMembership == "ban") {
+            return sender + " unbanned " + target;
+        }
+        if (prevMembership == "knock") {
+            return target + " was accepted into the " + room;
         }
         return target + " joined the " + room;
     }
     if (membership == "invite") {
-        if (sameUser) return target + " joined the " + room;
+        if (sentByCurrentUser) return "You invited " + target + (reason.empty() ? "" : ": " + reason);
+        if (sameUser) return "You were invited to this " + room + (reason.empty() ? "" : ": " + reason);
         return sender + " invited " + target + (reason.empty() ? "" : ": " + reason);
     }
     if (membership == "ban") {
+        if (sameUser) return target + " was banned from the " + room + (reason.empty() ? "" : ": " + reason);
         return sender + " banned " + target + (reason.empty() ? "" : ": " + reason);
     }
     if (membership == "leave") {
+        if (sentByCurrentUser && sameUser) return "You left the " + room;
         if (sameUser) return target + " left the " + room;
-        return sender + " kicked " + target + (reason.empty() ? "" : ": " + reason);
+        // Kicked by someone else
+        return target + " was kicked by " + sender + (reason.empty() ? "" : ": " + reason);
     }
     if (membership == "knock") {
-        return target + " requested to join" + (reason.empty() ? "" : ": " + reason);
+        if (sameUser) return "You requested to join this " + room + (reason.empty() ? "" : ": " + reason);
+        return target + " requested to join the " + room + (reason.empty() ? "" : ": " + reason);
     }
+
+    // Profile change events (no membership change)
     if (membership == "displayname") {
+        if (prevMembership == "avatar") return target + " changed their profile picture and display name to " + senderName;
         return target + " changed their display name to " + senderName;
     }
+    if (membership == "avatar") {
+        if (prevMembership == "displayname") return target + " changed their display name and profile picture";
+        return target + " changed their profile picture";
+    }
+
+    // Third-party invite
+    if (membership == "third_party_invite") {
+        return sender + " sent an email invitation to join the " + room;
+    }
+
     return target + " (" + membership + ")";
 }
 
