@@ -37,6 +37,7 @@
 #include "progressive/megolm_decryptor.hpp"
 #include "progressive/canonical_json.hpp"
 #include "progressive/event_encryption.hpp"
+#include "progressive/chunked_upload.hpp"
 #include <cstring>
 
 // ==== SHA-256 verification (E2EE foundation) ====
@@ -663,6 +664,21 @@ static void test_validate_bad_recovery_key() {
     ASSERT_TRUE(result.find("\"valid\":false") != std::string::npos);
 }
 
+// ==== Chunked uploader ====
+static void test_uploader_compute_chunks() {
+    progressive::ChunkedUploader uploader;
+    uploader.setChunkSizeMb(10);
+    int chunks = uploader.computeChunks(15 * 1024 * 1024);
+    ASSERT_EQ(chunks, 2);
+}
+
+static void test_uploader_suggest_chunk_size() {
+    int mb = progressive::ChunkedUploader::suggestChunkSizeMb(50_000_000);
+    ASSERT_EQ(mb, 10);
+    int mb2 = progressive::ChunkedUploader::suggestChunkSizeMb(500_000_000);
+    ASSERT_EQ(mb2, 20);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -809,6 +825,10 @@ int main() {
     ADD_TEST(runner, test_redaction_self);
     ADD_TEST(runner, test_redaction_with_reason);
     ADD_TEST(runner, test_validate_bad_recovery_key);
+    
+    printf("\n-- Uploader --\n");
+    ADD_TEST(runner, test_uploader_compute_chunks);
+    ADD_TEST(runner, test_uploader_suggest_chunk_size);
     
     return runner.summary();
 }
