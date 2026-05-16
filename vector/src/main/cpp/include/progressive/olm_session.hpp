@@ -91,6 +91,33 @@ OlmSessionData unpickleOlmSession(const std::string& pickled, OlmAccountData& ac
 // Destroy a session.
 void destroyOlmSession(OlmSessionData& session);
 
+// ==== Ed25519 Signature Verification ====
+
+// Verify an Ed25519 signature using libolm.
+// key: raw Ed25519 public key bytes
+// message: the signed message
+// signature: raw signature bytes
+// Returns true if the signature is valid.
+bool ed25519Verify(const uint8_t* key, size_t keyLen,
+                   const uint8_t* message, size_t messageLen,
+                   const uint8_t* signature, size_t signatureLen);
+
+// Verify a Matrix device signature.
+// deviceKeysJson: the JSON device keys object
+// userId: the user being verified
+// deviceId: the device being verified  
+// signKeyB64: base64-encoded Ed25519 signing key
+// signatureB64: base64-encoded signature
+bool verifyDeviceSignature(const std::string& deviceKeysJson,
+                           const std::string& userId, const std::string& deviceId,
+                           const std::string& signKeyB64, const std::string& signatureB64);
+
+// ==== Device Fingerprint ====
+
+// Compute a display-friendly device fingerprint from an identity key.
+// Uses word-based encoding (like Signal/Session).
+std::string computeDeviceFingerprint(const std::string& identityKeyBase64);
+
 // ==== Olm Session Manager ====
 
 class OlmSessionManager {

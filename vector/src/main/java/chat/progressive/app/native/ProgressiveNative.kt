@@ -882,6 +882,11 @@ object ProgressiveNative {
     @JvmStatic external fun nativeOlmPickleAccount(): String
     @JvmStatic external fun nativeOlmUnpickleAccount(pickled: String, userId: String, deviceId: String): Boolean
 
+    // --- Device Verification ---
+
+    @JvmStatic external fun nativeVerifyDeviceSignature(deviceKeysJson: String, userId: String, deviceId: String, signKeyB64: String, signatureB64: String): Boolean
+    @JvmStatic external fun nativeComputeDeviceFingerprint(identityKeyBase64: String): String
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -2791,6 +2796,11 @@ object ProgressiveNative {
     @JvmStatic fun nativeOlmDecryptMessageFallback(senderKey: String, sessionId: String, ciphertext: String): String = ""
     @JvmStatic fun nativeOlmPickleAccountFallback(): String = ""
     @JvmStatic fun nativeOlmUnpickleAccountFallback(pickled: String, userId: String, deviceId: String): Boolean = false
+
+    // --- Device Verification fallbacks ---
+    @JvmStatic fun nativeVerifyDeviceSignatureFallback(deviceKeysJson: String, userId: String, deviceId: String, signKeyB64: String, signatureB64: String): Boolean = false
+    @JvmStatic fun nativeComputeDeviceFingerprintFallback(identityKeyBase64: String): String =
+        identityKeyBase64.take(20).chunked(4).joinToString(" ") { it.uppercase() }
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")

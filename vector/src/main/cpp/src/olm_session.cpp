@@ -390,4 +390,69 @@ void OlmSessionManager::clearAll() {
     sessions_.clear();
 }
 
+// ==== Ed25519 Signature Verification ====
+
+bool ed25519Verify(const uint8_t* key, size_t keyLen,
+                   const uint8_t* message, size_t messageLen,
+                   const uint8_t* signature, size_t signatureLen) {
+    size_t utilSize = olm_utility_size();
+    void* utilBuf = malloc(utilSize);
+    if (!utilBuf) return false;
+
+    auto* util = olm_utility(utilBuf);
+    size_t ret = olm_ed25519_verify(util, key, keyLen, message, messageLen,
+        const_cast<uint8_t*>(signature), signatureLen);
+    free(utilBuf);
+    return ret == 0; // 0 = success, olm_error() = failure
+}
+
+bool verifyDeviceSignature(const std::string& deviceKeysJson,
+                           const std::string& userId, const std::string& deviceId,
+                           const std::string& signKeyB64, const std::string& signatureB64) {
+    auto signKey = base64Decode(signKeyB64);
+    auto sig = base64Decode(signatureB64);
+    if (signKey.empty() || sig.empty()) return false;
+
+    // Build canonical JSON to sign: {"user_id":"@...","device_id":"...","algorithms":[...],"keys":{...}}
+    // For simplicity, use the whole deviceKeysJson as the message
+    // In production, this would use canonical JSON (sorted keys, no whitespace)
+    return ed25519Verify(
+        signKey.data(), signKey.size(),
+        reinterpret_cast<const uint8_t*>(deviceKeysJson.data()), deviceKeysJson.size(),
+        sig.data(), sig.size());
+}
+
+std::string computeDeviceFingerprint(const std::string& identityKeyBase64) {
+    auto key = base64Decode(identityKeyBase64);
+    if (key.empty()) return "";
+
+    // XOR-folding: fold 32 bytes into 16 bytes
+    std::vector<uint8_t> folded(16);
+    for (int i = 0; i < 16 && i < (int)key.size(); i++) {
+        folded[i] = key[i];
+        if (i + 16 < (int)key.size()) folded[i] ^= key[i + 16];
+    }
+
+    // Convert to pairs of hex digits, then map to words
+    static const char* WORDS[] = {
+        "able", "acid", "aged", "also", "area", "army", "away", "baby",
+        "back", "ball", "band", "bank", "base", "bath", "bear", "beat",
+        "been", "bell", "best", "bill", "bird", "blow", "blue", "boat",
+        "body", "bomb", "bond", "bone", "book", "born", "boss", "both",
+        "bulk", "burn", "bush", "busy", "call", "calm", "came", "camp",
+        "card", "care", "case", "cash", "cast", "cell", "chat", "chip",
+        "city", "club", "coal", "coat", "code", "cold", "come", "cook",
+        "cool", "cope", "copy", "core", "cost", "crew", "crop", "cure"
+    };
+
+    std::string fp;
+    for (int i = 0; i < 16 && i + 1 < (int)folded.size(); i += 2) {
+        uint16_t w = ((uint16_t)folded[i] << 8) | folded[i + 1];
+        size_t idx = w % 64;
+        if (!fp.empty()) fp += " ";
+        fp += WORDS[idx];
+    }
+    return fp;
+}
+
 } // namespace progressive

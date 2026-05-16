@@ -2678,4 +2678,16 @@ JNI_FUNC(jboolean, nativeOlmUnpickleAccount)(JNIEnv* env, jclass, jstring jPickl
     return g_olmAccount.valid ? JNI_TRUE : JNI_FALSE;
 }
 
+// --- Device Verification ---
+
+JNI_FUNC(jboolean, nativeVerifyDeviceSignature)(JNIEnv* env, jclass, jstring jDeviceKeysJson, jstring jUserId, jstring jDeviceId, jstring jSignKeyB64, jstring jSignatureB64) {
+    return progressive::verifyDeviceSignature(jStr(env, jDeviceKeysJson), jStr(env, jUserId),
+        jStr(env, jDeviceId), jStr(env, jSignKeyB64), jStr(env, jSignatureB64)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeComputeDeviceFingerprint)(JNIEnv* env, jclass, jstring jIdentityKeyB64) {
+    auto result = progressive::computeDeviceFingerprint(jStr(env, jIdentityKeyB64));
+    return env->NewStringUTF(result.c_str());
+}
+
 } // extern "C"
