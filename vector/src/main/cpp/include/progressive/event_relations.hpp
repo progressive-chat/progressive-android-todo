@@ -43,7 +43,7 @@ std::string extractReplySource(const std::string& contentJson);
 std::string extractEditSource(const std::string& contentJson);
 
 // Build relation content for a reply.
-std::string buildReplyRelation(const std::string& eventId, const std::string& threadRoot = "");
+std::string buildReplyRelationWithThread(const std::string& eventId, const std::string& threadRoot = "");
 
 // Build relation content for a thread reply.
 std::string buildThreadRelation(const std::string& threadRoot);

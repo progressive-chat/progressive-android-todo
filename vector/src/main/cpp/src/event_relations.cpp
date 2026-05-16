@@ -74,7 +74,7 @@ std::string extractEditSource(const std::string& contentJson) {
     return {};
 }
 
-std::string buildReplyRelation(const std::string& eventId, const std::string& threadRoot) {
+std::string buildReplyRelationWithThread(const std::string& eventId, const std::string& threadRoot) {
     auto esc = [](const std::string& s) -> std::string {
         std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
     };

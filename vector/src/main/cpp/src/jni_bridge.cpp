@@ -1094,11 +1094,11 @@ JNI_FUNC(jstring, nativeParseUnifiedPushMessage)(JNIEnv* env, jclass, jstring jJ
 // --- Thumbnail Calc ---
 JNI_FUNC(jstring, nativeCalculateThumbnailSize)(JNIEnv* env, jclass, jint jOw, jint jOh, jint jMw, jint jMh) {
     progressive::ThumbnailParams params;
-    params.srcW = jOw; params.srcH = jOh;
+    params.sourceW = jOw; params.sourceH = jOh;
     params.maxW = jMw; params.maxH = jMh;
     auto result = progressive::computeThumbnail(params);
     std::ostringstream os;
-    os << R"({"width":)" << result.w << R"(,"height":)" << result.h << "}";
+    os << R"({"width":)" << result.targetW << R"(,"height":)" << result.targetH << "}";
     return env->NewStringUTF(os.str().c_str());
 }
 
