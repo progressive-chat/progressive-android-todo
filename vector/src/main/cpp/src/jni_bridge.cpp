@@ -149,6 +149,7 @@
 #include "progressive/thread_manager.hpp"
 #include "progressive/poll_manager.hpp"
 #include "progressive/space_graph.hpp"
+#include "progressive/pin_manager.hpp"
 #include "progressive/cross_signing.hpp"
 #include "progressive/edit_history.hpp"
 #include "progressive/read_marker.hpp"
@@ -5501,6 +5502,68 @@ JNI_FUNC(jstring, nativeSpaceSearch)(JNIEnv* env, jclass, jstring jSpaceId, jstr
 
 JNI_FUNC(void, nativeSpaceReset)(JNIEnv*, jclass) {
     g_spaceGraph.reset(new progressive::SpaceGraph());
+}
+
+// ============================================================
+// Pin Manager
+// ============================================================
+
+static std::unique_ptr<progressive::PinManager> g_pinMgr;
+
+static progressive::PinManager* getPinMgr() {
+    if (!g_pinMgr) g_pinMgr.reset(new progressive::PinManager());
+    return g_pinMgr.get();
+}
+
+JNI_FUNC(jstring, nativePinEvent)(JNIEnv* env, jclass, jstring jRoomId, jstring jEventId,
+                                   jstring jPinnedBy, jint jPowerLevel) {
+    std::string error;
+    auto r = getPinMgr()->pinEvent(jStr(env, jRoomId), jStr(env, jEventId),
+        jStr(env, jPinnedBy), jPowerLevel, error);
+    if (r.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(r.c_str());
+}
+
+JNI_FUNC(jstring, nativeUnpinEvent)(JNIEnv* env, jclass, jstring jRoomId, jstring jEventId,
+                                     jstring jRemovedBy, jint jPowerLevel) {
+    std::string error;
+    auto r = getPinMgr()->unpinEvent(jStr(env, jRoomId), jStr(env, jEventId),
+        jStr(env, jRemovedBy), jPowerLevel, error);
+    if (r.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(r.c_str());
+}
+
+JNI_FUNC(jstring, nativePinToggle)(JNIEnv* env, jclass, jstring jRoomId, jstring jEventId,
+                                    jstring jUserId, jint jPowerLevel) {
+    std::string error;
+    auto r = getPinMgr()->togglePin(jStr(env, jRoomId), jStr(env, jEventId),
+        jStr(env, jUserId), jPowerLevel, error);
+    if (r.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(r.c_str());
+}
+
+JNI_FUNC(void, nativePinLoadState)(JNIEnv* env, jclass, jstring jRoomId, jstring jStateJson) {
+    getPinMgr()->loadState(jStr(env, jRoomId), jStr(env, jStateJson));
+}
+
+JNI_FUNC(jstring, nativePinGetEvents)(JNIEnv* env, jclass, jstring jRoomId) {
+    return env->NewStringUTF(getPinMgr()->pinnedEventsToJson(jStr(env, jRoomId)).c_str());
+}
+
+JNI_FUNC(jboolean, nativePinIsPinned)(JNIEnv* env, jclass, jstring jRoomId, jstring jEventId) {
+    return getPinMgr()->isEventPinned(jStr(env, jRoomId), jStr(env, jEventId)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jint, nativePinCount)(JNIEnv* env, jclass, jstring jRoomId) {
+    return getPinMgr()->getPinnedCount(jStr(env, jRoomId));
+}
+
+JNI_FUNC(jboolean, nativePinCanManage)(JNIEnv*, jclass, jint jPowerLevel) {
+    return getPinMgr()->canManagePins(jPowerLevel) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(void, nativePinReset)(JNIEnv*, jclass) {
+    g_pinMgr.reset(new progressive::PinManager());
 }
 
 } // extern "C"

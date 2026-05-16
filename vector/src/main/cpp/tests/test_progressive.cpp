@@ -1438,6 +1438,60 @@ static void test_space_search() {
     ASSERT_STREQ(results[0].name.c_str(), "Engineering");
 }
 
+// ==== Pin Manager ====
+
+#include "progressive/pin_manager.hpp"
+
+static void test_pin_event() {
+    progressive::PinManager mgr;
+    std::string error;
+    auto json = mgr.pinEvent("!room:org", "$evt1", "@alice:org", 50, error);
+    ASSERT_TRUE(!json.empty());
+    ASSERT_STREQ(error.c_str(), "");
+    ASSERT_TRUE(mgr.isEventPinned("!room:org", "$evt1"));
+    ASSERT_EQ(mgr.getPinnedCount("!room:org"), 1);
+}
+
+static void test_pin_duplicate() {
+    progressive::PinManager mgr;
+    std::string error;
+    mgr.pinEvent("!room:org", "$evt1", "@alice:org", 50, error);
+    auto json = mgr.pinEvent("!room:org", "$evt1", "@alice:org", 50, error);
+    ASSERT_TRUE(json.empty());
+    ASSERT_TRUE(error.find("already pinned") != std::string::npos);
+}
+
+static void test_unpin_event() {
+    progressive::PinManager mgr;
+    std::string error;
+    mgr.pinEvent("!room:org", "$evt1", "@alice:org", 50, error);
+    ASSERT_EQ(mgr.getPinnedCount("!room:org"), 1);
+    mgr.unpinEvent("!room:org", "$evt1", "@alice:org", 50, error);
+    ASSERT_FALSE(mgr.isEventPinned("!room:org", "$evt1"));
+    ASSERT_EQ(mgr.getPinnedCount("!room:org"), 0);
+}
+
+static void test_pin_power_level() {
+    progressive::PinManager mgr;
+    ASSERT_TRUE(mgr.canManagePins(50));
+    ASSERT_TRUE(mgr.canManagePins(100));
+    ASSERT_FALSE(mgr.canManagePins(10));
+}
+
+static void test_pin_parse_ids() {
+    auto ids = progressive::PinManager::parsePinnedEventIds(R"({"pinned":["$evt1","$evt2","$evt3"]})");
+    ASSERT_EQ(static_cast<int>(ids.size()), 3);
+    ASSERT_STREQ(ids[0].c_str(), "$evt1");
+    ASSERT_STREQ(ids[2].c_str(), "$evt3");
+}
+
+static void test_pin_build_content() {
+    auto json = progressive::PinManager::buildPinnedEventsContent({"$a", "$b"});
+    ASSERT_TRUE(json.find("$a") != std::string::npos);
+    ASSERT_TRUE(json.find("$b") != std::string::npos);
+    ASSERT_TRUE(json.find("pinned") != std::string::npos);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -1698,6 +1752,14 @@ int main() {
     ADD_TEST(runner, test_space_parents);
     ADD_TEST(runner, test_space_depth);
     ADD_TEST(runner, test_space_search);
+    
+    printf("\n-- Pin Manager --\n");
+    ADD_TEST(runner, test_pin_event);
+    ADD_TEST(runner, test_pin_duplicate);
+    ADD_TEST(runner, test_unpin_event);
+    ADD_TEST(runner, test_pin_power_level);
+    ADD_TEST(runner, test_pin_parse_ids);
+    ADD_TEST(runner, test_pin_build_content);
     
     return runner.summary();
 }

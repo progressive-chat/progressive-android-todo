@@ -1478,6 +1478,18 @@ object ProgressiveNative {
     @JvmStatic external fun nativeSpaceSearch(spaceId: String, query: String): String
     @JvmStatic external fun nativeSpaceReset()
 
+    // --- Pin Manager ---
+
+    @JvmStatic external fun nativePinEvent(roomId: String, eventId: String, pinnedBy: String, powerLevel: Int): String
+    @JvmStatic external fun nativeUnpinEvent(roomId: String, eventId: String, removedBy: String, powerLevel: Int): String
+    @JvmStatic external fun nativePinToggle(roomId: String, eventId: String, userId: String, powerLevel: Int): String
+    @JvmStatic external fun nativePinLoadState(roomId: String, stateJson: String)
+    @JvmStatic external fun nativePinGetEvents(roomId: String): String
+    @JvmStatic external fun nativePinIsPinned(roomId: String, eventId: String): Boolean
+    @JvmStatic external fun nativePinCount(roomId: String): Int
+    @JvmStatic external fun nativePinCanManage(powerLevel: Int): Boolean
+    @JvmStatic external fun nativePinReset()
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -4223,6 +4235,24 @@ object ProgressiveNative {
     @JvmStatic fun nativeSpaceToTreeFallback(spaceId: String, maxDepth: Int): String = "{}"
     @JvmStatic fun nativeSpaceSearchFallback(spaceId: String, query: String): String = "[]"
     @JvmStatic fun nativeSpaceResetFallback() {}
+
+    // --- Pin Manager fallbacks ---
+    @JvmStatic fun nativePinEventFallback(roomId: String, eventId: String, pinnedBy: String, powerLevel: Int): String {
+        if (powerLevel < 50) return """{"error":"Power level $powerLevel insufficient (need 50)"}"""
+        return """{"pinned":["$eventId"]}"""
+    }
+    @JvmStatic fun nativeUnpinEventFallback(roomId: String, eventId: String, removedBy: String, powerLevel: Int): String {
+        if (powerLevel < 50) return """{"error":"Power level $powerLevel insufficient (need 50)"}"""
+        return """{"pinned":[]}"""
+    }
+    @JvmStatic fun nativePinToggleFallback(roomId: String, eventId: String, userId: String, powerLevel: Int): String =
+        nativePinEventFallback(roomId, eventId, userId, powerLevel)
+    @JvmStatic fun nativePinLoadStateFallback(roomId: String, stateJson: String) {}
+    @JvmStatic fun nativePinGetEventsFallback(roomId: String): String = """{"room_id":"$roomId","pinned_count":0,"events":[]}"""
+    @JvmStatic fun nativePinIsPinnedFallback(roomId: String, eventId: String): Boolean = false
+    @JvmStatic fun nativePinCountFallback(roomId: String): Int = 0
+    @JvmStatic fun nativePinCanManageFallback(powerLevel: Int): Boolean = powerLevel >= 50
+    @JvmStatic fun nativePinResetFallback() {}
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")
