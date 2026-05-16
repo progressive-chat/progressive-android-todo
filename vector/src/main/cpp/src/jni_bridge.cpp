@@ -125,7 +125,6 @@
 #include "progressive/sqlite_wrapper.hpp"
 #include "progressive/eventdb.hpp"
 #include "progressive/room_filter.hpp"
-#include "progressive/thumbnail.hpp"
 #include "progressive/sync_models.hpp"
 #include "progressive/event_models.hpp"
 #include "progressive/matrix_api.hpp"
@@ -137,27 +136,13 @@
 #include "progressive/megolm_decryptor.hpp"
 #include "progressive/olm_session.hpp"
 #include "progressive/sas_verification.hpp"
-#include "progressive/markdown.hpp"
 #include "progressive/room_content.hpp"
 #include "progressive/event_utils.hpp"
 #include "progressive/content_builder.hpp"
-#include "progressive/displayname_utils.hpp"
-#include "progressive/permalink.hpp"
-#include "progressive/media_utils.hpp"
 #include "progressive/key_backup.hpp"
-#include "progressive/room_encryption.hpp"
-#include "progressive/event_display.hpp"
-#include "progressive/date_utils.hpp"
-#include "progressive/presence_utils.hpp"
 #include "progressive/device_naming.hpp"
 #include "progressive/account_utils.hpp"
-#include "progressive/login_utils.hpp"
-#include "progressive/poll_utils.hpp"
-#include "progressive/membership_utils.hpp"
-#include "progressive/invite_utils.hpp"
-#include "progressive/event_validator.hpp"
 #include "progressive/widget_utils.hpp"
-#include "progressive/widget_manager.hpp"
 #include "progressive/key_backup_manager.hpp"
 #include "progressive/live_location.hpp"
 #include "progressive/cross_signing.hpp"
@@ -169,11 +154,9 @@
 #include "progressive/power_levels.hpp"
 #include "progressive/well_known.hpp"
 #include "progressive/room_sort.hpp"
-#include "progressive/key_backup.hpp"
 #include "progressive/content_utils.hpp"
 #include "progressive/room_state.hpp"
 #include "progressive/login_flow.hpp"
-#include "progressive/device_naming.hpp"
 #include "progressive/sync_filter.hpp"
 #include "progressive/room_name.hpp"
 #include "progressive/notif_format.hpp"
@@ -186,7 +169,6 @@
 #include "progressive/content_guard.hpp"
 #include "progressive/user_status.hpp"
 #include "progressive/verification_utils.hpp"
-#include "progressive/account_utils.hpp"
 #include <sstream>
 #include <chrono>
 
@@ -4166,29 +4148,9 @@ JNI_FUNC(jstring, nativeGetErrorDescription)(JNIEnv* env, jclass, jstring jCode)
     return env->NewStringUTF(result.c_str());
 }
 
-JNI_FUNC(jboolean, nativeIsPasswordError)(JNIEnv* env, jclass, jstring jCode) {
-    return progressive::isPasswordError(jStr(env, jCode)) ? JNI_TRUE : JNI_FALSE;
-}
-
-JNI_FUNC(jstring, nativeGetAllErrorCodes)(JNIEnv* env, jclass) {
-    auto codes = progressive::getAllErrorCodes();
-    std::ostringstream os; os << "[";
-    for (size_t i = 0; i < codes.size(); i++) {
-        if (i > 0) os << ",";
-        os << "\"" << codes[i] << "\"";
-    }
-    os << "]";
-    return env->NewStringUTF(os.str().c_str());
-}
-
 JNI_FUNC(jboolean, nativeIsRateLimitError)(JNIEnv* env, jclass, jstring jErrorJson) {
     auto error = progressive::parseMatrixErrorJson(jStr(env, jErrorJson));
     return progressive::isRateLimitError(error) ? JNI_TRUE : JNI_FALSE;
-}
-
-JNI_FUNC(jlong, nativeGetRetryAfterMs)(JNIEnv* env, jclass, jstring jErrorJson) {
-    auto error = progressive::parseMatrixErrorJson(jStr(env, jErrorJson));
-    return progressive::getRetryAfterMs(error);
 }
 
 JNI_FUNC(jboolean, nativeIsSoftLogout)(JNIEnv* env, jclass, jstring jErrorJson) {
@@ -4296,7 +4258,6 @@ JNI_FUNC(jstring, nativeParseUrl)(JNIEnv* env, jclass, jstring jUrl) {
     return env->NewStringUTF(os.str().c_str());
 }
 
-// --- Megolm Decryptor ---
 // Controlled by Labs: SETTINGS_LABS_NATIVE_CRYPTO
 
 static progressive::MegolmSessionManager g_megolmManager;
