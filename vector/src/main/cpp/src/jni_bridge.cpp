@@ -3615,6 +3615,18 @@ JNI_FUNC(jstring, nativeParseDirectMessageMap)(JNIEnv* env, jclass, jstring jJso
     auto result = progressive::buildDirectMessageMapJson(dmMap);
     return env->NewStringUTF(result.c_str());
 }
+
+// --- Edit History ---
+
+JNI_FUNC(jstring, nativeGetEditCountBadge)(JNIEnv* env, jclass, jint jCount) {
+    auto result = progressive::getEditCountBadge(jCount);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeComputeEditDiffSummary)(JNIEnv* env, jclass, jstring jOld, jstring jNew) {
+    auto result = progressive::computeEditDiffSummary(jStr(env, jOld), jStr(env, jNew));
+    return env->NewStringUTF(result.c_str());
+}
     // Format: "Alice, Bob and 3 others online"
     std::ostringstream os;
     int total = static_cast<int>(names.size());

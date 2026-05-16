@@ -396,6 +396,11 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeParseDirectMessageMap(json: String): String
 
+    // --- Edit History ---
+
+    @JvmStatic external fun nativeGetEditCountBadge(editCount: Int): String
+    @JvmStatic external fun nativeComputeEditDiffSummary(oldBody: String, newBody: String): String
+
     // --- Event Classifier ---
 
     @JvmStatic external fun nativeIsStateEvent(eventType: String): Boolean
@@ -3482,6 +3487,15 @@ object ProgressiveNative {
 
     // --- Direct Message fallback ---
     @JvmStatic fun nativeParseDirectMessageMapFallback(json: String): String = "{}"
+
+    // --- Edit History fallbacks ---
+    @JvmStatic fun nativeGetEditCountBadgeFallback(editCount: Int): String =
+        if (editCount > 1) "Edited $editCount times" else if (editCount == 1) "Edited" else ""
+    @JvmStatic fun nativeComputeEditDiffSummaryFallback(oldBody: String, newBody: String): String {
+        val added = (newBody.length - oldBody.length).coerceAtLeast(0)
+        val removed = (oldBody.length - newBody.length).coerceAtLeast(0)
+        return "+$added/-$removed chars"
+    }
 
     // --- Event Classifier fallback ---
     @JvmStatic fun nativeIsStateEventFallback(eventType: String): Boolean =
