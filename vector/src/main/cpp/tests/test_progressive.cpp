@@ -35,6 +35,7 @@
 #include "progressive/file_validator.hpp"
 #include "progressive/event_utils.hpp"
 #include "progressive/megolm_decryptor.hpp"
+#include "progressive/canonical_json.hpp"
 #include <cstring>
 
 // ==== SHA-256 verification (E2EE foundation) ====
@@ -581,6 +582,19 @@ static void test_megolm_clear_room() {
     ASSERT_EQ(mgr.sessionCount(), 0);
 }
 
+// ==== Canonical JSON ====
+static void test_canonical_json_simple() {
+    auto result = progressive::canonicalizeJson(R"({"b":2,"a":1})");
+    ASSERT_TRUE(result.find("\"a\"") != std::string::npos);
+    ASSERT_TRUE(result.find("\"b\"") != std::string::npos);
+    ASSERT_TRUE(result.find("\"a\"") < result.find("\"b\"")); // a before b
+}
+
+static void test_canonical_json_no_spaces() {
+    auto result = progressive::canonicalizeJson(R"( { "x" : 1 } )");
+    ASSERT_TRUE(result.find(" ") == std::string::npos);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -712,6 +726,10 @@ int main() {
     printf("\n-- Megolm --\n");
     ADD_TEST(runner, test_megolm_manager_empty);
     ADD_TEST(runner, test_megolm_clear_room);
+    
+    printf("\n-- Canonical JSON --\n");
+    ADD_TEST(runner, test_canonical_json_simple);
+    ADD_TEST(runner, test_canonical_json_no_spaces);
     
     return runner.summary();
 }

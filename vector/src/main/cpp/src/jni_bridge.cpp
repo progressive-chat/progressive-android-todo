@@ -3380,6 +3380,13 @@ JNI_FUNC(jstring, nativeParseEventContent)(JNIEnv* env, jclass, jstring jEventTy
     return env->NewStringUTF(os.str().c_str());
 }
 
+// --- Canonical JSON ---
+
+JNI_FUNC(jstring, nativeCanonicalizeJson)(JNIEnv* env, jclass, jstring jJson) {
+    auto result = progressive::canonicalizeJson(jStr(env, jJson));
+    return env->NewStringUTF(result.c_str());
+}
+
 // --- Member Notice / Call Notice / Edit Annotation ---
 
 JNI_FUNC(jstring, nativeFormatMemberNotice)(JNIEnv* env, jclass, jstring jMembership, jstring jPrevMembership, jstring jSenderId, jstring jSenderName, jstring jTargetId, jstring jTargetName, jstring jReason, jboolean jDirect, jboolean jSelf) {
