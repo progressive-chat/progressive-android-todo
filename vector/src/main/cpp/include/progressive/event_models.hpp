@@ -597,7 +597,7 @@ struct EventAndSender {
     UserItem sender;
 };
 
-struct EventEventSearchResult {
+struct EventSearchResult {
     std::string nextBatch;                   // pagination token, null if no more
     std::vector<std::string> highlights;     // stemmed words to highlight
     std::vector<EventAndSender> results;     // ordered result list
