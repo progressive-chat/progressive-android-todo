@@ -158,7 +158,7 @@ inline std::vector<RoomFilterEntry> filterAndSortRooms(
 // Check if a room is a predecessor (upgraded/tombstoned).
 // Predecessor rooms have a replacement_room field in their tombstone event.
 
-struct RoomVersionInfo {
+struct RoomUpgradeInfo {
     std::string roomId;
     std::string predecessorRoomId;   // If this is a new room, the old one it replaces
     std::string replacementRoomId;   // If tombstoned, the new room to go to
@@ -169,7 +169,7 @@ struct RoomVersionInfo {
 // For each predecessor → successor pair, remove the predecessor.
 inline std::vector<RoomFilterEntry> deduplicateRoomVersions(
     const std::vector<RoomFilterEntry>& rooms,
-    const std::vector<RoomVersionInfo>& versionInfo)
+    const std::vector<RoomUpgradeInfo>& versionInfo)
 {
     // Build map: predecessorRoomId → successor roomId
     std::unordered_map<std::string, std::string> predecessors;
