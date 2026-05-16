@@ -244,6 +244,10 @@ object ProgressiveNative {
     @JvmStatic external fun nativeParseRoomTopicContent(contentJson: String): String
     @JvmStatic external fun nativeParseRoomAvatarContent(contentJson: String): String
 
+    // --- Connection Monitor ---
+
+    @JvmStatic external fun nativeGetBannerColor(downtimeMs: Long): String
+
     // --- Account Export ---
 
     @JvmStatic external fun nativeEncryptAccount(
@@ -3094,6 +3098,13 @@ object ProgressiveNative {
     @JvmStatic fun nativeParseRoomAvatarContentFallback(contentJson: String): String {
         val url = Regex("\"url\":\"(mxc://[^\"]+)\"").find(contentJson)?.groupValues?.get(1) ?: ""
         return """{"avatar_url":"$url"}"""
+    }
+
+    // --- Connection Monitor fallback ---
+    @JvmStatic fun nativeGetBannerColorFallback(downtimeMs: Long): String = when {
+        downtimeMs > 300_000 -> "#F44336"  // red after 5 min
+        downtimeMs > 60_000 -> "#FF9800"   // orange after 1 min
+        else -> "#4CAF50"                    // green
     }
 
     // --- Megolm fallbacks ---

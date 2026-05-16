@@ -3057,6 +3057,13 @@ JNI_FUNC(jstring, nativeParseRoomAvatarContent)(JNIEnv* env, jclass, jstring jCo
     return env->NewStringUTF(os.str().c_str());
 }
 
+// --- Connection Monitor ---
+
+JNI_FUNC(jstring, nativeGetBannerColor)(JNIEnv* env, jclass, jlong jDowntimeMs) {
+    auto result = progressive::ConnectionMonitor::getBannerColor(jDowntimeMs);
+    return env->NewStringUTF(result.c_str());
+}
+
 JNI_FUNC(jstring, nativeParseMarkdownTable)(JNIEnv* env, jclass, jstring jTableBlock, jboolean jWithScroll) {
     auto result = progressive::parseMarkdownTable(jStr(env, jTableBlock), jWithScroll);
     return env->NewStringUTF(result.c_str());
