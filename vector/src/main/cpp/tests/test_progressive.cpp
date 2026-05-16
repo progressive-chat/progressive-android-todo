@@ -679,6 +679,19 @@ static void test_uploader_suggest_chunk_size() {
     ASSERT_EQ(mb2, 20);
 }
 
+// ==== Audio support ====
+static void test_is_supported_audio_type() {
+    ASSERT_TRUE(progressive::isSupportedAudioType("audio/ogg"));
+    ASSERT_FALSE(progressive::isSupportedAudioType("image/png"));
+}
+
+// ==== 3PID parsing ====
+static void test_parse_three_pid_email() {
+    auto pid = progressive::parseThreePid("alice@matrix.org");
+    ASSERT_STREQ(pid.medium, "email");
+    ASSERT_TRUE(pid.valid);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -829,6 +842,10 @@ int main() {
     printf("\n-- Uploader --\n");
     ADD_TEST(runner, test_uploader_compute_chunks);
     ADD_TEST(runner, test_uploader_suggest_chunk_size);
+    
+    printf("\n-- Audio & 3PID --\n");
+    ADD_TEST(runner, test_is_supported_audio_type);
+    ADD_TEST(runner, test_parse_three_pid_email);
     
     return runner.summary();
 }
