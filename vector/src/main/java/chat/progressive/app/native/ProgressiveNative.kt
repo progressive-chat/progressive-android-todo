@@ -360,6 +360,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeBuildThreadListJson(eventsJson: String): String
 
+    // --- Event Classifier ---
+
+    @JvmStatic external fun nativeIsStateEvent(eventType: String): Boolean
+
     // --- Member / Call Notices ---
 
     @JvmStatic external fun nativeFormatMemberNotice(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String
@@ -3361,6 +3365,10 @@ object ProgressiveNative {
 
     // --- Thread List fallback ---
     @JvmStatic fun nativeBuildThreadListJsonFallback(eventsJson: String): String = "[]"
+
+    // --- Event Classifier fallback ---
+    @JvmStatic fun nativeIsStateEventFallback(eventType: String): Boolean =
+        eventType.startsWith("m.room.") && eventType != "m.room.message" && eventType != "m.room.encrypted"
 
     // --- Member/Call/Edit fallbacks ---
     @JvmStatic fun nativeFormatMemberNoticeFallback(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String {

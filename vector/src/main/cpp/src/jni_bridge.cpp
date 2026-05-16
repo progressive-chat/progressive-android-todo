@@ -3443,6 +3443,12 @@ JNI_FUNC(jstring, nativeBuildThreadListJson)(JNIEnv* env, jclass, jstring jEvent
     return env->NewStringUTF(result.c_str());
 }
 
+// --- Event Classifier ---
+
+JNI_FUNC(jboolean, nativeIsStateEvent)(JNIEnv* env, jclass, jstring jEventType) {
+    return progressive::isStateEvent(jStr(env, jEventType)) ? JNI_TRUE : JNI_FALSE;
+}
+
 // --- Member Notice / Call Notice / Edit Annotation ---
 
 JNI_FUNC(jstring, nativeFormatMemberNotice)(JNIEnv* env, jclass, jstring jMembership, jstring jPrevMembership, jstring jSenderId, jstring jSenderName, jstring jTargetId, jstring jTargetName, jstring jReason, jboolean jDirect, jboolean jSelf) {
