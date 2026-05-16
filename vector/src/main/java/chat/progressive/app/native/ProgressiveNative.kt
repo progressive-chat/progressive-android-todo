@@ -1367,6 +1367,19 @@ object ProgressiveNative {
     @JvmStatic external fun nativeIsValidEncryptedFile(infoJson: String): Boolean
     @JvmStatic external fun nativeExtractFileIv(infoJson: String): String
 
+    // --- Crypto Algorithms ---
+
+    @JvmStatic external fun nativeSha256(data: ByteArray): String
+    @JvmStatic external fun nativeBase58Encode(data: ByteArray): String
+
+    // --- TLS Bridge ---
+
+    @JvmStatic external fun nativeTlsBridgeAvailable(): Boolean
+
+    // --- Create Room ---
+
+    @JvmStatic external fun nativeCreateRoomPresetToString(preset: Int): String
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -3914,6 +3927,33 @@ object ProgressiveNative {
         "\"url\":\"mxc://" in infoJson && "\"iv\":\"" in infoJson
     @JvmStatic fun nativeExtractFileIvFallback(infoJson: String): String =
         Regex(""""iv":"([^"]+)"""").find(infoJson)?.groupValues?.getOrNull(1) ?: ""
+
+    // --- Crypto Algorithms fallbacks ---
+    @JvmStatic fun nativeSha256Fallback(data: ByteArray): String {
+        val md = java.security.MessageDigest.getInstance("SHA-256")
+        return md.digest(data).joinToString("") { "%02x".format(it) }
+    }
+    @JvmStatic fun nativeBase58EncodeFallback(data: ByteArray): String {
+        val alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+        val sb = StringBuilder()
+        var num = java.math.BigInteger(1, data)
+        val zero = java.math.BigInteger.ZERO
+        while (num > zero) {
+            val divrem = num.divideAndRemainder(java.math.BigInteger.valueOf(58))
+            sb.insert(0, alphabet[divrem[1].toInt()])
+            num = divrem[0]
+        }
+        for (b in data) if (b.toInt() == 0) sb.insert(0, '1') else break
+        return sb.toString()
+    }
+
+    // --- TLS Bridge fallback ---
+    @JvmStatic fun nativeTlsBridgeAvailableFallback(): Boolean = false
+
+    // --- Create Room fallback ---
+    @JvmStatic fun nativeCreateRoomPresetToStringFallback(preset: Int): String = when(preset) {
+        0 -> "private_chat"; 1 -> "public_chat"; 2 -> "trusted_private_chat"
+        else -> "private_chat" }
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")

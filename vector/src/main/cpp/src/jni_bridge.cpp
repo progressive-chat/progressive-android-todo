@@ -4821,4 +4821,41 @@ JNI_FUNC(jstring, nativeExtractFileIv)(JNIEnv* env, jclass, jstring jInfoJson) {
     return env->NewStringUTF(r.c_str());
 }
 
+// --- Crypto Algorithms ---
+
+JNI_FUNC(jstring, nativeSha256)(JNIEnv* env, jclass, jbyteArray jData) {
+    jsize len = env->GetArrayLength(jData);
+    jbyte* bytes = env->GetByteArrayElements(jData, nullptr);
+    auto hash = progressive::sha256(reinterpret_cast<uint8_t*>(bytes), static_cast<size_t>(len));
+    env->ReleaseByteArrayElements(jData, bytes, JNI_ABORT);
+    // Convert to hex string
+    static const char* hex = "0123456789abcdef";
+    std::string result;
+    result.reserve(hash.size() * 2);
+    for (uint8_t b : hash) { result += hex[b >> 4]; result += hex[b & 0xf]; }
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeBase58Encode)(JNIEnv* env, jclass, jbyteArray jData) {
+    jsize len = env->GetArrayLength(jData);
+    jbyte* bytes = env->GetByteArrayElements(jData, nullptr);
+    std::vector<uint8_t> input(reinterpret_cast<uint8_t*>(bytes), reinterpret_cast<uint8_t*>(bytes) + len);
+    env->ReleaseByteArrayElements(jData, bytes, JNI_ABORT);
+    auto r = progressive::base58Encode(input);
+    return env->NewStringUTF(r.c_str());
+}
+
+// --- TLS Bridge ---
+
+JNI_FUNC(jboolean, nativeTlsBridgeAvailable)(JNIEnv*, jclass) {
+    return progressive::tlsBridgeAvailable() ? JNI_TRUE : JNI_FALSE;
+}
+
+// --- Create Room ---
+
+JNI_FUNC(jstring, nativeCreateRoomPresetToString)(JNIEnv* env, jclass, jint jPreset) {
+    auto r = progressive::createRoomPresetToString(static_cast<progressive::CreateRoomPreset>(jPreset));
+    return env->NewStringUTF(r);
+}
+
 } // extern "C"
