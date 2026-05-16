@@ -255,6 +255,10 @@ object ProgressiveNative {
     @JvmStatic external fun nativeFormatMediaCollapseLabel(count: Int): String
     @JvmStatic external fun nativeIsEmojiCodePoint(codepoint: Int): Boolean
 
+    // --- MIME Normalization ---
+
+    @JvmStatic external fun nativeNormalizeMimeType(mimeType: String): String
+
     // --- Account Export ---
 
     @JvmStatic external fun nativeEncryptAccount(
@@ -3117,6 +3121,10 @@ object ProgressiveNative {
     @JvmStatic fun nativeCountUniqueEmojisFallback(text: String): Int = 0
     @JvmStatic fun nativeFormatMediaCollapseLabelFallback(count: Int): String = "$count media items"
     @JvmStatic fun nativeIsEmojiCodePointFallback(codepoint: Int): Boolean = codepoint >= 0x1F300
+
+    // --- MIME fallback ---
+    @JvmStatic fun nativeNormalizeMimeTypeFallback(mimeType: String): String =
+        if (mimeType == "image/jpg") "image/jpeg" else mimeType
 
     // --- Megolm fallbacks ---
     @JvmStatic fun nativeMegolmAddSessionFallback(roomId: String, senderKey: String, sessionId: String, sessionKeyBase64: String): Boolean = false

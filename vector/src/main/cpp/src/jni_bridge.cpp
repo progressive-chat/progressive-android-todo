@@ -3083,6 +3083,13 @@ JNI_FUNC(jboolean, nativeIsEmojiCodePoint)(JNIEnv* env, jclass, jint jCodepoint)
     return progressive::isEmojiCodePoint(jCodepoint) ? JNI_TRUE : JNI_FALSE;
 }
 
+// --- MIME Normalization ---
+
+JNI_FUNC(jstring, nativeNormalizeMimeType)(JNIEnv* env, jclass, jstring jMime) {
+    auto result = progressive::normalizeMimeType(jStr(env, jMime));
+    return env->NewStringUTF(result.c_str());
+}
+
 JNI_FUNC(jstring, nativeParseMarkdownTable)(JNIEnv* env, jclass, jstring jTableBlock, jboolean jWithScroll) {
     auto result = progressive::parseMarkdownTable(jStr(env, jTableBlock), jWithScroll);
     return env->NewStringUTF(result.c_str());
