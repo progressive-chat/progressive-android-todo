@@ -137,6 +137,11 @@ std::string formatCallNotice(
     bool sentByCurrentUser
 );
 
+// ==== Redaction Notice ====
+
+// Format a redaction notice: "Message removed" with optional reason.
+std::string formatRedactionNotice(const std::string& reason, bool redactedBySameUser, bool isStateEvent);
+
 // ==== Edit Annotation ====
 
 std::string annotateEdited(const std::string& body, bool isEdited);

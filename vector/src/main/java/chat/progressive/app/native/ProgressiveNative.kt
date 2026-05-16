@@ -394,6 +394,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeProcessRoomUpgrade(tombstoneEventJson: String): String
 
+    // --- Redaction ---
+
+    @JvmStatic external fun nativeFormatRedactionNotice(reason: String, redactedBySelf: Boolean, isStateEvent: Boolean): String
+
     // --- Member / Call Notices ---
 
     @JvmStatic external fun nativeFormatMemberNotice(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String
@@ -3427,6 +3431,12 @@ object ProgressiveNative {
     // --- Room Upgrade fallback ---
     @JvmStatic fun nativeProcessRoomUpgradeFallback(tombstoneEventJson: String): String =
         """{"is_upgrade":false,"successor":"","notice":""}"""
+
+    // --- Redaction fallback ---
+    @JvmStatic fun nativeFormatRedactionNoticeFallback(reason: String, redactedBySelf: Boolean, isStateEvent: Boolean): String =
+        if (isStateEvent) "This event is no longer available"
+        else if (redactedBySelf) if (reason.isEmpty()) "You removed this message" else "You removed this message: $reason"
+        else if (reason.isEmpty()) "Message removed" else "Message removed: $reason"
 
     // --- Member/Call/Edit fallbacks ---
     @JvmStatic fun nativeFormatMemberNoticeFallback(membership: String, prevMembership: String, senderId: String, senderName: String, targetId: String, targetName: String, reason: String, isDirect: Boolean, sentBySelf: Boolean): String {

@@ -3603,6 +3603,13 @@ JNI_FUNC(jstring, nativeProcessRoomUpgrade)(JNIEnv* env, jclass, jstring jTombst
        << R"(,"notice":")" << progressive::formatUpgradeNotice(info) << "\"}";
     return env->NewStringUTF(os.str().c_str());
 }
+
+// --- Redaction ---
+
+JNI_FUNC(jstring, nativeFormatRedactionNotice)(JNIEnv* env, jclass, jstring jReason, jboolean jSelf, jboolean jState) {
+    auto result = progressive::formatRedactionNotice(jStr(env, jReason), jSelf, jState);
+    return env->NewStringUTF(result.c_str());
+}
     }
     result.isEnded = json.find("\"closed\":true") != std::string::npos;
 

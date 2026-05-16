@@ -321,6 +321,14 @@ std::string formatCallNotice(
     return who + " (" + eventType + ")";
 }
 
+// ==== Redaction Notice ====
+
+std::string formatRedactionNotice(const std::string& reason, bool redactedBySameUser, bool isStateEvent) {
+    if (isStateEvent) return "This event is no longer available";
+    if (redactedBySameUser) return reason.empty() ? "You removed this message" : "You removed this message: " + reason;
+    return reason.empty() ? "Message removed" : "Message removed: " + reason;
+}
+
 // ==== Edit Annotation ====
 
 std::string annotateEdited(const std::string& body, bool isEdited) {
