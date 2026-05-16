@@ -3509,6 +3509,21 @@ JNI_FUNC(jstring, nativeFormatOverflowLabel)(JNIEnv* env, jclass, jint jCount) {
     auto result = progressive::formatOverflowLabel(jCount);
     return env->NewStringUTF(result.c_str());
 }
+
+// --- Space Hierarchy ---
+
+JNI_FUNC(jstring, nativeSearchSpaceChildren)(JNIEnv* env, jclass, jstring jChildrenJson, jstring jQuery) {
+    auto children = progressive::parseSpaceChildren(jStr(env, jChildrenJson));
+    auto filtered = progressive::searchSpaceChildren(children, jStr(env, jQuery));
+    std::ostringstream os; os << "[";
+    for (size_t i = 0; i < filtered.size(); i++) {
+        if (i > 0) os << ",";
+        os << R"({"child_id":")" << filtered[i].childId
+           << R"(","name":")" << filtered[i].name << "\"}";
+    }
+    os << "]";
+    return env->NewStringUTF(os.str().c_str());
+}
         return v;
     };
     auto eventIds = parseStrArray(jStr(env, jEventIdsJson));

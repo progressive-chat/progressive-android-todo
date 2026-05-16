@@ -373,6 +373,10 @@ object ProgressiveNative {
     @JvmStatic external fun nativeFormatReceiptAccessibility(receiptsJson: String, overflowCount: Int): String
     @JvmStatic external fun nativeFormatOverflowLabel(count: Int): String
 
+    // --- Space Hierarchy ---
+
+    @JvmStatic external fun nativeSearchSpaceChildren(childrenJson: String, query: String): String
+
     // --- Event Classifier ---
 
     @JvmStatic external fun nativeIsStateEvent(eventType: String): Boolean
@@ -661,7 +665,6 @@ object ProgressiveNative {
     // --- Read Receipts ---
 
     @JvmStatic external fun nativeComputeReceiptDisplay(receiptsJson: String, maxVisible: Int): String
-    @JvmStatic external fun nativeFormatOverflowLabel(count: Int): String
     @JvmStatic external fun nativeFormatReceiptAccessibility(visibleJson: String, overflow: Int): String
 
     // --- Room Analytics ---
@@ -3436,6 +3439,9 @@ object ProgressiveNative {
     // --- Read Receipts fallbacks ---
     @JvmStatic fun nativeFormatReceiptAccessibilityFallback(receiptsJson: String, overflowCount: Int): String = "Read"
     @JvmStatic fun nativeFormatOverflowLabelFallback(count: Int): String = if (count > 0) "+$count" else ""
+
+    // --- Space Hierarchy fallback ---
+    @JvmStatic fun nativeSearchSpaceChildrenFallback(childrenJson: String, query: String): String = "[]"
 
     // --- Event Classifier fallback ---
     @JvmStatic fun nativeIsStateEventFallback(eventType: String): Boolean =
