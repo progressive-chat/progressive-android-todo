@@ -405,6 +405,10 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeComputeNotificationState(roomJson: String): String
 
+    // --- Room List Search ---
+
+    @JvmStatic external fun nativeSearchRoomList(roomsJson: String, query: String): String
+
     // --- Event Classifier ---
 
     @JvmStatic external fun nativeIsStateEvent(eventType: String): Boolean
@@ -3503,6 +3507,9 @@ object ProgressiveNative {
     // --- Notification State fallback ---
     @JvmStatic fun nativeComputeNotificationStateFallback(roomJson: String): String =
         """{"level":"none","count":0,"badge_text":"","show_badge":false}"""
+
+    // --- Room List Search fallback ---
+    @JvmStatic fun nativeSearchRoomListFallback(roomsJson: String, query: String): String = "[]"
 
     // --- Event Classifier fallback ---
     @JvmStatic fun nativeIsStateEventFallback(eventType: String): Boolean =

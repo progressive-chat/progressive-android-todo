@@ -3633,7 +3633,6 @@ JNI_FUNC(jstring, nativeComputeEditDiffSummary)(JNIEnv* env, jclass, jstring jOl
 JNI_FUNC(jstring, nativeComputeNotificationState)(JNIEnv* env, jclass, jstring jRoomJson) {
     progressive::RoomListItem room;
     auto json = jStr(env, jRoomJson);
-    // Parse key fields from JSON
     auto extractInt = [&](const std::string& key) -> int {
         auto p = json.find("\"" + key + "\"");
         if (p == std::string::npos) return 0;
@@ -3656,6 +3655,43 @@ JNI_FUNC(jstring, nativeComputeNotificationState)(JNIEnv* env, jclass, jstring j
     auto state = progressive::computeNotificationState(room);
     auto result = progressive::notificationStateToJson(state);
     return env->NewStringUTF(result.c_str());
+}
+
+// --- Room List Search ---
+
+JNI_FUNC(jstring, nativeSearchRoomList)(JNIEnv* env, jclass, jstring jRoomsJson, jstring jQuery) {
+    auto json = jStr(env, jRoomsJson);
+    std::vector<progressive::RoomListItem> rooms;
+    // Parse JSON array of rooms
+    size_t p = 0;
+    while ((p = json.find("\"roomId\"", p)) != std::string::npos) {
+        p = json.rfind('{', p); if (p == std::string::npos) break;
+        int depth = 1; size_t s = p; p++;
+        while (p < json.size() && depth > 0) {
+            if (json[p] == '{') depth++; else if (json[p] == '}') depth--;
+            p++;
+        }
+        std::string rj = json.substr(s, p - s);
+        progressive::RoomListItem room;
+        auto es = [&](const std::string& key) -> std::string {
+            auto pp = rj.find("\"" + key + "\""); if (pp == std::string::npos) return "";
+            pp = rj.find('"', pp + key.size() + 2); if (pp == std::string::npos) return "";
+            pp++; size_t e = pp; while (e < rj.size() && rj[e] != '"') e++;
+            return rj.substr(pp, e - pp);
+        };
+        room.roomId = es("roomId");
+        room.name = es("name");
+        rooms.push_back(room);
+    }
+    auto results = progressive::searchRoomList(rooms, jStr(env, jQuery));
+    std::ostringstream os; os << "[";
+    for (size_t i = 0; i < results.size(); i++) {
+        if (i > 0) os << ",";
+        os << R"({"room_id":")" << results[i].roomId
+           << R"(","name":")" << results[i].name << "\"}";
+    }
+    os << "]";
+    return env->NewStringUTF(os.str().c_str());
 }
     // Format: "Alice, Bob and 3 others online"
     std::ostringstream os;
