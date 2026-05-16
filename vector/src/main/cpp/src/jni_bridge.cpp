@@ -2245,6 +2245,23 @@ JNI_FUNC(jstring, nativeUrlPreviewToJson)(JNIEnv* env, jclass, jstring jPreviewJ
     return env->NewStringUTF(result.c_str());
 }
 
+// --- Web Search ---
+
+JNI_FUNC(jstring, nativeBuildSearxngUrl)(JNIEnv* env, jclass, jstring jEndpoint, jstring jQuery, jint jMax) {
+    auto result = progressive::buildSearxngUrl(jStr(env, jEndpoint), jStr(env, jQuery), jMax);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeBuildDuckDuckGoUrl)(JNIEnv* env, jclass, jstring jQuery) {
+    auto result = progressive::buildDuckDuckGoUrl(jStr(env, jQuery));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeBuildGoogleUrl)(JNIEnv* env, jclass, jstring jApiKey, jstring jEngineId, jstring jQuery, jint jMax) {
+    auto result = progressive::buildGoogleUrl(jStr(env, jApiKey), jStr(env, jEngineId), jStr(env, jQuery), jMax);
+    return env->NewStringUTF(result.c_str());
+}
+
 // --- Device Type ---
 
 JNI_FUNC(jstring, nativeClassifyDeviceType)(JNIEnv* env, jclass, jstring jAgent, jstring jClient) {

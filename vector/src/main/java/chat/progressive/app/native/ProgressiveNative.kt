@@ -1960,6 +1960,12 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeClassifyDeviceType(userAgent: String, clientName: String): String
 
+    // --- Web Search ---
+
+    @JvmStatic external fun nativeBuildSearxngUrl(endpoint: String, query: String, maxResults: Int): String
+    @JvmStatic external fun nativeBuildDuckDuckGoUrl(query: String): String
+    @JvmStatic external fun nativeBuildGoogleUrl(apiKey: String, engineId: String, query: String, maxResults: Int): String
+
 
     // --- Device Type ---
 
@@ -3739,6 +3745,14 @@ object ProgressiveNative {
         userAgent.contains("Tablet") -> "Tablet"
         else -> "Desktop"
     }
+
+    // --- Web Search fallback ---
+    @JvmStatic fun nativeBuildSearxngUrlFallback(endpoint: String, query: String, maxResults: Int): String =
+        "${endpoint.trimEnd('/')}/search?q=${java.net.URLEncoder.encode(query, "UTF-8")}&format=json"
+    @JvmStatic fun nativeBuildDuckDuckGoUrlFallback(query: String): String =
+        "https://api.duckduckgo.com/?q=${java.net.URLEncoder.encode(query, "UTF-8")}&format=json"
+    @JvmStatic fun nativeBuildGoogleUrlFallback(apiKey: String, engineId: String, query: String, maxResults: Int): String =
+        "https://customsearch.googleapis.com/customsearch/v1?key=$apiKey&cx=$engineId&q=${java.net.URLEncoder.encode(query, "UTF-8")}&num=$maxResults"
 
     // --- Version Comparison fallback ---
     @JvmStatic fun nativeCompareSemverFallback(a: String, b: String): Int {
