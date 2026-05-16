@@ -1356,6 +1356,32 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeCreateRoomPresetToString(preset: Int): String
 
+    // --- Widget Manager ---
+
+    @JvmStatic external fun nativeWidgetMgrInit(roomId: String, userId: String, displayName: String, avatarUrl: String): Boolean
+    @JvmStatic external fun nativeWidgetMgrSetSecurityPolicy(policyJson: String): Boolean
+    @JvmStatic external fun nativeWidgetMgrLoadWidgets(stateEventsJson: String): String
+    @JvmStatic external fun nativeWidgetMgrCreateWidget(widgetId: String, type: String, url: String, name: String, waitForIframeLoad: Boolean): String
+    @JvmStatic external fun nativeWidgetMgrRemoveWidget(widgetId: String): String
+    @JvmStatic external fun nativeWidgetMgrSetPinned(widgetId: String, pinned: Boolean): String
+    @JvmStatic external fun nativeWidgetMgrResize(widgetId: String, width: Int, height: Int): String
+    @JvmStatic external fun nativeWidgetMgrSetMinimized(widgetId: String, minimized: Boolean): String
+    @JvmStatic external fun nativeWidgetMgrSetMaximized(widgetId: String, maximized: Boolean): String
+    @JvmStatic external fun nativeWidgetMgrRequestCapability(widgetId: String, capability: Int): String
+    @JvmStatic external fun nativeWidgetMgrApproveCapability(widgetId: String, capability: Int): String
+    @JvmStatic external fun nativeWidgetMgrDenyCapability(widgetId: String, capability: Int): String
+    @JvmStatic external fun nativeWidgetMgrGetUrl(widgetId: String): String
+    @JvmStatic external fun nativeWidgetMgrBuildPostMessage(widgetId: String, action: String, data: String): String
+    @JvmStatic external fun nativeWidgetMgrParsePostMessage(message: String): String
+    @JvmStatic external fun nativeWidgetMgrSupportsPiP(widgetId: String): Boolean
+    @JvmStatic external fun nativeWidgetMgrGetByType(type: String): String
+    @JvmStatic external fun nativeWidgetMgrCount(): String
+    @JvmStatic external fun nativeWidgetMgrBuildCsp(): String
+    @JvmStatic external fun nativeApplyWidgetUrlTemplate(url: String, templateJson: String): String
+    @JvmStatic external fun nativeValidateWidgetSecurity(url: String, policyJson: String): String
+    @JvmStatic external fun nativeClassifyWidgetType(type: String): String
+    @JvmStatic external fun nativeIsAutoApprovedCapability(capability: Int, widgetType: String): Boolean
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -3908,6 +3934,62 @@ object ProgressiveNative {
     @JvmStatic fun nativeCreateRoomPresetToStringFallback(preset: Int): String = when(preset) {
         0 -> "private_chat"; 1 -> "public_chat"; 2 -> "trusted_private_chat"
         else -> "private_chat" }
+
+    // --- Widget Manager fallbacks ---
+    private var _widgetMgrWidgets = mutableListOf<Map<String, Any>>()
+
+    @JvmStatic fun nativeWidgetMgrInitFallback(roomId: String, userId: String, displayName: String, avatarUrl: String): Boolean = true
+    @JvmStatic fun nativeWidgetMgrSetSecurityPolicyFallback(policyJson: String): Boolean = true
+    @JvmStatic fun nativeWidgetMgrLoadWidgetsFallback(stateEventsJson: String): String = "[]"
+    @JvmStatic fun nativeWidgetMgrCreateWidgetFallback(widgetId: String, type: String, url: String, name: String, waitForIframeLoad: Boolean): String {
+        _widgetMgrWidgets.add(mapOf("widgetId" to widgetId, "type" to type, "url" to url, "name" to name))
+        return """{"id":"$widgetId","type":"$type","url":"$url","name":"${name.ifEmpty{widgetId}}"}"""
+    }
+    @JvmStatic fun nativeWidgetMgrRemoveWidgetFallback(widgetId: String): String {
+        _widgetMgrWidgets.removeAll { it["widgetId"] == widgetId }
+        return """{"state_key":"$widgetId"}"""
+    }
+    @JvmStatic fun nativeWidgetMgrSetPinnedFallback(widgetId: String, pinned: Boolean): String =
+        """{"widgetId":"$widgetId","pinned":$pinned}"""
+    @JvmStatic fun nativeWidgetMgrResizeFallback(widgetId: String, width: Int, height: Int): String =
+        """{"widgetId":"$widgetId","width":$width,"height":$height}"""
+    @JvmStatic fun nativeWidgetMgrSetMinimizedFallback(widgetId: String, minimized: Boolean): String =
+        """{"widgetId":"$widgetId","minimized":$minimized}"""
+    @JvmStatic fun nativeWidgetMgrSetMaximizedFallback(widgetId: String, maximized: Boolean): String =
+        """{"widgetId":"$widgetId","maximized":$maximized}"""
+    @JvmStatic fun nativeWidgetMgrRequestCapabilityFallback(widgetId: String, capability: Int): String =
+        """{"widgetId":"$widgetId","capability":$capability,"approved":true,"reason":"auto-approved (fallback)"}"""
+    @JvmStatic fun nativeWidgetMgrApproveCapabilityFallback(widgetId: String, capability: Int): String =
+        """{"approved":true}"""
+    @JvmStatic fun nativeWidgetMgrDenyCapabilityFallback(widgetId: String, capability: Int): String =
+        """{"denied":true}"""
+    @JvmStatic fun nativeWidgetMgrGetUrlFallback(widgetId: String): String = ""
+    @JvmStatic fun nativeWidgetMgrBuildPostMessageFallback(widgetId: String, action: String, data: String): String =
+        """{"api":"fromWidget","widgetId":"$widgetId","action":"$action","data":${data.ifEmpty{"{}"}}}"""
+    @JvmStatic fun nativeWidgetMgrParsePostMessageFallback(message: String): String {
+        val action = Regex(""""action":"([^"]+)"""").find(message)?.groupValues?.getOrNull(1) ?: ""
+        val wid = Regex(""""widgetId":"([^"]+)"""").find(message)?.groupValues?.getOrNull(1) ?: ""
+        return """{"api":"","action":"$action","widgetId":"$wid","data":{}}"""
+    }
+    @JvmStatic fun nativeWidgetMgrSupportsPiPFallback(widgetId: String): Boolean = false
+    @JvmStatic fun nativeWidgetMgrGetByTypeFallback(type: String): String = "[]"
+    @JvmStatic fun nativeWidgetMgrCountFallback(): String = "0"
+    @JvmStatic fun nativeWidgetMgrBuildCspFallback(): String = ""
+    @JvmStatic fun nativeApplyWidgetUrlTemplateFallback(url: String, templateJson: String): String = url
+    @JvmStatic fun nativeValidateWidgetSecurityFallback(url: String, policyJson: String): String =
+        if (url.startsWith("https://")) """{"valid":true,"reason":""}""" else """{"valid":false,"reason":"URL must use https://"}"""
+    @JvmStatic fun nativeClassifyWidgetTypeFallback(type: String): String = when(type) {
+        "m.jitsi","jitsi" -> "Video Conference"
+        "m.etherpad","etherpad" -> "Collaborative Document"
+        "m.custom" -> "Custom Widget"
+        "m.stickerpicker" -> "Sticker Picker"
+        "m.calculator" -> "Calculator"
+        "m.youtube" -> "YouTube"
+        "m.spotify" -> "Spotify"
+        "m.whiteboard" -> "Whiteboard"
+        else -> type }
+    @JvmStatic fun nativeIsAutoApprovedCapabilityFallback(capability: Int, widgetType: String): Boolean =
+        widgetType in listOf("m.jitsi","jitsi","m.stickerpicker")
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")

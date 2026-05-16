@@ -1,5 +1,6 @@
 #include <jni.h>
 #include <string>
+#include <memory>
 #include <android/log.h>
 #include "progressive/jumptodate.hpp"
 #include "progressive/relation.hpp"
@@ -80,7 +81,7 @@
 #include "progressive/user_rating.hpp"
 #include "progressive/event_timeline.hpp"
 #include "progressive/room_directory.hpp"
-#include "progressive/widget_utils.hpp"
+#include "progressive/widget_manager.hpp"
 #include "progressive/sso_utils.hpp"
 #include "progressive/backup_utils.hpp"
 #include "progressive/device_manager.hpp"
@@ -156,6 +157,7 @@
 #include "progressive/invite_utils.hpp"
 #include "progressive/event_validator.hpp"
 #include "progressive/widget_utils.hpp"
+#include "progressive/widget_manager.hpp"
 #include "progressive/cross_signing.hpp"
 #include "progressive/edit_history.hpp"
 #include "progressive/read_marker.hpp"
@@ -4720,6 +4722,193 @@ JNI_FUNC(jboolean, nativeTlsBridgeAvailable)(JNIEnv*, jclass) {
 JNI_FUNC(jstring, nativeCreateRoomPresetToString)(JNIEnv* env, jclass, jint jPreset) {
     auto r = progressive::createRoomPresetToString(static_cast<progressive::CreateRoomPreset>(jPreset));
     return env->NewStringUTF(r);
+}
+
+// ============================================================
+// Widget Manager — full Matrix widget lifecycle
+// ============================================================
+
+static std::unique_ptr<progressive::WidgetManager> g_widgetMgr;
+
+static progressive::WidgetManager* getWidgetMgr() {
+    if (!g_widgetMgr) {
+        g_widgetMgr.reset(new progressive::WidgetManager("", "", "", ""));
+    }
+    return g_widgetMgr.get();
+}
+
+JNI_FUNC(jboolean, nativeWidgetMgrInit)(JNIEnv* env, jclass, jstring jRoomId, jstring jUserId,
+                                         jstring jDisplayName, jstring jAvatarUrl) {
+    g_widgetMgr.reset(new progressive::WidgetManager(
+        jStr(env, jRoomId), jStr(env, jUserId),
+        jStr(env, jDisplayName), jStr(env, jAvatarUrl)));
+    return JNI_TRUE;
+}
+
+JNI_FUNC(jboolean, nativeWidgetMgrSetSecurityPolicy)(JNIEnv* env, jclass, jstring jPolicyJson) {
+    auto json = jStr(env, jPolicyJson);
+    auto policy = progressive::defaultWidgetSecurityPolicy();
+    if (json.find("\"enforce_same_origin\":false") != std::string::npos) policy.enforceSameOrigin = false;
+    if (json.find("\"allow_data_urls\":true") != std::string::npos) policy.allowDataUrls = true;
+    if (json.find("\"allow_blob_urls\":true") != std::string::npos) policy.allowBlobUrls = true;
+    getWidgetMgr()->setSecurityPolicy(policy);
+    return JNI_TRUE;
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrLoadWidgets)(JNIEnv* env, jclass, jstring jStateJson) {
+    auto mgr = getWidgetMgr();
+    mgr->loadWidgets(jStr(env, jStateJson));
+    return env->NewStringUTF(mgr->widgetsToJson().c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrCreateWidget)(JNIEnv* env, jclass, jstring jWidgetId,
+                                                jstring jType, jstring jUrl, jstring jName,
+                                                jboolean jWaitLoad) {
+    auto mgr = getWidgetMgr();
+    std::string error;
+    auto result = mgr->createWidget(jStr(env, jWidgetId), jStr(env, jType),
+                                    jStr(env, jUrl), jStr(env, jName), jWaitLoad, error);
+    if (!result.empty()) {
+        return env->NewStringUTF(result.c_str());
+    }
+    return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrRemoveWidget)(JNIEnv* env, jclass, jstring jWidgetId) {
+    auto result = getWidgetMgr()->removeWidget(jStr(env, jWidgetId));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrSetPinned)(JNIEnv* env, jclass, jstring jWidgetId, jboolean jPinned) {
+    std::string error;
+    auto result = getWidgetMgr()->setWidgetPinned(jStr(env, jWidgetId), jPinned, error);
+    if (result.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrResize)(JNIEnv* env, jclass, jstring jWidgetId, jint jW, jint jH) {
+    std::string error;
+    auto result = getWidgetMgr()->resizeWidget(jStr(env, jWidgetId), jW, jH, error);
+    if (result.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrSetMinimized)(JNIEnv* env, jclass, jstring jWidgetId, jboolean jMin) {
+    auto result = getWidgetMgr()->setWidgetMinimized(jStr(env, jWidgetId), jMin);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrSetMaximized)(JNIEnv* env, jclass, jstring jWidgetId, jboolean jMax) {
+    auto result = getWidgetMgr()->setWidgetMaximized(jStr(env, jWidgetId), jMax);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrRequestCapability)(JNIEnv* env, jclass, jstring jWidgetId, jint jCap) {
+    std::string error;
+    auto result = getWidgetMgr()->requestCapability(jStr(env, jWidgetId),
+        static_cast<progressive::WidgetCapability>(jCap), error);
+    if (result.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrApproveCapability)(JNIEnv* env, jclass, jstring jWidgetId, jint jCap) {
+    auto result = getWidgetMgr()->approveCapability(jStr(env, jWidgetId),
+        static_cast<progressive::WidgetCapability>(jCap));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrDenyCapability)(JNIEnv* env, jclass, jstring jWidgetId, jint jCap) {
+    auto result = getWidgetMgr()->denyCapability(jStr(env, jWidgetId),
+        static_cast<progressive::WidgetCapability>(jCap));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrGetUrl)(JNIEnv* env, jclass, jstring jWidgetId) {
+    std::string error;
+    auto result = getWidgetMgr()->getWidgetUrl(jStr(env, jWidgetId), error);
+    if (result.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrBuildPostMessage)(JNIEnv* env, jclass, jstring jWidgetId,
+                                                    jstring jAction, jstring jData) {
+    auto result = getWidgetMgr()->buildWidgetPostMessage(jStr(env, jWidgetId),
+        jStr(env, jAction), jStr(env, jData));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrParsePostMessage)(JNIEnv* env, jclass, jstring jMessage) {
+    std::string action, widgetId, data;
+    auto api = getWidgetMgr()->parseWidgetPostMessage(jStr(env, jMessage), action, widgetId, data);
+    std::ostringstream os;
+    os << R"({"api":")" << api << R"(","action":")" << action
+       << R"(","widgetId":")" << widgetId << R"(","data":)" << (data.empty() ? "{}" : data) << "}";
+    return env->NewStringUTF(os.str().c_str());
+}
+
+JNI_FUNC(jboolean, nativeWidgetMgrSupportsPiP)(JNIEnv* env, jclass, jstring jWidgetId) {
+    return getWidgetMgr()->supportsPiP(jStr(env, jWidgetId)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrGetByType)(JNIEnv* env, jclass, jstring jType) {
+    auto widgets = getWidgetMgr()->getWidgetsByType(jStr(env, jType));
+    std::ostringstream os; os << "[";
+    for (size_t i = 0; i < widgets.size(); i++) {
+        if (i > 0) os << ",";
+        os << R"({"id":")" << widgets[i].widgetId
+           << R"(","name":")" << widgets[i].name
+           << R"(","type":")" << widgets[i].type << "\"}";
+    }
+    os << "]";
+    return env->NewStringUTF(os.str().c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrCount)(JNIEnv* env, jclass) {
+    return env->NewStringUTF(std::to_string(getWidgetMgr()->widgetCount()).c_str());
+}
+
+JNI_FUNC(jstring, nativeWidgetMgrBuildCsp)(JNIEnv* env, jclass) {
+    auto csp = getWidgetMgr()->buildGlobalCsp();
+    return env->NewStringUTF(csp.c_str());
+}
+
+// Helper functions (no manager needed)
+JNI_FUNC(jstring, nativeApplyWidgetUrlTemplate)(JNIEnv* env, jclass, jstring jUrl, jstring jTemplateJson) {
+    auto json = jStr(env, jTemplateJson);
+    progressive::WidgetUrlTemplate t;
+    auto s = [&](const std::string& k) -> std::string { return jExtractStr(json, k); };
+    t.userId = s("user_id"); t.roomId = s("room_id"); t.widgetId = s("widget_id");
+    t.displayName = s("display_name"); t.avatarUrl = s("avatar_url");
+    t.clientId = s("client_id"); t.clientTheme = s("client_theme");
+    t.clientLanguage = s("client_language");
+    auto result = progressive::applyWidgetUrlTemplate(jStr(env, jUrl), t);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeValidateWidgetSecurity)(JNIEnv* env, jclass, jstring jUrl, jstring jPolicyJson) {
+    auto json = jStr(env, jPolicyJson);
+    auto policy = progressive::defaultWidgetSecurityPolicy();
+    if (jExtractBool(json, "enforce_same_origin") == false &&
+        json.find("\"enforce_same_origin\"") != std::string::npos) policy.enforceSameOrigin = false;
+    if (jExtractBool(json, "allow_data_urls")) policy.allowDataUrls = true;
+    if (jExtractBool(json, "allow_blob_urls")) policy.allowBlobUrls = true;
+
+    std::string reason;
+    bool ok = progressive::validateWidgetSecurity(jStr(env, jUrl), policy, reason);
+    std::ostringstream os;
+    os << R"({"valid":)" << (ok ? "true" : "false")
+       << R"(,"reason":")" << reason << "\"}";
+    return env->NewStringUTF(os.str().c_str());
+}
+
+JNI_FUNC(jstring, nativeClassifyWidgetType)(JNIEnv* env, jclass, jstring jType) {
+    auto wt = progressive::classifyWidgetType(jStr(env, jType));
+    return env->NewStringUTF(progressive::getWidgetTypeName(jStr(env, jType)));
+}
+
+JNI_FUNC(jboolean, nativeIsAutoApprovedCapability)(JNIEnv* env, jclass, jint jCap, jstring jWidgetType) {
+    return progressive::isAutoApprovedCapability(
+        static_cast<progressive::WidgetCapability>(jCap), jStr(env, jWidgetType)) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"
