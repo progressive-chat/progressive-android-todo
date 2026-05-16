@@ -1570,7 +1570,6 @@ JNI_FUNC(jstring, nativeBuildUserPermalink)(JNIEnv* env, jclass, jstring jUser) 
 }
 
 // --- Media Utilities ---
-}
 
 // --- Presence Utilities ---
 
