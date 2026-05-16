@@ -170,6 +170,7 @@
 #include "progressive/text_undo_manager.hpp"
 #include "progressive/room_permissions_manager.hpp"
 #include "progressive/offline_cache.hpp"
+#include "progressive/spoiler_manager.hpp"
 #include "progressive/cross_signing.hpp"
 #include "progressive/edit_history.hpp"
 #include "progressive/read_marker.hpp"
@@ -6772,6 +6773,53 @@ JNI_FUNC(void, nativeCacheRecordHit)(JNIEnv* env, jclass, jstring jRoomId, jlong
 
 JNI_FUNC(void, nativeCacheRecordMiss)(JNIEnv* env, jclass, jstring jRoomId, jlong jBytes) {
     getCacheMgr()->recordMiss(jStr(env, jRoomId), jBytes);
+}
+
+// ============================================================
+// Spoiler Manager
+// ============================================================
+
+static std::unique_ptr<progressive::SpoilerManager> g_spoilerMgr;
+
+static progressive::SpoilerManager* getSpoilerMgr() {
+    if (!g_spoilerMgr) g_spoilerMgr.reset(new progressive::SpoilerManager());
+    return g_spoilerMgr.get();
+}
+
+JNI_FUNC(jstring, nativeSpoilerBuildImage)(JNIEnv* env, jclass, jstring jBody, jstring jMxc, jstring jMime,
+                                            jint jW, jint jH, jlong jSize, jstring jReason) {
+    auto sc = getSpoilerMgr()->buildImageSpoiler(jStr(env, jBody), jStr(env, jMxc), jStr(env, jMime),
+        jW, jH, jSize, jStr(env, jReason));
+    std::ostringstream os;
+    os << R"({"plain_body":")" << sc.plainBody
+       << R"(","formatted_body":")" << sc.formattedBody
+       << R"(","type":")" << sc.spoilerType
+       << R"(","has_spoiler":true)";
+    os << "}";
+    return env->NewStringUTF(os.str().c_str());
+}
+
+JNI_FUNC(jstring, nativeSpoilerBuildText)(JNIEnv* env, jclass, jstring jBody, jstring jReason) {
+    auto sc = getSpoilerMgr()->buildTextSpoiler(jStr(env, jBody), jStr(env, jReason));
+    std::ostringstream os;
+    os << R"({"plain_body":")" << sc.plainBody
+       << R"(","formatted_body":")" << sc.formattedBody
+       << R"(","type":"text","has_spoiler":true)";
+    os << "}";
+    return env->NewStringUTF(os.str().c_str());
+}
+
+JNI_FUNC(jboolean, nativeSpoilerHasSpoiler)(JNIEnv* env, jclass, jstring jFormattedBody) {
+    return getSpoilerMgr()->hasSpoiler(jStr(env, jFormattedBody)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeSpoilerDetectType)(JNIEnv* env, jclass, jstring jFormattedBody) {
+    return env->NewStringUTF(getSpoilerMgr()->detectSpoilerType(jStr(env, jFormattedBody)).c_str());
+}
+
+JNI_FUNC(jstring, nativeSpoilerBuildContent)(JNIEnv* env, jclass, jstring jBody, jstring jMxcUrl, jstring jMsgType, jstring jReason) {
+    auto sc = getSpoilerMgr()->buildImageSpoiler(jStr(env, jBody), jStr(env, jMxcUrl), "image/jpeg", 0, 0, 0, jStr(env, jReason));
+    return env->NewStringUTF(getSpoilerMgr()->buildSpoilerMessageContent(sc, jStr(env, jMxcUrl), jStr(env, jMsgType)).c_str());
 }
 
 } // extern "C"

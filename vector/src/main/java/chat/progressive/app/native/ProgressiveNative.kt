@@ -1718,6 +1718,14 @@ object ProgressiveNative {
     @JvmStatic external fun nativeCacheRecordHit(roomId: String, bytes: Long)
     @JvmStatic external fun nativeCacheRecordMiss(roomId: String, bytes: Long)
 
+    // --- Spoiler Manager ---
+
+    @JvmStatic external fun nativeSpoilerBuildImage(body: String, mxcUrl: String, mimeType: String, width: Int, height: Int, sizeBytes: Long, reason: String): String
+    @JvmStatic external fun nativeSpoilerBuildText(body: String, reason: String): String
+    @JvmStatic external fun nativeSpoilerHasSpoiler(formattedBody: String): Boolean
+    @JvmStatic external fun nativeSpoilerDetectType(formattedBody: String): String
+    @JvmStatic external fun nativeSpoilerBuildContent(body: String, mxcUrl: String, msgType: String, reason: String): String
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -4858,6 +4866,22 @@ object ProgressiveNative {
     @JvmStatic fun nativeCacheEvictToFreeFallback(targetBytes: Long, availableBytes: Long, reservedBytes: Long): String = "[]"
     @JvmStatic fun nativeCacheRecordHitFallback(roomId: String, bytes: Long) {}
     @JvmStatic fun nativeCacheRecordMissFallback(roomId: String, bytes: Long) {}
+
+    // --- Spoiler fallbacks ---
+    @JvmStatic fun nativeSpoilerBuildImageFallback(body: String, mxcUrl: String, mimeType: String, width: Int, height: Int, sizeBytes: Long, reason: String): String {
+        val reasonAttr = if (reason.isNotEmpty()) " data-mx-spoiler-reason=\"$reason\"" else ""
+        val img = "<img src=\"$mxcUrl\" alt=\"$body\" title=\"$body\" />"
+        return """{"plain_body":"$body","formatted_body":"<span data-mx-spoiler$reasonAttr>$img</span>","type":"image","has_spoiler":true}"""
+    }
+    @JvmStatic fun nativeSpoilerBuildTextFallback(body: String, reason: String): String {
+        val reasonAttr = if (reason.isNotEmpty()) " data-mx-spoiler-reason=\"$reason\"" else ""
+        return """{"plain_body":"||$body||","formatted_body":"<span data-mx-spoiler$reasonAttr>$body</span>","type":"text","has_spoiler":true}"""
+    }
+    @JvmStatic fun nativeSpoilerHasSpoilerFallback(formattedBody: String): Boolean = "data-mx-spoiler" in formattedBody
+    @JvmStatic fun nativeSpoilerDetectTypeFallback(formattedBody: String): String =
+        when { "<img" in formattedBody -> "image"; "<video" in formattedBody -> "video"; else -> "text" }
+    @JvmStatic fun nativeSpoilerBuildContentFallback(body: String, mxcUrl: String, msgType: String, reason: String): String =
+        """{"msgtype":"$msgType","body":"$body","url":"$mxcUrl","m.spoiler":true}"""
 
     @JvmStatic fun nativeSessionCountFallback(): Int = 0
 
