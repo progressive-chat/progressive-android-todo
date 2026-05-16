@@ -1635,6 +1635,59 @@ static void test_userdir_relevance() {
     ASSERT_TRUE(mgr.calculateRelevance(u, "Bo") <= 50);
 }
 
+// ==== Device Manager Full (from Element Android sources) ====
+
+#include "progressive/device_manager_full.hpp"
+
+static void test_device_parse_list() {
+    progressive::DeviceManager mgr;
+    auto resp = mgr.parseDevicesList(R"({"devices":[{"device_id":"DEV1","display_name":"Phone","last_seen_ts":1700000000000},{"device_id":"DEV2","display_name":"Laptop","last_seen_ts":0}]})");
+    ASSERT_EQ(resp.totalCount, 2);
+    ASSERT_STREQ(resp.devices[0].deviceId.c_str(), "DEV1");
+    ASSERT_STREQ(resp.devices[0].displayName.c_str(), "Phone");
+}
+
+static void test_device_format_fingerprint() {
+    progressive::DeviceManager mgr;
+    auto fmt = mgr.formatFingerprint("abcdef1234567890");
+    ASSERT_TRUE(fmt.find(" ") != std::string::npos); // Has spaces
+    ASSERT_TRUE(fmt.size() > 8);
+}
+
+static void test_device_inactivity() {
+    progressive::DeviceManager mgr;
+    ASSERT_TRUE(mgr.isDeviceInactive(0, 7));
+    // 0 timestamp = never seen = inactive
+}
+
+static void test_device_trust_label() {
+    progressive::DeviceManager mgr;
+    progressive::DeviceTrustLevel tl;
+    tl.crossSigningVerified = true;
+    ASSERT_STREQ(mgr.getTrustLabel(tl).c_str(), "Verified");
+    tl.crossSigningVerified = false; tl.locallyVerified = true;
+    ASSERT_STREQ(mgr.getTrustLabel(tl).c_str(), "Verified (local)");
+    tl.locallyVerified = false;
+    ASSERT_STREQ(mgr.getTrustLabel(tl).c_str(), "Not verified");
+}
+
+static void test_device_build_rename() {
+    progressive::DeviceManager mgr;
+    progressive::DeviceRenameRequest req; req.deviceId = "DEV1"; req.newDisplayName = "My New Phone";
+    auto json = mgr.buildRenameRequest(req);
+    ASSERT_TRUE(json.find("My New Phone") != std::string::npos);
+}
+
+static void test_device_crypto_parse() {
+    progressive::DeviceManager mgr;
+    auto dev = mgr.parseCryptoDeviceInfo("DEV1", "@alice:org",
+        R"({"keys":{"ed25519:DEV1":"ABCDEFGH1234","curve25519:DEV1":"ZYX987"},"algorithms":["m.olm.v1.curve25519-aes-sha2","m.megolm.v1.aes-sha2"]})");
+    ASSERT_TRUE(dev.valid);
+    ASSERT_STREQ(dev.fingerprint().c_str(), "ABCDEFGH1234");
+    ASSERT_STREQ(dev.identityKey().c_str(), "ZYX987");
+    ASSERT_EQ(static_cast<int>(dev.algorithms.size()), 2);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -1927,6 +1980,14 @@ int main() {
     ADD_TEST(runner, test_userdir_validation);
     ADD_TEST(runner, test_userdir_build_request);
     ADD_TEST(runner, test_userdir_relevance);
+    
+    printf("\n-- Device Manager (Element Android) --\n");
+    ADD_TEST(runner, test_device_parse_list);
+    ADD_TEST(runner, test_device_format_fingerprint);
+    ADD_TEST(runner, test_device_inactivity);
+    ADD_TEST(runner, test_device_trust_label);
+    ADD_TEST(runner, test_device_build_rename);
+    ADD_TEST(runner, test_device_crypto_parse);
     
     return runner.summary();
 }

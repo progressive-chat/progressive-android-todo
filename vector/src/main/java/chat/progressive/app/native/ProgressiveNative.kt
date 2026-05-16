@@ -1534,6 +1534,19 @@ object ProgressiveNative {
     @JvmStatic external fun nativeProfileGetSummary(name: String): String
     @JvmStatic external fun nativeProfileMemory(): String
 
+    // --- Device Manager Full ---
+
+    @JvmStatic external fun nativeDeviceParseList(json: String): String
+    @JvmStatic external fun nativeDeviceParseInfo(deviceId: String, json: String): String
+    @JvmStatic external fun nativeDeviceParseCrypto(deviceId: String, userId: String, json: String): String
+    @JvmStatic external fun nativeDeviceBuildRename(deviceId: String, newName: String): String
+    @JvmStatic external fun nativeDeviceBuildDelete(deviceId: String, authType: String, authSession: String, password: String): String
+    @JvmStatic external fun nativeDeviceFormatFingerprint(rawKey: String): String
+    @JvmStatic external fun nativeDeviceGetTrustLabel(crossSigningVerified: Boolean, locallyVerified: Boolean): String
+    @JvmStatic external fun nativeDeviceFormatLastSeen(timestampMs: Long): String
+    @JvmStatic external fun nativeDeviceIsInactive(lastSeenTs: Long, inactivityDays: Int): Boolean
+    @JvmStatic external fun nativeDeviceSatisfiesVersion(clientVersion: String, minRequired: String): Boolean
+
     // --- WebRTC Utils ---
 
     @JvmStatic external fun nativeFormatCallDuration(seconds: Int): String
@@ -4377,6 +4390,38 @@ object ProgressiveNative {
     @JvmStatic fun nativeProfileReportTextFallback(): String = "Profiler not available (native lib not loaded)"
     @JvmStatic fun nativeProfileGetSummaryFallback(name: String): String = """{"name":"$name","calls":0,"total_ns":0,"avg_ns":0,"min_ns":0,"max_ns":0}"""
     @JvmStatic fun nativeProfileMemoryFallback(): String = """{"bytes":0,"alloc_count":0,"dealloc_count":0,"ts":0}"""
+
+    // --- Device Manager Full fallbacks ---
+    @JvmStatic fun nativeDeviceParseListFallback(json: String): String = "[]"
+    @JvmStatic fun nativeDeviceParseInfoFallback(deviceId: String, json: String): String =
+        """{"device_id":"$deviceId","user_id":"","display_name":"","last_seen_ts":0,"last_seen":"Never","last_seen_ip":"","user_agent":"","is_inactive":true}"""
+    @JvmStatic fun nativeDeviceParseCryptoFallback(deviceId: String, userId: String, json: String): String =
+        """{"device_id":"$deviceId","user_id":"$userId","display_name":"","fingerprint":"","identity_key":"","trust_label":"Not verified","is_verified":false,"is_blocked":false,"algorithms":[]}"""
+    @JvmStatic fun nativeDeviceBuildRenameFallback(deviceId: String, newName: String): String =
+        """{"display_name":"$newName"}"""
+    @JvmStatic fun nativeDeviceBuildDeleteFallback(deviceId: String, authType: String, authSession: String, password: String): String =
+        """{"devices":["$deviceId"],"auth":{"type":"$authType","session":"$authSession"}}"""
+    @JvmStatic fun nativeDeviceFormatFingerprintFallback(rawKey: String): String =
+        rawKey.uppercase().chunked(4).joinToString(" ")
+    @JvmStatic fun nativeDeviceGetTrustLabelFallback(crossSigningVerified: Boolean, locallyVerified: Boolean): String =
+        if (crossSigningVerified) "Verified" else if (locallyVerified) "Verified (local)" else "Not verified"
+    @JvmStatic fun nativeDeviceFormatLastSeenFallback(timestampMs: Long): String {
+        if (timestampMs <= 0) return "Never"
+        val diff = System.currentTimeMillis() - timestampMs
+        return when {
+            diff < 60000 -> "Just now"
+            diff < 3600000 -> "${diff/60000}m ago"
+            diff < 86400000 -> "${diff/3600000}h ago"
+            diff < 2592000000 -> "${diff/86400000}d ago"
+            else -> "${diff/2592000000}mo ago"
+        }
+    }
+    @JvmStatic fun nativeDeviceIsInactiveFallback(lastSeenTs: Long, inactivityDays: Int): Boolean {
+        if (lastSeenTs <= 0) return true
+        return (System.currentTimeMillis() - lastSeenTs) > inactivityDays * 86400000L
+    }
+    @JvmStatic fun nativeDeviceSatisfiesVersionFallback(clientVersion: String, minRequired: String): Boolean =
+        clientVersion >= minRequired
 
     // --- URL Preview fallbacks ---
     @JvmStatic fun nativeIsPreviewableUrlFallback(url: String): Boolean = url.startsWith("http")

@@ -154,6 +154,7 @@
 #include "progressive/oidc_manager.hpp"
 #include "progressive/user_directory.hpp"
 #include "progressive/profiler.hpp"
+#include "progressive/device_manager_full.hpp"
 #include "progressive/cross_signing.hpp"
 #include "progressive/edit_history.hpp"
 #include "progressive/read_marker.hpp"
@@ -5841,6 +5842,64 @@ JNI_FUNC(jstring, nativeProfileMemory)(JNIEnv* env, jclass) {
        << R"(,"dealloc_count":)" << snap.deallocateCount
        << R"(,"ts":)" << snap.timestampNs << "}";
     return env->NewStringUTF(os.str().c_str());
+}
+
+// ============================================================
+// Device Manager Full
+// ============================================================
+
+static std::unique_ptr<progressive::DeviceManager> g_deviceMgr;
+
+static progressive::DeviceManager* getDeviceMgr() {
+    if (!g_deviceMgr) g_deviceMgr.reset(new progressive::DeviceManager());
+    return g_deviceMgr.get();
+}
+
+JNI_FUNC(jstring, nativeDeviceParseList)(JNIEnv* env, jclass, jstring jJson) {
+    auto resp = getDeviceMgr()->parseDevicesList(jStr(env, jJson));
+    return env->NewStringUTF(getDeviceMgr()->devicesToJson(resp.devices).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceParseInfo)(JNIEnv* env, jclass, jstring jDevId, jstring jJson) {
+    auto dev = getDeviceMgr()->parseDeviceInfo(jStr(env, jDevId), jStr(env, jJson));
+    return env->NewStringUTF(getDeviceMgr()->deviceToJson(dev).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceParseCrypto)(JNIEnv* env, jclass, jstring jDevId, jstring jUserId, jstring jJson) {
+    auto dev = getDeviceMgr()->parseCryptoDeviceInfo(jStr(env, jDevId), jStr(env, jUserId), jStr(env, jJson));
+    return env->NewStringUTF(getDeviceMgr()->cryptoDeviceToJson(dev).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceBuildRename)(JNIEnv* env, jclass, jstring jDevId, jstring jNewName) {
+    progressive::DeviceRenameRequest req; req.deviceId = jStr(env, jDevId); req.newDisplayName = jStr(env, jNewName);
+    return env->NewStringUTF(getDeviceMgr()->buildRenameRequest(req).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceBuildDelete)(JNIEnv* env, jclass, jstring jDevId, jstring jAuthType, jstring jSession, jstring jPass) {
+    progressive::DeviceDeletionRequest req; req.deviceId = jStr(env, jDevId); req.authType = jStr(env, jAuthType);
+    req.authSession = jStr(env, jSession); req.password = jStr(env, jPass);
+    return env->NewStringUTF(getDeviceMgr()->buildDeleteRequest(req).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceFormatFingerprint)(JNIEnv* env, jclass, jstring jRawKey) {
+    return env->NewStringUTF(getDeviceMgr()->formatFingerprint(jStr(env, jRawKey)).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceGetTrustLabel)(JNIEnv* env, jclass, jboolean jCrossSigning, jboolean jLocal) {
+    progressive::DeviceTrustLevel tl; tl.crossSigningVerified = jCrossSigning; tl.locallyVerified = jLocal;
+    return env->NewStringUTF(getDeviceMgr()->getTrustLabel(tl).c_str());
+}
+
+JNI_FUNC(jstring, nativeDeviceFormatLastSeen)(JNIEnv* env, jclass, jlong jTs) {
+    return env->NewStringUTF(getDeviceMgr()->formatLastSeen(jTs).c_str());
+}
+
+JNI_FUNC(jboolean, nativeDeviceIsInactive)(JNIEnv*, jclass, jlong jTs, jint jDays) {
+    return getDeviceMgr()->isDeviceInactive(jTs, jDays) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jboolean, nativeDeviceSatisfiesVersion)(JNIEnv* env, jclass, jstring jVer, jstring jMin) {
+    return getDeviceMgr()->satisfiesMinVersion(jStr(env, jVer), jStr(env, jMin)) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"
