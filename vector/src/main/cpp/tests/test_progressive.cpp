@@ -16,6 +16,9 @@
 #include "progressive/identity_utils.hpp"
 #include "progressive/content_utils.hpp"
 #include "progressive/user_status.hpp"
+#include "progressive/event_classifier.hpp"
+#include "progressive/poll_utils.hpp"
+#include "progressive/room_counter.hpp"
 #include <cstring>
 
 // ==== SHA-256 verification (E2EE foundation) ====
@@ -322,6 +325,37 @@ static void test_build_user_status_json() {
     ASSERT_TRUE(json.find("\"💼\"") != std::string::npos);
 }
 
+// ==== Poll utilities ====
+static void test_is_valid_poll_question() {
+    ASSERT_TRUE(progressive::isValidPollQuestion("What is your favorite color?"));
+    ASSERT_FALSE(progressive::isValidPollQuestion(""));
+}
+
+static void test_is_poll_ended() {
+    ASSERT_FALSE(progressive::isPollEnded(0));  // never ends
+    ASSERT_TRUE(progressive::isPollEnded(1));    // already ended (1ms epoch)
+}
+
+// ==== Event classifier ====
+static void test_classify_event_message() {
+    auto type = progressive::classifyEvent("m.room.message", "m.text");
+    auto desc = progressive::getEventTypeDescription(type);
+    ASSERT_TRUE(!desc.empty());
+}
+
+// ==== Edit history ====
+static void test_get_edit_badge_text() {
+    ASSERT_STREQ(progressive::getEditBadgeText(0), "");
+    ASSERT_TRUE(progressive::getEditBadgeText(3).find("3") != std::string::npos);
+}
+
+// ==== Room counter ====
+static void test_room_count_zero() {
+    std::vector<progressive::RoomCountEntry> rooms;
+    auto result = progressive::countRooms(rooms, 0, false, false);
+    ASSERT_EQ(result.totalRooms, 0);
+}
+
 // ==== Run all tests ====
 int main() {
     printf("=== Progressive Chat C++ Unit Tests ===\n");
@@ -395,6 +429,13 @@ int main() {
     printf("\n-- User Status --\n");
     ADD_TEST(runner, test_get_status_suggestions);
     ADD_TEST(runner, test_build_user_status_json);
+    
+    printf("\n-- Misc --\n");
+    ADD_TEST(runner, test_is_valid_poll_question);
+    ADD_TEST(runner, test_is_poll_ended);
+    ADD_TEST(runner, test_classify_event_message);
+    ADD_TEST(runner, test_get_edit_badge_text);
+    ADD_TEST(runner, test_room_count_zero);
     
     return runner.summary();
 }
