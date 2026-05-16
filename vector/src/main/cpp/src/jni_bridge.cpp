@@ -129,6 +129,8 @@
 #include "progressive/event_models.hpp"
 #include "progressive/matrix_api.hpp"
 #include "progressive/common_utils.hpp"
+#include "progressive/media_utils_extra.hpp"
+#include "progressive/account_data_utils.hpp"
 #include "progressive/event_utils.hpp"
 #include "progressive/content_builder.hpp"
 #include "progressive/displayname_utils.hpp"

@@ -182,7 +182,6 @@ bool isInvitationEvent(const std::string& eventType, const std::string& contentJ
 
 // ---- Relation Types (from RelationType.kt 36L) ----
 namespace RelationType {
-    constexpr const char* RESPONSE = "org.matrix.response";
 }
 
 // Check if event is a reply (has m.in_reply_to with event_id).
