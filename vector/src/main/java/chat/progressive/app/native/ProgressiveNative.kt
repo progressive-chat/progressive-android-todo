@@ -947,6 +947,15 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeGetTrustLabel(level: String): String
 
+    // --- MXC URL Utilities ---
+
+    @JvmStatic external fun nativeIsMxcUri(url: String): Boolean
+    @JvmStatic external fun nativeExtractMxcServerName(mxcUrl: String): String
+    @JvmStatic external fun nativeExtractMxcMediaId(mxcUrl: String): String
+    @JvmStatic external fun nativeBuildMxcUri(serverName: String, mediaId: String): String
+    @JvmStatic external fun nativeResolveMxcDownloadUrl(mxcUrl: String, homeServerUrl: String): String
+    @JvmStatic external fun nativeHasTextWithImage(contentJson: String): Boolean
+
     // --- Megolm Decryptor ---
 
     @JvmStatic external fun nativeMegolmAddSession(roomId: String, senderKey: String, sessionId: String, sessionKeyBase64: String): Boolean
@@ -2971,6 +2980,19 @@ object ProgressiveNative {
     @JvmStatic fun nativeGetTrustLabelFallback(level: String): String = when(level) {
         "verified" -> "Verified"; "warning" -> "Warning"; "blacklisted" -> "Blocked"; else -> "Unknown"
     }
+
+    // --- MXC fallbacks ---
+    @JvmStatic fun nativeIsMxcUriFallback(url: String): Boolean = url.startsWith("mxc://")
+    @JvmStatic fun nativeExtractMxcServerNameFallback(mxcUrl: String): String =
+        mxcUrl.removePrefix("mxc://").substringBefore("/")
+    @JvmStatic fun nativeExtractMxcMediaIdFallback(mxcUrl: String): String =
+        mxcUrl.substringAfterLast("/")
+    @JvmStatic fun nativeBuildMxcUriFallback(serverName: String, mediaId: String): String =
+        "mxc://$serverName/$mediaId"
+    @JvmStatic fun nativeResolveMxcDownloadUrlFallback(mxcUrl: String, homeServerUrl: String): String =
+        "${homeServerUrl.trimEnd('/')}/_matrix/media/v3/download/${mxcUrl.removePrefix("mxc://")}"
+    @JvmStatic fun nativeHasTextWithImageFallback(contentJson: String): Boolean =
+        contentJson.contains("\"msgtype\":\"m.image\"")
 
     // --- Megolm fallbacks ---
     @JvmStatic fun nativeMegolmAddSessionFallback(roomId: String, senderKey: String, sessionId: String, sessionKeyBase64: String): Boolean = false

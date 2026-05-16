@@ -2888,6 +2888,36 @@ JNI_FUNC(jstring, nativeGetTrustLabel)(JNIEnv* env, jclass, jstring jLevel) {
     return env->NewStringUTF(result.c_str());
 }
 
+// --- MXC URL Utilities ---
+
+JNI_FUNC(jboolean, nativeIsMxcUri)(JNIEnv* env, jclass, jstring jUrl) {
+    return progressive::isMxcUri(jStr(env, jUrl)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeExtractMxcServerName)(JNIEnv* env, jclass, jstring jMxcUrl) {
+    auto result = progressive::extractMxcServerName(jStr(env, jMxcUrl));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeExtractMxcMediaId)(JNIEnv* env, jclass, jstring jMxcUrl) {
+    auto result = progressive::extractMxcMediaId(jStr(env, jMxcUrl));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeBuildMxcUri)(JNIEnv* env, jclass, jstring jServer, jstring jMediaId) {
+    auto result = progressive::buildMxcUri(jStr(env, jServer), jStr(env, jMediaId));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeResolveMxcDownloadUrl)(JNIEnv* env, jclass, jstring jMxcUrl, jstring jHomeServer) {
+    auto result = progressive::resolveMxcDownloadUrl(jStr(env, jMxcUrl), jStr(env, jHomeServer));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jboolean, nativeHasTextWithImage)(JNIEnv* env, jclass, jstring jContentJson) {
+    return progressive::hasTextWithImage(jStr(env, jContentJson)) ? JNI_TRUE : JNI_FALSE;
+}
+
 // --- Megolm Decryptor ---
 // Controlled by Labs: SETTINGS_LABS_NATIVE_CRYPTO
 
