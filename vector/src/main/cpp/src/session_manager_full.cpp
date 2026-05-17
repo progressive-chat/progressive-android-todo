@@ -25,14 +25,14 @@ SessionLoginType sessionLoginTypeFromString(const std::string& s) {
     return SessionLoginType::UNKNOWN;
 }
 
-const char* sessionStateToString(SessionState state) {
+const char* sessionStateToString(SessionLifecycleState state) {
     switch (state) {
-        case SessionState::CREATED: return "created";
-        case SessionState::OPENING: return "opening";
-        case SessionState::OPENED: return "opened";
-        case SessionState::CLOSING: return "closing";
-        case SessionState::CLOSED: return "closed";
-        case SessionState::ERROR: return "error";
+        case SessionLifecycleState::CREATED: return "created";
+        case SessionLifecycleState::OPENING: return "opening";
+        case SessionLifecycleState::OPENED: return "opened";
+        case SessionLifecycleState::CLOSING: return "closing";
+        case SessionLifecycleState::CLOSED: return "closed";
+        case SessionLifecycleState::ERROR: return "error";
         default: return "unknown";
     }
 }
@@ -128,7 +128,7 @@ std::string SessionManager::createSession(const SessionCredentials& creds, const
     info.homeServerUrlBase = config.homeServerUrlBase;
     info.identityServerUrl = config.identityServerUrl;
     info.loginType = loginType;
-    info.state = SessionState::CREATED;
+    info.state = SessionLifecycleState::CREATED;
     info.isOpenable = !creds.accessToken.empty();
     info.createdAtMs = static_cast<int64_t>(std::time(nullptr)) * 1000;
 
@@ -141,7 +141,7 @@ bool SessionManager::openSession(const std::string& sessionId, std::string& erro
     if (!s) { error = "Session not found: " + sessionId; return false; }
     if (!s->isOpenable) { error = "Session not openable (no token)"; return false; }
 
-    s->state = SessionState::OPENED;
+    s->state = SessionLifecycleState::OPENED;
     s->isSyncing = true;
     updateSyncTimestamp(sessionId);
     return true;
@@ -151,7 +151,7 @@ bool SessionManager::closeSession(const std::string& sessionId) {
     auto* s = findSession(sessionId);
     if (!s) return false;
 
-    s->state = SessionState::CLOSED;
+    s->state = SessionLifecycleState::CLOSED;
     s->isSyncing = false;
 
     if (s->isActive) {
@@ -266,7 +266,7 @@ void SessionManager::invalidateToken(const std::string& sessionId) {
     auto* s = findSession(sessionId);
     if (s) {
         s->isOpenable = false;
-        s->state = SessionState::ERROR;
+        s->state = SessionLifecycleState::ERROR;
     }
 }
 

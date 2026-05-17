@@ -115,7 +115,7 @@ struct SavedSessionParams {
 // ---- Session State ----
 // Original: Session state transitions
 
-enum class SessionState {
+enum class SessionLifecycleState {
     CREATED = 0,         // Constructed but not opened
     OPENING = 1,         // Opening (sync starting)
     OPENED = 2,          // Fully open and syncing
@@ -124,7 +124,7 @@ enum class SessionState {
     ERROR = 5,           // Error state (token invalid, etc.)
 };
 
-const char* sessionStateToString(SessionState state);
+const char* sessionStateToString(SessionLifecycleState state);
 
 // ---- Session Info ----
 // Original: Session interface properties (myUserId, sessionId, isOpenable)
@@ -139,7 +139,7 @@ struct SavedSessionInfo {
     std::string homeServerUrlBase;
     std::string identityServerUrl;
     SessionLoginType loginType = SessionLoginType::UNKNOWN;
-    SessionState state = SessionState::CREATED;
+    SessionLifecycleState state = SessionLifecycleState::CREATED;
     bool isOpenable = false;         // Original: isOpenable — has valid token
     bool isActive = false;           // Current active session
     bool isSyncing = false;          // Sync service running

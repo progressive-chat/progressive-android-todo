@@ -32,15 +32,15 @@ SharedState sharedStateFromString(const std::string& s) {
     return SharedState::NOT_SHARED;
 }
 
-// ====== IdentityThreePid ======
+// ====== ThreePid ======
 // Original: toMedium()
 
-std::string IdentityThreePid::toMedium() const {
+std::string ThreePid::toMedium() const {
     return threePidMediumToString(medium);
 }
 
 // Original: getCountryCode() — only for MSISDN
-std::string IdentityThreePid::getCountryCode() const {
+std::string ThreePid::getCountryCode() const {
     if (medium != ThreePidMedium::MSISDN) return "";
     // Simple heuristic: first 1-3 digits
     std::string clean;
@@ -51,8 +51,8 @@ std::string IdentityThreePid::getCountryCode() const {
     return "1"; // default
 }
 
-IdentityThreePid IdentityThreePid::parse(const std::string& input) {
-    IdentityThreePid pid;
+ThreePid ThreePid::parse(const std::string& input) {
+    ThreePid pid;
     pid.value = input;
     if (isEmail(input)) {
         pid.medium = ThreePidMedium::EMAIL;
@@ -64,12 +64,12 @@ IdentityThreePid IdentityThreePid::parse(const std::string& input) {
     return pid;
 }
 
-bool IdentityThreePid::isEmail(const std::string& input) {
+bool ThreePid::isEmail(const std::string& input) {
     auto at = input.find('@');
     return at != std::string::npos && at > 0 && at < input.size() - 1;
 }
 
-bool IdentityThreePid::isMsisdn(const std::string& input) {
+bool ThreePid::isMsisdn(const std::string& input) {
     // Starts with + or contains only digits and common separators
     if (!input.empty() && input[0] == '+') return true;
     for (char c : input) {
@@ -168,21 +168,21 @@ bool IdentityServerManager::isValidServerUrl(const std::string& url) const {
 // ====== ThreePID Binding ======
 // Original: startBindThreePid / cancelBindThreePid / finalizeBindThreePid
 
-std::string IdentityServerManager::buildBindRequest(const IdentityThreePid& threePid) const {
+std::string IdentityServerManager::buildBindRequest(const ThreePid& threePid) const {
     std::ostringstream os;
     os << R"({"medium":")" << threePid.toMedium()
        << R"(","address":")" << threePid.value << R"("})";
     return os.str();
 }
 
-std::string IdentityServerManager::buildUnbindRequest(const IdentityThreePid& threePid) const {
+std::string IdentityServerManager::buildUnbindRequest(const ThreePid& threePid) const {
     std::ostringstream os;
     os << R"({"medium":")" << threePid.toMedium()
        << R"(","address":")" << threePid.value << R"("})";
     return os.str();
 }
 
-std::string IdentityServerManager::buildSubmitTokenRequest(const IdentityThreePid& threePid, const std::string& sid,
+std::string IdentityServerManager::buildSubmitTokenRequest(const ThreePid& threePid, const std::string& sid,
                                                             const std::string& clientSecret, int token) const {
     std::ostringstream os;
     os << R"({"sid":")" << sid
@@ -192,7 +192,7 @@ std::string IdentityServerManager::buildSubmitTokenRequest(const IdentityThreePi
     return os.str();
 }
 
-ThreePidBindingStatus IdentityServerManager::parseBindResponse(const std::string& json, const IdentityThreePid& threePid) const {
+ThreePidBindingStatus IdentityServerManager::parseBindResponse(const std::string& json, const ThreePid& threePid) const {
     ThreePidBindingStatus status;
     status.threePid = threePid;
 
@@ -211,7 +211,7 @@ ThreePidBindingStatus IdentityServerManager::parseBindResponse(const std::string
     return status;
 }
 
-void IdentityServerManager::registerBinding(const std::string& sid, const IdentityThreePid& threePid) {
+void IdentityServerManager::registerBinding(const std::string& sid, const ThreePid& threePid) {
     ThreePidBindingStatus status;
     status.threePid = threePid;
     status.sid = sid;
@@ -247,7 +247,7 @@ void IdentityServerManager::removeBinding(const std::string& sid) {
 // ====== 3PID Lookup ======
 // Original: lookUp(threePids) → List<FoundThreePid>
 
-std::string IdentityServerManager::buildLookupRequest(const std::vector<IdentityThreePid>& threePids) const {
+std::string IdentityServerManager::buildLookupRequest(const std::vector<ThreePid>& threePids) const {
     std::ostringstream os;
     os << R"({"threepids":[)";
     for (size_t i = 0; i < threePids.size(); i++) {
@@ -290,7 +290,7 @@ std::vector<FoundThreePid> IdentityServerManager::parseLookupResponse(const std:
 
                         FoundThreePid found;
                         found.matrixId = mxid;
-                        found.threePid = IdentityThreePid::parse(key);
+                        found.threePid = ThreePid::parse(key);
                         found.valid = !mxid.empty();
                         results.push_back(found);
 
@@ -319,7 +319,7 @@ std::string IdentityServerManager::buildConsentRequest(bool consent) const {
 
 // ====== Share Status ======
 
-SharedState IdentityServerManager::getShareStatus(const IdentityThreePid& threePid) const {
+SharedState IdentityServerManager::getShareStatus(const ThreePid& threePid) const {
     for (const auto& [sid, binding] : bindings_) {
         if (binding.threePid.medium == threePid.medium &&
             binding.threePid.value == threePid.value) {
@@ -329,7 +329,7 @@ SharedState IdentityServerManager::getShareStatus(const IdentityThreePid& threeP
     return SharedState::NOT_SHARED;
 }
 
-void IdentityServerManager::setShareStatus(const IdentityThreePid& threePid, SharedState state) {
+void IdentityServerManager::setShareStatus(const ThreePid& threePid, SharedState state) {
     for (auto& [sid, binding] : bindings_) {
         if (binding.threePid.medium == threePid.medium &&
             binding.threePid.value == threePid.value) {
@@ -358,7 +358,7 @@ SignInvitationResult IdentityServerManager::parseSignInvitationResponse(const st
 
 // ====== Serialization ======
 
-std::string IdentityServerManager::threePidToJson(const IdentityThreePid& threePid) const {
+std::string IdentityServerManager::threePidToJson(const ThreePid& threePid) const {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
         for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
