@@ -3,6 +3,8 @@
 #include <android/log.h>
 #include "progressive/jumptodate.hpp"
 #include "progressive/relation.hpp"
+#include "progressive/olm_session.hpp"
+#include "progressive/sas_verification.hpp"
 #include "progressive/exporter.hpp"
 #include "progressive/eventcache.hpp"
 #include "progressive/translate.hpp"
@@ -2471,6 +2473,67 @@ JNI_FUNC(jboolean, nativeIsInviteExpired)(JNIEnv* env, jclass, jlong jInvitedAtM
 JNI_FUNC(jstring, nativeBuildKnockBody)(JNIEnv* env, jclass, jstring jReason) {
     auto result = progressive::buildKnockBody(jStr(env, jReason));
     return env->NewStringUTF(result.c_str());
+}
+
+// ============================================================
+// Olm Account + SAS (from commit f760516d)
+// ============================================================
+static progressive::OlmAccountData g_olmAccount;
+static progressive::OlmSessionManager g_olmSessionMgr;
+
+JNI_FUNC(jboolean, nativeOlmCreateAccount)(JNIEnv* env, jclass, jstring jUserId, jstring jDeviceId) {
+    g_olmAccount = progressive::createOlmAccount(jStr(env, jUserId), jStr(env, jDeviceId));
+    return g_olmAccount.valid ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeOlmGetIdentityKeys)(JNIEnv* env, jclass) {
+    return env->NewStringUTF(progressive::getAccountIdentityKeys(g_olmAccount).c_str());
+}
+
+JNI_FUNC(jstring, nativeOlmGenerateOneTimeKeys)(JNIEnv* env, jclass, jint jCount) {
+    auto result = progressive::generateOneTimeKeys(g_olmAccount, jCount);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeOlmSignMessage)(JNIEnv* env, jclass, jstring jMessage) {
+    auto result = progressive::accountSign(g_olmAccount, jStr(env, jMessage));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jboolean, nativeVerifyDeviceSignature)(JNIEnv* env, jclass, jstring jDeviceKeysJson, jstring jUserId, jstring jDeviceId, jstring jSignKeyB64, jstring jSignatureB64) {
+    return progressive::verifyDeviceSignature(jStr(env, jDeviceKeysJson), jStr(env, jUserId),
+        jStr(env, jDeviceId), jStr(env, jSignKeyB64), jStr(env, jSignatureB64)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeComputeDeviceFingerprint)(JNIEnv* env, jclass, jstring jIdentityKeyB64) {
+    auto result = progressive::computeDeviceFingerprint(jStr(env, jIdentityKeyB64));
+    return env->NewStringUTF(result.c_str());
+}
+
+// SAS Emoji Verification
+static progressive::SasVerification g_sas;
+
+JNI_FUNC(jstring, nativeSasCreate)(JNIEnv* env, jclass) {
+    g_sas = progressive::sasCreate();
+    return env->NewStringUTF(g_sas.ourPubkey.c_str());
+}
+
+JNI_FUNC(jboolean, nativeSasSetTheirKey)(JNIEnv* env, jclass, jstring jTheirPubkey) {
+    return progressive::sasSetTheirKey(g_sas, jStr(env, jTheirPubkey)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeSasGetEmojis)(JNIEnv* env, jclass) {
+    auto result = progressive::sasGetEmojis(g_sas);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeSasCalculateMac)(JNIEnv* env, jclass, jstring jInput, jstring jInfo) {
+    auto result = progressive::sasCalculateMac(g_sas, jStr(env, jInput), jStr(env, jInfo));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jboolean, nativeSasVerifyMac)(JNIEnv* env, jclass, jstring jTheirMac, jstring jInput, jstring jInfo) {
+    return progressive::sasVerifyMac(g_sas, jStr(env, jTheirMac), jStr(env, jInput), jStr(env, jInfo)) ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"
