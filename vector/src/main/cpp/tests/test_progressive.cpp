@@ -658,9 +658,9 @@ static void test_uploader_compute_chunks() {
 }
 
 static void test_uploader_suggest_chunk_size() {
-    int mb = progressive::ChunkedUploader::suggestChunkSizeMb(50_000_000);
+    int mb = progressive::ChunkedUploader::suggestChunkSizeMb(50000000);
     ASSERT_EQ(mb, 10);
-    int mb2 = progressive::ChunkedUploader::suggestChunkSizeMb(500_000_000);
+    int mb2 = progressive::ChunkedUploader::suggestChunkSizeMb(500000000);
     ASSERT_EQ(mb2, 20);
 }
 
