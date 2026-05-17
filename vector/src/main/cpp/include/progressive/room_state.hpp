@@ -8,13 +8,13 @@
 namespace progressive {
 
 // ---- Room State Event Parsers ----
-// Ported from: org.matrix.android.sdk.api.session.room.model.RoomJoinRules.kt
-//              org.matrix.android.sdk.api.session.room.model.RoomHistoryVisibility.kt
+// Ported from: org.matrix.android.sdk.api.session.room.model.RoomJoinRulesData.kt
+//              org.matrix.android.sdk.api.session.room.model.RSH_RoomHistoryVisibility.kt
 //              org.matrix.android.sdk.api.session.room.model.RoomGuestAccess.kt
 //              org.matrix.android.sdk.api.session.room.model.RoomCreate.kt
 
 // ---- Room Join Rules ----
-// Original Kotlin (RoomJoinRules.kt):
+// Original Kotlin (RoomJoinRulesData.kt):
 //   enum class JoinRules { PUBLIC, INVITE, KNOCK, PRIVATE, RESTRICTED }
 //   data class RoomJoinRulesContent(@Json(name = "join_rule") val joinRule: String)
 
@@ -27,7 +27,7 @@ enum class JoinRule {
     Unknown
 };
 
-struct RoomJoinRules {
+struct RoomJoinRulesData {
     JoinRule rule = JoinRule::Unknown;
     std::string rawRule;         // original string from event
     std::vector<std::string> allow;  // allowed room IDs for restricted rules
@@ -37,17 +37,17 @@ struct RoomJoinRules {
 // Parse m.room.join_rules event content.
 // {"join_rule": "public"} → JoinRule::Public
 // {"join_rule": "restricted", "allow": [{"room_id": "!abc:server", "type": "m.room_membership"}]}
-RoomJoinRules parseJoinRules(const std::string& contentJson);
+RoomJoinRulesData parseJoinRules(const std::string& contentJson);
 
-bool isPublicRoom(const RoomJoinRules& rules);
-bool isInviteOnly(const RoomJoinRules& rules);
-bool isKnockable(const RoomJoinRules& rules);
+bool isPublicRoom(const RoomJoinRulesData& rules);
+bool isInviteOnly(const RoomJoinRulesData& rules);
+bool isKnockable(const RoomJoinRulesData& rules);
 
 std::string joinRuleToString(JoinRule rule);
 JoinRule joinRuleFromString(const std::string& rule);
 
 // ---- Room History Visibility ----
-// Original Kotlin (RoomHistoryVisibility.kt):
+// Original Kotlin (RSH_RoomHistoryVisibility.kt):
 //   enum class HistoryVisibility { SHARED, INVITED, JOINED, WORLD_READABLE }
 //   Who can see events in the room's history
 
@@ -59,7 +59,7 @@ enum class HistoryVisibility {
     Unknown
 };
 
-struct RoomHistoryVisibility {
+struct RSH_RoomHistoryVisibility {
     HistoryVisibility visibility = HistoryVisibility::Unknown;
     std::string rawValue;
     bool valid = false;
@@ -67,10 +67,10 @@ struct RoomHistoryVisibility {
 
 // Parse m.room.history_visibility event content.
 // {"history_visibility": "shared"} → HistoryVisibility::Shared
-RoomHistoryVisibility parseHistoryVisibility(const std::string& contentJson);
+RSH_RoomHistoryVisibility parseHistoryVisibility(const std::string& contentJson);
 
-bool isHistoryPubliclyVisible(const RoomHistoryVisibility& vis);
-bool isHistoryVisibleToGuests(const RoomHistoryVisibility& vis);
+bool isHistoryPubliclyVisible(const RSH_RoomHistoryVisibility& vis);
+bool isHistoryVisibleToGuests(const RSH_RoomHistoryVisibility& vis);
 
 std::string historyVisibilityToString(HistoryVisibility vis);
 HistoryVisibility historyVisibilityFromString(const std::string& vis);
@@ -155,8 +155,8 @@ inline std::string roomVersioningStateToString(RoomVersioningState state) {
 
 // ---- JSON Serialization ----
 
-std::string joinRulesToJson(const RoomJoinRules& rules);
-std::string historyVisibilityToJson(const RoomHistoryVisibility& vis);
+std::string joinRulesToJson(const RoomJoinRulesData& rules);
+std::string historyVisibilityToJson(const RSH_RoomHistoryVisibility& vis);
 std::string guestAccessToJson(const RoomGuestAccess& access);
 std::string roomCreateToJson(const RoomCreate& create);
 

@@ -31,14 +31,14 @@ static bool extractBool(const std::string& json, const std::string& field, bool 
 }
 
 // ==== Room Join Rules ====
-// Original Kotlin (RoomJoinRules.kt):
+// Original Kotlin (RoomJoinRulesData.kt):
 //   data class RoomJoinRulesContent(@Json(name = "join_rule") val joinRule: String?) {
 //       fun isPublic() = joinRule == JoinRules.PUBLIC
 //       fun isInvite() = joinRule == JoinRules.INVITE
 //   }
 
-RoomJoinRules parseJoinRules(const std::string& contentJson) {
-    RoomJoinRules rules;
+RoomJoinRulesData parseJoinRules(const std::string& contentJson) {
+    RoomJoinRulesData rules;
 
     // Original Kotlin: content.get("join_rule")?.asString()
     rules.rawRule = extractStr(contentJson, "join_rule");
@@ -62,9 +62,9 @@ RoomJoinRules parseJoinRules(const std::string& contentJson) {
     return rules;
 }
 
-bool isPublicRoom(const RoomJoinRules& rules) { return rules.rule == JoinRule::Public; }
-bool isInviteOnly(const RoomJoinRules& rules) { return rules.rule == JoinRule::Invite; }
-bool isKnockable(const RoomJoinRules& rules) { return rules.rule == JoinRule::Knock; }
+bool isPublicRoom(const RoomJoinRulesData& rules) { return rules.rule == JoinRule::Public; }
+bool isInviteOnly(const RoomJoinRulesData& rules) { return rules.rule == JoinRule::Invite; }
+bool isKnockable(const RoomJoinRulesData& rules) { return rules.rule == JoinRule::Knock; }
 
 JoinRule joinRuleFromString(const std::string& rule) {
     if (rule == "public") return JoinRule::Public;
@@ -87,22 +87,22 @@ std::string joinRuleToString(JoinRule rule) {
 }
 
 // ==== Room History Visibility ====
-// Original Kotlin (RoomHistoryVisibility.kt):
+// Original Kotlin (RSH_RoomHistoryVisibility.kt):
 //   data class RoomHistoryVisibilityContent(@Json(name = "history_visibility") val historyVisibility: String)
 
-RoomHistoryVisibility parseHistoryVisibility(const std::string& contentJson) {
-    RoomHistoryVisibility vis;
+RSH_RoomHistoryVisibility parseHistoryVisibility(const std::string& contentJson) {
+    RSH_RoomHistoryVisibility vis;
     vis.rawValue = extractStr(contentJson, "history_visibility");
     vis.visibility = historyVisibilityFromString(vis.rawValue);
     vis.valid = vis.visibility != HistoryVisibility::Unknown;
     return vis;
 }
 
-bool isHistoryPubliclyVisible(const RoomHistoryVisibility& vis) {
+bool isHistoryPubliclyVisible(const RSH_RoomHistoryVisibility& vis) {
     return vis.visibility == HistoryVisibility::WorldReadable;
 }
 
-bool isHistoryVisibleToGuests(const RoomHistoryVisibility& vis) {
+bool isHistoryVisibleToGuests(const RSH_RoomHistoryVisibility& vis) {
     return vis.visibility == HistoryVisibility::WorldReadable ||
            vis.visibility == HistoryVisibility::Shared;
 }
@@ -187,7 +187,7 @@ bool isUpgradedRoom(const RoomCreate& create) {
 
 // ==== JSON Serialization ====
 
-std::string joinRulesToJson(const RoomJoinRules& rules) {
+std::string joinRulesToJson(const RoomJoinRulesData& rules) {
     auto esc = [](const std::string& s) -> std::string {
         std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
     };
@@ -201,7 +201,7 @@ std::string joinRulesToJson(const RoomJoinRules& rules) {
     return json.str();
 }
 
-std::string historyVisibilityToJson(const RoomHistoryVisibility& vis) {
+std::string historyVisibilityToJson(const RSH_RoomHistoryVisibility& vis) {
     std::ostringstream json;
     json << R"({"valid": )" << (vis.valid ? "true" : "false") << ",";
     json << R"("visibility": ")" << historyVisibilityToString(vis.visibility) << R"(",)";

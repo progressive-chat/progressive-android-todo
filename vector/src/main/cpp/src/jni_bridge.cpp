@@ -136,7 +136,6 @@
 #include "progressive/megolm_decryptor.hpp"
 #include "progressive/olm_session.hpp"
 #include "progressive/sas_verification.hpp"
-#include "progressive/room_content.hpp"
 #include "progressive/event_utils.hpp"
 #include "progressive/content_builder.hpp"
 #include "progressive/key_backup.hpp"
@@ -164,7 +163,8 @@
 #include "progressive/event_relations_manager.hpp"
 #include "progressive/cross_signing_manager.hpp"
 #include "progressive/draft_manager_full.hpp"
-#include "progressive/room_state_manager.hpp"
+#include "progressive/room_state.hpp"
+
 #include "progressive/terms_manager.hpp"
 #include "progressive/transparent_overlay.hpp"
 #include "progressive/composer_manager.hpp"
