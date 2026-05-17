@@ -3731,25 +3731,6 @@ JNI_FUNC(jstring, nativeSearchRoomList)(JNIEnv* env, jclass, jstring jRoomsJson,
     return env->NewStringUTF(os.str().c_str());
 }
     // Format: "Alice, Bob and 3 others online"
-    std::ostringstream os;
-    int total = static_cast<int>(names.size());
-    int shown = std::min(total, jMaxNames);
-    for (int i = 0; i < shown; i++) {
-        if (i > 0) os << (i == shown - 1 && total <= jMaxNames ? " and " : ", ");
-        os << names[i];
-    }
-    if (total > jMaxNames) os << " and " << (total - shown) << " others";
-    os << (total == 1 ? " is online" : " are online");
-    return env->NewStringUTF(os.str().c_str());
-}
-        return v;
-    };
-    auto eventIds = parseStrArray(jStr(env, jEventIdsJson));
-    auto highlightIds = parseStrArray(jStr(env, jHighlightIdsJson));
-    auto readId = jStr(env, jReadReceiptId);
-
-    auto result = progressive::computeThreadUnreadCount(eventIds, readId, highlightIds);
-    std::ostringstream os;
     os << R"({"total":)" << result.totalReplies
        << R"(,"unread":)" << result.unreadReplies
        << R"(,"highlight":)" << result.highlightReplies
