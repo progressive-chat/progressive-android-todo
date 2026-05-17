@@ -207,7 +207,7 @@ class EventHtmlRenderer @Inject constructor(
         val processed = if (vectorPreferences.isNativeMarkdownEnabled()) {
             try {
                 ProgressiveNative.ensureLoaded()
-                ProgressiveNative.nativeMarkdownToHtml(text, true, true, true, true)
+                ProgressiveNative.nativeMarkdownToHtml(text, true)
             } catch (e: UnsatisfiedLinkError) {
                 text
             }
@@ -226,7 +226,7 @@ class EventHtmlRenderer @Inject constructor(
             val markdown = if (vectorPreferences.isNativeMarkdownEnabled()) {
                 try {
                     ProgressiveNative.ensureLoaded()
-                    ProgressiveNative.nativeMarkdownToHtml(text, true, true, true, true)
+                    ProgressiveNative.nativeMarkdownToHtml(text, true)
                 } catch (e: UnsatisfiedLinkError) {
                     Timber.w(e, "Native markdown not loaded, using fallback")
                     text
