@@ -4082,7 +4082,6 @@ object ProgressiveNative {
     // --- Matrix Error fallbacks ---
     @JvmStatic fun nativeGetErrorDescriptionFallback(errorCode: String): String =
         errorCode.replace("M_", "").replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
-        errorJson.contains("M_CONSENT_NOT_GIVEN")
     @JvmStatic fun nativeFormatImageNotificationFallback(sender: String): String =
         "$sender sent an image"
     @JvmStatic fun nativeFormatFileNotificationFallback(sender: String, fileName: String): String =
