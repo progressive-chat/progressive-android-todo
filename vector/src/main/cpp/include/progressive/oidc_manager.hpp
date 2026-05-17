@@ -44,7 +44,7 @@ OidcLoginType loginTypeFromString(const std::string& s);
 
 // ---- SSO Provider ----
 
-struct SsoProvider {
+struct OidcSsoProvider {
     std::string id;              // "github", "google", "apple", etc.
     std::string name;            // "GitHub", "Google", "Apple"
     std::string brand;           // Brand identifier
@@ -53,7 +53,7 @@ struct SsoProvider {
 };
 
 // Parse SSO providers from login flows response.
-std::vector<SsoProvider> parseSsoProviders(const std::string& loginFlowsJson);
+std::vector<OidcSsoProvider> parseSsoProviders(const std::string& loginFlowsJson);
 
 // Build SSO login URL for a specific provider.
 std::string buildSsoLoginUrl(const std::string& baseUrl, const std::string& providerId,
@@ -237,7 +237,7 @@ struct OidcWellKnownResult {
     bool supportsOidc = false;
     bool supportsPassword = true;
     std::vector<OidcLoginType> supportedLoginTypes;
-    std::vector<SsoProvider> ssoProviders;
+    std::vector<OidcSsoProvider> ssoProviders;
     std::string error;
 };
 

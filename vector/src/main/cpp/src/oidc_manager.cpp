@@ -59,8 +59,8 @@ OidcLoginType loginTypeFromString(const std::string& s) {
 
 // ====== SSO Providers ======
 
-std::vector<SsoProvider> parseSsoProviders(const std::string& loginFlowsJson) {
-    std::vector<SsoProvider> providers;
+std::vector<OidcSsoProvider> parseSsoProviders(const std::string& loginFlowsJson) {
+    std::vector<OidcSsoProvider> providers;
     size_t pos = 0;
 
     // Look for identity_providers array within m.login.sso flows
@@ -77,7 +77,7 @@ std::vector<SsoProvider> parseSsoProviders(const std::string& loginFlowsJson) {
             if (objEnd == std::string::npos) break;
             std::string obj = loginFlowsJson.substr(pos, objEnd - pos + 1);
 
-            SsoProvider p;
+            OidcSsoProvider p;
             p.id = extractStr(obj, "id");
             p.name = extractStr(obj, "name");
             p.brand = extractStr(obj, "brand");
