@@ -4083,17 +4083,6 @@ object ProgressiveNative {
     @JvmStatic fun nativeGetErrorDescriptionFallback(errorCode: String): String =
         errorCode.replace("M_", "").replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
         errorCode == "M_FORBIDDEN" || errorCode == "M_USER_DEACTIVATED"
-        """["M_FORBIDDEN","M_UNKNOWN_TOKEN","M_MISSING_TOKEN","M_BAD_JSON","M_NOT_JSON","M_NOT_FOUND",
-        |"M_LIMIT_EXCEEDED","M_UNKNOWN","M_UNRECOGNISED","M_UNAUTHORIZED","M_USER_DEACTIVATED",
-        |"M_USER_IN_USE","M_INVALID_USERNAME","M_ROOM_IN_USE","M_INVALID_ROOM_STATE","M_THREEPID_IN_USE",
-        |"M_THREEPID_NOT_FOUND","M_SERVER_NOT_TRUSTED","M_CONSENT_NOT_GIVEN","M_CANNOT_LEAVE_SERVER_NOTICE_ROOM",
-        |"M_WEAK_PASSWORD","M_RESOURCE_LIMIT_EXCEEDED","M_ORG_MATRIX_EXPIRED_ACCOUNT"]""".trimMargin()
-    @JvmStatic fun nativeIsRateLimitErrorFallback(errorJson: String): Boolean =
-        """"errcode":"M_LIMIT_EXCEEDED"""" in errorJson
-        val m = Regex(""""retry_after_ms":(\d+)""").find(errorJson)
-        return m?.groupValues?.getOrNull(1)?.toLongOrNull() ?: 0L
-    }
-    @JvmStatic fun nativeIsSoftLogoutFallback(errorJson: String): Boolean =
         errorJson.contains("soft_logout")
     @JvmStatic fun nativeNeedsConsentFallback(errorJson: String): Boolean =
         errorJson.contains("M_CONSENT_NOT_GIVEN")
