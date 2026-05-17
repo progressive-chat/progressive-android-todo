@@ -1739,9 +1739,9 @@ JNI_FUNC(jboolean, nativeIsValidDisplayName)(JNIEnv* env, jclass, jstring jName,
 JNI_FUNC(jstring, nativeParseWellKnown)(JNIEnv* env, jclass, jstring jJson) {
     auto result = progressive::oidcParseWellKnown(jStr(env, jJson));
     std::ostringstream os;
-    os << R"({"homeserver_url":")" << result.homeServerBaseUrl
-       << R"(","identity_server":")" << result.identityServerBaseUrl
-       << R"(","valid":)" << (result.valid ? "true" : "false") << "}";
+    os << R"({"homeserver_url":")" << result.baseUrl
+       << R"(","identity_server":")" << result.idServer
+       << R"(","valid":)" << ((!result.baseUrl.empty()) ? "true" : "false") << "}";
     return env->NewStringUTF(os.str().c_str());
 }
 
@@ -1759,12 +1759,12 @@ JNI_FUNC(jboolean, nativeIsPollEnded)(JNIEnv* env, jclass, jlong jCloseTs) {
 
 JNI_FUNC(jboolean, nativeCanReadMessages)(JNIEnv* env, jclass, jstring jMembership) {
     auto ms = jStr(env, jMembership);
-    progressive::Membership m = progressive::Membership::Leave;
-    if (ms == "join") m = progressive::Membership::Join;
-    else if (ms == "invite") m = progressive::Membership::Invite;
-    else if (ms == "knock") m = progressive::Membership::Knock;
-    else if (ms == "ban") m = progressive::Membership::Ban;
-    else if (ms == "leave") m = progressive::Membership::Leave;
+    progressive::MemberState m = progressive::MemberState::Leave;
+    if (ms == "join") m = progressive::MemberState::Join;
+    else if (ms == "invite") m = progressive::MemberState::Invite;
+    else if (ms == "knock") m = progressive::MemberState::Knock;
+    else if (ms == "ban") m = progressive::MemberState::Ban;
+    else if (ms == "leave") m = progressive::MemberState::Leave;
     return progressive::canReadMessages(m) ? JNI_TRUE : JNI_FALSE;
 }
 
@@ -2529,21 +2529,21 @@ JNI_FUNC(jstring, nativeExtractCurveKeyFromRecoveryKey)(JNIEnv* env, jclass, jst
 
 JNI_FUNC(jstring, nativeFormatMembership)(JNIEnv* env, jclass, jstring jMembership) {
     auto ms = jStr(env, jMembership);
-    progressive::Membership m = progressive::Membership::Leave;
-    if (ms == "join") m = progressive::Membership::Join;
-    else if (ms == "invite") m = progressive::Membership::Invite;
-    else if (ms == "knock") m = progressive::Membership::Knock;
-    else if (ms == "ban") m = progressive::Membership::Ban;
+    progressive::MemberState m = progressive::MemberState::Leave;
+    if (ms == "join") m = progressive::MemberState::Join;
+    else if (ms == "invite") m = progressive::MemberState::Invite;
+    else if (ms == "knock") m = progressive::MemberState::Knock;
+    else if (ms == "ban") m = progressive::MemberState::Ban;
     auto result = progressive::formatMembership(m);
     return env->NewStringUTF(result.c_str());
 }
 
 JNI_FUNC(jboolean, nativeIsActiveMember)(JNIEnv* env, jclass, jstring jMembership) {
     auto ms = jStr(env, jMembership);
-    progressive::Membership m = progressive::Membership::Leave;
-    if (ms == "join") m = progressive::Membership::Join;
-    else if (ms == "invite") m = progressive::Membership::Invite;
-    else if (ms == "knock") m = progressive::Membership::Knock;
+    progressive::MemberState m = progressive::MemberState::Leave;
+    if (ms == "join") m = progressive::MemberState::Join;
+    else if (ms == "invite") m = progressive::MemberState::Invite;
+    else if (ms == "knock") m = progressive::MemberState::Knock;
     return progressive::isActiveMember(m) ? JNI_TRUE : JNI_FALSE;
 }
 
@@ -2605,7 +2605,7 @@ JNI_FUNC(jstring, nativeGenerateDeviceId)(JNIEnv* env, jclass) {
 JNI_FUNC(jstring, nativeValidatePassword)(JNIEnv* env, jclass, jstring jPassword) {
     auto result = progressive::validatePassword(jStr(env, jPassword));
     std::ostringstream os;
-    os << R"({"valid":)" << (result.valid ? "true" : "false")
+    os << R"({"valid":)" << ((!result.baseUrl.empty()) ? "true" : "false")
        << R"(,"strength":)" << result.strength
        << R"(,"strength_label":")" << result.strengthLabel
        << R"(","feedback":")" << result.feedback << "\"}";
