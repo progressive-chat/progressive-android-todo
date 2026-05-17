@@ -132,20 +132,20 @@ std::string historyVisibilityToString(HistoryVisibility vis) {
 RoomGuestAccess parseGuestAccess(const std::string& contentJson) {
     RoomGuestAccess access;
     access.rawValue = extractStr(contentJson, "guest_access");
-    access.access = (access.rawValue == "can_join") ? GuestAccess::CanJoin :
-                    (access.rawValue == "forbidden") ? GuestAccess::Forbidden : GuestAccess::Unknown;
-    access.valid = access.access != GuestAccess::Unknown;
+    access.access = (access.rawValue == "can_join") ? GuestAccessType::CanJoin :
+                    (access.rawValue == "forbidden") ? GuestAccessType::Forbidden : GuestAccessType::Unknown;
+    access.valid = access.access != GuestAccessType::Unknown;
     return access;
 }
 
 bool areGuestsAllowed(const RoomGuestAccess& access) {
-    return access.access == GuestAccess::CanJoin;
+    return access.access == GuestAccessType::CanJoin;
 }
 
-std::string guestAccessToString(GuestAccess access) {
+std::string guestAccessToString(GuestAccessType access) {
     switch (access) {
-        case GuestAccess::CanJoin: return "can_join";
-        case GuestAccess::Forbidden: return "forbidden";
+        case GuestAccessType::CanJoin: return "can_join";
+        case GuestAccessType::Forbidden: return "forbidden";
         default: return "unknown";
     }
 }

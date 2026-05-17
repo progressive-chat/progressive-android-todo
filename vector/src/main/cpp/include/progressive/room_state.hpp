@@ -80,25 +80,25 @@ HistoryVisibility historyVisibilityFromString(const std::string& vis);
 //   data class RoomGuestAccess(@Json(name = "guest_access") val guestAccess: String)
 //   "can_join" or "forbidden"
 
-enum class GuestAccess {
+enum class GuestAccessType {
     CanJoin,     // guests can join
     Forbidden,   // guests not allowed
     Unknown
 };
 
 struct RoomGuestAccess {
-    GuestAccess access = GuestAccess::Unknown;
+    GuestAccessType access = GuestAccessType::Unknown;
     std::string rawValue;
     bool valid = false;
 };
 
 // Parse m.room.guest_access event content.
-// {"guest_access": "can_join"} → GuestAccess::CanJoin
+// {"guest_access": "can_join"} → GuestAccessType::CanJoin
 RoomGuestAccess parseGuestAccess(const std::string& contentJson);
 
 bool areGuestsAllowed(const RoomGuestAccess& access);
 
-std::string guestAccessToString(GuestAccess access);
+std::string guestAccessToString(GuestAccessType access);
 
 // ---- Room Create ----
 struct RoomCreate {
@@ -133,22 +133,22 @@ bool isRoomUpgraded(const RoomTombstone& tombstone);
 std::string tombstoneToJson(const RoomTombstone& tombstone);
 
 // ---- Room Versioning State ----
-// Ported from: org.matrix.android.sdk.api.session.room.model.RoomVersioningState.kt (39L)
+// Ported from: org.matrix.android.sdk.api.session.room.model.RoomVersionState.kt (39L)
 //
 // Tracks whether a room has been upgraded and whether the user joined the new room.
 
-enum class RoomVersioningState {
+enum class RoomVersionState {
     None,                       // not versioned
     UpgradedRoomNotJoined,      // upgraded but new room not joined
     UpgradedRoomJoined          // upgraded and new room joined
 };
 
-inline bool isVersioned(RoomVersioningState state) { return state != RoomVersioningState::None; }
-inline std::string roomVersioningStateToString(RoomVersioningState state) {
+inline bool isVersioned(RoomVersionState state) { return state != RoomVersionState::None; }
+inline std::string roomVersioningStateToString(RoomVersionState state) {
     switch (state) {
-        case RoomVersioningState::None: return "none";
-        case RoomVersioningState::UpgradedRoomNotJoined: return "upgraded_not_joined";
-        case RoomVersioningState::UpgradedRoomJoined: return "upgraded_joined";
+        case RoomVersionState::None: return "none";
+        case RoomVersionState::UpgradedRoomNotJoined: return "upgraded_not_joined";
+        case RoomVersionState::UpgradedRoomJoined: return "upgraded_joined";
     }
     return "unknown";
 }

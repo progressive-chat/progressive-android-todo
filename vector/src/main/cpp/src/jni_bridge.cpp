@@ -2768,7 +2768,7 @@ JNI_FUNC(jboolean, nativeIsInviteOnly)(JNIEnv* env, jclass, jstring jStateJson) 
 
 JNI_FUNC(jstring, nativeJoinRuleToString)(JNIEnv* env, jclass, jstring jStateJson) {
     auto rules = progressive::parseJoinRules(jStr(env, jStateJson));
-    auto result = progressive::joinRuleToString(rules.rule);
+    auto result = progressive::joinRuleToString(rules.joinRule);
     return env->NewStringUTF(result.c_str());
 }
 
@@ -3206,7 +3206,7 @@ JNI_FUNC(jstring, nativeNormalizeMimeType)(JNIEnv* env, jclass, jstring jMime) {
 JNI_FUNC(jstring, nativeParseJoinRules)(JNIEnv* env, jclass, jstring jContentJson) {
     auto rules = progressive::parseJoinRules(jStr(env, jContentJson));
     std::ostringstream os;
-    os << R"({"rule":")" << progressive::joinRuleToString(rules.rule) << "\"}";
+    os << R"({"rule":")" << progressive::joinRuleToString(rules.joinRule) << "\"}";
     return env->NewStringUTF(os.str().c_str());
 }
 
