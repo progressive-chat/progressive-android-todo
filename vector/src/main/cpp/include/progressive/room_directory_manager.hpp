@@ -11,12 +11,12 @@ namespace progressive {
 // Room Discovery / Directory Search
 //
 // Faithful port from Element Android original sources:
-//   PublicRoom.kt — room data model (9 fields + getPrimaryAlias)
+//   PublicRoomEntry.kt — room data model (9 fields + getPrimaryAlias)
 //   PublicRoomsFilter.kt — generic_search_term
-//   PublicRoomsParams.kt — limit, since, filter, include_all_networks
-//   PublicRoomsResponse.kt — chunk, next_batch, prev_batch, total_estimate
+//   PublicRoomsParamsEntry.kt — limit, since, filter, include_all_networks
+//   PublicRoomsResponseEntry.kt — chunk, next_batch, prev_batch, total_estimate
 //   RoomDirectoryService.kt — getPublicRooms, visibility, alias check
-//   RoomDirectoryVisibility.kt — PRIVATE / PUBLIC
+//   RoomDirVisibility.kt — PRIVATE / PUBLIC
 //
 // Matrix API:
 //   POST /publicRooms — search public rooms
@@ -25,20 +25,20 @@ namespace progressive {
 // ================================================================
 
 // ---- Room Directory Visibility ----
-// Original: RoomDirectoryVisibility.kt (PRIVATE, PUBLIC)
+// Original: RoomDirVisibility.kt (PRIVATE, PUBLIC)
 
-enum class RoomDirectoryVisibility {
+enum class RoomDirVisibility {
     PRIVATE = 0,     // Not listed in public directory
     PUBLIC = 1,      // Listed in public directory
 };
 
-const char* visibilityToString(RoomDirectoryVisibility v);
-RoomDirectoryVisibility visibilityFromString(const std::string& s);
+const char* visibilityToString(RoomDirVisibility v);
+RoomDirVisibility visibilityFromString(const std::string& s);
 
 // ---- Public Room ----
-// Original: PublicRoom.kt (9 fields, getPrimaryAlias())
+// Original: PublicRoomEntry.kt (9 fields, getPrimaryAlias())
 
-struct PublicRoom {
+struct PublicRoomEntry {
     std::string roomId;              // !room:example.org (required)
     std::string name;                // Room name (optional)
     std::string topic;               // Room topic (optional)
@@ -62,14 +62,14 @@ struct PublicRoom {
 // ---- Public Rooms Filter ----
 // Original: PublicRoomsFilter.kt (generic_search_term)
 
-struct PublicRoomsFilter {
+struct PublicRoomEntrysFilter {
     std::string searchTerm;          // Search in name, topic, alias
 };
 
 // ---- Public Rooms Params ----
-// Original: PublicRoomsParams.kt (limit, since, filter, include_all_networks, third_party_instance_id)
+// Original: PublicRoomsParamsEntry.kt (limit, since, filter, include_all_networks, third_party_instance_id)
 
-struct PublicRoomsParams {
+struct PublicRoomEntrysParams {
     int limit = 20;                  // Batch size (optional)
     std::string since;               // Pagination token (optional)
     PublicRoomsFilter filter;        // Search filter (optional)
@@ -79,10 +79,10 @@ struct PublicRoomsParams {
 };
 
 // ---- Public Rooms Response ----
-// Original: PublicRoomsResponse.kt (chunk, next_batch, prev_batch, total_room_count_estimate)
+// Original: PublicRoomsResponseEntry.kt (chunk, next_batch, prev_batch, total_room_count_estimate)
 
-struct PublicRoomsResponse {
-    std::vector<PublicRoom> chunk;         // Current page of rooms
+struct PublicRoomEntrysResponse {
+    std::vector<PublicRoomEntry> chunk;         // Current page of rooms
     std::string nextBatch;                 // Token for next page (empty = end)
     std::string prevBatch;                 // Token for previous page (empty = start)
     int totalRoomCountEstimate = 0;        // Estimated total (optional)
@@ -108,25 +108,25 @@ public:
     // ====== Public Rooms Search ======
 
     // Build the POST /publicRooms request body.
-    // Original: getPublicRooms(server, PublicRoomsParams) → POST /publicRooms
-    std::string buildPublicRoomsRequest(const PublicRoomsParams& params) const;
+    // Original: getPublicRooms(server, PublicRoomsParamsEntry) → POST /publicRooms
+    std::string buildPublicRoomsRequest(const PublicRoomsParamsEntry& params) const;
 
     // Parse POST /publicRooms response.
-    // Original: PublicRoomsResponse.chunk
-    PublicRoomsResponse parsePublicRoomsResponse(const std::string& json) const;
+    // Original: PublicRoomsResponseEntry.chunk
+    PublicRoomsResponseEntry parsePublicRoomsResponse(const std::string& json) const;
 
     // Accumulate paginated results (merge multiple pages).
-    void accumulateResults(PublicRoomsResponse& existing, const PublicRoomsResponse& nextPage) const;
+    void accumulateResults(PublicRoomsResponseEntry& existing, const PublicRoomsResponseEntry& nextPage) const;
 
     // ====== Room Directory Visibility ======
 
     // Build visibility request body.
-    // Original: setRoomDirectoryVisibility(roomId, visibility)
-    std::string buildVisibilityRequest(RoomDirectoryVisibility visibility) const;
+    // Original: setRoomDirVisibility(roomId, visibility)
+    std::string buildVisibilityRequest(RoomDirVisibility visibility) const;
 
     // Parse visibility response.
-    // Original: getRoomDirectoryVisibility(roomId) → GET /directory/list/room/{roomId}
-    RoomDirectoryVisibility parseVisibilityResponse(const std::string& json) const;
+    // Original: getRoomDirVisibility(roomId) → GET /directory/list/room/{roomId}
+    RoomDirVisibility parseVisibilityResponse(const std::string& json) const;
 
     // ====== Alias Check ======
 
@@ -140,7 +140,7 @@ public:
     // ====== Room Preview ======
 
     // Format a public room for display.
-    std::string formatRoomPreview(const PublicRoom& room) const;
+    std::string formatRoomPreview(const PublicRoomEntry& room) const;
 
     // Build room join URL.
     std::string buildRoomJoinUrl(const std::string& roomId, const std::string& viaServer) const;
@@ -151,24 +151,24 @@ public:
     // ====== Filtering & Sorting ======
 
     // Filter rooms by search term (client-side filter on top of server filter).
-    std::vector<PublicRoom> filterRooms(const std::vector<PublicRoom>& rooms, const std::string& query) const;
+    std::vector<PublicRoomEntry> filterRooms(const std::vector<PublicRoomEntry>& rooms, const std::string& query) const;
 
     // Sort rooms by member count (descending), then by name (ascending).
-    void sortRoomsByPopularity(std::vector<PublicRoom>& rooms) const;
+    void sortRoomsByPopularity(std::vector<PublicRoomEntry>& rooms) const;
 
     // Sort rooms by name (alphabetical).
-    void sortRoomsByName(std::vector<PublicRoom>& rooms) const;
+    void sortRoomsByName(std::vector<PublicRoomEntry>& rooms) const;
 
     // ====== Serialization ======
 
     // Export a single room as JSON.
-    std::string roomToJson(const PublicRoom& room) const;
+    std::string roomToJson(const PublicRoomEntry& room) const;
 
     // Export room list as JSON array.
-    std::string roomsToJson(const std::vector<PublicRoom>& rooms) const;
+    std::string roomsToJson(const std::vector<PublicRoomEntry>& rooms) const;
 
     // Export response as JSON.
-    std::string responseToJson(const PublicRoomsResponse& resp) const;
+    std::string responseToJson(const PublicRoomsResponseEntry& resp) const;
 
     // Export alias result as JSON.
     std::string aliasResultToJson(const AliasAvailabilityResult& result) const;

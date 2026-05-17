@@ -7,44 +7,44 @@ namespace progressive {
 
 // ====== Enum conversions ======
 
-const char* attachmentTypeToString(AttachmentType type) {
+const char* attachmentTypeToString(MediaAttachmentType type) {
     switch (type) {
-        case AttachmentType::FILE: return "file";
-        case AttachmentType::IMAGE: return "image";
-        case AttachmentType::AUDIO: return "audio";
-        case AttachmentType::VIDEO: return "video";
-        case AttachmentType::VOICE_MESSAGE: return "voice_message";
+        case MediaAttachmentType::FILE: return "file";
+        case MediaAttachmentType::IMAGE: return "image";
+        case MediaAttachmentType::AUDIO: return "audio";
+        case MediaAttachmentType::VIDEO: return "video";
+        case MediaAttachmentType::VOICE_MESSAGE: return "voice_message";
         default: return "file";
     }
 }
 
-AttachmentType attachmentTypeFromString(const std::string& s) {
-    if (s == "image") return AttachmentType::IMAGE;
-    if (s == "video") return AttachmentType::VIDEO;
-    if (s == "audio") return AttachmentType::AUDIO;
-    if (s == "voice_message") return AttachmentType::VOICE_MESSAGE;
-    return AttachmentType::FILE;
+MediaAttachmentType attachmentTypeFromString(const std::string& s) {
+    if (s == "image") return MediaAttachmentType::IMAGE;
+    if (s == "video") return MediaAttachmentType::VIDEO;
+    if (s == "audio") return MediaAttachmentType::AUDIO;
+    if (s == "voice_message") return MediaAttachmentType::VOICE_MESSAGE;
+    return MediaAttachmentType::FILE;
 }
 
-// ====== ContentAttachmentData ======
+// ====== MediaContentAttachmentData ======
 // Original: normalizeMimeType — "image/jpg" → "image/jpeg"
 
-std::string ContentAttachmentData::getSafeMimeType() const {
+std::string MediaContentAttachmentData::getSafeMimeType() const {
     return normalizeMimeType(mimeType);
 }
 
-std::string ContentAttachmentData::normalizeMimeType(const std::string& mime) {
+std::string MediaContentAttachmentData::normalizeMimeType(const std::string& mime) {
     if (mime == "image/jpg") return "image/jpeg";
     return mime;
 }
 
-AttachmentType ContentAttachmentData::detectType(const std::string& mimeType) {
-    if (mimeType.compare(0, 6, "image/") == 0) return AttachmentType::IMAGE;
-    if (mimeType.compare(0, 6, "video/") == 0) return AttachmentType::VIDEO;
-    if (mimeType.compare(0, 6, "audio/") == 0) return AttachmentType::AUDIO;
+MediaAttachmentType MediaContentAttachmentData::detectType(const std::string& mimeType) {
+    if (mimeType.compare(0, 6, "image/") == 0) return MediaAttachmentType::IMAGE;
+    if (mimeType.compare(0, 6, "video/") == 0) return MediaAttachmentType::VIDEO;
+    if (mimeType.compare(0, 6, "audio/") == 0) return MediaAttachmentType::AUDIO;
     if (mimeType.find("voice") != std::string::npos ||
-        mimeType.find("ogg") != std::string::npos) return AttachmentType::AUDIO;
-    return AttachmentType::FILE;
+        mimeType.find("ogg") != std::string::npos) return MediaAttachmentType::AUDIO;
+    return MediaAttachmentType::FILE;
 }
 
 // ====== Constructor ======
@@ -125,12 +125,12 @@ void MediaUploadManager::updateProgress(int64_t uploadedBytes) {
     progress_.lastUpdateMs = static_cast<int64_t>(std::time(nullptr)) * 1000;
 }
 
-UploadProgress MediaUploadManager::getProgress() const {
+MediaUploadProgress MediaUploadManager::getProgress() const {
     return progress_;
 }
 
 void MediaUploadManager::resetProgress(int64_t totalBytes) {
-    progress_ = UploadProgress{};
+    progress_ = MediaUploadProgress{};
     progress_.totalBytes = totalBytes;
     progress_.startedAtMs = static_cast<int64_t>(std::time(nullptr)) * 1000;
 }
@@ -138,7 +138,7 @@ void MediaUploadManager::resetProgress(int64_t totalBytes) {
 // ====== Content Building ======
 // Original: SendService.sendMedia — builds event content for different media types
 
-std::string MediaUploadManager::buildImageContent(const ContentAttachmentData& attachment,
+std::string MediaUploadManager::buildImageContent(const MediaContentAttachmentData& attachment,
                                                     const std::string& mxcUrl,
                                                     const std::string& body) const {
     auto esc = [](const std::string& s) -> std::string {
@@ -171,7 +171,7 @@ std::string MediaUploadManager::buildImageContent(const ContentAttachmentData& a
     return os.str();
 }
 
-std::string MediaUploadManager::buildVideoContent(const ContentAttachmentData& attachment,
+std::string MediaUploadManager::buildVideoContent(const MediaContentAttachmentData& attachment,
                                                     const std::string& mxcUrl,
                                                     const std::string& body) const {
     auto esc = [](const std::string& s) -> std::string {
@@ -197,7 +197,7 @@ std::string MediaUploadManager::buildVideoContent(const ContentAttachmentData& a
     return os.str();
 }
 
-std::string MediaUploadManager::buildAudioContent(const ContentAttachmentData& attachment,
+std::string MediaUploadManager::buildAudioContent(const MediaContentAttachmentData& attachment,
                                                     const std::string& mxcUrl,
                                                     const std::string& body) const {
     auto esc = [](const std::string& s) -> std::string {
@@ -207,7 +207,7 @@ std::string MediaUploadManager::buildAudioContent(const ContentAttachmentData& a
     };
 
     std::string b = body.empty() ? attachment.name : body;
-    bool isVoice = attachment.type == AttachmentType::VOICE_MESSAGE;
+    bool isVoice = attachment.type == MediaAttachmentType::VOICE_MESSAGE;
 
     std::ostringstream os;
     os << R"({"msgtype":"m.audio")";
@@ -223,7 +223,7 @@ std::string MediaUploadManager::buildAudioContent(const ContentAttachmentData& a
     return os.str();
 }
 
-std::string MediaUploadManager::buildFileContent(const ContentAttachmentData& attachment,
+std::string MediaUploadManager::buildFileContent(const MediaContentAttachmentData& attachment,
                                                    const std::string& mxcUrl,
                                                    const std::string& body) const {
     auto esc = [](const std::string& s) -> std::string {
@@ -246,14 +246,14 @@ std::string MediaUploadManager::buildFileContent(const ContentAttachmentData& at
     return os.str();
 }
 
-std::string MediaUploadManager::buildMediaContent(const ContentAttachmentData& attachment,
+std::string MediaUploadManager::buildMediaContent(const MediaContentAttachmentData& attachment,
                                                     const std::string& mxcUrl,
                                                     const std::string& body) const {
     switch (attachment.type) {
-        case AttachmentType::IMAGE: return buildImageContent(attachment, mxcUrl, body);
-        case AttachmentType::VIDEO: return buildVideoContent(attachment, mxcUrl, body);
-        case AttachmentType::AUDIO:
-        case AttachmentType::VOICE_MESSAGE: return buildAudioContent(attachment, mxcUrl, body);
+        case MediaAttachmentType::IMAGE: return buildImageContent(attachment, mxcUrl, body);
+        case MediaAttachmentType::VIDEO: return buildVideoContent(attachment, mxcUrl, body);
+        case MediaAttachmentType::AUDIO:
+        case MediaAttachmentType::VOICE_MESSAGE: return buildAudioContent(attachment, mxcUrl, body);
         default: return buildFileContent(attachment, mxcUrl, body);
     }
 }
@@ -295,7 +295,7 @@ void MediaUploadManager::getCompressedDimensions(int originalWidth, int original
 
 // ====== Serialization ======
 
-std::string MediaUploadManager::attachmentToJson(const ContentAttachmentData& attachment) const {
+std::string MediaUploadManager::attachmentToJson(const MediaContentAttachmentData& attachment) const {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
         for (char c : s) { if (c == '"') out += "\\\""; else out += c; }

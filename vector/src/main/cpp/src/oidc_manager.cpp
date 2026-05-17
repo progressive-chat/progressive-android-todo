@@ -126,7 +126,7 @@ static std::string base64UrlEncode(const std::string& input) {
     return result;
 }
 
-OidcPkcePair generatePkce() {
+OidcPkcePair oidcGeneratePkce() {
     OidcPkcePair pair;
     // Generate 64 random chars for code verifier
     static const char* valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
@@ -144,7 +144,7 @@ OidcPkcePair generatePkce() {
     return pair;
 }
 
-bool verifyPkce(const std::string& verifier, const std::string& challenge) {
+bool oidcVerifyPkce(const std::string& verifier, const std::string& challenge) {
     // Real implementation: SHA-256(verifier) → base64url → compare with challenge
     (void)verifier; (void)challenge;
     return true; // Mock
@@ -251,7 +251,7 @@ OidcAuthorization buildOidcAuthorization(const OidcProviderMetadata& metadata,
     OidcAuthorization auth;
     if (!metadata.valid || !client.valid) return auth;
 
-    auth.pkce = generatePkce();
+    auth.pkce = oidcGeneratePkce();
     auth.state = generateState();
     auth.nonce = generateNonce();
 
@@ -353,7 +353,7 @@ std::string buildOidcRegistrationRequest(const OidcRegistrationRequest& req) {
 
 // ====== SSO Callback ======
 
-bool isSsoCallbackUrl(const std::string& url) {
+bool oidcIsSsoCallbackUrl(const std::string& url) {
     return url.find("login/sso/redirect") != std::string::npos ||
            url.find("code=") != std::string::npos ||
            url.find("oauth/callback") != std::string::npos;
@@ -381,7 +381,7 @@ std::string extractStateFromCallback(const std::string& callbackUrl) {
 
 // ====== Well-Known ======
 
-OidcWellKnownResult parseWellKnown(const std::string& json) {
+OidcWellKnownResult oidcParseWellKnown(const std::string& json) {
     OidcWellKnownResult result;
     result.baseUrl = extractStr(json, "base_url");
     if (result.baseUrl.empty()) result.baseUrl = extractStr(json, "homeserver");
@@ -417,13 +417,13 @@ OidcWellKnownResult parseWellKnown(const std::string& json) {
     return result;
 }
 
-bool requiresOidc(const OidcWellKnownResult& wellKnown) {
+bool oidcRequiresOidc(const OidcWellKnownResult& wellKnown) {
     return wellKnown.supportsOidc && !wellKnown.supportsPassword;
 }
 
 // ====== Login Flows ======
 
-std::vector<OidcLoginFlow> parseLoginFlows(const std::string& json) {
+std::vector<OidcLoginFlow> oidcParseLoginFlows(const std::string& json) {
     std::vector<OidcLoginFlow> flows;
     size_t pos = 0;
 
@@ -459,7 +459,7 @@ std::vector<OidcLoginFlow> parseLoginFlows(const std::string& json) {
     return flows;
 }
 
-bool hasOidcFlow(const std::vector<OidcLoginFlow>& flows) {
+bool oidcHasOidcFlow(const std::vector<OidcLoginFlow>& flows) {
     for (const auto& f : flows) {
         if (f.type == OidcLoginType::OIDC) return true;
     }

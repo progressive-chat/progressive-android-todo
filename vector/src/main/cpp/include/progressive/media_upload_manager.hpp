@@ -10,7 +10,7 @@ namespace progressive {
 // Media Upload Pipeline — full file upload & compression
 //
 // Faithful port from Element Android original sources:
-//   ContentAttachmentData.kt — attachment model (size, duration,
+//   MediaContentAttachmentData.kt — attachment model (size, duration,
 //     height, width, exifOrientation, name, mimeType, type,
 //     getSafeMimeType via normalizeMimeType)
 //   FileUploader.kt — uploadFile, uploadByteArray, max size check,
@@ -31,9 +31,9 @@ namespace progressive {
 // ================================================================
 
 // ---- Attachment Type ----
-// Original: ContentAttachmentData.Type (FILE, IMAGE, AUDIO, VIDEO, VOICE_MESSAGE)
+// Original: MediaContentAttachmentData.Type (FILE, IMAGE, AUDIO, VIDEO, VOICE_MESSAGE)
 
-enum class AttachmentType {
+enum class MediaAttachmentType {
     FILE = 0,
     IMAGE = 1,
     AUDIO = 2,
@@ -41,15 +41,15 @@ enum class AttachmentType {
     VOICE_MESSAGE = 4,
 };
 
-const char* attachmentTypeToString(AttachmentType type);
-AttachmentType attachmentTypeFromString(const std::string& s);
+const char* attachmentTypeToString(MediaAttachmentType type);
+MediaAttachmentType attachmentTypeFromString(const std::string& s);
 
 // ---- Content Attachment Data ----
-// Original: ContentAttachmentData.kt (size, duration, date, height, width,
+// Original: MediaContentAttachmentData.kt (size, duration, date, height, width,
 //   exifOrientation, name, queryUri, mimeType, type, waveform)
 // Original: getSafeMimeType() → normalizeMimeType
 
-struct ContentAttachmentData {
+struct MediaContentAttachmentData {
     int64_t size = 0;                // File size in bytes
     int64_t duration = 0;            // Audio/video duration in ms
     int64_t date = 0;                // File modification date (epoch ms)
@@ -58,7 +58,7 @@ struct ContentAttachmentData {
     int exifOrientation = 0;         // Original: ExifInterface.ORIENTATION_UNDEFINED
     std::string name;                // File name
     std::string mimeType;            // "image/jpeg", "video/mp4", etc.
-    AttachmentType type = AttachmentType::FILE;
+    MediaAttachmentType type = MediaAttachmentType::FILE;
     std::vector<int> waveform;       // Audio waveform data (optional)
     bool valid = false;
 
@@ -69,7 +69,7 @@ struct ContentAttachmentData {
     static std::string normalizeMimeType(const std::string& mime);
 
     // Detect attachment type from MIME type.
-    static AttachmentType detectType(const std::string& mimeType);
+    static MediaAttachmentType detectType(const std::string& mimeType);
 };
 
 // ---- Upload Config ----
@@ -88,7 +88,7 @@ struct UploadConfig {
 // ---- Upload Progress ----
 // Original: ProgressRequestBody.Listener
 
-struct UploadProgress {
+struct MediaUploadProgress {
     int64_t totalBytes = 0;
     int64_t uploadedBytes = 0;
     float percent = 0.0f;            // 0.0 - 100.0
@@ -151,7 +151,7 @@ public:
     void updateProgress(int64_t uploadedBytes);
 
     // Get current progress.
-    UploadProgress getProgress() const;
+    MediaUploadProgress getProgress() const;
 
     // Reset progress for a new upload.
     void resetProgress(int64_t totalBytes);
@@ -160,27 +160,27 @@ public:
     // Original: SendService.sendMedia — build message content from attachment
 
     // Build image message content JSON.
-    std::string buildImageContent(const ContentAttachmentData& attachment,
+    std::string buildImageContent(const MediaContentAttachmentData& attachment,
                                    const std::string& mxcUrl,
                                    const std::string& body = "") const;
 
     // Build video message content JSON.
-    std::string buildVideoContent(const ContentAttachmentData& attachment,
+    std::string buildVideoContent(const MediaContentAttachmentData& attachment,
                                    const std::string& mxcUrl,
                                    const std::string& body = "") const;
 
     // Build audio message content JSON.
-    std::string buildAudioContent(const ContentAttachmentData& attachment,
+    std::string buildAudioContent(const MediaContentAttachmentData& attachment,
                                    const std::string& mxcUrl,
                                    const std::string& body = "") const;
 
     // Build file message content JSON.
-    std::string buildFileContent(const ContentAttachmentData& attachment,
+    std::string buildFileContent(const MediaContentAttachmentData& attachment,
                                   const std::string& mxcUrl,
                                   const std::string& body = "") const;
 
     // Build generic media content JSON.
-    std::string buildMediaContent(const ContentAttachmentData& attachment,
+    std::string buildMediaContent(const MediaContentAttachmentData& attachment,
                                    const std::string& mxcUrl,
                                    const std::string& body = "") const;
 
@@ -200,14 +200,14 @@ public:
     // ====== Serialization ======
 
     // Export attachment data as JSON.
-    std::string attachmentToJson(const ContentAttachmentData& attachment) const;
+    std::string attachmentToJson(const MediaContentAttachmentData& attachment) const;
 
     // Export upload progress as JSON.
     std::string progressToJson() const;
 
 private:
     UploadConfig config_;
-    UploadProgress progress_;
+    MediaUploadProgress progress_;
 };
 
 } // namespace progressive

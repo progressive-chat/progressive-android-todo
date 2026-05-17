@@ -7,13 +7,13 @@ namespace progressive {
 
 // ====== Enum conversions ======
 
-const char* visibilityToString(RoomDirectoryVisibility v) {
-    return v == RoomDirectoryVisibility::PUBLIC ? "public" : "private";
+const char* visibilityToString(RoomDirVisibility v) {
+    return v == RoomDirVisibility::PUBLIC ? "public" : "private";
 }
 
-RoomDirectoryVisibility visibilityFromString(const std::string& s) {
-    if (s == "public") return RoomDirectoryVisibility::PUBLIC;
-    return RoomDirectoryVisibility::PRIVATE;
+RoomDirVisibility visibilityFromString(const std::string& s) {
+    if (s == "public") return RoomDirVisibility::PUBLIC;
+    return RoomDirVisibility::PRIVATE;
 }
 
 // ====== JSON helpers ======
@@ -50,9 +50,9 @@ bool RoomDirectoryManager::extractBool(const std::string& json, const std::strin
 RoomDirectoryManager::RoomDirectoryManager() {}
 
 // ====== Public Rooms Search ======
-// Original: getPublicRooms(server, PublicRoomsParams)
+// Original: getPublicRooms(server, PublicRoomsParamsEntry)
 
-std::string RoomDirectoryManager::buildPublicRoomsRequest(const PublicRoomsParams& params) const {
+std::string RoomDirectoryManager::buildPublicRoomsRequest(const PublicRoomsParamsEntry& params) const {
     std::ostringstream os;
     os << R"({"limit":)" << params.limit;
 
@@ -76,9 +76,9 @@ std::string RoomDirectoryManager::buildPublicRoomsRequest(const PublicRoomsParam
     return os.str();
 }
 
-// Original: PublicRoomsResponse — {"chunk":[{...}],"next_batch":"...","prev_batch":"...","total_room_count_estimate":42}
-PublicRoomsResponse RoomDirectoryManager::parsePublicRoomsResponse(const std::string& json) const {
-    PublicRoomsResponse resp;
+// Original: PublicRoomsResponseEntry — {"chunk":[{...}],"next_batch":"...","prev_batch":"...","total_room_count_estimate":42}
+PublicRoomsResponseEntry RoomDirectoryManager::parsePublicRoomsResponse(const std::string& json) const {
+    PublicRoomsResponseEntry resp;
 
     resp.nextBatch = extractStr(json, "next_batch");
     resp.prevBatch = extractStr(json, "prev_batch");
@@ -107,7 +107,7 @@ PublicRoomsResponse RoomDirectoryManager::parsePublicRoomsResponse(const std::st
         }
         std::string roomJson = json.substr(objStart, pos - objStart);
 
-        PublicRoom room;
+        PublicRoomEntry room;
         room.roomId = extractStr(roomJson, "room_id");
         room.name = extractStr(roomJson, "name");
         room.topic = extractStr(roomJson, "topic");
@@ -147,7 +147,7 @@ PublicRoomsResponse RoomDirectoryManager::parsePublicRoomsResponse(const std::st
     return resp;
 }
 
-void RoomDirectoryManager::accumulateResults(PublicRoomsResponse& existing, const PublicRoomsResponse& nextPage) const {
+void RoomDirectoryManager::accumulateResults(PublicRoomsResponseEntry& existing, const PublicRoomsResponseEntry& nextPage) const {
     existing.chunk.insert(existing.chunk.end(), nextPage.chunk.begin(), nextPage.chunk.end());
     existing.nextBatch = nextPage.nextBatch;
     existing.prevBatch = nextPage.prevBatch;
@@ -157,11 +157,11 @@ void RoomDirectoryManager::accumulateResults(PublicRoomsResponse& existing, cons
 
 // ====== Room Directory Visibility ======
 
-std::string RoomDirectoryManager::buildVisibilityRequest(RoomDirectoryVisibility visibility) const {
+std::string RoomDirectoryManager::buildVisibilityRequest(RoomDirVisibility visibility) const {
     return std::string(R"({"visibility":")") + visibilityToString(visibility) + R"("})";
 }
 
-RoomDirectoryVisibility RoomDirectoryManager::parseVisibilityResponse(const std::string& json) const {
+RoomDirVisibility RoomDirectoryManager::parseVisibilityResponse(const std::string& json) const {
     auto vis = extractStr(json, "visibility");
     return visibilityFromString(vis);
 }
@@ -186,7 +186,7 @@ AliasAvailabilityResult RoomDirectoryManager::parseAliasAvailability(const std::
 
 // ====== Room Preview ======
 
-std::string RoomDirectoryManager::formatRoomPreview(const PublicRoom& room) const {
+std::string RoomDirectoryManager::formatRoomPreview(const PublicRoomEntry& room) const {
     std::ostringstream os;
     os << (room.name.empty() ? room.getPrimaryAlias() : room.name);
     if (!room.topic.empty()) {
@@ -234,13 +234,13 @@ std::string RoomDirectoryManager::buildRoomAvatarUrl(const std::string& avatarUr
 
 // ====== Filtering & Sorting ======
 
-std::vector<PublicRoom> RoomDirectoryManager::filterRooms(const std::vector<PublicRoom>& rooms, const std::string& query) const {
+std::vector<PublicRoomEntry> RoomDirectoryManager::filterRooms(const std::vector<PublicRoomEntry>& rooms, const std::string& query) const {
     if (query.empty()) return rooms;
 
     std::string q;
     for (char c : query) q += static_cast<char>(std::tolower(c));
 
-    std::vector<PublicRoom> result;
+    std::vector<PublicRoomEntry> result;
     for (const auto& room : rooms) {
         std::string name;
         for (char c : room.name) name += static_cast<char>(std::tolower(c));
@@ -257,22 +257,22 @@ std::vector<PublicRoom> RoomDirectoryManager::filterRooms(const std::vector<Publ
     return result;
 }
 
-void RoomDirectoryManager::sortRoomsByPopularity(std::vector<PublicRoom>& rooms) const {
-    std::sort(rooms.begin(), rooms.end(), [](const PublicRoom& a, const PublicRoom& b) {
+void RoomDirectoryManager::sortRoomsByPopularity(std::vector<PublicRoomEntry>& rooms) const {
+    std::sort(rooms.begin(), rooms.end(), [](const PublicRoomEntry& a, const PublicRoomEntry& b) {
         if (a.numJoinedMembers != b.numJoinedMembers) return a.numJoinedMembers > b.numJoinedMembers;
         return a.name < b.name;
     });
 }
 
-void RoomDirectoryManager::sortRoomsByName(std::vector<PublicRoom>& rooms) const {
-    std::sort(rooms.begin(), rooms.end(), [](const PublicRoom& a, const PublicRoom& b) {
+void RoomDirectoryManager::sortRoomsByName(std::vector<PublicRoomEntry>& rooms) const {
+    std::sort(rooms.begin(), rooms.end(), [](const PublicRoomEntry& a, const PublicRoomEntry& b) {
         return a.name < b.name;
     });
 }
 
 // ====== Serialization ======
 
-std::string RoomDirectoryManager::roomToJson(const PublicRoom& room) const {
+std::string RoomDirectoryManager::roomToJson(const PublicRoomEntry& room) const {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
         for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
@@ -298,7 +298,7 @@ std::string RoomDirectoryManager::roomToJson(const PublicRoom& room) const {
     return os.str();
 }
 
-std::string RoomDirectoryManager::roomsToJson(const std::vector<PublicRoom>& rooms) const {
+std::string RoomDirectoryManager::roomsToJson(const std::vector<PublicRoomEntry>& rooms) const {
     std::ostringstream os; os << "[";
     for (size_t i = 0; i < rooms.size(); i++) {
         if (i > 0) os << ","; os << roomToJson(rooms[i]);
@@ -307,7 +307,7 @@ std::string RoomDirectoryManager::roomsToJson(const std::vector<PublicRoom>& roo
     return os.str();
 }
 
-std::string RoomDirectoryManager::responseToJson(const PublicRoomsResponse& resp) const {
+std::string RoomDirectoryManager::responseToJson(const PublicRoomsResponseEntry& resp) const {
     std::ostringstream os;
     os << R"({"rooms":)" << roomsToJson(resp.chunk)
        << R"(,"next_batch":")" << resp.nextBatch

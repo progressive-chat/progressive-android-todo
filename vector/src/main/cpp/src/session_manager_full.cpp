@@ -99,12 +99,12 @@ static int64_t extractInt(const std::string& json, const std::string& key) {
 
 SessionManager::SessionManager() {}
 
-SessionInfo* SessionManager::findSession(const std::string& sessionId) {
+SavedSessionInfo* SessionManager::findSession(const std::string& sessionId) {
     auto it = sessions_.find(sessionId);
     return (it != sessions_.end()) ? &it->second : nullptr;
 }
 
-const SessionInfo* SessionManager::findSession(const std::string& sessionId) const {
+const SavedSessionInfo* SessionManager::findSession(const std::string& sessionId) const {
     auto it = sessions_.find(sessionId);
     return (it != sessions_.end()) ? &it->second : nullptr;
 }
@@ -120,7 +120,7 @@ std::string SessionManager::createSession(const SessionCredentials& creds, const
     auto sessionId = creds.computeSessionId();
     if (hasSession(sessionId)) { error = "Session already exists: " + sessionId; return ""; }
 
-    SessionInfo info;
+    SavedSessionInfo info;
     info.sessionId = sessionId;
     info.userId = creds.userId;
     info.deviceId = creds.deviceId;
@@ -201,21 +201,21 @@ bool SessionManager::hasActiveSession() const {
     return !activeSessionId_.empty() && hasSession(activeSessionId_);
 }
 
-bool SessionManager::getActiveSession(SessionInfo& out) const {
+bool SessionManager::getActiveSession(SavedSessionInfo& out) const {
     auto* s = findSession(activeSessionId_);
     if (!s) return false;
     out = *s;
     return true;
 }
 
-bool SessionManager::getSession(const std::string& sessionId, SessionInfo& out) const {
+bool SessionManager::getSession(const std::string& sessionId, SavedSessionInfo& out) const {
     auto* s = findSession(sessionId);
     if (!s) return false;
     out = *s;
     return true;
 }
 
-bool SessionManager::getSessionByUser(const std::string& userId, SessionInfo& out) const {
+bool SessionManager::getSessionByUser(const std::string& userId, SavedSessionInfo& out) const {
     for (const auto& [id, info] : sessions_) {
         if (info.userId == userId) {
             out = info;
@@ -227,11 +227,11 @@ bool SessionManager::getSessionByUser(const std::string& userId, SessionInfo& ou
 
 // ====== Queries ======
 
-std::vector<SessionInfo> SessionManager::getAllSessions() const {
-    std::vector<SessionInfo> result;
+std::vector<SavedSessionInfo> SessionManager::getAllSessions() const {
+    std::vector<SavedSessionInfo> result;
     for (const auto& [id, info] : sessions_) result.push_back(info);
     // Sort: active first, then by last sync (descending)
-    std::sort(result.begin(), result.end(), [](const SessionInfo& a, const SessionInfo& b) {
+    std::sort(result.begin(), result.end(), [](const SavedSessionInfo& a, const SavedSessionInfo& b) {
         if (a.isActive != b.isActive) return a.isActive;
         return a.lastSyncMs > b.lastSyncMs;
     });
@@ -304,7 +304,7 @@ void SessionManager::setPushRule(const std::string& sessionId, const std::string
 
 // ====== Serialization ======
 
-std::string SessionManager::sessionToJson(const SessionInfo& session) const {
+std::string SessionManager::sessionToJson(const SavedSessionInfo& session) const {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
         for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
@@ -341,7 +341,7 @@ std::string SessionManager::allSessionsToJson() const {
     return os.str();
 }
 
-std::string SessionManager::paramsToJson(const SessionParams& params) const {
+std::string SessionManager::paramsToJson(const SavedSessionParams& params) const {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
         for (char c : s) { if (c == '"') out += "\\\""; else out += c; }

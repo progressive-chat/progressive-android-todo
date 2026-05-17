@@ -12,7 +12,7 @@ namespace progressive {
 //
 // Faithful port from Element Android original sources:
 //   Session.kt — session interface (open/close, services, myUserId, sessionId)
-//   SessionParams.kt — session configuration (credentials, home server,
+//   SavedSessionParams.kt — session configuration (credentials, home server,
 //     isTokenValid, loginType, shortcuts for userId/deviceId/homeServerUrl)
 //   Credentials.kt — auth data (userId, accessToken, refreshToken,
 //     homeServer, deviceId, discoveryInformation, sessionId via md5)
@@ -45,9 +45,9 @@ const char* sessionLoginTypeToString(SessionLoginType type);
 SessionLoginType sessionLoginTypeFromString(const std::string& s);
 
 // ---- Discovery Information ----
-// Original: DiscoveryInformation — from well-known response
+// Original: SessionDiscoveryInfo — from well-known response
 
-struct DiscoveryInformation {
+struct SessionDiscoveryInfo {
     std::string baseUrl;
     std::string identityServer;
     bool valid = false;
@@ -64,7 +64,7 @@ struct SessionCredentials {
     std::string refreshToken;        // Optional refresh token
     std::string homeServer;          // Deprecated — extract from userId
     std::string deviceId;            // ABCDEFGHIJ
-    DiscoveryInformation discoveryInfo;
+    SessionDiscoveryInfo discoveryInfo;
     bool valid = false;
 
     // Original: sessionId() = md5("$userId|$deviceId")
@@ -90,12 +90,12 @@ struct HomeServerConfig {
 };
 
 // ---- Session Params ----
-// Original: SessionParams.kt (credentials, homeServerConnectionConfig,
+// Original: SavedSessionParams.kt (credentials, homeServerConnectionConfig,
 //   isTokenValid, loginType)
 // Original: Shortcuts — userId, deviceId, homeServerUrl, homeServerUrlBase,
 //   homeServerHost, defaultIdentityServerUrl
 
-struct SessionParams {
+struct SavedSessionParams {
     SessionCredentials credentials;
     HomeServerConfig homeServerConfig;
     bool isTokenValid = false;
@@ -129,7 +129,7 @@ const char* sessionStateToString(SessionState state);
 // ---- Session Info ----
 // Original: Session interface properties (myUserId, sessionId, isOpenable)
 
-struct SessionInfo {
+struct SavedSessionInfo {
     std::string sessionId;           // Original: sessionId
     std::string userId;              // Original: myUserId = sessionParams.userId
     std::string deviceId;
@@ -191,19 +191,19 @@ public:
     bool hasActiveSession() const;
 
     // Get the active session info.
-    bool getActiveSession(SessionInfo& out) const;
+    bool getActiveSession(SavedSessionInfo& out) const;
 
     // Get a session by ID.
-    bool getSession(const std::string& sessionId, SessionInfo& out) const;
+    bool getSession(const std::string& sessionId, SavedSessionInfo& out) const;
 
     // Get a session by user ID.
-    bool getSessionByUser(const std::string& userId, SessionInfo& out) const;
+    bool getSessionByUser(const std::string& userId, SavedSessionInfo& out) const;
 
     // ====== Session Queries ======
     // Original: Session properties
 
     // Get all sessions (sorted by last activity).
-    std::vector<SessionInfo> getAllSessions() const;
+    std::vector<SavedSessionInfo> getAllSessions() const;
 
     // Get session count.
     int sessionCount() const { return static_cast<int>(sessions_.size()); }
@@ -247,13 +247,13 @@ public:
     // ====== Serialization ======
 
     // Export session info as JSON.
-    std::string sessionToJson(const SessionInfo& session) const;
+    std::string sessionToJson(const SavedSessionInfo& session) const;
 
     // Export all sessions as JSON array.
     std::string allSessionsToJson() const;
 
     // Export session params as JSON.
-    std::string paramsToJson(const SessionParams& params) const;
+    std::string paramsToJson(const SavedSessionParams& params) const;
 
     // ====== Session ID ======
 
@@ -262,11 +262,11 @@ public:
     static std::string computeSessionId(const std::string& userId, const std::string& deviceId);
 
 private:
-    std::unordered_map<std::string, SessionInfo> sessions_;
+    std::unordered_map<std::string, SavedSessionInfo> sessions_;
     std::string activeSessionId_;
 
-    SessionInfo* findSession(const std::string& sessionId);
-    const SessionInfo* findSession(const std::string& sessionId) const;
+    SavedSessionInfo* findSession(const std::string& sessionId);
+    const SavedSessionInfo* findSession(const std::string& sessionId) const;
 
     // Simple hash for session ID (replaces MD5 from original).
     static std::string simpleHash(const std::string& input);

@@ -81,10 +81,10 @@ struct OidcPkcePair {
 // Generate a cryptographically random PKCE pair.
 // Uses std::rand() seeded with time — for production use,
 // replace with OpenSSL or OS random generator.
-OidcPkcePair generatePkce();
+OidcPkcePair oidcGeneratePkce();
 
 // Verify a PKCE code challenge matches the verifier.
-bool verifyPkce(const std::string& verifier, const std::string& challenge);
+bool oidcVerifyPkce(const std::string& verifier, const std::string& challenge);
 
 // ---- OIDC Discovery (OpenID Connect) ----
 
@@ -220,7 +220,7 @@ std::string buildOidcRegistrationRequest(const OidcRegistrationRequest& req);
 // ---- SSO Callback Handling ----
 
 // Check if a URL is an SSO/OIDC callback.
-bool isSsoCallbackUrl(const std::string& url);
+bool oidcIsSsoCallbackUrl(const std::string& url);
 
 // Extract the authorization code from a callback URL.
 std::string extractAuthCodeFromCallback(const std::string& callbackUrl);
@@ -242,10 +242,10 @@ struct OidcWellKnownResult {
 };
 
 // Parse well-known response for OIDC and SSO information.
-OidcWellKnownResult parseWellKnown(const std::string& json);
+OidcWellKnownResult oidcParseWellKnown(const std::string& json);
 
 // Check if well-known requires OIDC (no password login available).
-bool requiresOidc(const OidcWellKnownResult& wellKnown);
+bool oidcRequiresOidc(const OidcWellKnownResult& wellKnown);
 
 // ---- Login Flows ----
 
@@ -255,10 +255,10 @@ struct OidcLoginFlow {
 };
 
 // Parse login flows from GET /login response.
-std::vector<OidcLoginFlow> parseLoginFlows(const std::string& json);
+std::vector<OidcLoginFlow> oidcParseLoginFlows(const std::string& json);
 
 // Check if OIDC flow is available.
-bool hasOidcFlow(const std::vector<OidcLoginFlow>& flows);
+bool oidcHasOidcFlow(const std::vector<OidcLoginFlow>& flows);
 
 // ---- Password / Token Manager Interface ----
 

@@ -11,7 +11,7 @@ namespace progressive {
 // Identity Server Manager — 3PID management, identity server API
 //
 // Faithful port from Element Android original sources:
-//   ThreePid.kt — sealed Email/Msisdn, toMedium(), getCountryCode()
+//   IdentityThreePid.kt — sealed Email/Msisdn, toMedium(), getCountryCode()
 //   IdentityService.kt — get/set identity server, bind/unbind 3PID,
 //     lookUp, user consent, getShareStatus, sign3pidInvitation
 //   FoundThreePid.kt — threePid + matrixId
@@ -29,7 +29,7 @@ namespace progressive {
 // ================================================================
 
 // ---- ThreePID Type ----
-// Original: ThreePid.kt sealed Email/Msisdn
+// Original: IdentityThreePid.kt sealed Email/Msisdn
 
 enum class ThreePidMedium {
     EMAIL = 0,       // Original: MEDIUM_EMAIL
@@ -40,9 +40,9 @@ const char* threePidMediumToString(ThreePidMedium medium);
 ThreePidMedium threePidMediumFromString(const std::string& s);
 
 // ---- ThreePID ----
-// Original: ThreePid.kt (Email(email), Msisdn(msisdn))
+// Original: IdentityThreePid.kt (Email(email), Msisdn(msisdn))
 
-struct ThreePid {
+struct IdentityThreePid {
     ThreePidMedium medium = ThreePidMedium::EMAIL;
     std::string value;               // "alice@example.org" or "1234567890"
     bool valid = false;
@@ -54,7 +54,7 @@ struct ThreePid {
     std::string getCountryCode() const;
 
     // Parse a threePID from a string (detects email vs phone).
-    static ThreePid parse(const std::string& input);
+    static IdentityThreePid parse(const std::string& input);
 
     // Check if input is an email.
     static bool isEmail(const std::string& input);
@@ -67,7 +67,7 @@ struct ThreePid {
 // Original: FoundThreePid.kt (threePid, matrixId)
 
 struct FoundThreePid {
-    ThreePid threePid;
+    IdentityThreePid threePid;
     std::string matrixId;            // @user:example.org
     bool valid = false;
 };
@@ -86,8 +86,8 @@ SharedState sharedStateFromString(const std::string& s);
 
 // ---- 3PID Binding Status ----
 
-struct ThreePidBindingStatus {
-    ThreePid threePid;
+struct IdentityThreePidBindingStatus {
+    IdentityThreePid threePid;
     SharedState shareState = SharedState::NOT_SHARED;
     std::string sid;                 // Session ID for pending binding
     bool isBound = false;            // Successfully bound
@@ -158,20 +158,20 @@ public:
     // Original: startBindThreePid / cancelBindThreePid / finalizeBindThreePid / unbindThreePid
 
     // Build bind request body.
-    std::string buildBindRequest(const ThreePid& threePid) const;
+    std::string buildBindRequest(const IdentityThreePid& threePid) const;
 
     // Build unbind request body.
-    std::string buildUnbindRequest(const ThreePid& threePid) const;
+    std::string buildUnbindRequest(const IdentityThreePid& threePid) const;
 
     // Build validation token submission request.
-    std::string buildSubmitTokenRequest(const ThreePid& threePid, const std::string& sid,
+    std::string buildSubmitTokenRequest(const IdentityThreePid& threePid, const std::string& sid,
                                          const std::string& clientSecret, int token) const;
 
     // Parse bind response.
-    ThreePidBindingStatus parseBindResponse(const std::string& json, const ThreePid& threePid) const;
+    ThreePidBindingStatus parseBindResponse(const std::string& json, const IdentityThreePid& threePid) const;
 
     // Register a binding session.
-    void registerBinding(const std::string& sid, const ThreePid& threePid);
+    void registerBinding(const std::string& sid, const IdentityThreePid& threePid);
 
     // Get binding by session ID.
     ThreePidBindingStatus getBinding(const std::string& sid) const;
@@ -189,7 +189,7 @@ public:
     // Original: lookUp(threePids) → List<FoundThreePid>
 
     // Build lookup request for multiple 3PIDs.
-    std::string buildLookupRequest(const std::vector<ThreePid>& threePids) const;
+    std::string buildLookupRequest(const std::vector<IdentityThreePid>& threePids) const;
 
     // Parse lookup response.
     std::vector<FoundThreePid> parseLookupResponse(const std::string& json) const;
@@ -204,13 +204,13 @@ public:
     std::string buildConsentRequest(bool consent) const;
 
     // ====== Share Status ======
-    // Original: getShareStatus(threePids) → Map<ThreePid, SharedState>
+    // Original: getShareStatus(threePids) → Map<IdentityThreePid, SharedState>
 
     // Get share status for 3PIDs.
-    SharedState getShareStatus(const ThreePid& threePid) const;
+    SharedState getShareStatus(const IdentityThreePid& threePid) const;
 
     // Set share status.
-    void setShareStatus(const ThreePid& threePid, SharedState state);
+    void setShareStatus(const IdentityThreePid& threePid, SharedState state);
 
     // ====== Invitation Signing ======
     // Original: sign3pidInvitation(identityServer, token, secret)
@@ -224,7 +224,7 @@ public:
     // ====== Serialization ======
 
     // Export 3PID as JSON.
-    std::string threePidToJson(const ThreePid& threePid) const;
+    std::string threePidToJson(const IdentityThreePid& threePid) const;
 
     // Export binding status as JSON.
     std::string bindingToJson(const ThreePidBindingStatus& status) const;

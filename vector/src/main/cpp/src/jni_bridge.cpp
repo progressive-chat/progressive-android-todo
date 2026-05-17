@@ -1206,7 +1206,7 @@ JNI_FUNC(jstring, nativeGenerateOAuthState)(JNIEnv* env, jclass) {
 }
 
 JNI_FUNC(jstring, nativeGeneratePkce)(JNIEnv* env, jclass) {
-    auto pkce = progressive::generatePkce();
+    auto pkce = progressive::oidcGeneratePkce();
     std::ostringstream os;
     os << R"({"codeVerifier":")" << pkce.codeVerifier << R"(","codeChallenge":")" << pkce.codeChallenge << "\"}";
     return env->NewStringUTF(os.str().c_str());
@@ -1740,7 +1740,7 @@ JNI_FUNC(jboolean, nativeIsValidDisplayName)(JNIEnv* env, jclass, jstring jName,
 // --- Well-Known Server Discovery ---
 
 JNI_FUNC(jstring, nativeParseWellKnown)(JNIEnv* env, jclass, jstring jJson) {
-    auto result = progressive::parseWellKnown(jStr(env, jJson));
+    auto result = progressive::oidcParseWellKnown(jStr(env, jJson));
     std::ostringstream os;
     os << R"({"homeserver_url":")" << result.homeServerBaseUrl
        << R"(","identity_server":")" << result.identityServerBaseUrl
@@ -1972,7 +1972,7 @@ JNI_FUNC(jboolean, nativeHasPower)(JNIEnv* env, jclass, jstring jPlJson, jstring
 // --- SSO ---
 
 JNI_FUNC(jboolean, nativeIsSsoCallbackUrl)(JNIEnv* env, jclass, jstring jUrl) {
-    return progressive::isSsoCallbackUrl(jStr(env, jUrl)) ? JNI_TRUE : JNI_FALSE;
+    return progressive::oidcIsSsoCallbackUrl(jStr(env, jUrl)) ? JNI_TRUE : JNI_FALSE;
 }
 
 JNI_FUNC(jstring, nativeExtractSsoProvider)(JNIEnv* env, jclass, jstring jIdpId) {
@@ -5751,19 +5751,19 @@ JNI_FUNC(jstring, nativeOidcParseWhoami)(JNIEnv* env, jclass, jstring jJson) {
 }
 
 JNI_FUNC(jstring, nativeOidcParseWellKnown)(JNIEnv* env, jclass, jstring jJson) {
-    auto wk = progressive::parseWellKnown(jStr(env, jJson));
+    auto wk = progressive::oidcParseWellKnown(jStr(env, jJson));
     std::ostringstream os;
     os << R"({"base_url":")" << wk.baseUrl
        << R"(","oidc_issuer":")" << wk.oidcIssuer
        << R"(,"supports_oidc":)" << (wk.supportsOidc ? "true" : "false")
        << R"(,"supports_password":)" << (wk.supportsPassword ? "true" : "false")
-       << R"(,"requires_oidc":)" << (progressive::requiresOidc(wk) ? "true" : "false")
+       << R"(,"requires_oidc":)" << (progressive::oidcRequiresOidc(wk) ? "true" : "false")
        << "}";
     return env->NewStringUTF(os.str().c_str());
 }
 
 JNI_FUNC(jboolean, nativeOidcIsCallback)(JNIEnv* env, jclass, jstring jUrl) {
-    return progressive::isSsoCallbackUrl(jStr(env, jUrl)) ? JNI_TRUE : JNI_FALSE;
+    return progressive::oidcIsSsoCallbackUrl(jStr(env, jUrl)) ? JNI_TRUE : JNI_FALSE;
 }
 
 JNI_FUNC(jstring, nativeOidcExtractCode)(JNIEnv* env, jclass, jstring jUrl) {
@@ -6034,7 +6034,7 @@ JNI_FUNC(jstring, nativeSessionCreate)(JNIEnv* env, jclass, jstring jCredsJson, 
     std::string error;
     auto sid = getSessionMgrFull()->createSession(creds, config, static_cast<progressive::SessionLoginType>(jLoginType), error);
     if (sid.empty()) return env->NewStringUTF(("{\"error\":\"" + error + "\"}").c_str());
-    progressive::SessionInfo info; getSessionMgrFull()->getSession(sid, info);
+    progressive::SavedSessionInfo info; getSessionMgrFull()->getSession(sid, info);
     return env->NewStringUTF(getSessionMgrFull()->sessionToJson(info).c_str());
 }
 
@@ -6056,7 +6056,7 @@ JNI_FUNC(jboolean, nativeSessionSetActive)(JNIEnv* env, jclass, jstring jSid) {
 }
 
 JNI_FUNC(jstring, nativeSessionGetActive)(JNIEnv* env, jclass) {
-    progressive::SessionInfo info;
+    progressive::SavedSessionInfo info;
     if (getSessionMgrFull()->getActiveSession(info))
         return env->NewStringUTF(getSessionMgrFull()->sessionToJson(info).c_str());
     return env->NewStringUTF("{}");
