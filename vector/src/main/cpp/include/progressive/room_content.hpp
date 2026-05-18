@@ -562,6 +562,17 @@ struct LocalRoomSummary {
 
 // Room server ACL
 RoomServerAclContent parseRoomServerAclContent(const std::string& contentJson);
+
+// Wildcard pattern match (* matches zero or more chars, ? matches exactly one).
+// Used for server ACL hostname evaluation.
+bool wildcardMatch(const std::string& pattern, const std::string& value);
+
+// Check if a server is allowed to participate in a room based on ACL content.
+// Returns true if the server hostname matches an allow entry and no deny entry.
+// If allowList is empty, all servers are denied (except for the special case
+// where the ACL has never been set — caller should handle this separately).
+bool isServerAllowed(const std::string& serverName, const RoomServerAclContent& acl);
+
 // Room third-party invite
 RoomThirdPartyInviteContent parseRoomThirdPartyInvite(const std::string& contentJson);
 // Room stripped state

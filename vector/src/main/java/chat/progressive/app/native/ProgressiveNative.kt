@@ -510,6 +510,11 @@ object ProgressiveNative {
     @JvmStatic external fun nativeErrorIsRegistrationAvailability(errorCode: String, httpCode: Int): Boolean
     @JvmStatic external fun nativeClassifyError(errorCode: String, httpCode: Int, errorMessage: String, isNetworkError: Boolean, isUnknownHost: Boolean): String
 
+    // --- Server ACL ---
+
+    @JvmStatic external fun nativeWildcardMatch(pattern: String, value: String): Boolean
+    @JvmStatic external fun nativeIsServerAllowed(serverName: String, aclJson: String): Boolean
+
     // --- Notification Formatter ---
 
     @JvmStatic external fun nativeFormatImageNotification(senderName: String): String

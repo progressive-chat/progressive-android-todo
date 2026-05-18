@@ -516,4 +516,41 @@ PublicRoomsResponse parsePublicRoomsResponse(const std::string& json) {
     return r;
 }
 
+bool wildcardMatch(const std::string& pattern, const std::string& value) {
+    size_t pi = 0, vi = 0;
+    size_t pStar = std::string::npos, vStar = 0;
+
+    while (vi < value.size()) {
+        if (pi < pattern.size() && (pattern[pi] == '?' || pattern[pi] == value[vi])) {
+            pi++; vi++;
+        } else if (pi < pattern.size() && pattern[pi] == '*') {
+            pStar = pi;
+            vStar = vi;
+            pi++;
+        } else if (pStar != std::string::npos) {
+            pi = pStar + 1;
+            vStar++;
+            vi = vStar;
+        } else {
+            return false;
+        }
+    }
+
+    while (pi < pattern.size() && pattern[pi] == '*') pi++;
+    return pi == pattern.size();
+}
+
+bool isServerAllowed(const std::string& serverName, const RoomServerAclContent& acl) {
+    // Check deny list first (more specific)
+    for (auto& deny : acl.denyList) {
+        if (wildcardMatch(deny, serverName)) return false;
+    }
+    // Check allow list
+    if (acl.allowList.empty()) return false; // empty allow = deny all
+    for (auto& allow : acl.allowList) {
+        if (wildcardMatch(allow, serverName)) return true;
+    }
+    return false;
+}
+
 } // namespace progressive

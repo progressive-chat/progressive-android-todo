@@ -6010,6 +6010,19 @@ JNI_FUNC(jstring, nativeClassifyError)(JNIEnv* env, jclass, jstring jErrorCode, 
 }
 
 // ============================================================
+// Server ACL — wildcard matching + server allow/deny evaluation
+// ============================================================
+
+JNI_FUNC(jboolean, nativeWildcardMatch)(JNIEnv* env, jclass, jstring jPattern, jstring jValue) {
+    return progressive::wildcardMatch(jStr(env, jPattern), jStr(env, jValue)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jboolean, nativeIsServerAllowed)(JNIEnv* env, jclass, jstring jServerName, jstring jAclJson) {
+    auto acl = progressive::parseRoomServerAclContent(jStr(env, jAclJson));
+    return progressive::isServerAllowed(jStr(env, jServerName), acl) ? JNI_TRUE : JNI_FALSE;
+}
+
+// ============================================================
 // Text Format Utilities (ported from TextUtils.kt)
 // ============================================================
 
