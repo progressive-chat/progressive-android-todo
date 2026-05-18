@@ -368,6 +368,13 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeBuildSyncFilter(includeThreads: Boolean, includePresence: Boolean, timelineLimit: Int, lazyLoadMembers: Boolean): String
 
+    // --- Bidi Text Security ---
+
+    @JvmStatic external fun nativeContainsRtlOverride(text: String): Boolean
+    @JvmStatic external fun nativeContainsBidiOverride(text: String): Boolean
+    @JvmStatic external fun nativeFilterBidiOverrides(text: String): String
+    @JvmStatic external fun nativeSanitizeDisplayText(text: String): String
+
     // --- Read Receipts ---
 
     @JvmStatic external fun nativeFormatReceiptAccessibility(receiptsJson: String, overflowCount: Int): String

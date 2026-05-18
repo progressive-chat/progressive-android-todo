@@ -4,6 +4,7 @@
 #include "progressive/jumptodate.hpp"
 #include "progressive/relation.hpp"
 #include "progressive/olm_session.hpp"
+#include "progressive/bidirectional_utils.hpp"
 #include "progressive/exporter.hpp"
 #include "progressive/eventcache.hpp"
 #include "progressive/translate.hpp"
@@ -2493,6 +2494,28 @@ Java_chat_progressive_app_native_ProgressiveNative_nativeOlmGetIdentityKeys(JNIE
 __attribute__((used)) JNIEXPORT jstring JNICALL
 Java_chat_progressive_app_native_ProgressiveNative_nativeOlmGenerateOneTimeKeys(JNIEnv* env, jclass, jint jCount) {
     auto result = progressive::generateOneTimeKeys(g_olmAccount, jCount);
+    return env->NewStringUTF(result.c_str());
+}
+
+// ============================================================
+// Bidi (bidirectional text) Security — Unicode override detection
+// ============================================================
+
+JNI_FUNC(jboolean, nativeContainsRtlOverride)(JNIEnv* env, jclass, jstring jText) {
+    return progressive::containsRtlOverride(jStr(env, jText)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jboolean, nativeContainsBidiOverride)(JNIEnv* env, jclass, jstring jText) {
+    return progressive::containsBidiOverride(jStr(env, jText)) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNI_FUNC(jstring, nativeFilterBidiOverrides)(JNIEnv* env, jclass, jstring jText) {
+    auto result = progressive::filterBidiOverrides(jStr(env, jText));
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeSanitizeDisplayText)(JNIEnv* env, jclass, jstring jText) {
+    auto result = progressive::sanitizeDisplayText(jStr(env, jText));
     return env->NewStringUTF(result.c_str());
 }
 
