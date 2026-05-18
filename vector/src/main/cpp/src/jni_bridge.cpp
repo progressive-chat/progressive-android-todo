@@ -164,6 +164,8 @@
 #include "progressive/power_levels.hpp"
 #include "progressive/well_known.hpp"
 #include "progressive/room_content.hpp"
+#include "progressive/user_status.hpp"
+#include "progressive/content_guard.hpp"
 #include "progressive/room_directory_manager.hpp"
 #include "progressive/room_permissions_manager.hpp"
 #include "progressive/room_state_manager.hpp"
@@ -3217,7 +3219,7 @@ JNI_FUNC(jboolean, nativeIsInviteOnly)(JNIEnv* env, jclass, jstring jStateJson) 
 JNI_FUNC(jstring, nativeJoinRuleToString)(JNIEnv* env, jclass, jstring jStateJson) {
     auto rules = progressive::parseRoomJoinRulesContent(jStr(env, jStateJson));
     auto result = progressive::roomJoinRulesToString(rules.joinRules);
-    return env->NewStringUTF(result.c_str());
+    return env->NewStringUTF(result);
 }
 JNI_FUNC(jboolean, nativeIsHistoryPubliclyVisible)(JNIEnv* env, jclass, jstring jStateJson) {
     auto vis = progressive::parseRoomHistoryVisibilityContent(jStr(env, jStateJson));
@@ -3226,7 +3228,7 @@ JNI_FUNC(jboolean, nativeIsHistoryPubliclyVisible)(JNIEnv* env, jclass, jstring 
 JNI_FUNC(jstring, nativeHistoryVisibilityToString)(JNIEnv* env, jclass, jstring jStateJson) {
     auto vis = progressive::parseRoomHistoryVisibilityContent(jStr(env, jStateJson));
     auto result = progressive::roomHistoryVisibilityToString(vis.historyVisibility);
-    return env->NewStringUTF(result.c_str());
+    return env->NewStringUTF(result);
 }
 JNI_FUNC(jboolean, nativeAreGuestsAllowed)(JNIEnv* env, jclass, jstring jStateJson) {
     auto access = progressive::parseRoomGuestAccessContent(jStr(env, jStateJson));
@@ -3606,8 +3608,8 @@ JNI_FUNC(jstring, nativeComputePermissions)(JNIEnv* env, jclass, jstring jPlJson
     return env->NewStringUTF(result.c_str());
 }
 JNI_FUNC(jstring, nativeParseTombstone)(JNIEnv* env, jclass, jstring jJson) {
-    auto tombstone = progressive::parseTombstone(jStr(env, jJson));
-    auto result = progressive::tombstoneToJson(tombstone);
+    auto tombstone = progressive::parseRoomTombstoneContent(jStr(env, jJson));
+    auto result = progressive::tombstoneContentToJson(tombstone);
     return env->NewStringUTF(result.c_str());
 }
 JNI_FUNC(jstring, nativeParseScanResult)(JNIEnv* env, jclass, jstring jJson) {
@@ -3981,20 +3983,6 @@ JNI_FUNC(jstring, nativeSearchRoomList)(JNIEnv* env, jclass, jstring jRoomsJson,
     os << "]";
     return env->NewStringUTF(os.str().c_str());
 }
-    // Format: "Alice, Bob and 3 others online"
-    std::ostringstream os;
-    int total = static_cast<int>(names.size());
-    int shown = std::min(total, jMaxNames);
-    for (int i = 0; i < shown; i++) {
-        if (i > 0) os << (i == shown - 1 && total <= jMaxNames ? " and " : ", ");
-        os << names[i];
-    }
-    if (total > jMaxNames) os << " and " << (total - shown) << " others";
-    os << (total == 1 ? " is online" : " are online");
-    return env->NewStringUTF(os.str().c_str());
-}
-        return v;
-    }
 JNI_FUNC(jboolean, nativeIsStateEvent)(JNIEnv* env, jclass, jstring jEventType) {
     return progressive::isStateEvent(jStr(env, jEventType)) ? JNI_TRUE : JNI_FALSE;
 }
