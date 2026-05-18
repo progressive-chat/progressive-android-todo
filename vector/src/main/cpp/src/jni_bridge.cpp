@@ -2603,9 +2603,14 @@ JNI_FUNC(jstring, nativeFormatCallNotification)(JNIEnv* env, jclass, jstring jCa
     };
     call.callId = extractStr("call_id");
     call.callerName = extractStr("caller_name");
-    call.isVideo = json.find("\"is_video\":true") != std::string::npos;
-    auto result = progressive::formatCallNotification(call);
-    return env->NewStringUTF(result.c_str());
+    call.isVideoOn = json.find("\"is_video\":true") != std::string::npos;
+    auto cn = progressive::formatCallNotification(call);
+    std::ostringstream os;
+    os << R"({"title":")" << cn.title << R"(","body":")" << cn.body
+       << R"(","is_video":)" << (cn.isVideo ? "true" : "false")
+       << R"(,"state":)" << static_cast<int>(cn.state)
+       << R"(,"timestamp_ms":)" << cn.timestampMs << "}";
+    return env->NewStringUTF(os.str().c_str());
 }
 
 // --- Content Scanner / ToS ---
@@ -4759,7 +4764,7 @@ JNI_FUNC(jstring, nativeCallReject)(JNIEnv* env, jclass, jstring jCallId) {
     return env->NewStringUTF(r.c_str());
 }
 JNI_FUNC(jstring, nativeCallHangup)(JNIEnv* env, jclass, jstring jCallId) {
-    auto r = getCallMgr()->hangupCall(jStr(env, jCallId), progressive::CallManagerEndReason::USER_HANGUP);
+    auto r = getCallMgr()->hangupCall(jStr(env, jCallId), progressive::CallManagerEndReason::USER_HUNG_UP);
     return env->NewStringUTF(r.c_str());
 }
 JNI_FUNC(jstring, nativeCallGetActive)(JNIEnv* env, jclass) {

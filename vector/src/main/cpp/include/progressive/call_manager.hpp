@@ -309,6 +309,5 @@ private:
 };
 
 // JNI compat aliases (1055949e JNI uses old type names)
-using CallInfo = CallSession;
 
 } // namespace progressive

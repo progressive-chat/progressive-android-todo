@@ -94,12 +94,17 @@ struct CreateRoomParams {
 
 // Original Kotlin (ReplyToContent.kt:24-26):
 //   data class ReplyToContent(@Json(name="event_id") eventId: String?)
+#ifndef PROGRESSIVE_REPLY_TO_DEFINED
+#define PROGRESSIVE_REPLY_TO_DEFINED
 struct ReplyToContent {
     std::string eventId;     // "event_id" key
 };
+#endif
 
 // Original Kotlin (RelationContent.kt:26-37):
 //   interface RelationContent { type, eventId, inReplyTo, option, isFallingBack }
+#ifndef PROGRESSIVE_RELATION_CONTENT_DEFINED
+#define PROGRESSIVE_RELATION_CONTENT_DEFINED
 struct RelationContent {
     std::string type;        // "rel_type" key — e.g. "m.annotation", "m.replace"
     std::string eventId;     // "event_id" key
@@ -113,14 +118,18 @@ struct RelationContent {
     // Original Kotlin: shouldRenderInThread() = isFallingBack == false
     bool shouldRenderInThread() const { return !isFallingBack; }
 };
+#endif
 
 // Original Kotlin (ReactionContent.kt:25-27):
 //   data class ReactionContent(@Json(name="m.relates_to") relatesTo: ReactionInfo?)
+#ifndef PROGRESSIVE_REACTION_INFO_DEFINED
+#define PROGRESSIVE_REACTION_INFO_DEFINED
 struct ReactionInfo {
     std::string eventId;     // "event_id" key
     std::string key;         // "key" key — the emoji/key reaction
     std::string relType;     // Should be "m.annotation"
 };
+#endif
 
 struct ReactionContent {
     ReactionInfo relatesTo;  // "m.relates_to" key

@@ -145,3 +145,5 @@ private:
 };
 
 } // namespace progressive
+
+using PinManager = PinManagerFull;  // JNI compat alias
