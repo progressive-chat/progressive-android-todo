@@ -836,7 +836,7 @@
     <string name="shortcut_disabled_reason_room_left">The room has been left!</string>
     <string name="shortcut_disabled_reason_sign_out">The session has been signed out!</string>
 
-    <!-- Vector Settings -->
+    <!-- Progressive Chat Settings -->
 
     <string name="settings_profile_picture">Profile Picture</string>
     <string name="settings_display_name">Display Name</string>
@@ -2827,7 +2827,7 @@
     <string name="notice_crypto_unable_to_decrypt_merged">Waiting for encryption history</string>
 
     <!-- TODO TO BE REMOVED -->
-    <string tools:ignore="UnusedResources" name="disclaimer_title">Riot is now Element!</string>
+    <string tools:ignore="UnusedResources" name="disclaimer_title">Riot is now Progressive Chat!</string>
     <!-- TODO TO BE REMOVED -->
     <string tools:ignore="UnusedResources" name="disclaimer_content">We’re excited to announce we’ve changed name! Your app is up to date and you’re signed in to your account.</string>
     <!-- TODO TO BE REMOVED -->
