@@ -5998,6 +5998,25 @@ JNI_FUNC(jboolean, nativeErrorIsRegistrationAvailability)(JNIEnv* env, jclass, j
     return progressive::isRegistrationAvailabilityError(ctx) ? JNI_TRUE : JNI_FALSE;
 }
 
+// ============================================================
+// Text Format Utilities (ported from TextUtils.kt)
+// ============================================================
+
+JNI_FUNC(jstring, nativeFormatCountToShortDecimal)(JNIEnv* env, jclass, jlong jValue) {
+    auto result = progressive::formatCountToShortDecimal(jValue);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeFormatDuration)(JNIEnv* env, jclass, jlong jTotalSeconds) {
+    auto result = progressive::formatDuration(jTotalSeconds);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jstring, nativeFormatDurationWithUnits)(JNIEnv* env, jclass, jlong jTotalSeconds, jboolean jAppendSeconds) {
+    auto result = progressive::formatDurationWithUnits(jTotalSeconds, jAppendSeconds);
+    return env->NewStringUTF(result.c_str());
+}
+
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* /*reserved*/) {
     JNIEnv* env = nullptr;
     if (vm->GetEnv((void**)&env, JNI_VERSION_1_6) != JNI_OK)

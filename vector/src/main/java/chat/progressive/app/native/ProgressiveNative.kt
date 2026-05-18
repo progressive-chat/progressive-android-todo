@@ -2043,6 +2043,12 @@ object ProgressiveNative {
 
     @JvmStatic external fun nativeFormatBadgeText(totalCount: Int): String
 
+    // --- Text Format Utilities ---
+
+    @JvmStatic external fun nativeFormatCountToShortDecimal(value: Long): String
+    @JvmStatic external fun nativeFormatDuration(totalSeconds: Long): String
+    @JvmStatic external fun nativeFormatDurationWithUnits(totalSeconds: Long, appendSeconds: Boolean): String
+
     // --- Permalink Parser (updated) ---
 
     @JvmStatic external fun nativeParsePermalinkFull(url: String): String
