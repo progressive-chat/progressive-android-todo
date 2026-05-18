@@ -6033,6 +6033,15 @@ JNI_FUNC(jstring, nativeFormatDuration)(JNIEnv* env, jclass, jlong jTotalSeconds
 }
 
 JNI_FUNC(jstring, nativeFormatDurationWithUnits)(JNIEnv* env, jclass, jlong jTotalSeconds, jboolean jAppendSeconds) {
+
+JNI_FUNC(jstring, nativeFormatUnreadJumpLabel)(JNIEnv* env, jclass, jint jUnreadCount, jint jUnreadMentions) {
+    auto result = progressive::formatUnreadJumpLabel(jUnreadCount, jUnreadMentions);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNI_FUNC(jboolean, nativeShouldShowJumpToUnread)(JNIEnv* env, jclass, jstring jReadMarkerJson) {
+    return progressive::shouldShowJumpToUnread(jStr(env, jReadMarkerJson)) ? JNI_TRUE : JNI_FALSE;
+}
     auto result = progressive::formatDurationWithUnits(jTotalSeconds, jAppendSeconds);
     return env->NewStringUTF(result.c_str());
 }

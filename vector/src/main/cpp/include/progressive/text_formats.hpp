@@ -44,6 +44,21 @@ std::string formatDuration(int64_t totalSeconds);
 // Format duration with units: "1h 30min 15sec"
 std::string formatDurationWithUnits(int64_t totalSeconds, bool appendSeconds = true);
 
+// Format unread jump label: "5 new messages (2 mentions)"
+inline std::string formatUnreadJumpLabel(int unreadCount, int unreadMentions) {
+    std::string result = std::to_string(unreadCount);
+    if (unreadCount == 1) result += " new message";
+    else result += " new messages";
+    if (unreadMentions > 0) result += " (" + std::to_string(unreadMentions) + " mentions)";
+    return result;
+}
+
+// Check if read marker JSON indicates unread messages
+inline bool shouldShowJumpToUnread(const std::string& readMarkerJson) {
+    return readMarkerJson.find("\"hasUnread\": true") != std::string::npos ||
+           readMarkerJson.find("\"hasUnread\":true") != std::string::npos;
+}
+
 } // namespace progressive
 
 #endif // PROGRESSIVE_TEXT_FORMATS_HPP
