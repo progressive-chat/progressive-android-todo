@@ -11,9 +11,11 @@ add_library(
     src/json_parser.cpp
     src/relation.cpp
     src/exporter.cpp
+    src/eventcache.cpp
     src/translate.cpp
     src/proxy.cpp
     src/yggdrasil.cpp
+    src/markdown.cpp
     src/matrix_api.cpp
     src/account_data_utils.cpp
     src/account_export.cpp
@@ -52,6 +54,7 @@ add_library(
     src/room_analytics.cpp
     src/room_content.cpp
     src/room_counter.cpp
+    src/chat_tools.cpp
     src/lang_detect.cpp
     src/avatar_history.cpp
     src/event_link.cpp
@@ -97,24 +100,15 @@ add_library(
     src/identity_utils.cpp
     src/notif_analyzer.cpp
     src/sync_analyzer.cpp
+    src/sync_models.cpp
     src/user_rating.cpp
     src/event_timeline.cpp
     src/event_utils.cpp
     src/room_directory.cpp
     src/widget_utils.cpp
-    src/voice_broadcast.cpp
-    src/sync_handler.cpp
-    src/space_graph.cpp
-    src/server_notice_manager.cpp
-    src/room_state_manager.cpp
-    src/room_name.cpp
-    src/room_directory_manager.cpp
-    src/poll_manager.cpp
-    src/login_flow.cpp
-    src/device_manager_full.cpp
-    src/decryptor_utils.cpp
-    src/cross_signing_manager.cpp
     src/content_utils.cpp
+    src/progressive_stubs.cpp
+    src/progressive_stubs.cpp
     src/widget_manager.cpp
     src/user_directory.cpp
     src/transparent_overlay.cpp
