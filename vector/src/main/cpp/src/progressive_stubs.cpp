@@ -125,12 +125,7 @@ std::string DeviceManager::trustLevelToJson(const DeviceTrustLevel& level) const
 std::string DeviceManager::extractStr(const std::string& json, const std::string& key) { return {}; }
 int64_t DeviceManager::extractInt(const std::string& json, const std::string& key) { return {}; }
 bool DeviceManager::extractBool(const std::string& json, const std::string& key) { return {}; }
-LoginAuthFlowsResult parseLoginFlows(const std::string& json) { return {}; }
-bool requiresIdentityServer(LoginFlowType type) { return {}; }
-std::string loginFlowTypeToName(LoginFlowType type) { return ""; }
-std::string loginFlowTypeDescription(LoginFlowType type) { return ""; }
 std::string getSsoProviderIcon(const std::string& providerId) { return ""; }
-std::string loginFlowsToJson(const LoginAuthFlowsResult& result) { return ""; }
 std::string PollManager::buildPollStartContent(const std::string& question, const std::vector<std::string>& optionTexts, PollKind kind, int maxSelections, bool unstable, std::string& error) { return {}; }
 PollContent PollManager::parsePollStartContent(const std::string& contentJson, bool unstable) { return {}; }
 bool PollManager::isValidPollQuestion(const std::string& question) { return {}; }
