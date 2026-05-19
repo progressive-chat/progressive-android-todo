@@ -107,11 +107,7 @@ add_library(
     src/room_directory.cpp
     src/widget_utils.cpp
     src/voice_broadcast.cpp
-    src/sync_handler.cpp
-    src/decryptor_utils.cpp
-    src/room_name.cpp
     src/server_notice_manager.cpp
-    src/space_graph.cpp
     src/widget_manager.cpp
     src/user_directory.cpp
     src/transparent_overlay.cpp
