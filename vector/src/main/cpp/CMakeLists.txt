@@ -117,7 +117,6 @@ add_library(
     src/session_manager_full.cpp
     src/room_state.cpp
     src/room_permissions_manager.cpp
-    src/room_name.cpp
     src/room_directory_manager.cpp
     src/profiler.cpp
     src/poll_manager.cpp
