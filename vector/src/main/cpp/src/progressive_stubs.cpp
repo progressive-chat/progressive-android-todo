@@ -171,4 +171,7 @@ RoomDirectoryManager::RoomDirectoryManager() {}
 RoomStateManager::RoomStateManager() {}
 ServerNoticeManager::ServerNoticeManager() {}
 SpaceGraph::SpaceGraph() {}
+SpaceChildEntry parseSpaceChild(const std::string& stateKey, const std::string& contentJson) { return {}; }
+std::string resolveMxcThumbnailUrl(const std::string& mxcUrl, const std::string& homeServerUrl, int width, int height, const std::string& method) { return ""; }
+std::vector<SpaceNode> SpaceGraph::getChildren(const std::string& spaceId) const { return {}; }
 } // namespace progressive
