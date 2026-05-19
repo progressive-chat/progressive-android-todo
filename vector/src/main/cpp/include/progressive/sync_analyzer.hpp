@@ -1,4 +1,5 @@
 #ifndef PROGRESSIVE_SYNC_ANALYZER_HPP
+#include "progressive/sync_models.hpp"
 #define PROGRESSIVE_SYNC_ANALYZER_HPP
 
 #include <string>
