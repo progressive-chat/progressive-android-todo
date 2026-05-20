@@ -284,7 +284,7 @@ EventPushRule parseEventPushRule(const std::string& json) {
     EventPushRule rule;
 
     auto extractStr = [&](const std::string& key) -> std::string {
-        std::string search = "\"" + key + "\":\"";
+        auto search = "\"" + key + "\":\"";
         auto pos = json.find(search);
         if (pos == std::string::npos) {
             search = "\"" + key + "\": \"";
