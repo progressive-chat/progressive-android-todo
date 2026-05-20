@@ -93,9 +93,9 @@ jobs:
         run: |
           VERSION="v0.2.0"
           gh release delete "$VERSION-nightly" --cleanup-tag -y 2>/dev/null || true
-          git tag -f "$VERSION-nightly" 2>/dev/null && git push -f origin "$VERSION-nightly" 2>/dev/null || true
           gh release create "$VERSION-nightly" \
             --title "Progressive Chat $VERSION — Nightly Build" \
+            --target main \
             --notes "Automated nightly build from main branch. Commit: ${{ github.sha }}
 
           ## What's new
