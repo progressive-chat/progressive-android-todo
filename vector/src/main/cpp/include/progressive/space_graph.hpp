@@ -422,6 +422,5 @@ void sortSpaceChildren(std::vector<SpaceChildWithOrder>& children,
 // Returns empty string if invalid.
 std::string parseSpaceChildOrder(const std::string& rawOrder);
 
-} // namespace progressive
 
 } // namespace progressive
