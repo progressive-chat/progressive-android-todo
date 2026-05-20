@@ -156,7 +156,7 @@ void SpaceGraph::setOrder(const std::string& parentId, const std::string& childI
 
 // ====== Graph Traversal ======
 
-void SpaceGraph::traverseBFS(const SpaceTraversalOptions& options, SpaceGraphResult& result) {
+void SpaceGraph::traverseBFS(const SpaceTraversalOptions& options, SpaceGraphResult& result) const {
     std::queue<std::pair<std::string, int>> q; // (nodeId, depth)
     std::unordered_set<std::string> visited;
 

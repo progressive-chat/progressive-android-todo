@@ -209,7 +209,7 @@ private:
     std::unordered_map<std::string, std::unordered_map<std::string, std::string>> orderMap_; // parentId → (childId → order)
 
     // BFS traversal helper.
-    void traverseBFS(const SpaceTraversalOptions& options, SpaceGraphResult& result);
+    void traverseBFS(const SpaceTraversalOptions& options, SpaceGraphResult& result) const;
 
     // DFS traversal helper.
     void traverseDFS(const std::string& nodeId, int depth,
