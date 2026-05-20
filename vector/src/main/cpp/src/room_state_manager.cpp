@@ -104,23 +104,10 @@ std::string buildJoinRulesContent(RoomJoinRule rule) {
 // ====== progressive::RoomStateManager ======
 
 RoomStateManager::RoomStateManager() {}
-
-    if (it == rooms_.end()) {
-        RoomStateSummary s;
-        s.roomId = roomId;
-        rooms_[roomId] = s;
-    }
-    return rooms_[roomId];
 }
 
 void progressive::RoomStateManager::setHistoryVisibility(const std::string& roomId, RSM_RoomHistoryVisibility visibility) {
     auto it = rooms_.find(roomId);
-    if (it == rooms_.end()) {
-        RoomStateSummary s;
-        s.roomId = roomId;
-        rooms_[roomId] = s;
-        it = rooms_.find(roomId);
-    }
     auto& state = it->second;
     state.historyVisibility = visibility;
     state.isWorldReadable = (visibility == RSM_RoomHistoryVisibility::WORLD_READABLE);
