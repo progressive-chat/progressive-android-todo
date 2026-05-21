@@ -518,4 +518,78 @@ PushEvaluation evaluatePushNotification(
     return result;
 }
 
+
+
+// ================================================================
+// Push Rule Engine — notification filtering logic
+// ================================================================
+
+bool globMatch(const std::string& pattern, const std::string& text) {
+    size_t pi = 0, ti = 0, starIdx = std::string::npos, matchIdx = 0;
+    while (ti < text.size()) {
+        if (pi < pattern.size() && (pattern[pi] == '?' || tolower(pattern[pi]) == tolower(text[ti]))) {
+            pi++; ti++;
+        } else if (pi < pattern.size() && pattern[pi] == '*') {
+            starIdx = pi; matchIdx = ti; pi++;
+        } else if (starIdx != std::string::npos) {
+            pi = starIdx + 1; matchIdx++; ti = matchIdx;
+        } else {
+            return false;
+        }
+    }
+    while (pi < pattern.size() && pattern[pi] == '*') pi++;
+    return pi == pattern.size();
+}
+
+PushRuleActionTweak parseActionTweak(const std::string& tweakJson) {
+    PushRuleActionTweak tweak;
+    auto extractBool = [&](const std::string& key) {
+        return tweakJson.find("\"" + key + "\":true") != std::string::npos;
+    };
+    auto extractStr = [&](const std::string& key) -> std::string {
+        auto p = tweakJson.find("\"" + key + "\":\"");
+        if (p == std::string::npos) return "";
+        p += key.size() + 4;
+        auto e = tweakJson.find('"', p);
+        return tweakJson.substr(p, e - p);
+    };
+    tweak.highlight = extractBool("highlight");
+    tweak.setSound = !extractStr("sound").empty();
+    tweak.soundName = extractStr("sound");
+    return tweak;
+}
+
+std::string applyActionTweak(const PushRuleActionTweak& tweak, const std::string& action) {
+    if (tweak.highlight && action == "notify") return "highlight";
+    if (!tweak.setSound && action == "notify") return "silent_notify";
+    return action;
+}
+
+PushRuleContentBuilder buildPushRuleContent(const std::string& ruleId, const std::string& pattern,
+                                               const std::string& action, const PushRuleActionTweak& tweak) {
+    PushRuleContentBuilder builder;
+    builder.ruleId = ruleId;
+    builder.pattern = pattern;
+    builder.action = action;
+    builder.tweak = tweak;
+    return builder;
+}
+
+std::string pushRuleContentToJson(const PushRuleContentBuilder& builder) {
+    std::ostringstream os;
+    os << "{";
+    os << R"("rule_id":")" << builder.ruleId << R"(")";
+    os << R"(,"actions":[")" << builder.action << R"("])";
+    os << R"(,"pattern":")" << builder.pattern << R"(")";
+    if (builder.tweak.highlight || builder.tweak.setSound) {
+        os << R"(,"default":false,)";
+        os << R"("tweaks":{)";
+        os << R"("highlight":)" << (builder.tweak.highlight ? "true" : "false");
+        if (builder.tweak.setSound) os << R"(,"sound":")" << builder.tweak.soundName << R"(")";
+        os << "}";
+    }
+    os << "}";
+    return os.str();
+}
+
 } // namespace progressive
