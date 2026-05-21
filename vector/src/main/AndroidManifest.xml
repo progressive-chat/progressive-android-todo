@@ -310,6 +310,9 @@
             android:exported="false" />
 
         <activity
+            android:name=".features.alarm.AlarmListActivity" />
+
+        <activity
             android:name=".features.alarm.AlarmActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
