@@ -223,24 +223,4 @@ std::string urlPreviewToJson(const UrlPreview& preview) {
     return json.str();
 }
 
-
-std::vector<UrlMatch> extractUrls(const std::string& text) {
-    std::vector<UrlMatch> matches;
-    size_t pos = 0;
-    while (pos < text.size()) {
-        auto httpPos = text.find("http", pos);
-        if (httpPos == std::string::npos) break;
-        size_t start = httpPos, end = start;
-        while (end < text.size() && text[end] != ' ' && text[end] != '
-' &&
-               text[end] != '"' && text[end] != '>' && text[end] != '<' &&
-               text[end] != ')') { end++; }
-        std::string url = text.substr(start, end - start);
-        if (url.size() > 7) {
-            matches.push_back({url, static_cast<int>(start), static_cast<int>(end)});
-        }
-        pos = end;
-    }
-    return matches;
-}
 } // namespace progressive
