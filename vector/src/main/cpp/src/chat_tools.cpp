@@ -207,7 +207,4 @@ bool isValidCrop(int imgW, int imgH, int cropX, int cropY, int cropW, int cropH)
     return true;
 }
 
-
-
-
 } // namespace progressive
