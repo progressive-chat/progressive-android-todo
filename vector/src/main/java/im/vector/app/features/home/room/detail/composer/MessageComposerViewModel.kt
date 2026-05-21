@@ -561,6 +561,18 @@ class MessageComposerViewModel @AssistedInject constructor(
                                      vectorPreferences.toggleEmojiBlacklist()
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
+                                 Command.SMSAGENT -> {
+                                     // Send message text without /smsagent prefix
+                                     val args = parsedCommand.args
+                                     if (args.isNotBlank()) {
+                                         room.sendService().sendTextMessage(args, autoMarkdown = false)
+                                         // Also dispatch agent task (handled by native bridge)
+                                         // Agent processes: alarms, reminders, actions
+                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                     } else {
+                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                     }
+                                 }
                                  else -> {
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }

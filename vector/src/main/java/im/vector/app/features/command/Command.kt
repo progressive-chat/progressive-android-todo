@@ -69,7 +69,8 @@ enum class Command(
     LLMP("/llmp", null, "<query>", CommonStrings.command_description_llmp, false, true),
     AGENT("/agent", null, "<task>", CommonStrings.command_description_agent, false, true),
     WEB("/web", arrayOf("/search"), "[engine] <query>", CommonStrings.command_description_web, false, true),
-    HIDE_EMOJI("/hideemoji", null, "", CommonStrings.command_description_hide_emoji, false, true);
+    HIDE_EMOJI("/hideemoji", null, "", CommonStrings.command_description_hide_emoji, false, true),
+    SMSAGENT("/smsagent", null, "<message>", CommonStrings.command_description_smsagent, false, true);
 
     val allAliases = arrayOf(command, *aliases.orEmpty())
 
