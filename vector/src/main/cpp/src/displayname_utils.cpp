@@ -202,4 +202,38 @@ std::string getBestDisplayName(const std::string& displayName, const std::string
     return "Unknown";
 }
 
+
+std::string disambiguateDisplayName(
+    const std::string& displayName,
+    const std::string& userId,
+    DisambiguationStrategy strategy
+) {
+    if (displayName.empty()) {
+        auto pos = userId.find(':');
+        return userId.substr(1, pos - 1);
+    }
+    if (strategy == DisambiguationStrategy::APPEND_USERID) {
+        auto pos = userId.find(':');
+        return displayName + " (" + userId.substr(1, pos - 1) + ")";
+    }
+    return displayName;
+}
+
+DisplayNameChange detectDisplayNameChange(
+    const std::string& oldName,
+    const std::string& newName
+) {
+    DisplayNameChange change;
+    change.oldName = oldName;
+    change.newName = newName;
+    change.changed = oldName != newName;
+    return change;
+}
+
+std::string formatDisplayNameChange(const DisplayNameChange& change) {
+    if (!change.changed) return "";
+    if (change.oldName.empty()) return change.newName;
+    if (change.newName.empty()) return "(removed)";
+    return change.oldName + " → " + change.newName;
+}
 } // namespace progressive
