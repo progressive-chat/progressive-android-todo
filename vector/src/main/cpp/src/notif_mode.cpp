@@ -4,23 +4,23 @@
 
 namespace progressive {
 
-NotifModeManager::NotifModeManager() {}
+NightModeManager::NightModeManager() {}
 
-void NotifModeManager::setMode(NotifMode m) { cfg_.mode = m; }
-NotifMode NotifModeManager::getMode() const { return cfg_.mode; }
+void NightModeManager::setMode(NightMode m) { cfg_.mode = m; }
+NightMode NightModeManager::getMode() const { return cfg_.mode; }
 
-void NotifModeManager::setNightKeywords(const std::vector<std::string>& keywords) {
+void NightModeManager::setNightKeywords(const std::vector<std::string>& keywords) {
     cfg_.nightKeywords = keywords;
 }
-void NotifModeManager::addNightKeyword(const std::string& kw) {
+void NightModeManager::addNightKeyword(const std::string& kw) {
     if (!kw.empty() && std::find(cfg_.nightKeywords.begin(), cfg_.nightKeywords.end(), kw) == cfg_.nightKeywords.end())
         cfg_.nightKeywords.push_back(kw);
 }
-void NotifModeManager::removeNightKeyword(const std::string& kw) {
+void NightModeManager::removeNightKeyword(const std::string& kw) {
     cfg_.nightKeywords.erase(std::remove(cfg_.nightKeywords.begin(), cfg_.nightKeywords.end(), kw), cfg_.nightKeywords.end());
 }
 
-bool NotifModeManager::matchKeyword(const std::string& body) const {
+bool NightModeManager::matchKeyword(const std::string& body) const {
     if (cfg_.nightKeywords.empty()) return false;
     std::string lower;
     std::transform(body.begin(), body.end(), std::back_inserter(lower), ::tolower);
@@ -32,9 +32,9 @@ bool NotifModeManager::matchKeyword(const std::string& body) const {
     return false;
 }
 
-bool NotifModeManager::shouldNotify(const std::string& body, const std::string& senderMxid,
+bool NightModeManager::shouldNotify(const std::string& body, const std::string& senderMxid,
                                      bool isRoomPing, bool isAlarm) const {
-    if (cfg_.mode == NotifMode::NORMAL) return true;
+    if (cfg_.mode == NightMode::NORMAL) return true;
     if (isAlarm) return true;
     if (isRoomPing && cfg_.nightPingRooms) return true;
     if (matchKeyword(body)) return true;
@@ -43,7 +43,7 @@ bool NotifModeManager::shouldNotify(const std::string& body, const std::string& 
     return false;
 }
 
-std::string NotifModeManager::toJson() const {
+std::string NightModeManager::toJson() const {
     std::ostringstream os;
     os << "{";
     os << "\"mode\":" << static_cast<int>(cfg_.mode);
@@ -62,9 +62,9 @@ std::string NotifModeManager::toJson() const {
     return os.str();
 }
 
-void NotifModeManager::fromJson(const std::string& json) {
-    cfg_ = NotifConfig{};
-    if (json.find("\"mode\":1") != std::string::npos) cfg_.mode = NotifMode::NIGHT;
+void NightModeManager::fromJson(const std::string& json) {
+    cfg_ = NightNotifConfig{};
+    if (json.find("\"mode\":1") != std::string::npos) cfg_.mode = NightMode::NIGHT;
     cfg_.nightPingRooms = json.find("\"nightPingRooms\":true") != std::string::npos;
     // Parse keywords array
     auto kwPos = json.find("\"nightKeywords\"");

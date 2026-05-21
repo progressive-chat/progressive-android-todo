@@ -8,13 +8,13 @@ namespace progressive {
 
 // ---- Notification Mode ----
 
-enum class NotifMode {
+enum class NightMode {
     NORMAL = 0,
     NIGHT = 1       // Only alarms, keyword pings, no sound for regular messages
 };
 
-struct NotifConfig {
-    NotifMode mode = NotifMode::NORMAL;
+struct NightNotifConfig {
+    NightMode mode = NightMode::NORMAL;
     std::vector<std::string> nightKeywords;  // words that still ping in night mode
     std::vector<std::string> nightMxids;     // users that still ping in night mode
     bool nightPingRooms = false;             // @room still pings in night mode
@@ -22,12 +22,12 @@ struct NotifConfig {
 
 // ---- Notification Mode Manager ----
 
-class NotifModeManager {
+class NightModeManager {
 public:
-    NotifModeManager();
+    NightModeManager();
 
-    void setMode(NotifMode m);
-    NotifMode getMode() const;
+    void setMode(NightMode m);
+    NightMode getMode() const;
 
     void setNightKeywords(const std::vector<std::string>& keywords);
     void addNightKeyword(const std::string& kw);
@@ -42,10 +42,10 @@ public:
     std::string toJson() const;
     void fromJson(const std::string& json);
 
-    const NotifConfig& config() const { return cfg_; }
+    const NightNotifConfig& config() const { return cfg_; }
 
 private:
-    NotifConfig cfg_;
+    NightNotifConfig cfg_;
     bool matchKeyword(const std::string& body) const;
 };
 
