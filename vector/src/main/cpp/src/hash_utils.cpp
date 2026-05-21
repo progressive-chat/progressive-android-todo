@@ -97,7 +97,7 @@ std::string sha256Hex(const std::string& input) {
     return hexEncode(hash);
 }
 
-std::string sha256Hex(const std::vector<uint8_t>& data) {
+std::string sha256HexBytes(const std::vector<uint8_t>& data) {
     auto hash = sha256Raw(data.data(), data.size());
     return hexEncode(hash);
 }
