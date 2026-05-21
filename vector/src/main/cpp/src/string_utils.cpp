@@ -133,7 +133,7 @@ std::string truncateString(const std::string& input, int maxLen, StringTruncatio
 std::vector<StringSearchResult> findAllOccurrences(const std::string& haystack, const std::string& needle) {
     std::vector<StringSearchResult> r; size_t p = 0;
     while ((p=haystack.find(needle,p)) != std::string::npos) {
-        StringSearchResult sr; sr.startIndex=(int)p; sr.endIndex=(int)(p+needle.size()); sr.text=needle; r.push_back(sr);
+        StringSearchResult sr; sr.found=true; sr.position=(int)p; sr.length=(int)needle.size(); r.push_back(sr);
         p += needle.size();
     }
     return r;
