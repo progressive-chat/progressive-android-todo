@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF1C1C1E"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏰"
+            android:textSize="64sp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/alarmNoteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alarm"
+            android:textSize="28sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:id="@+id/alarmPreActionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="#CCCCCC"
+            android:gravity="center"
+            android:layout_marginBottom="48dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/alarmSnoozeButton"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Snooze 10 min"
+            android:textSize="18sp"
+            android:layout_marginBottom="12dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        <Button
+            android:id="@+id/alarmDismissButton"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Dismiss"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
