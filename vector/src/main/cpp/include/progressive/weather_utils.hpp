@@ -23,6 +23,6 @@ std::string parseOpenWeatherResponse(const std::string& json);
 std::string formatWeatherForAlarm(const std::string& location, const std::string& weatherSummary);
 
 // Encode a string for URL (basic implementation).
-std::string urlEncode(const std::string& s);
+
 
 } // namespace progressive

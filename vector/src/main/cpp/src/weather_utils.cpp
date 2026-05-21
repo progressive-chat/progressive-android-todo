@@ -4,20 +4,6 @@
 
 namespace progressive {
 
-std::string urlEncode(const std::string& s) {
-    std::ostringstream escaped;
-    for (char c : s) {
-        if (isalnum(static_cast<unsigned char>(c)) || c == '-' || c == '_' || c == '.' || c == '~') {
-            escaped << c;
-        } else if (c == ' ') {
-            escaped << '+';
-        } else {
-            escaped << '%' << std::uppercase << std::hex << static_cast<int>(static_cast<unsigned char>(c));
-            escaped << std::nouppercase << std::dec;
-        }
-    }
-    return escaped.str();
-}
 
 std::string buildWeatherUrl(const std::string& location, const std::string& apiToken) {
     if (!apiToken.empty()) {
