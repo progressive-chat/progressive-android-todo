@@ -284,4 +284,77 @@ ExportPreset exportPresetFromJson(const std::string& /*json*/) {
     return p;
 }
 
+
+
+// ---- RoomCounters: aggregate notification counts ----
+
+RoomCounters computeRoomCounters(
+    const std::vector<RoomSummaryInfo>& rooms,
+    const RoomSummaryQueryParams& queryParams
+) {
+    RoomCounters counters;
+    for (const auto& room : rooms) {
+        if (room.membership == "invite") {
+            counters.totalInvites++;
+            continue;
+        }
+        if (room.notificationCount > 0) {
+            counters.totalNotifications += room.notificationCount;
+            if (room.highlightCount > 0) {
+                counters.totalHighlights += room.highlightCount;
+            }
+            if (room.isDirect) {
+                counters.totalDirectNotifications += room.notificationCount;
+                counters.totalDirectHighlights += room.highlightCount;
+            } else {
+                counters.totalGroupNotifications += room.notificationCount;
+                counters.totalGroupHighlights += room.highlightCount;
+            }
+        }
+    }
+    return counters;
+}
+
+RoomCounterDelta compareRoomCounters(
+    const std::string& roomId,
+    int prevCount, int newCount,
+    int prevHighlights, int newHighlights
+) {
+    RoomCounterDelta delta;
+    delta.roomId = roomId;
+    delta.prevCount = prevCount;
+    delta.newCount = newCount;
+    delta.prevHighlights = prevHighlights;
+    delta.newHighlights = newHighlights;
+    return delta;
+}
+
+bool roomCounterChanged(const RoomCounterDelta& delta) {
+    return delta.prevCount != delta.newCount || delta.prevHighlights != delta.newHighlights;
+}
+
+std::string formatCounterBadge(int count) {
+    if (count <= 0) return "";
+    if (count >= 1000) return "999+";
+    return std::to_string(count);
+}
+
+bool shouldNotifyForEvent(
+    const std::string& eventType,
+    const std::string& membership,
+    bool isMuted,
+    bool isDirect,
+    const std::string& notifMode
+) {
+    if (isMuted) return false;
+    if (eventType == "m.room.member" || eventType == "m.room.create") return false;
+    if (membership != "join") return false;
+    if (notifMode == "none") return false;
+    if (notifMode == "mentions") {
+        // Only highlight events would notify — this is handled upstream
+        return true;
+    }
+    return true;
+}
+
 } // namespace progressive
