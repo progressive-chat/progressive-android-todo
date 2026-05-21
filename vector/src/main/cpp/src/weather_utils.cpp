@@ -1,4 +1,5 @@
 #include "progressive/weather_utils.hpp"
+#include "progressive/url_tools.hpp"
 #include <sstream>
 #include <algorithm>
 
