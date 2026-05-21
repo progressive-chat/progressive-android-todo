@@ -3353,14 +3353,14 @@ JNI_FUNC(jstring, nativeBuildUserIdentifier)(JNIEnv* env, jclass, jstring jUserI
     auto result = progressive::buildUserIdentifier(jStr(env, jUserId));
     return env->NewStringUTF(result.c_str());
 }
-JNI_FUNC(jboolean, nativeIsNightModeDifferent)(JNIEnv* env, jclass, jstring jOld, jstring jNew) {
-    auto parse = [](const std::string& s) -> progressive::NightMode {
+JNI_FUNC(jboolean, nativeIsNotifModeDifferent)(JNIEnv* env, jclass, jstring jOld, jstring jNew) {
+    auto parse = [](const std::string& s) -> progressive::NotifMode {
         if (s == "all") return progressive::NotifMode::All;
         if (s == "mentions") return progressive::NotifMode::Mentions;
         if (s == "none") return progressive::NotifMode::None;
-        return progressive::NightMode::Default;
+        return progressive::NotifMode::Default;
     };
-    return progressive::isNightModeDifferent(parse(jStr(env, jOld)), parse(jStr(env, jNew))) ? JNI_TRUE : JNI_FALSE;
+    return progressive::isNotifModeDifferent(parse(jStr(env, jOld)), parse(jStr(env, jNew))) ? JNI_TRUE : JNI_FALSE;
 }
 JNI_FUNC(jstring, nativeGetDefaultModeForRoom)(JNIEnv* env, jclass, jboolean jDirect, jboolean jEncrypted) {
     auto mode = progressive::getDefaultModeForRoom(jDirect, jEncrypted);
