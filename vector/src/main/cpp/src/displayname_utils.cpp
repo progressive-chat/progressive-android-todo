@@ -226,12 +226,12 @@ DisplayNameChange detectDisplayNameChange(
     DisplayNameChange change;
     change.oldName = oldName;
     change.newName = newName;
-    change.changed = oldName != newName;
+    
     return change;
 }
 
 std::string formatDisplayNameChange(const DisplayNameChange& change) {
-    if (!change.changed) return "";
+    if (change.oldName == change.newName) return "";
     if (change.oldName.empty()) return change.newName;
     if (change.newName.empty()) return "(removed)";
     return change.oldName + " → " + change.newName;
