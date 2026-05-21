@@ -26,6 +26,7 @@ import im.vector.app.features.analytics.plan.JoinedRoom
 import im.vector.app.features.attachments.toContentAttachmentData
 import im.vector.app.features.command.Command
 import im.vector.app.features.command.CommandParser
+import okhttp3.MediaType
 import im.vector.app.features.command.ParsedCommand
 import im.vector.app.features.home.room.detail.ChatEffect
 import im.vector.app.features.home.room.detail.composer.rainbow.RainbowGenerator
@@ -636,6 +637,59 @@ class MessageComposerViewModel @AssistedInject constructor(
                                              ProgressiveNative.ensureLoaded()
                                              ProgressiveNative.nativeAlarmCreate(args)
                                          } catch (_: Exception) { }
+                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                     } else {
+                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                     }
+                                 }
+                                 Command.AGENT -> {
+                                     val args = parsedCommand.args.trim()
+                                     if (args.isNotBlank()) {
+                                         // Agent: analyze task, call LLM, respond in chat
+                                         viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+                                             try {
+                                                 ProgressiveNative.ensureLoaded()
+                                                 val config = vectorPreferences
+                                                 val provider = config.getLlmProvider()
+                                                 val endpoint = config.getLlmEndpoint()
+                                                 val token = config.getLlmToken()
+                                                 val model = config.getLlmModel()
+                                                 
+                                                 val requestBody = ProgressiveNative.nativeBuildLlmRequest(
+                                                     "You are a helpful assistant. $args", provider, endpoint, token, model, "", 0.7f, 1024
+                                                 )
+                                                 val headers = ProgressiveNative.nativeBuildLlmHeaders(provider, token)
+                                                 
+                                                 val request = okhttp3.Request.Builder()
+                                                     .url(endpoint)
+                                                     .post(okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), requestBody))
+                                                     .apply {
+                                                         for (line in headers.split("
+")) {
+                                                             val colon = line.indexOf(": ")
+                                                             if (colon > 0) addHeader(line.substring(0, colon), line.substring(colon + 2))
+                                                         }
+                                                     }.build()
+                                                 
+                                                 val session = activeSessionHolder.getActiveSession()
+                                                 if (session != null) {
+                                                     val response = session.getOkHttpClient().newCall(request).execute()
+                                                     val body = response.body?.string() ?: ""
+                                                     val code = response.code
+                                                     val parsed = ProgressiveNative.nativeParseLlmResponse(body, code, provider)
+                                                     val json = org.json.JSONObject(parsed)
+                                                     val text = if (json.getBoolean("success")) json.getString("text") else json.getString("errorMessage")
+                                                     
+                                                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                                                         room.sendService().sendTextMessage(text, autoMarkdown = false)
+                                                     }
+                                                 }
+                                             } catch (e: Exception) {
+                                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                                                     room.sendService().sendTextMessage("Agent error: ${e.message}", autoMarkdown = false)
+                                                 }
+                                             }
+                                         }
                                          _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                      } else {
                                          _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
