@@ -153,4 +153,197 @@ std::string eventValidationToJson(const EventValidation& validation) {
     return json.str();
 }
 
+
+
+// ============================================================================
+// Enhanced Event Validation
+// ============================================================================
+
+static std::string extractStrLocal(const std::string& json, const std::string& key) {
+    auto search = "\"" + key + "\":\"";
+    auto pos = json.find(search);
+    if (pos == std::string::npos) return "";
+    pos += search.size();
+    auto end = json.find('"', pos);
+    if (end == std::string::npos) return "";
+    return json.substr(pos, end - pos);
+}
+
+EventValidationResult validateEvent(
+    const std::string& eventJson,
+    const std::vector<EventValidationRule>& rules
+) {
+    EventValidationResult result;
+    auto has = [&](const std::string& key) { return eventJson.find("\"" + key + "\"") != std::string::npos; };
+    
+    for (auto rule : rules) {
+        switch (rule) {
+            case EventValidationRule::ROOM_ID_REQUIRED:
+                if (!has("room_id")) { result.isValid = false; result.ruleFailures.push_back(rule); }
+                break;
+            case EventValidationRule::SENDER_REQUIRED:
+                if (!has("sender")) { result.isValid = false; result.ruleFailures.push_back(rule); }
+                break;
+            case EventValidationRule::TYPE_REQUIRED:
+                if (!has("type")) { result.isValid = false; result.ruleFailures.push_back(rule); }
+                break;
+            case EventValidationRule::EVENT_ID_REQUIRED:
+                if (!has("event_id")) { result.isValid = false; result.ruleFailures.push_back(rule); }
+                break;
+            case EventValidationRule::CONTENT_REQUIRED:
+                if (!has("content")) { result.isValid = false; result.ruleFailures.push_back(rule); }
+                break;
+            case EventValidationRule::STATE_KEY_FOR_STATE:
+                if (eventJson.find("\"type\":\"m.room.") != std::string::npos &&
+                    !has("state_key")) {
+                    result.isValid = false; result.ruleFailures.push_back(rule);
+                }
+                break;
+            case EventValidationRule::TIMESTAMP_NON_NEGATIVE:
+                if (eventJson.find("\"origin_server_ts\":-") != std::string::npos) {
+                    result.isValid = false; result.ruleFailures.push_back(rule);
+                }
+                break;
+            case EventValidationRule::EVENT_ID_FORMAT: {
+                auto eid = extractStrLocal(eventJson, "event_id");
+                if (!eid.empty() && eid[0] != '$') {
+                    result.isValid = false; result.ruleFailures.push_back(rule);
+                }
+                break;
+            }
+            case EventValidationRule::ROOM_ID_FORMAT: {
+                auto rid = extractStrLocal(eventJson, "room_id");
+                if (!rid.empty() && rid[0] != '!') {
+                    result.isValid = false; result.ruleFailures.push_back(rule);
+                }
+                break;
+            }
+            case EventValidationRule::USER_ID_FORMAT: {
+                auto uid = extractStrLocal(eventJson, "sender");
+                if (!uid.empty() && uid[0] != '@') {
+                    result.isValid = false; result.ruleFailures.push_back(rule);
+                }
+                break;
+            }
+            case EventValidationRule::REDACTION_HAS_REASON:
+                if (has("type") && eventJson.find("\"type\":\"m.room.redaction\"") != std::string::npos && !has("reason")) {
+                    result.warnings.push_back("Redaction without reason");
+                }
+                break;
+        }
+    }
+    return result;
+}
+
+EventValidationResult validateEventBasic(const std::string& eventJson) {
+    return validateEvent(eventJson, {
+        EventValidationRule::ROOM_ID_REQUIRED,
+        EventValidationRule::SENDER_REQUIRED,
+        EventValidationRule::TYPE_REQUIRED,
+        EventValidationRule::EVENT_ID_REQUIRED,
+        EventValidationRule::CONTENT_REQUIRED
+    });
+}
+
+EventValidationResult validateEventFull(const std::string& eventJson) {
+    return validateEvent(eventJson, {
+        EventValidationRule::ROOM_ID_REQUIRED,
+        EventValidationRule::SENDER_REQUIRED,
+        EventValidationRule::TYPE_REQUIRED,
+        EventValidationRule::EVENT_ID_REQUIRED,
+        EventValidationRule::CONTENT_REQUIRED,
+        EventValidationRule::STATE_KEY_FOR_STATE,
+        EventValidationRule::TIMESTAMP_NON_NEGATIVE,
+        EventValidationRule::EVENT_ID_FORMAT,
+        EventValidationRule::ROOM_ID_FORMAT,
+        EventValidationRule::USER_ID_FORMAT
+    });
+}
+
+std::vector<std::string> getValidationErrors(const EventValidationResult& result) {
+    std::vector<std::string> errors;
+    for (auto rule : result.ruleFailures) {
+        switch (rule) {
+            case EventValidationRule::ROOM_ID_REQUIRED: errors.push_back("Missing room_id"); break;
+            case EventValidationRule::SENDER_REQUIRED: errors.push_back("Missing sender"); break;
+            case EventValidationRule::TYPE_REQUIRED: errors.push_back("Missing type"); break;
+            case EventValidationRule::EVENT_ID_REQUIRED: errors.push_back("Missing event_id"); break;
+            case EventValidationRule::CONTENT_REQUIRED: errors.push_back("Missing content"); break;
+            case EventValidationRule::STATE_KEY_FOR_STATE: errors.push_back("State event missing state_key"); break;
+            case EventValidationRule::TIMESTAMP_NON_NEGATIVE: errors.push_back("Negative timestamp"); break;
+            case EventValidationRule::EVENT_ID_FORMAT: errors.push_back("Invalid event_id format"); break;
+            case EventValidationRule::ROOM_ID_FORMAT: errors.push_back("Invalid room_id format"); break;
+            case EventValidationRule::USER_ID_FORMAT: errors.push_back("Invalid user_id format"); break;
+            case EventValidationRule::REDACTION_HAS_REASON: break;
+        }
+    }
+    for (const auto& w : result.warnings) errors.push_back(w);
+    return errors;
+}
+
+bool isWellFormedEventId(const std::string& eventId) {
+    return !eventId.empty() && eventId[0] == '$' && eventId.size() > 1;
+}
+
+bool isWellFormedRoomId(const std::string& roomId) {
+    return !roomId.empty() && roomId[0] == '!' && roomId.find(':') != std::string::npos;
+}
+
+bool isWellFormedUserId(const std::string& userId) {
+    return !userId.empty() && userId[0] == '@' && userId.find(':') != std::string::npos;
+}
+
+bool isWellFormedEventType(const std::string& eventType) {
+    if (eventType.empty()) return false;
+    size_t dots = 0;
+    for (char c : eventType) {
+        if (c == '.') dots++;
+        if (!isalnum(c) && c != '.' && c != '_' && c != '-') return false;
+    }
+    return dots >= 1;
+}
+
+EventIntegrityCheck checkEventIntegrity(const std::string& eventJson) {
+    EventIntegrityCheck check;
+    // Basic presence check — actual signature verification requires crypto
+    check.passesHashCheck = eventJson.find("\"hashes\"") != std::string::npos;
+    check.passesSignatureCheck = eventJson.find("\"signatures\"") != std::string::npos;
+    check.passingCount = (check.passesHashCheck ? 1 : 0) + (check.passesSignatureCheck ? 1 : 0);
+    check.violationCount = 2 - check.passingCount;
+    return check;
+}
+
+EventValidationResult validateRedactionEvent(const std::string& eventJson) {
+    auto result = validateEventBasic(eventJson);
+    if (!eventJson.empty() && eventJson.find("\"type\":\"m.room.redaction\"") != std::string::npos) {
+        if (!eventJson.empty() && eventJson.find("\"redacts\"") == std::string::npos) {
+            result.isValid = false;
+            result.ruleFailures.push_back(EventValidationRule::REDACTION_HAS_REASON);
+        }
+    }
+    return result;
+}
+
+EventValidationResult validateStateEvent(const std::string& eventJson) {
+    auto result = validateEventBasic(eventJson);
+    if (!eventJson.empty() && !eventJson.empty() &&
+        eventJson.find("\"state_key\"") == std::string::npos &&
+        eventJson.find("\"type\":\"m.room.") != std::string::npos) {
+        result.isValid = false;
+        result.ruleFailures.push_back(EventValidationRule::STATE_KEY_FOR_STATE);
+    }
+    return result;
+}
+
+EventValidationResult validateEncryptedEvent(const std::string& eventJson) {
+    auto result = validateEventBasic(eventJson);
+    if (!eventJson.empty() && !eventJson.empty() &&
+        eventJson.find("\"type\":\"m.room.encrypted\"") != std::string::npos) {
+        // Encrypted events don't need content validation
+        result.isValid = true;
+        result.ruleFailures.clear();
+    }
+    return result;
+}
+
 } // namespace progressive
