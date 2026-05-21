@@ -27,6 +27,11 @@ class AlarmListActivity : VectorBaseActivity<ActivityAlarmListBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar(views.alarmListToolbar).allowBack()
+        views.alarmListToolbar.menu.add(0, 1, 0, "Settings").setShowAsAction(1)
+        views.alarmListToolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == 1) startActivity(AlarmSettingsActivity.newIntent(this))
+            true
+        }
         loadAlarms()
     }
 
