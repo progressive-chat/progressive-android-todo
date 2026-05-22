@@ -121,6 +121,10 @@ add_library(
     src/event_timeline.cpp
     src/event_utils.cpp
     src/room_directory.cpp
+    src/permalink_utils.cpp
+    src/profile_utils.cpp
+    src/read_marker_utils.cpp
+    src/reaction_picker_utils.cpp
     src/user_report_utils.cpp
     src/room_directory_utils.cpp
     src/server_notice_utils.cpp
