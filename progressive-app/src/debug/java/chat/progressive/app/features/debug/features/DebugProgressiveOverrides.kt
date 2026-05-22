@@ -25,7 +25,7 @@ private val keyForceLoginFallback = booleanPreferencesKey("force_login_fallback"
 private val forceCanChangeDisplayName = booleanPreferencesKey("force_can_change_display_name")
 private val forceCanChangeAvatar = booleanPreferencesKey("force_can_change_avatar")
 
-class DebugVectorOverrides(private val context: Context) : VectorOverrides {
+class DebugProgressiveOverrides(private val context: Context) : VectorOverrides {
 
     override val forceDialPad = context.dataStore.data.map { preferences ->
         preferences[keyForceDialPadDisplay].orFalse()

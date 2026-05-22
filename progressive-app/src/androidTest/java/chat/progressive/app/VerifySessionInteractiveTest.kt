@@ -81,7 +81,7 @@ class VerifySessionInteractiveTest : VerificationTestBase() {
         runTest {
             existingSession?.signOutService()?.signOut(true)
         }
-        val app = EspressoHelper.getCurrentActivity()!!.application as VectorApplication
+        val app = EspressoHelper.getCurrentActivity()!!.application as ProgressiveApplication
         while (app.authenticationService.getLastAuthenticatedSession() != null) {
             val session = app.authenticationService.getLastAuthenticatedSession()!!
             runTest {

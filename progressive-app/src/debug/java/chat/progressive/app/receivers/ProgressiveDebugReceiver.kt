@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Receiver to handle some command from ADB
  */
-class VectorDebugReceiver @Inject constructor(
+class ProgressiveDebugReceiver @Inject constructor(
         @DefaultPreferences
         private val sharedPreferences: SharedPreferences,
 ) : BroadcastReceiver(), DebugReceiver {

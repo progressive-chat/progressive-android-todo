@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlin.reflect.KFunction1
 
 class DebugFeaturesStateFactory @Inject constructor(
-        private val debugFeatures: DebugVectorFeatures,
+        private val debugFeatures: DebugProgressiveFeatures,
         private val defaultFeatures: DefaultVectorFeatures
 ) {
 

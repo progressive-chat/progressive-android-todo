@@ -72,7 +72,7 @@ import javax.inject.Inject
 import androidx.work.Configuration as WorkConfiguration
 
 @HiltAndroidApp
-class VectorApplication :
+class ProgressiveApplication :
         Application(),
         WorkConfiguration.Provider {
 

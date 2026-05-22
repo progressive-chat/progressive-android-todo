@@ -15,7 +15,7 @@ import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.EmptyViewEvents
 import chat.progressive.app.core.platform.VectorViewModel
-import chat.progressive.app.features.debug.features.DebugVectorOverrides
+import chat.progressive.app.features.debug.features.DebugProgressiveOverrides
 import chat.progressive.app.features.debug.settings.DebugPrivateSettingsViewActions.SetAvatarCapabilityOverride
 import chat.progressive.app.features.debug.settings.DebugPrivateSettingsViewActions.SetDisplayNameCapabilityOverride
 import chat.progressive.app.features.home.room.list.home.release.ReleaseNotesPreferencesStore
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class DebugPrivateSettingsViewModel @AssistedInject constructor(
         @Assisted initialState: DebugPrivateSettingsViewState,
-        private val debugVectorOverrides: DebugVectorOverrides,
+        private val debugVectorOverrides: DebugProgressiveOverrides,
         private val releaseNotesPreferencesStore: ReleaseNotesPreferencesStore,
 ) : VectorViewModel<DebugPrivateSettingsViewState, DebugPrivateSettingsViewActions, EmptyViewEvents>(initialState) {
 

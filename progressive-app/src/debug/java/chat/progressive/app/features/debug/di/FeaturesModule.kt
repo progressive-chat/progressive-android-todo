@@ -17,18 +17,18 @@ import chat.progressive.app.features.DefaultVectorFeatures
 import chat.progressive.app.features.DefaultVectorOverrides
 import chat.progressive.app.features.VectorFeatures
 import chat.progressive.app.features.VectorOverrides
-import chat.progressive.app.features.debug.features.DebugVectorFeatures
-import chat.progressive.app.features.debug.features.DebugVectorOverrides
+import chat.progressive.app.features.debug.features.DebugProgressiveFeatures
+import chat.progressive.app.features.debug.features.DebugProgressiveOverrides
 
 @InstallIn(SingletonComponent::class)
 @Module
 interface FeaturesModule {
 
     @Binds
-    fun bindFeatures(debugFeatures: DebugVectorFeatures): VectorFeatures
+    fun bindFeatures(debugFeatures: DebugProgressiveFeatures): VectorFeatures
 
     @Binds
-    fun bindOverrides(debugOverrides: DebugVectorOverrides): VectorOverrides
+    fun bindOverrides(debugOverrides: DebugProgressiveOverrides): VectorOverrides
 
     companion object {
 
@@ -38,8 +38,8 @@ interface FeaturesModule {
         }
 
         @Provides
-        fun providesDebugVectorFeatures(context: Context, defaultVectorFeatures: DefaultVectorFeatures): DebugVectorFeatures {
-            return DebugVectorFeatures(context, defaultVectorFeatures)
+        fun providesDebugProgressiveFeatures(context: Context, defaultVectorFeatures: DefaultVectorFeatures): DebugProgressiveFeatures {
+            return DebugProgressiveFeatures(context, defaultVectorFeatures)
         }
 
         @Provides
@@ -48,8 +48,8 @@ interface FeaturesModule {
         }
 
         @Provides
-        fun providesDebugVectorOverrides(context: Context): DebugVectorOverrides {
-            return DebugVectorOverrides(context)
+        fun providesDebugProgressiveOverrides(context: Context): DebugProgressiveOverrides {
+            return DebugProgressiveOverrides(context)
         }
     }
 }

@@ -19,7 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DebugFeaturesSettingsActivity : VectorBaseActivity<FragmentGenericRecyclerBinding>() {
 
-    @Inject lateinit var debugFeatures: DebugVectorFeatures
+    @Inject lateinit var debugFeatures: DebugProgressiveFeatures
     @Inject lateinit var debugFeaturesStateFactory: DebugFeaturesStateFactory
     @Inject lateinit var controller: FeaturesController
 

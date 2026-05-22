@@ -30,7 +30,7 @@ import javax.inject.Inject
 private val loggerTag = LoggerTag("Push", LoggerTag.SYNC)
 
 @AndroidEntryPoint
-class VectorFirebaseMessagingService : FirebaseMessagingService() {
+class ProgressiveFirebaseMessaging : FirebaseMessagingService() {
     @Inject lateinit var fcmHelper: FcmHelper
     @Inject lateinit var vectorPreferences: VectorPreferences
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder

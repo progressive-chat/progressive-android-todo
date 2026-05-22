@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "debug_features")
 
-class DebugVectorFeatures(
+class DebugProgressiveFeatures(
         context: Context,
         private val vectorFeatures: DefaultVectorFeatures
 ) : VectorFeatures {

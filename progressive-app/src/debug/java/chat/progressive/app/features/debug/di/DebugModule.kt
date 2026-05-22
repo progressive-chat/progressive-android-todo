@@ -19,7 +19,7 @@ import chat.progressive.app.core.debug.DebugReceiver
 import chat.progressive.app.core.debug.LeakDetector
 import chat.progressive.app.features.debug.DebugMenuActivity
 import chat.progressive.app.leakcanary.LeakCanaryLeakDetector
-import chat.progressive.app.receivers.VectorDebugReceiver
+import chat.progressive.app.receivers.ProgressiveDebugReceiver
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -36,7 +36,7 @@ abstract class DebugModule {
     }
 
     @Binds
-    abstract fun bindsDebugReceiver(receiver: VectorDebugReceiver): DebugReceiver
+    abstract fun bindsDebugReceiver(receiver: ProgressiveDebugReceiver): DebugReceiver
 
     @Binds
     abstract fun bindsLeakDetector(leakDetector: LeakCanaryLeakDetector): LeakDetector
