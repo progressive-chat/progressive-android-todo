@@ -87,6 +87,9 @@ add_library(
     src/hash_utils.cpp
     src/http_client.cpp
     src/room_stats.cpp
+    src/room_member_utils.cpp
+    src/file_upload_utils.cpp
+    src/event_timestamp_utils.cpp
     src/olm_session_utils.cpp
     src/voice_message_utils.cpp
     src/smart_reply.cpp
