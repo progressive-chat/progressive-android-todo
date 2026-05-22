@@ -205,6 +205,8 @@ add_library(
     src/unified_push.cpp
     src/url_preview.cpp
     src/web_search.cpp
+    src/user_directory_search.cpp
+    src/event_pagination.cpp
     src/device_trust.cpp
     src/event_redaction.cpp
     src/link_preview_utils.cpp
