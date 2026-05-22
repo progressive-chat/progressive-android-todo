@@ -607,6 +607,19 @@ class MessageComposerViewModel @AssistedInject constructor(
                                      room.sendService().sendTextMessage("🎲 " + results.joinToString(" + ") + " = " + results.sum(), autoMarkdown = false)
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
+                                 Command.EMOJI -> {
+                                     val emojis = mapOf("smile" to "😊","heart" to "❤️","laugh" to "😂","cry" to "😢",
+                                         "cool" to "😎","wink" to "😉","kiss" to "😘","angry" to "😠",
+                                         "clap" to "👏","fire" to "🔥","ok" to "👌","thumb" to "👍")
+                                     val e = emojis[parsedCommand.args.trim().lowercase()] ?: parsedCommand.args.trim()
+                                     room.sendService().sendTextMessage(e, autoMarkdown = false)
+                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                 }
+                                 Command.REACT -> {
+                                     val emoji = parsedCommand.args.ifBlank { "👍" }
+                                     room.sendService().sendTextMessage(emoji, autoMarkdown = false)
+                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                 }
                                  Command.EIGHTBALL -> {
                                      val answers = listOf("Yes","No","Maybe","Ask again later","Definitely","Don't count on it","Outlook good","Very doubtful")
                                      room.sendService().sendTextMessage("🎱 " + answers.random(), autoMarkdown = false)
