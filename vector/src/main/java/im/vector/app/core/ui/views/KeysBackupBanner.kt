@@ -19,7 +19,7 @@ import im.vector.lib.strings.CommonStrings
 import timber.log.Timber
 
 /**
- * The view used in VectorHomeActivity to show some information about the keys backup state.
+ * The view used in ProgressiveHomeActivity to show some information about the keys backup state.
  * It does have a unique render method.
  */
 class KeysBackupBanner @JvmOverloads constructor(

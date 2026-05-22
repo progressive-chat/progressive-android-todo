@@ -283,7 +283,7 @@ class NotificationUtils @Inject constructor(
 
     /**
      * Build an incoming call notification.
-     * This notification starts the VectorHomeActivity which is in charge of centralizing the incoming call flow.
+     * This notification starts the ProgressiveHomeActivity which is in charge of centralizing the incoming call flow.
      *
      * @param call information about the call
      * @param title title of the notification
