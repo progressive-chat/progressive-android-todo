@@ -57,7 +57,7 @@ class KeywordPreference : ProgressiveBasePreference {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
-        layoutResource = R.layout.vector_preference_chip_group
+        layoutResource = R.layout.progressive_preference_chip_group
     }
 
     override fun setEnabled(enabled: Boolean) {

@@ -125,7 +125,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class TimelineViewModel @AssistedInject constructor(
         @Assisted private val initialState: RoomDetailViewState,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val vectorDataStore: VectorDataStore,
         private val stringProvider: StringProvider,
         private val session: Session,
@@ -245,7 +245,7 @@ class TimelineViewModel @AssistedInject constructor(
             spaceStateHandler.getCurrentSpace().let { currentSpace ->
                 val currentRoomSummary = room.roomSummary() ?: return@let
                 // nothing we are good
-                if ((currentSpace == null && !vectorPreferences.prefSpacesShowAllRoomInHome()) ||
+                if ((currentSpace == null && !progressivePreferences.prefSpacesShowAllRoomInHome()) ||
                         (currentSpace != null && !currentRoomSummary.flattenParentIds.contains(currentSpace.roomId))) {
                     // take first one or switch to home
                     spaceStateHandler.setCurrentSpace(
@@ -366,7 +366,7 @@ class TimelineViewModel @AssistedInject constructor(
 
     private fun setupPreviewUrlObservers() {
         if (room == null) return
-        if (!vectorPreferences.showUrlPreviews()) {
+        if (!progressivePreferences.showUrlPreviews()) {
             return
         }
         combine(
@@ -842,8 +842,8 @@ class TimelineViewModel @AssistedInject constructor(
                     // Show Join conference button only if there is an active conf id not joined. Otherwise fallback to default video disabled. ^
                     R.id.join_conference -> !state.isCallOptionAvailable() && state.jitsiState.confId != null && !state.jitsiState.hasJoined
                     R.id.search -> state.isSearchAvailable()
-                    R.id.menu_timeline_thread_list -> vectorPreferences.areThreadMessagesEnabled()
-                    R.id.dev_tools -> vectorPreferences.developerMode()
+                    R.id.menu_timeline_thread_list -> progressivePreferences.areThreadMessagesEnabled()
+                    R.id.dev_tools -> progressivePreferences.developerMode()
                     else -> false
                 }
             }
@@ -920,7 +920,7 @@ class TimelineViewModel @AssistedInject constructor(
             }
 
             // handle chat effects here
-            if (vectorPreferences.chatEffectsEnabled()) {
+            if (progressivePreferences.chatEffectsEnabled()) {
                 chatEffectManager.checkForEffect(action.event)
             }
         }
@@ -1492,7 +1492,7 @@ class TimelineViewModel @AssistedInject constructor(
     override fun onCleared() {
         timeline?.dispose()
         timeline?.removeAllListeners()
-        if (vectorPreferences.sendTypingNotifs()) {
+        if (progressivePreferences.sendTypingNotifs()) {
             room?.typingService()?.userStopsTyping()
         }
         chatEffectManager.delegate = null

@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class VectorSettingsNotificationViewModel @AssistedInject constructor(
         @Assisted initialState: ProgressiveDummyViewState,
         private val pushersManager: PushersManager,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val enableNotificationsForCurrentSessionUseCase: EnableNotificationsForCurrentSessionUseCase,
         private val disableNotificationsForCurrentSessionUseCase: DisableNotificationsForCurrentSessionUseCase,
         private val unregisterUnifiedPushUseCase: UnregisterUnifiedPushUseCase,
@@ -50,7 +50,7 @@ class VectorSettingsNotificationViewModel @AssistedInject constructor(
     val notificationsPreferenceListener: SharedPreferences.OnSharedPreferenceChangeListener =
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY) {
-                    if (vectorPreferences.areNotificationEnabledForDevice()) {
+                    if (progressivePreferences.areNotificationEnabledForDevice()) {
                         _viewEvents.post(VectorSettingsNotificationViewEvent.NotificationsForDeviceEnabled)
                     } else {
                         _viewEvents.post(VectorSettingsNotificationViewEvent.NotificationsForDeviceDisabled)
@@ -63,11 +63,11 @@ class VectorSettingsNotificationViewModel @AssistedInject constructor(
     }
 
     private fun observeNotificationsEnabledPreference() {
-        vectorPreferences.subscribeToChanges(notificationsPreferenceListener)
+        progressivePreferences.subscribeToChanges(notificationsPreferenceListener)
     }
 
     override fun onCleared() {
-        vectorPreferences.unsubscribeToChanges(notificationsPreferenceListener)
+        progressivePreferences.unsubscribeToChanges(notificationsPreferenceListener)
         super.onCleared()
     }
 
@@ -107,7 +107,7 @@ class VectorSettingsNotificationViewModel @AssistedInject constructor(
                     _viewEvents.post(VectorSettingsNotificationViewEvent.AskUserForPushDistributor)
                 }
                 RegisterUnifiedPushUseCase.RegisterUnifiedPushResult.Success -> {
-                    val areNotificationsEnabled = vectorPreferences.areNotificationEnabledForDevice()
+                    val areNotificationsEnabled = progressivePreferences.areNotificationEnabledForDevice()
                     ensureFcmTokenIsRetrievedUseCase.execute(pushersManager, registerPusher = areNotificationsEnabled)
                     toggleNotificationsForCurrentSessionUseCase.execute(enabled = areNotificationsEnabled)
                     _viewEvents.post(VectorSettingsNotificationViewEvent.NotificationMethodChanged)

@@ -111,7 +111,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     @Inject lateinit var autoCompleterFactory: AutoCompleter.Factory
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var shareIntentHandler: ShareIntentHandler
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var buildMeta: BuildMeta
     @Inject lateinit var session: Session
@@ -133,7 +133,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     }
 
     private val isEmojiKeyboardVisible: Boolean
-        get() = vectorPreferences.showEmojiKeyboard()
+        get() = progressivePreferences.showEmojiKeyboard()
 
     private var lockSendButton = false
 
@@ -149,7 +149,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     private val setLinkActionsViewModel: SetLinkSharedActionViewModel by viewModels()
 
     private val composer: MessageComposerView get() {
-        return if (vectorPreferences.isRichTextEditorEnabled()) {
+        return if (progressivePreferences.isRichTextEditorEnabled()) {
             views.richTextComposerLayout
         } else {
             views.composerLayout
@@ -171,8 +171,8 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
         setupComposer()
         setupEmojiButton()
 
-        views.composerLayout.isGone = vectorPreferences.isRichTextEditorEnabled()
-        views.richTextComposerLayout.isVisible = vectorPreferences.isRichTextEditorEnabled()
+        views.composerLayout.isGone = progressivePreferences.isRichTextEditorEnabled()
+        views.richTextComposerLayout.isVisible = progressivePreferences.isRichTextEditorEnabled()
         views.richTextComposerLayout.setOnErrorListener(errorTracker::trackError)
 
         messageComposerViewModel.observeViewEvents {
@@ -328,9 +328,9 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
         observerUserTyping()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            composerEditText.setUseIncognitoKeyboard(vectorPreferences.useIncognitoKeyboard())
+            composerEditText.setUseIncognitoKeyboard(progressivePreferences.useIncognitoKeyboard())
         }
-        composerEditText.setSendMessageWithEnter(vectorPreferences.sendMessageWithEnter())
+        composerEditText.setSendMessageWithEnter(progressivePreferences.sendMessageWithEnter())
 
         composerEditText.setOnEditorActionListener { v, actionId, keyEvent ->
             val imeActionId = actionId and EditorInfo.IME_MASK_ACTION
@@ -340,7 +340,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
                     !keyEvent.isShiftPressed &&
                     keyEvent.keyCode == KeyEvent.KEYCODE_ENTER &&
                     resources.configuration.keyboard != Configuration.KEYBOARD_NOKEYS
-            val sendMessageWithEnter = externalKeyboardPressedEnter && vectorPreferences.sendMessageWithEnter()
+            val sendMessageWithEnter = externalKeyboardPressedEnter && progressivePreferences.sendMessageWithEnter()
             val result = if (isSendAction || sendMessageWithEnter) {
                 sendTextMessage(v.text)
                 true
@@ -348,7 +348,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
             result
         }
 
-        composer.emojiButton?.isVisible = vectorPreferences.showEmojiKeyboard()
+        composer.emojiButton?.isVisible = progressivePreferences.showEmojiKeyboard()
 
         val showKeyboard = withState(timelineViewModel) { it.showKeyboardWhenPresented }
         if (isThreadTimeLine() && showKeyboard) {
@@ -357,7 +357,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
         }
         composer.callback = object : Callback {
             override fun onAddAttachment() {
-                if (vectorPreferences.isRichTextEditorEnabled()) {
+                if (progressivePreferences.isRichTextEditorEnabled()) {
                     AttachmentTypeSelectorBottomSheet.show(childFragmentManager)
                 } else {
                     if (!::attachmentTypeSelector.isInitialized) {
@@ -371,7 +371,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
                         )
                         attachmentTypeSelector.setAttachmentVisibility(
                                 AttachmentType.VOICE_BROADCAST,
-                                vectorPreferences.isVoiceBroadcastEnabled(), // TODO check user permission
+                                progressivePreferences.isVoiceBroadcastEnabled(), // TODO check user permission
                         )
                     }
                     attachmentTypeSelector.show(composer.attachmentButton)
@@ -438,7 +438,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
             if (formattedText != null) {
                 messageComposerViewModel.handle(MessageComposerAction.SendMessage(text, formattedText, false))
             } else {
-                messageComposerViewModel.handle(MessageComposerAction.SendMessage(text, null, vectorPreferences.isMarkdownEnabled()))
+                messageComposerViewModel.handle(MessageComposerAction.SendMessage(text, null, progressivePreferences.isMarkdownEnabled()))
             }
             emojiPopup.dismiss()
         }
@@ -447,7 +447,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     private fun sendUri(uri: Uri): Boolean {
         val shareIntent = Intent(Intent.ACTION_SEND, uri)
         val isHandled = shareIntentHandler.handleIncomingShareIntent(shareIntent, ::onContentAttachmentsReady, onPlainText = {
-            fatalError("Should not happen as we're generating a File based share Intent", vectorPreferences.failFast())
+            fatalError("Should not happen as we're generating a File based share Intent", progressivePreferences.failFast())
         })
         if (!isHandled) {
             Toast.makeText(requireContext(), CommonStrings.error_handling_incoming_share, Toast.LENGTH_SHORT).show()
@@ -699,7 +699,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
         when (type) {
             AttachmentType.CAMERA -> attachmentsHelper.openCamera(
                     activity = requireActivity(),
-                    vectorPreferences = vectorPreferences,
+                    progressivePreferences = progressivePreferences,
                     cameraActivityResultLauncher = attachmentCameraActivityResultLauncher,
                     cameraVideoActivityResultLauncher = attachmentCameraVideoActivityResultLauncher
             )

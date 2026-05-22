@@ -11,11 +11,11 @@ import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 class ToggleIpAddressVisibilityUseCase @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute() {
-        val currentVisibility = vectorPreferences.showIpAddressInSessionManagerScreens()
-        vectorPreferences.setIpAddressVisibilityInDeviceManagerScreens(!currentVisibility)
+        val currentVisibility = progressivePreferences.showIpAddressInSessionManagerScreens()
+        progressivePreferences.setIpAddressVisibilityInDeviceManagerScreens(!currentVisibility)
     }
 }

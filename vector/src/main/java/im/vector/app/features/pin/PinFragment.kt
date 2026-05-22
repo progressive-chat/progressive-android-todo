@@ -48,7 +48,7 @@ class PinFragment :
         ProgressiveFragment<FragmentPinBinding>() {
 
     @Inject lateinit var pinCodeStore: PinCodeStore
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var defaultConfiguration: LockScreenConfiguration
 
     private val fragmentArgs: PinArgs by args()
@@ -108,7 +108,7 @@ class PinFragment :
                 if (throwable is BiometricAuthError) {
                     // System disabled biometric auth, no need to do it ourselves
                     if (throwable.isAuthPermanentlyDisabledError) {
-                        vectorPreferences.setUseBiometricToUnlock(false)
+                        progressivePreferences.setUseBiometricToUnlock(false)
                     }
                     Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_SHORT).show()
                 } else {
@@ -118,7 +118,7 @@ class PinFragment :
 
             override fun onBiometricKeyInvalidated() {
                 // Disable biometric auth in settings and remove system key
-                vectorPreferences.setUseBiometricToUnlock(false)
+                progressivePreferences.setUseBiometricToUnlock(false)
 
                 MaterialAlertDialogBuilder(requireContext())
                         .setMessage(CommonStrings.auth_biometric_key_invalidated_message)

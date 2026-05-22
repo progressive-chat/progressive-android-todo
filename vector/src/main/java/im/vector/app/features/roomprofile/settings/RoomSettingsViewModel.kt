@@ -37,7 +37,7 @@ import org.matrix.android.sdk.flow.unwrap
 
 class RoomSettingsViewModel @AssistedInject constructor(
         @Assisted initialState: RoomSettingsViewState,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val session: Session
 ) :
         ProgressiveViewModel<RoomSettingsViewState, RoomSettingsAction, RoomSettingsViewEvents>(initialState) {

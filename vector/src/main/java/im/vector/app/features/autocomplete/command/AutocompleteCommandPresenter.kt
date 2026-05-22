@@ -21,7 +21,7 @@ class AutocompleteCommandPresenter @AssistedInject constructor(
         @Assisted val isInThreadTimeline: Boolean,
         context: Context,
         private val controller: AutocompleteCommandController,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) :
         RecyclerViewPresenter<Command>(context), AutocompleteClickListener<Command> {
 
@@ -45,10 +45,10 @@ class AutocompleteCommandPresenter @AssistedInject constructor(
     override fun onQuery(query: CharSequence?) {
         val data = Command.values()
                 .filter {
-                    !it.isDevCommand || vectorPreferences.developerMode()
+                    !it.isDevCommand || progressivePreferences.developerMode()
                 }
                 .filter {
-                    if (vectorPreferences.areThreadMessagesEnabled() && isInThreadTimeline) {
+                    if (progressivePreferences.areThreadMessagesEnabled() && isInThreadTimeline) {
                         it.isThreadCommand
                     } else {
                         true

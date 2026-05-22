@@ -22,7 +22,7 @@ class StartCallActionsHandler(
         private val roomId: String,
         private val fragment: Fragment,
         private val callManager: WebRtcCallManager,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val timelineViewModel: TimelineViewModel,
         private val startCallActivityResultLauncher: ActivityResultLauncher<Array<String>>,
         private val showDialogWithMessage: (String) -> Unit,
@@ -107,7 +107,7 @@ class StartCallActionsHandler(
     }
 
     private fun safeStartCall(isVideoCall: Boolean) {
-        if (vectorPreferences.preventAccidentalCall()) {
+        if (progressivePreferences.preventAccidentalCall()) {
             MaterialAlertDialogBuilder(fragment.requireActivity())
                     .setMessage(if (isVideoCall) CommonStrings.start_video_call_prompt_msg else CommonStrings.start_voice_call_prompt_msg)
                     .setPositiveButton(if (isVideoCall) CommonStrings.start_video_call else CommonStrings.start_voice_call) { _, _ ->

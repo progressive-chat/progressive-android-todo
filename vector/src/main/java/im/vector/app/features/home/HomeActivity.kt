@@ -200,14 +200,14 @@ class HomeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isNewAppLayoutEnabled = vectorPreferences.isNewAppLayoutEnabled()
+        isNewAppLayoutEnabled = progressivePreferences.isNewAppLayoutEnabled()
         analyticsScreenName = MobileScreen.ScreenName.Home
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, false)
         sharedActionViewModel = viewModelProvider[HomeSharedActionViewModel::class.java]
         roomListSharedActionViewModel = viewModelProvider[RoomListSharedActionViewModel::class.java]
         views.drawerLayout.addDrawerListener(drawerListener)
         if (isFirstCreation()) {
-            if (vectorPreferences.isNewAppLayoutEnabled()) {
+            if (progressivePreferences.isNewAppLayoutEnabled()) {
                 views.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 replaceFragment(views.homeDetailFragmentContainer, NewHomeDetailFragment::class.java)
             } else {
@@ -332,7 +332,7 @@ class HomeActivity :
                 // We came from a new session and not an existing one,
                 // so there is no need to migrate threads while an initial synced performed
                 Timber.i("----> No thread migration needed, we are ok")
-                vectorPreferences.setShouldMigrateThreads(shouldMigrate = false)
+                progressivePreferences.setShouldMigrateThreads(shouldMigrate = false)
             }
         } else {
             // Proceed with migration
@@ -345,7 +345,7 @@ class HomeActivity :
      */
     private fun handleThreadsMigration() {
         Timber.i("----> Threads Migration detected, clearing cache and sync...")
-        vectorPreferences.setShouldMigrateThreads(shouldMigrate = false)
+        progressivePreferences.setShouldMigrateThreads(shouldMigrate = false)
         MainActivity.restartApp(this, MainActivityArgs(clearCache = true))
     }
 
@@ -607,16 +607,16 @@ class HomeActivity :
     }
 
     private fun checkNewAppLayoutFlagChange() {
-        if (vectorPreferences.isNewAppLayoutEnabled() != isNewAppLayoutEnabled) {
+        if (progressivePreferences.isNewAppLayoutEnabled() != isNewAppLayoutEnabled) {
             restart()
         }
     }
 
-    override fun getMenuRes() = if (vectorPreferences.isNewAppLayoutEnabled()) R.menu.menu_new_home else R.menu.menu_home
+    override fun getMenuRes() = if (progressivePreferences.isNewAppLayoutEnabled()) R.menu.menu_new_home else R.menu.menu_home
 
     override fun handlePrepareMenu(menu: Menu) {
-        menu.findItem(R.id.menu_home_init_sync_legacy).isVisible = vectorPreferences.developerMode()
-        menu.findItem(R.id.menu_home_init_sync_optimized).isVisible = vectorPreferences.developerMode()
+        menu.findItem(R.id.menu_home_init_sync_legacy).isVisible = progressivePreferences.developerMode()
+        menu.findItem(R.id.menu_home_init_sync_optimized).isVisible = progressivePreferences.developerMode()
         menu.findItem(R.id.menu_home_night_mode)?.let { item ->
             try {
                 ProgressiveNative.ensureLoaded()

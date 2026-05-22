@@ -40,7 +40,7 @@ class GalleryOrCameraDialogHelper(
         private val fragment: Fragment,
         private val colorProvider: ColorProvider,
         private val clock: Clock,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val skipCrop: Boolean = false,
 ) {
     interface Listener {
@@ -87,7 +87,7 @@ class GalleryOrCameraDialogHelper(
     }
 
     private fun startUCrop(image: MultiPickerImageType) {
-        if (skipCrop || vectorPreferences.isSkipAvatarCropEnabled()) {
+        if (skipCrop || progressivePreferences.isSkipAvatarCropEnabled()) {
             listener.onImageReady(image.contentUri)
             return
         }

@@ -91,11 +91,11 @@ class AttachmentsHelper(
      */
     fun openCamera(
             activity: Activity,
-            vectorPreferences: ProgressiveBasePreferences,
+            progressivePreferences: ProgressiveBasePreferences,
             cameraActivityResultLauncher: ActivityResultLauncher<Intent>,
             cameraVideoActivityResultLauncher: ActivityResultLauncher<Intent>
     ) {
-        PhotoOrVideoDialog(activity, vectorPreferences).show(object : PhotoOrVideoDialog.PhotoOrVideoDialogListener {
+        PhotoOrVideoDialog(activity, progressivePreferences).show(object : PhotoOrVideoDialog.PhotoOrVideoDialogListener {
             override fun takePhoto() = doSafe {
                 captureUri = MultiPicker.get(MultiPicker.CAMERA).startWithExpectingFile(context, cameraActivityResultLauncher)
             }

@@ -77,7 +77,7 @@ class FtueAuthSignUpSignInSelectionFragment :
                 views.loginSignupSigninSignInSocialLoginContainer.isVisible = true
                 views.loginSignupSigninSocialLoginButtons.render(state.selectedHomeserver.preferredLoginMode, Mode.MODE_CONTINUE) { provider ->
                     viewModel.fetchSsoUrl(
-                            redirectUrl = SSORedirectRouterActivity.VECTOR_REDIRECT_URL,
+                            redirectUrl = SSORedirectRouterActivity.PROGRESSIVE_REDIRECT_URL,
                             deviceId = state.deviceId,
                             provider = provider,
                             action = if (state.signMode == SignMode.SignUp) SSOAction.REGISTER else SSOAction.LOGIN
@@ -119,7 +119,7 @@ class FtueAuthSignUpSignInSelectionFragment :
     private fun submit() = withState(viewModel) { state ->
         if (state.selectedHomeserver.preferredLoginMode is LoginMode.Sso) {
             viewModel.fetchSsoUrl(
-                    redirectUrl = SSORedirectRouterActivity.VECTOR_REDIRECT_URL,
+                    redirectUrl = SSORedirectRouterActivity.PROGRESSIVE_REDIRECT_URL,
                     deviceId = state.deviceId,
                     provider = null,
                     action = if (state.onboardingFlow == OnboardingFlow.SignUp) SSOAction.REGISTER else SSOAction.LOGIN

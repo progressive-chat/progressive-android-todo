@@ -27,7 +27,7 @@ class RageShake @Inject constructor(
         private val bugReporter: BugReporter,
         private val navigator: Navigator,
         private val sessionHolder: ActiveSessionHolder,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : ShakeDetector.Listener {
 
     private var shakeDetector: ShakeDetector? = null
@@ -40,7 +40,7 @@ class RageShake @Inject constructor(
         val sensorManager = activity.getSystemService<SensorManager>() ?: return
 
         shakeDetector = ShakeDetector(this).apply {
-            setSensitivity(vectorPreferences.getRageshakeSensitivity())
+            setSensitivity(progressivePreferences.getRageshakeSensitivity())
             start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
         }
     }
@@ -92,7 +92,7 @@ class RageShake @Inject constructor(
     }
 
     private fun disableRageShake() {
-        vectorPreferences.setRageshakeEnabled(false)
+        progressivePreferences.setRageshakeEnabled(false)
         stop()
     }
 

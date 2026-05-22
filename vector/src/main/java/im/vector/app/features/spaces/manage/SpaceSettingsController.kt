@@ -26,7 +26,7 @@ import javax.inject.Inject
 class SpaceSettingsController @Inject constructor(
         private val stringProvider: StringProvider,
         private val avatarRenderer: AvatarRenderer,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<RoomSettingsViewState>() {
 
     interface Callback {
@@ -104,7 +104,7 @@ class SpaceSettingsController @Inject constructor(
                 editable = data.actionPermissions.canChangeJoinRule,
                 action = { if (data.actionPermissions.canChangeJoinRule) callback?.onJoinRuleClicked() }
         )
-//        if (vectorPreferences.labsUseExperimentalRestricted()) {
+//        if (progressivePreferences.labsUseExperimentalRestricted()) {
 //            buildProfileAction(
 //                    id = "joinRule",
 //                    title = stringProvider.getString(CommonStrings.room_settings_room_access_title),
@@ -155,12 +155,12 @@ class SpaceSettingsController @Inject constructor(
                 id = "permissions",
                 title = stringProvider.getString(CommonStrings.space_settings_permissions_title),
                 subtitle = stringProvider.getString(CommonStrings.space_settings_permissions_subtitle),
-                divider = vectorPreferences.developerMode(),
+                divider = progressivePreferences.developerMode(),
                 editable = true,
                 action = { callback?.onRoomPermissionsClicked() }
         )
 
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             buildProfileAction(
                     id = "dev_tools",
                     title = stringProvider.getString(CommonStrings.settings_dev_tools),

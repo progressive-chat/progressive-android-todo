@@ -10,10 +10,10 @@ package im.vector.app.features.home.room.detail.timeline.style
 import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
-class TimelineLayoutSettingsProvider @Inject constructor(private val vectorPreferences: ProgressiveBasePreferences) {
+class TimelineLayoutSettingsProvider @Inject constructor(private val progressivePreferences: ProgressiveBasePreferences) {
 
     fun getLayoutSettings(): TimelineLayoutSettings {
-        return if (vectorPreferences.useMessageBubblesLayout()) {
+        return if (progressivePreferences.useMessageBubblesLayout()) {
             TimelineLayoutSettings.BUBBLE
         } else {
             TimelineLayoutSettings.MODERN

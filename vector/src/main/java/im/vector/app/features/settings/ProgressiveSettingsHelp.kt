@@ -32,7 +32,7 @@ class ProgressiveSettingsHelp :
     @Inject lateinit var buildMeta: BuildMeta
 
     override var titleRes = CommonStrings.preference_root_help_about
-    override val preferenceXmlRes = R.xml.vector_settings_help_about
+    override val preferenceXmlRes = R.xml.progressive_settings_help_about
 
     private val firstThrottler = FirstThrottler(1000)
 
@@ -108,14 +108,14 @@ class ProgressiveSettingsHelp :
         // Legacy init sync
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_LEGACY_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // vectorPreferences.didAskLegacyInitSync() — FIXME: restore when accessible
+            // progressivePreferences.didAskLegacyInitSync() — FIXME: restore when accessible
             true
         }
 
         // Optimized init sync
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_OPTIMIZED_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // vectorPreferences.didAskOptimizedInitSync() — FIXME: restore when accessible
+            // progressivePreferences.didAskOptimizedInitSync() — FIXME: restore when accessible
             true
         }
     }

@@ -41,7 +41,7 @@ class HomeDrawerFragment :
         ProgressiveFragment<FragmentHomeDrawerBinding>() {
 
     @Inject lateinit var session: Session
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var buildMeta: BuildMeta
     @Inject lateinit var permalinkFactory: PermalinkFactory
@@ -134,6 +134,6 @@ class HomeDrawerFragment :
 
     override fun onResume() {
         super.onResume()
-        views.homeDrawerHeaderDebugView.isVisible = buildMeta.isDebug && vectorPreferences.developerMode()
+        views.homeDrawerHeaderDebugView.isVisible = buildMeta.isDebug && progressivePreferences.developerMode()
     }
 }

@@ -36,13 +36,13 @@ class ProgressiveSettingsLabs :
 
     private val viewModel: VectorSettingsLabsViewModel by fragmentViewModel()
 
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var lightweightSettingsStorage: LightweightSettingsStorage
     @Inject lateinit var threadsManager: ThreadsManager
     @Inject lateinit var vectorFeatures: VectorFeatures
 
     override var titleRes = CommonStrings.room_settings_labs_pref_title
-    override val preferenceXmlRes = R.xml.vector_settings_labs
+    override val preferenceXmlRes = R.xml.progressive_settings_labs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class ProgressiveSettingsLabs :
     override fun bindPref() {
         findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_AUTO_REPORT_UISI)?.let { pref ->
             // ensure correct default
-            pref.isChecked = vectorPreferences.labsAutoReportUISI()
+            pref.isChecked = progressivePreferences.labsAutoReportUISI()
         }
 
         // clear cache
@@ -100,7 +100,7 @@ class ProgressiveSettingsLabs :
     private fun configureUnreadNotificationsAsTabPreference() {
         findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB)?.let { pref ->
             pref.isVisible = !vectorFeatures.isNewAppLayoutFeatureEnabled()
-            pref.isEnabled = !vectorPreferences.isNewAppLayoutEnabled()
+            pref.isEnabled = !progressivePreferences.isNewAppLayoutEnabled()
         }
     }
 
@@ -108,7 +108,7 @@ class ProgressiveSettingsLabs :
      * Intercept the click to display a user friendly dialog when their homeserver do not support threads.
      */
     private fun onThreadsPreferenceClickedInterceptor(vectorSwitchPreference: ProgressiveSwitchPreference) {
-        val userEnabledThreads = vectorPreferences.areThreadMessagesEnabled()
+        val userEnabledThreads = progressivePreferences.areThreadMessagesEnabled()
         if (!session.homeServerCapabilitiesService().getHomeServerCapabilities().canUseThreading && userEnabledThreads) {
             activity?.let {
                 MaterialAlertDialogBuilder(it)
@@ -138,9 +138,9 @@ class ProgressiveSettingsLabs :
      */
     private fun onThreadsPreferenceClicked() {
         // We should migrate threads only if threads are disabled
-        vectorPreferences.setThreadFlagChangedManually()
-        vectorPreferences.setShouldMigrateThreads(!vectorPreferences.areThreadMessagesEnabled())
-        lightweightSettingsStorage.setThreadMessagesEnabled(vectorPreferences.areThreadMessagesEnabled())
+        progressivePreferences.setThreadFlagChangedManually()
+        progressivePreferences.setShouldMigrateThreads(!progressivePreferences.areThreadMessagesEnabled())
+        lightweightSettingsStorage.setThreadMessagesEnabled(progressivePreferences.areThreadMessagesEnabled())
         displayLoadingView()
         MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = true))
     }

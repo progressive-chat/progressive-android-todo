@@ -30,7 +30,7 @@ class VectorSettingsAdvancedNotificationPreferenceFragment :
 
     override var titleRes: Int = CommonStrings.settings_notification_advanced
 
-    override val preferenceXmlRes = R.xml.vector_settings_notification_advanced_preferences
+    override val preferenceXmlRes = R.xml.progressive_settings_notification_advanced_preferences
 
     override fun bindPref() {
         for (preferenceKey in prefKeyToPushRuleId.keys) {

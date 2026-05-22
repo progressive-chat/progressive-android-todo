@@ -20,7 +20,7 @@ class VectorSettingsDefaultNotificationFragment :
 
     override var titleRes: Int = CommonStrings.settings_notification_default
 
-    override val preferenceXmlRes = R.xml.vector_settings_notification_default
+    override val preferenceXmlRes = R.xml.progressive_settings_notification_default
 
     override val prefKeyToPushRuleId = mapOf(
             "SETTINGS_PUSH_RULE_MESSAGES_IN_ONE_TO_ONE_PREFERENCE_KEY" to RuleIds.RULE_ID_ONE_TO_ONE_ROOM,

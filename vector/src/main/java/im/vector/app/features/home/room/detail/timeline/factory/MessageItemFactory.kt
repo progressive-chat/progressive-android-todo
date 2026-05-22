@@ -132,7 +132,7 @@ class MessageItemFactory @Inject constructor(
         private val clock: Clock,
         private val audioMessagePlaybackTracker: AudioMessagePlaybackTracker,
         private val locationPinProvider: LocationPinProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val urlMapProvider: UrlMapProvider,
         private val liveLocationShareMessageItemFactory: LiveLocationShareMessageItemFactory,
         private val pollItemViewStateFactory: PollItemViewStateFactory,
@@ -152,7 +152,7 @@ class MessageItemFactory @Inject constructor(
     }
 
     private val useRichTextEditorStyle: Boolean
-        get() = vectorPreferences.isRichTextEditorEnabled()
+        get() = progressivePreferences.isRichTextEditorEnabled()
 
     fun create(params: TimelineItemFactoryParams): ProgressiveEpoxyModel<*>? {
         val event = params.event
@@ -546,7 +546,7 @@ class MessageItemFactory @Inject constructor(
                         }
                     }
                 }.apply {
-                    if (playableIfAutoplay && vectorPreferences.autoplayAnimatedImages()) {
+                    if (playableIfAutoplay && progressivePreferences.autoplayAnimatedImages()) {
                         mode(ImageContentRenderer.Mode.ANIMATED_THUMBNAIL)
                     }
                 }

@@ -114,7 +114,7 @@ import javax.inject.Singleton
 @Singleton
 class DefaultNavigator @Inject constructor(
         private val sessionHolder: ActiveSessionHolder,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val widgetArgsBuilder: WidgetArgsBuilder,
         private val spaceStateHandler: SpaceStateHandler,
         private val supportedVerificationMethodsProvider: SupportedVerificationMethodsProvider,
@@ -155,7 +155,7 @@ class DefaultNavigator @Inject constructor(
             trigger: ViewRoom.Trigger?
     ) {
         if (sessionHolder.getSafeActiveSession()?.getRoom(roomId) == null) {
-            fatalError("Trying to open an unknown room $roomId", vectorPreferences.failFast())
+            fatalError("Trying to open an unknown room $roomId", progressivePreferences.failFast())
             return
         }
 
@@ -179,7 +179,7 @@ class DefaultNavigator @Inject constructor(
             postSwitchSpaceAction: Navigator.PostSwitchSpaceAction,
     ) {
         if (sessionHolder.getSafeActiveSession()?.getRoomSummary(spaceId) == null) {
-            fatalError("Trying to open an unknown space $spaceId", vectorPreferences.failFast())
+            fatalError("Trying to open an unknown space $spaceId", progressivePreferences.failFast())
             return
         }
         spaceStateHandler.setCurrentSpace(spaceId)
@@ -303,7 +303,7 @@ class DefaultNavigator @Inject constructor(
 
     override fun openMatrixToBottomSheet(fragmentActivity: FragmentActivity, link: String, origin: OriginOfMatrixTo) {
         if (fragmentActivity !is MatrixToBottomSheet.InteractionListener) {
-            fatalError("Caller context should implement MatrixToBottomSheet.InteractionListener", vectorPreferences.failFast())
+            fatalError("Caller context should implement MatrixToBottomSheet.InteractionListener", progressivePreferences.failFast())
             return
         }
         // TODO check if there is already one??

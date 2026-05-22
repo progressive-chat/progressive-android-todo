@@ -35,7 +35,7 @@ class VectorSettingsKeywordAndMentionsNotificationFragment :
 
     override var titleRes: Int = CommonStrings.settings_notification_mentions_and_keywords
 
-    override val preferenceXmlRes = R.xml.vector_settings_notification_mentions_and_keywords
+    override val preferenceXmlRes = R.xml.progressive_settings_notification_mentions_and_keywords
 
     private var keywordsHasFocus = false
 

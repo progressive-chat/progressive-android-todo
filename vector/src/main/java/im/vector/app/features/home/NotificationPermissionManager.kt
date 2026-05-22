@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class NotificationPermissionManager @Inject constructor(
         private val sdkIntProvider: BuildVersionSdkIntProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -40,7 +40,7 @@ class NotificationPermissionManager @Inject constructor(
             ignorePreference: Boolean = false,
     ) {
         if (!sdkIntProvider.isAtLeast(Build.VERSION_CODES.TIRAMISU)) return
-        if (!vectorPreferences.areNotificationEnabledForDevice() && !ignorePreference) return
+        if (!progressivePreferences.areNotificationEnabledForDevice() && !ignorePreference) return
         checkPermissions(
                 listOf(Manifest.permission.POST_NOTIFICATIONS),
                 activity,

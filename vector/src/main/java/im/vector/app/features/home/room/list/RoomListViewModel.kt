@@ -52,7 +52,7 @@ class RoomListViewModel @AssistedInject constructor(
         private val session: Session,
         stringProvider: StringProvider,
         spaceStateHandler: SpaceStateHandler,
-        vectorPreferences: ProgressiveBasePreferences,
+        progressivePreferences: ProgressiveBasePreferences,
         autoAcceptInvites: AutoAcceptInvites,
         private val analyticsTracker: AnalyticsTracker
 ) : ProgressiveViewModel<RoomListViewState, RoomListAction, RoomListViewEvents>(initialState) {
@@ -128,7 +128,7 @@ class RoomListViewModel @AssistedInject constructor(
                 updatableQuery = it
             },
             suggestedRoomJoiningState,
-            !vectorPreferences.prefSpacesShowAllRoomInHome()
+            !progressivePreferences.prefSpacesShowAllRoomInHome()
     )
 
     val sections: List<RoomsSection> by lazy {

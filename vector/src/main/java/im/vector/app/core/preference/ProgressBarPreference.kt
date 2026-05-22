@@ -21,6 +21,6 @@ class ProgressBarPreference : Preference {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
-        layoutResource = R.layout.vector_settings_spinner_preference
+        layoutResource = R.layout.progressive_settings_spinner_preference
     }
 }

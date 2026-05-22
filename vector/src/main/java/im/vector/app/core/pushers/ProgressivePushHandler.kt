@@ -43,7 +43,7 @@ class ProgressivePushHandler @Inject constructor(
     private val notificationDrawerManager: NotificationDrawerManager,
     private val notifiableEventResolver: NotifiableEventResolver,
     private val activeSessionHolder: ActiveSessionHolder,
-    private val vectorPreferences: ProgressiveBasePreferences,
+    private val progressivePreferences: ProgressiveBasePreferences,
     private val vectorDataStore: VectorDataStore,
     private val wifiDetector: WifiDetector,
     private val actionIds: NotificationActionIds,
@@ -81,7 +81,7 @@ class ProgressivePushHandler @Inject constructor(
             return
         }
 
-        if (!vectorPreferences.areNotificationEnabledForDevice()) {
+        if (!progressivePreferences.areNotificationEnabledForDevice()) {
             Timber.tag(loggerTag.value).i("Notification are disabled for this device")
             return
         }

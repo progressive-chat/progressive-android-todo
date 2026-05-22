@@ -23,7 +23,7 @@ import im.vector.app.features.settings.ProgressiveBasePreferences
 class AttachmentTypeSelectorViewModel @AssistedInject constructor(
         @Assisted initialState: AttachmentTypeSelectorViewState,
         private val vectorFeatures: VectorFeatures,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) : ProgressiveViewModel<AttachmentTypeSelectorViewState, AttachmentTypeSelectorAction, EmptyViewEvents>(initialState) {
     @AssistedFactory
     interface Factory : MavericksAssistedViewModelFactory<AttachmentTypeSelectorViewModel, AttachmentTypeSelectorViewState> {
@@ -41,13 +41,13 @@ class AttachmentTypeSelectorViewModel @AssistedInject constructor(
             copy(
                     isLocationVisible = vectorFeatures.isLocationSharingEnabled(),
                     isVoiceBroadcastVisible = vectorFeatures.isVoiceBroadcastEnabled(),
-                    isTextFormattingEnabled = vectorPreferences.isTextFormattingEnabled(),
+                    isTextFormattingEnabled = progressivePreferences.isTextFormattingEnabled(),
             )
         }
     }
 
     private fun setTextFormattingEnabled(isEnabled: Boolean) {
-        vectorPreferences.setTextFormattingEnabled(isEnabled)
+        progressivePreferences.setTextFormattingEnabled(isEnabled)
         setState {
             copy(
                     isTextFormattingEnabled = isEnabled

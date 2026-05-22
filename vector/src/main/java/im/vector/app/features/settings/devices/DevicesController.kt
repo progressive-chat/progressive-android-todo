@@ -33,7 +33,7 @@ class DevicesController @Inject constructor(
         private val colorProvider: ColorProvider,
         private val dateFormatter: ProgressiveDateFormatter,
         private val dimensionConverter: DimensionConverter,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : EpoxyController() {
 
     var callback: Callback? = null
@@ -92,7 +92,7 @@ class DevicesController @Inject constructor(
                         trustedSession(currentSessionCrossTrusted)
                         dimensionConverter(host.dimensionConverter)
                         colorProvider(host.colorProvider)
-                        detailedMode(host.vectorPreferences.developerMode())
+                        detailedMode(host.progressivePreferences.developerMode())
                         deviceInfo(deviceInfo)
                         currentDevice(true)
                         e2eCapable(true)
@@ -135,7 +135,7 @@ class DevicesController @Inject constructor(
                             trustedSession(currentSessionCrossTrusted)
                             dimensionConverter(host.dimensionConverter)
                             colorProvider(host.colorProvider)
-                            detailedMode(host.vectorPreferences.developerMode())
+                            detailedMode(host.progressivePreferences.developerMode())
                             deviceInfo(deviceInfo)
                             currentDevice(false)
                             itemClickAction { host.callback?.onDeviceClicked(deviceInfo) }

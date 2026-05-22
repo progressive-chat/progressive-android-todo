@@ -46,7 +46,7 @@ import org.matrix.android.sdk.api.util.toMatrixItem
 class RoomJoinRuleChooseRestrictedViewModel @AssistedInject constructor(
         @Assisted initialState: RoomJoinRuleChooseRestrictedState,
         private val session: Session,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val stringProvider: StringProvider
 ) : ProgressiveViewModel<RoomJoinRuleChooseRestrictedState, RoomJoinRuleChooseRestrictedActions, RoomJoinRuleChooseRestrictedEvents>(initialState) {
 
@@ -347,7 +347,7 @@ class RoomJoinRuleChooseRestrictedViewModel @AssistedInject constructor(
             copy(filter = action.filter, filteredResults = Loading())
         }
         viewModelScope.launch {
-            if (vectorPreferences.developerMode()) {
+            if (progressivePreferences.developerMode()) {
                 // in developer mode we let you choose any room or space to restrict to
                 val filteredCandidates = session.roomService().getRoomSummaries(
                         roomSummaryQueryParams {

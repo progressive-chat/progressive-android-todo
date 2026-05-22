@@ -78,7 +78,7 @@ class ProgressiveSettingsGeneral :
     @Inject lateinit var galleryOrCameraDialogHelperFactory: GalleryOrCameraDialogHelperFactory
 
     override var titleRes = CommonStrings.settings_general_title
-    override val preferenceXmlRes = R.xml.vector_settings_general
+    override val preferenceXmlRes = R.xml.progressive_settings_general
 
     private lateinit var galleryOrCameraDialogHelper: GalleryOrCameraDialogHelper
 

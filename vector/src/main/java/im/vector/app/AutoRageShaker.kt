@@ -38,7 +38,7 @@ class AutoRageShaker @Inject constructor(
         private val sessionDataSource: ActiveSessionDataSource,
         private val activeSessionHolder: ActiveSessionHolder,
         private val bugReporter: BugReporter,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : Session.Listener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val activeSessionIds = mutableSetOf<String>()
@@ -59,9 +59,9 @@ class AutoRageShaker @Inject constructor(
     private var preferenceEnabled = false
     fun initialize() {
         observeActiveSession()
-        preferenceEnabled = vectorPreferences.labsAutoReportUISI()
+        preferenceEnabled = progressivePreferences.labsAutoReportUISI()
         // It's a singleton...
-        vectorPreferences.subscribeToChanges(this)
+        progressivePreferences.subscribeToChanges(this)
 
         // Simple rate limit, notice that order is not
         // necessarily preserved
@@ -87,7 +87,7 @@ class AutoRageShaker @Inject constructor(
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        preferenceEnabled = vectorPreferences.labsAutoReportUISI()
+        preferenceEnabled = progressivePreferences.labsAutoReportUISI()
     }
 
     private fun observeActiveSession() {

@@ -44,7 +44,7 @@ interface SingletonEntryPoint {
 
     fun bugReporter(): BugReporter
 
-    fun vectorPreferences(): ProgressiveBasePreferences
+    fun progressivePreferences(): ProgressiveBasePreferences
 
     fun uiStateRepository(): UiStateRepository
 

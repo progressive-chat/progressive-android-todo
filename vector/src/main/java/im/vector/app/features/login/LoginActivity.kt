@@ -293,7 +293,7 @@ open class LoginActivity : ProgressiveActivity<ActivityLoginBinding>(), Unlocked
 
     private fun launchSsoFlow() = withState(loginViewModel) { state ->
         loginViewModel.getSsoUrl(
-                redirectUrl = SSORedirectRouterActivity.VECTOR_REDIRECT_URL,
+                redirectUrl = SSORedirectRouterActivity.PROGRESSIVE_REDIRECT_URL,
                 deviceId = state.deviceId,
                 providerId = null,
                 action = SSOAction.LOGIN

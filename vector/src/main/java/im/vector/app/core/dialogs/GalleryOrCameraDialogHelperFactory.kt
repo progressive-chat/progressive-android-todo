@@ -16,9 +16,9 @@ import javax.inject.Inject
 class GalleryOrCameraDialogHelperFactory @Inject constructor(
         private val colorProvider: ColorProvider,
         private val clock: Clock,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
     fun create(fragment: Fragment, skipCrop: Boolean = false): GalleryOrCameraDialogHelper {
-        return GalleryOrCameraDialogHelper(fragment, colorProvider, clock, vectorPreferences, skipCrop)
+        return GalleryOrCameraDialogHelper(fragment, colorProvider, clock, progressivePreferences, skipCrop)
     }
 }

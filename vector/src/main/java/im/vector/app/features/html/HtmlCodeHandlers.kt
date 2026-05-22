@@ -60,7 +60,7 @@ internal class CodePreTagHandler : TagHandler() {
 }
 
 internal class CodePostProcessorTagHandler(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val dimensionConverter: DimensionConverter,
 ) : TagHandler() {
 
@@ -93,7 +93,7 @@ internal class CodePostProcessorTagHandler(
 
     private fun IntermediateCodeSpan.toFinalCodeSpan(
             markwonTheme: MarkwonTheme
-    ): Any = if (vectorPreferences.isRichTextEditorEnabled()) {
+    ): Any = if (progressivePreferences.isRichTextEditorEnabled()) {
         toRichTextEditorSpan()
     } else {
         HtmlCodeSpan(markwonTheme, isBlock)

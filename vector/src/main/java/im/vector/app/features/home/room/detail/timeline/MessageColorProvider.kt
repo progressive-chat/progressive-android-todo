@@ -18,7 +18,7 @@ import javax.inject.Inject
 class MessageColorProvider @Inject constructor(
         private val colorProvider: ColorProvider,
         private val matrixItemColorProvider: MatrixItemColorProvider,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     @ColorInt
@@ -28,7 +28,7 @@ class MessageColorProvider @Inject constructor(
 
     @ColorInt
     fun getMessageTextColor(sendState: SendState): Int {
-        return if (vectorPreferences.developerMode()) {
+        return if (progressivePreferences.developerMode()) {
             when (sendState) {
                 // SendStates, in the classical order they will occur
                 SendState.UNKNOWN,

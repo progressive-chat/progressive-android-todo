@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class ShouldShowUnverifiedSessionsAlertUseCase @Inject constructor(
         private val vectorFeatures: VectorFeatures,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val clock: Clock,
 ) {
 
@@ -23,7 +23,7 @@ class ShouldShowUnverifiedSessionsAlertUseCase @Inject constructor(
         deviceId ?: return false
 
         val isUnverifiedSessionsAlertEnabled = vectorFeatures.isUnverifiedSessionsAlertEnabled()
-        val unverifiedSessionsAlertLastShownMillis = vectorPreferences.getUnverifiedSessionsAlertLastShownMillis(deviceId)
+        val unverifiedSessionsAlertLastShownMillis = progressivePreferences.getUnverifiedSessionsAlertLastShownMillis(deviceId)
         return isUnverifiedSessionsAlertEnabled &&
                 clock.epochMillis() - unverifiedSessionsAlertLastShownMillis >= Config.SHOW_UNVERIFIED_SESSIONS_ALERT_AFTER_MILLIS
     }

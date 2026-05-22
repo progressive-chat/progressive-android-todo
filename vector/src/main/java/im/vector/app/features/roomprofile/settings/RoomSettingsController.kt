@@ -31,7 +31,7 @@ class RoomSettingsController @Inject constructor(
         private val avatarRenderer: AvatarRenderer,
         private val dimensionConverter: DimensionConverter,
         private val roomHistoryVisibilityFormatter: RoomHistoryVisibilityFormatter,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<RoomSettingsViewState>() {
 
     interface Callback {
@@ -121,7 +121,7 @@ class RoomSettingsController @Inject constructor(
         )
 
         val isPublic = (data.newRoomJoinRules.newJoinRules ?: data.currentRoomJoinRules) == RoomJoinRules.PUBLIC
-        if (vectorPreferences.developerMode() && isPublic) {
+        if (progressivePreferences.developerMode() && isPublic) {
             val guestAccess = data.newRoomJoinRules.newGuestAccess ?: data.currentGuestAccess
             // add guest access option?
             formSwitchItem {

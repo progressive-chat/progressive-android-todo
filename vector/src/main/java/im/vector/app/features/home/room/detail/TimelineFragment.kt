@@ -233,7 +233,7 @@ class TimelineFragment :
     @Inject lateinit var permalinkHandler: PermalinkHandler
     @Inject lateinit var notificationDrawerManager: NotificationDrawerManager
     @Inject lateinit var eventHtmlRenderer: EventHtmlRenderer
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var threadsManager: ThreadsManager
     @Inject lateinit var colorProvider: ColorProvider
     @Inject lateinit var dimensionConverter: DimensionConverter
@@ -320,7 +320,7 @@ class TimelineFragment :
         callActionsHandler = StartCallActionsHandler(
                 roomId = timelineArgs.roomId,
                 fragment = this,
-                vectorPreferences = vectorPreferences,
+                progressivePreferences = progressivePreferences,
                 timelineViewModel = timelineViewModel,
                 callManager = callManager,
                 startCallActivityResultLauncher = startCallActivityResultLauncher,
@@ -371,7 +371,7 @@ class TimelineFragment :
                     syncState,
                     incrementalSyncStatus,
                     pushCounter,
-                    vectorPreferences.developerShowDebugInfo()
+                    progressivePreferences.developerShowDebugInfo()
             )
         }
 
@@ -501,9 +501,9 @@ class TimelineFragment :
     }
 
     private fun handleTranslateAction(action: EventSharedAction.Translate) {
-        val endpoint = vectorPreferences.getTranslateApiEndpoint()
-        val token = vectorPreferences.getTranslateApiToken()
-        val targetLang = vectorPreferences.getTranslateTargetLanguage()
+        val endpoint = progressivePreferences.getTranslateApiEndpoint()
+        val token = progressivePreferences.getTranslateApiToken()
+        val targetLang = progressivePreferences.getTranslateTargetLanguage()
             .ifEmpty { java.util.Locale.getDefault().language }
 
         if (endpoint.isBlank() || token.isBlank()) {
@@ -1129,7 +1129,7 @@ class TimelineFragment :
         timelineEventController.addModelBuildListener(modelBuildListener)
         views.timelineRecyclerView.adapter = timelineEventController.adapter
 
-        if (vectorPreferences.swipeToReplyIsEnabled()) {
+        if (progressivePreferences.swipeToReplyIsEnabled()) {
             val quickReplyHandler = object : RoomMessageTouchHelperCallback.QuickReplayHandler {
                 override fun performQuickReplyOnHolder(model: EpoxyModel<*>) {
                     (model as? AbsMessageItem)?.attributes?.informationData?.let {
@@ -1271,7 +1271,7 @@ class TimelineFragment :
             is RoomNotFound -> {
                 getString(
                         CommonStrings.timeline_error_room_not_found,
-                        if (vectorPreferences.developerMode()) {
+                        if (progressivePreferences.developerMode()) {
                             "\nDeveloper info: $timelineArgs"
                         } else {
                             ""
@@ -1662,7 +1662,7 @@ class TimelineFragment :
     }
 
     override fun onThreadSummaryClicked(eventId: String, isRootThreadEvent: Boolean): Boolean {
-        return if (vectorPreferences.areThreadMessagesEnabled() && isRootThreadEvent && !isThreadTimeLine()) {
+        return if (progressivePreferences.areThreadMessagesEnabled() && isRootThreadEvent && !isThreadTimeLine()) {
             navigateToThreadTimeline(eventId)
             true
         } else {
@@ -2017,7 +2017,7 @@ class TimelineFragment :
     }
 
     private fun onReplyInThreadClicked(action: EventSharedAction.ReplyInThread) {
-        if (vectorPreferences.areThreadMessagesEnabled()) {
+        if (progressivePreferences.areThreadMessagesEnabled()) {
             navigateToThreadTimeline(
                     rootThreadEventId = action.eventId,
                     startsThread = action.startsThread,

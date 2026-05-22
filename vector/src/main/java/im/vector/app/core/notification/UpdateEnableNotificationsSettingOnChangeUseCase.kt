@@ -20,7 +20,7 @@ import javax.inject.Inject
  * setting for the current device.
  */
 class UpdateEnableNotificationsSettingOnChangeUseCase @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val getNotificationsStatusUseCase: GetNotificationsStatusUseCase,
 ) {
 
@@ -33,8 +33,8 @@ class UpdateEnableNotificationsSettingOnChangeUseCase @Inject constructor(
 
     private fun updatePreference(notificationStatus: NotificationsStatus) {
         when (notificationStatus) {
-            NotificationsStatus.ENABLED -> vectorPreferences.setNotificationEnabledForDevice(true)
-            NotificationsStatus.DISABLED -> vectorPreferences.setNotificationEnabledForDevice(false)
+            NotificationsStatus.ENABLED -> progressivePreferences.setNotificationEnabledForDevice(true)
+            NotificationsStatus.DISABLED -> progressivePreferences.setNotificationEnabledForDevice(false)
             else -> Unit
         }
     }

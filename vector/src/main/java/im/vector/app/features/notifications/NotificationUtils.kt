@@ -71,7 +71,7 @@ import kotlin.random.Random
 class NotificationUtils @Inject constructor(
         private val context: Context,
         private val stringProvider: StringProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val clock: Clock,
         private val actionIds: NotificationActionIds,
         private val buildMeta: BuildMeta,
@@ -600,7 +600,7 @@ class NotificationUtils @Inject constructor(
         val accentColor = ContextCompat.getColor(context, im.vector.lib.ui.styles.R.color.notification_accent_color)
         // Build the pending intent for when the notification is clicked
         val openIntent = when {
-            threadId != null && vectorPreferences.areThreadMessagesEnabled() -> buildOpenThreadIntent(roomInfo, threadId)
+            threadId != null && progressivePreferences.areThreadMessagesEnabled() -> buildOpenThreadIntent(roomInfo, threadId)
             else -> buildOpenRoomIntent(roomInfo.roomId)
         }
 
@@ -642,7 +642,7 @@ class NotificationUtils @Inject constructor(
                     if (roomInfo.shouldBing) {
                         // Compat
                         priority = NotificationCompat.PRIORITY_DEFAULT
-                        vectorPreferences.getNotificationRingTone()?.let {
+                        progressivePreferences.getNotificationRingTone()?.let {
                             setSound(it)
                         }
                         setLights(accentColor, 500, 500)
@@ -781,7 +781,7 @@ class NotificationUtils @Inject constructor(
                     if (inviteNotifiableEvent.noisy) {
                         // Compat
                         priority = NotificationCompat.PRIORITY_DEFAULT
-                        vectorPreferences.getNotificationRingTone()?.let {
+                        progressivePreferences.getNotificationRingTone()?.let {
                             setSound(it)
                         }
                         setLights(accentColor, 500, 500)
@@ -822,7 +822,7 @@ class NotificationUtils @Inject constructor(
                     if (simpleNotifiableEvent.noisy) {
                         // Compat
                         priority = NotificationCompat.PRIORITY_DEFAULT
-                        vectorPreferences.getNotificationRingTone()?.let {
+                        progressivePreferences.getNotificationRingTone()?.let {
                             setSound(it)
                         }
                         setLights(accentColor, 500, 500)
@@ -977,7 +977,7 @@ class NotificationUtils @Inject constructor(
                     if (noisy) {
                         // Compat
                         priority = NotificationCompat.PRIORITY_DEFAULT
-                        vectorPreferences.getNotificationRingTone()?.let {
+                        progressivePreferences.getNotificationRingTone()?.let {
                             setSound(it)
                         }
                         setLights(accentColor, 500, 500)

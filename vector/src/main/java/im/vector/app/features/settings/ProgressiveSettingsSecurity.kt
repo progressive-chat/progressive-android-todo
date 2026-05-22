@@ -86,11 +86,11 @@ class ProgressiveSettingsSecurity :
     @Inject lateinit var rawService: RawService
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var analyticsConfig: AnalyticsConfig
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var buildMeta: BuildMeta
 
     override var titleRes = CommonStrings.settings_security_and_privacy
-    override val preferenceXmlRes = R.xml.vector_settings_security_privacy
+    override val preferenceXmlRes = R.xml.progressive_settings_security_privacy
 
     private val analyticsConsentViewModel: AnalyticsConsentViewModel by fragmentViewModel()
 
@@ -566,11 +566,11 @@ class ProgressiveSettingsSecurity :
      * Build the cryptography preference section.
      */
     private suspend fun refreshCryptographyPreference(devices: List<DeviceInfo>) {
-        showDeviceListPref.isVisible = !vectorPreferences.isNewSessionManagerEnabled()
+        showDeviceListPref.isVisible = !progressivePreferences.isNewSessionManagerEnabled()
         showDeviceListPref.isEnabled = devices.isNotEmpty()
         showDeviceListPref.summary = resources.getQuantityString(CommonPlurals.settings_active_sessions_count, devices.size, devices.size)
 
-        showDevicesListV2Pref.isVisible = vectorPreferences.isNewSessionManagerEnabled()
+        showDevicesListV2Pref.isVisible = progressivePreferences.isNewSessionManagerEnabled()
         showDevicesListV2Pref.isEnabled = devices.isNotEmpty()
         showDevicesListV2Pref.summary = resources.getQuantityString(CommonPlurals.settings_active_sessions_count, devices.size, devices.size)
 

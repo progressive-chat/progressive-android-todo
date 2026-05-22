@@ -17,7 +17,7 @@ import kotlin.math.roundToInt
 @ActivityScoped
 class TimelineMediaSizeProvider @Inject constructor(
         private val resources: Resources,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     var recyclerView: RecyclerView? = null
@@ -40,7 +40,7 @@ class TimelineMediaSizeProvider @Inject constructor(
             maxImageWidth = (width * 0.7f).roundToInt()
             maxImageHeight = (height * 0.7f).roundToInt()
         }
-        return if (vectorPreferences.useMessageBubblesLayout()) {
+        return if (progressivePreferences.useMessageBubblesLayout()) {
             val bubbleMaxImageWidth = maxImageWidth.coerceAtMost(resources.getDimensionPixelSize(im.vector.lib.ui.styles.R.dimen.chat_bubble_fixed_size))
             Pair(bubbleMaxImageWidth, maxImageHeight)
         } else {

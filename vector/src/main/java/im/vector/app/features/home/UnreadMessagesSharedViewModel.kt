@@ -48,7 +48,7 @@ data class CountInfo(
 class UnreadMessagesSharedViewModel @AssistedInject constructor(
         @Assisted initialState: UnreadMessagesState,
         session: Session,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         spaceStateHandler: SpaceStateHandler,
         private val autoAcceptInvites: AutoAcceptInvites
 ) :
@@ -134,7 +134,7 @@ class UnreadMessagesSharedViewModel @AssistedInject constructor(
                     roomSummaryQueryParams {
                         this.memberships = listOf(Membership.JOIN)
                         this.spaceFilter = when {
-                            vectorPreferences.prefSpacesShowAllRoomInHome() -> SpaceFilter.NoFilter
+                            progressivePreferences.prefSpacesShowAllRoomInHome() -> SpaceFilter.NoFilter
                             else -> SpaceFilter.OrphanRooms
                         }
                     }

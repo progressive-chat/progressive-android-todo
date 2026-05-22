@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MissingSystemKeyMigrator @Inject constructor(
         @BiometricKeyAlias private val systemKeyAlias: String,
         private val keystoreCryptoFactory: KeyStoreCrypto.Factory,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val buildVersionSdkIntProvider: BuildVersionSdkIntProvider,
 ) {
 
@@ -30,14 +30,14 @@ class MissingSystemKeyMigrator @Inject constructor(
      */
     fun migrateIfNeeded() {
         if (buildVersionSdkIntProvider.isAtLeast(Build.VERSION_CODES.M) &&
-                vectorPreferences.useBiometricsToUnlock()) {
+                progressivePreferences.useBiometricsToUnlock()) {
             val systemKeyStoreCrypto = keystoreCryptoFactory.provide(systemKeyAlias, true)
             runCatching {
                 systemKeyStoreCrypto.ensureKey()
             }.onFailure { e ->
                 Timber.e(e, "Could not automatically create biometric key. Biometric authentication will be disabled.")
                 systemKeyStoreCrypto.deleteKey()
-                vectorPreferences.setUseBiometricToUnlock(false)
+                progressivePreferences.setUseBiometricToUnlock(false)
             }
         }
     }

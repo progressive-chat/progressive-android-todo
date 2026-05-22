@@ -64,7 +64,7 @@ class BugReporter @Inject constructor(
         private val context: Context,
         private val activeSessionHolder: ActiveSessionHolder,
         private val versionProvider: VersionProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val vectorFileLogger: ProgressiveFileLogger,
         private val systemLocaleProvider: SystemLocaleProvider,
         private val matrix: Matrix,
@@ -282,7 +282,7 @@ class BugReporter @Inject constructor(
                             .addFormDataPart("matrix_sdk_version", Matrix.getSdkVersion())
                             .addFormDataPart("olm_version", olmVersion)
                             .addFormDataPart("device", Build.MODEL.trim())
-                            .addFormDataPart("verbose_log", vectorPreferences.labAllowedExtendedLogging().toOnOff())
+                            .addFormDataPart("verbose_log", progressivePreferences.labAllowedExtendedLogging().toOnOff())
                             .addFormDataPart("multi_window", inMultiWindowMode.toOnOff())
                             .addFormDataPart(
                                     "os", Build.VERSION.RELEASE + " (API " + sdkIntProvider.get() + ") " +

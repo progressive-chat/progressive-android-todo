@@ -75,7 +75,7 @@ class NewHomeDetailFragment :
     @Inject lateinit var colorProvider: ColorProvider
     @Inject lateinit var alertManager: PopupAlertManager
     @Inject lateinit var callManager: WebRtcCallManager
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var spaceStateHandler: SpaceStateHandler
     @Inject lateinit var buildMeta: BuildMeta
 
@@ -359,7 +359,7 @@ class NewHomeDetailFragment :
         }
 
         views.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            views.debugButton.isVisible = verticalOffset == 0 && buildMeta.isDebug && vectorPreferences.developerMode()
+            views.debugButton.isVisible = verticalOffset == 0 && buildMeta.isDebug && progressivePreferences.developerMode()
         })
     }
 
@@ -384,7 +384,7 @@ class NewHomeDetailFragment :
                 it.syncState,
                 it.incrementalSyncRequestState,
                 it.pushCounter,
-                vectorPreferences.developerShowDebugInfo()
+                progressivePreferences.developerShowDebugInfo()
         )
         views.homeVerifyDevice.isVisible = it.showVerifyDeviceBanner
         refreshAvatar()

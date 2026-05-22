@@ -19,7 +19,7 @@ class VectorSettingsRootFragment :
         VectorSettingsBaseFragment() {
 
     override var titleRes: Int = CommonStrings.title_activity_settings
-    override val preferenceXmlRes = R.xml.vector_settings_root
+    override val preferenceXmlRes = R.xml.progressive_settings_root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

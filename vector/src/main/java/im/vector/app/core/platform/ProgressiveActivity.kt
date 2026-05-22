@@ -165,7 +165,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var errorFormatter: ErrorFormatter
     @Inject lateinit var mdmService: MdmService
 
@@ -232,7 +232,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
         }
 
         // Set flag FLAG_SECURE
-        if (vectorPreferences.useFlagSecure()) {
+        if (progressivePreferences.useFlagSecure()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         }
 
@@ -248,7 +248,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
 
         initUiAndData()
 
-        if (vectorPreferences.isNewAppLayoutEnabled()) {
+        if (progressivePreferences.isNewAppLayoutEnabled()) {
             tryOrNull { // Add to XML theme when feature flag is removed
                 val toolbarBackground = MaterialColors.getColor(views.root, im.vector.lib.ui.styles.R.attr.vctr_toolbar_background)
                 @Suppress("DEPRECATION")
@@ -410,7 +410,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
         }
         configurationViewModel.onActivityResumed()
 
-        if (this !is BugReportActivity && vectorPreferences.useRageshake()) {
+        if (this !is BugReportActivity && progressivePreferences.useRageshake()) {
             rageShake.start()
         }
         debugReceiver.register(this)
@@ -608,7 +608,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
                 }
             }.show()
         } else {
-            fatalError("No CoordinatorLayout to display this snackbar!", vectorPreferences.failFast())
+            fatalError("No CoordinatorLayout to display this snackbar!", progressivePreferences.failFast())
         }
     }
 

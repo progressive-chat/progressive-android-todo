@@ -11,12 +11,12 @@ import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 class IsNewLoginAlertShownUseCase @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute(deviceId: String?): Boolean {
         deviceId ?: return false
 
-        return vectorPreferences.isNewLoginAlertShownForDevice(deviceId)
+        return progressivePreferences.isNewLoginAlertShownForDevice(deviceId)
     }
 }

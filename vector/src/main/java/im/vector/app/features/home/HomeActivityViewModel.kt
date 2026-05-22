@@ -76,7 +76,7 @@ class HomeActivityViewModel @AssistedInject constructor(
         private val reAuthHelper: ReAuthHelper,
         private val analyticsStore: AnalyticsStore,
         private val lightweightSettingsStorage: LightweightSettingsStorage,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val analyticsTracker: AnalyticsTracker,
         private val analyticsConfig: AnalyticsConfig,
         private val releaseNotesPreferencesStore: ReleaseNotesPreferencesStore,
@@ -126,7 +126,7 @@ class HomeActivityViewModel @AssistedInject constructor(
     }
 
     private fun registerUnifiedPushIfNeeded() {
-        if (vectorPreferences.areNotificationEnabledForDevice()) {
+        if (progressivePreferences.areNotificationEnabledForDevice()) {
             registerUnifiedPush(distributor = "")
         } else {
             unregisterUnifiedPush()
@@ -140,7 +140,7 @@ class HomeActivityViewModel @AssistedInject constructor(
                     _viewEvents.post(HomeActivityViewEvents.AskUserForPushDistributor)
                 }
                 RegisterUnifiedPushUseCase.RegisterUnifiedPushResult.Success -> {
-                    ensureFcmTokenIsRetrievedUseCase.execute(pushersManager, registerPusher = vectorPreferences.areNotificationEnabledForDevice())
+                    ensureFcmTokenIsRetrievedUseCase.execute(pushersManager, registerPusher = progressivePreferences.areNotificationEnabledForDevice())
                 }
             }
         }
@@ -153,7 +153,7 @@ class HomeActivityViewModel @AssistedInject constructor(
     }
 
     private fun observeReleaseNotes() = withState { state ->
-        if (vectorPreferences.isNewAppLayoutEnabled()) {
+        if (progressivePreferences.isNewAppLayoutEnabled()) {
             // we don't want to show release notes for new users or after relogin
             if (state.authenticationDescription == null) {
                 releaseNotesPreferencesStore.appLayoutOnboardingShown.onEach { isAppLayoutOnboardingShown ->
@@ -245,38 +245,38 @@ class HomeActivityViewModel @AssistedInject constructor(
      */
     private fun initThreadsMigration() {
         // When we would like to enable threads for all users
-//        if(vectorPreferences.shouldMigrateThreads()) {
-//            vectorPreferences.setThreadMessagesEnabled()
-//            lightweightSettingsStorage.setThreadMessagesEnabled(vectorPreferences.areThreadMessagesEnabled())
+//        if(progressivePreferences.shouldMigrateThreads()) {
+//            progressivePreferences.setThreadMessagesEnabled()
+//            lightweightSettingsStorage.setThreadMessagesEnabled(progressivePreferences.areThreadMessagesEnabled())
 //        }
 
         when {
-            !vectorPreferences.areThreadMessagesEnabled() && !vectorPreferences.wasThreadFlagChangedManually() -> {
-                vectorPreferences.setThreadMessagesEnabled()
-                lightweightSettingsStorage.setThreadMessagesEnabled(vectorPreferences.areThreadMessagesEnabled())
+            !progressivePreferences.areThreadMessagesEnabled() && !progressivePreferences.wasThreadFlagChangedManually() -> {
+                progressivePreferences.setThreadMessagesEnabled()
+                lightweightSettingsStorage.setThreadMessagesEnabled(progressivePreferences.areThreadMessagesEnabled())
                 // Clear Cache
                 _viewEvents.post(HomeActivityViewEvents.MigrateThreads(checkSession = false))
             }
             // Notify users
-            vectorPreferences.shouldNotifyUserAboutThreads() && vectorPreferences.areThreadMessagesEnabled() -> {
+            progressivePreferences.shouldNotifyUserAboutThreads() && progressivePreferences.areThreadMessagesEnabled() -> {
                 Timber.i("----> Notify users about threads")
                 // Notify the user if needed that we migrated to support m.thread
                 // instead of io.element.thread so old thread messages will be displayed as normal timeline messages
                 _viewEvents.post(HomeActivityViewEvents.NotifyUserForThreadsMigration)
-                vectorPreferences.userNotifiedAboutThreads()
+                progressivePreferences.userNotifiedAboutThreads()
             }
             // Migrate users with enabled lab settings
-            vectorPreferences.shouldNotifyUserAboutThreads() && vectorPreferences.shouldMigrateThreads() -> {
+            progressivePreferences.shouldNotifyUserAboutThreads() && progressivePreferences.shouldMigrateThreads() -> {
                 Timber.i("----> Migrate threads with enabled labs")
                 // If user had io.element.thread enabled then enable the new thread support,
                 // clear cache to sync messages appropriately
-                vectorPreferences.setThreadMessagesEnabled()
-                lightweightSettingsStorage.setThreadMessagesEnabled(vectorPreferences.areThreadMessagesEnabled())
+                progressivePreferences.setThreadMessagesEnabled()
+                lightweightSettingsStorage.setThreadMessagesEnabled(progressivePreferences.areThreadMessagesEnabled())
                 // Clear Cache
                 _viewEvents.post(HomeActivityViewEvents.MigrateThreads(checkSession = false))
             }
             // Enable all users
-            vectorPreferences.shouldMigrateThreads() && vectorPreferences.areThreadMessagesEnabled() -> {
+            progressivePreferences.shouldMigrateThreads() && progressivePreferences.areThreadMessagesEnabled() -> {
                 Timber.i("----> Try to migrate threads")
                 _viewEvents.post(HomeActivityViewEvents.MigrateThreads(checkSession = true))
             }
@@ -319,7 +319,7 @@ class HomeActivityViewModel @AssistedInject constructor(
             // Don't do that if it's a login or a register (pass in memory)
             if (reAuthHelper.data != null) return@launch
             // Check if disabled for this device
-            if (!vectorPreferences.areNotificationEnabledForDevice()) {
+            if (!progressivePreferences.areNotificationEnabledForDevice()) {
                 // Check if set at account level
                 val mRuleMaster = activeSessionHolder.getSafeActiveSession()
                         ?.pushRuleService()
@@ -336,7 +336,7 @@ class HomeActivityViewModel @AssistedInject constructor(
                             })?.size ?: 0
 
                     // Prompt once to the user
-                    if (knownRooms > 1 && !vectorPreferences.didAskUserToEnableSessionPush()) {
+                    if (knownRooms > 1 && !progressivePreferences.didAskUserToEnableSessionPush()) {
                         // delay a bit
                         delay(1500)
                         _viewEvents.post(HomeActivityViewEvents.PromptToEnableSessionPush)
@@ -447,7 +447,7 @@ class HomeActivityViewModel @AssistedInject constructor(
                                 // _viewEvents.post(
                                 //         HomeActivityViewEvents.CurrentSessionNotVerified(
                                 //                 session.getUserOrDefault(session.myUserId).toMatrixItem(),
-                                //                 vectorPreferences.isOnRustCrypto() && vectorPreferences.hadExistingLegacyData()
+                                //                 progressivePreferences.isOnRustCrypto() && progressivePreferences.hadExistingLegacyData()
                                 //         )
                                 // )
                             } else {
@@ -509,7 +509,7 @@ class HomeActivityViewModel @AssistedInject constructor(
     override fun handle(action: HomeActivityViewActions) {
         when (action) {
             HomeActivityViewActions.PushPromptHasBeenReviewed -> {
-                vectorPreferences.setDidAskUserToEnableSessionPush()
+                progressivePreferences.setDidAskUserToEnableSessionPush()
             }
             HomeActivityViewActions.ViewStarted -> {
                 initialize()

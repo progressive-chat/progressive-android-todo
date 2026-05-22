@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 class KeysBackupSettingsRecyclerViewController @Inject constructor(
         private val stringProvider: StringProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val session: Session
 ) : TypedEpoxyController<KeysBackupSettingViewState>() {
 
@@ -151,7 +151,7 @@ class KeysBackupSettingsRecyclerViewController @Inject constructor(
                 description(keyVersionResult?.algorithm.orEmpty().toEpoxyCharSequence())
             }
 
-            if (vectorPreferences.developerMode()) {
+            if (progressivePreferences.developerMode()) {
                 buildKeysBackupTrust(data.keysBackupVersionTrust)
             }
         }

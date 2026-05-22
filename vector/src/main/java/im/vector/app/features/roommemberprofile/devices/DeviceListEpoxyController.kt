@@ -35,7 +35,7 @@ class DeviceListEpoxyController @Inject constructor(
         private val stringProvider: StringProvider,
         private val colorProvider: ColorProvider,
         private val dimensionConverter: DimensionConverter,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) :
         TypedEpoxyController<DeviceListViewState>() {
 
@@ -89,7 +89,7 @@ class DeviceListEpoxyController @Inject constructor(
                     description(host.stringProvider.getString(CommonStrings.verification_conclusion_ok_notice).toEpoxyCharSequence())
                 }
 
-                if (vectorPreferences.developerMode()) {
+                if (progressivePreferences.developerMode()) {
                     // Display the cross signing keys
                     addDebugInfo(data)
                 }
@@ -125,7 +125,7 @@ class DeviceListEpoxyController @Inject constructor(
                             id(device.deviceId)
                             titleIconResourceId(shield)
                             apply {
-                                val title = if (host.vectorPreferences.developerMode()) {
+                                val title = if (host.progressivePreferences.developerMode()) {
                                     val seq = span {
                                         +(device.displayName() ?: device.deviceId)
                                         +"\n"

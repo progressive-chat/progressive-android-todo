@@ -65,7 +65,7 @@ import javax.inject.Singleton
 class EventHtmlRenderer @Inject constructor(
         htmlConfigure: MatrixHtmlPluginConfigure,
         private val context: Context,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val activeSessionHolder: ActiveSessionHolder
 ) {
 
@@ -189,7 +189,7 @@ class EventHtmlRenderer @Inject constructor(
             .usePlugin(removeLeadingNewlineForInlineElement)
             .usePlugin(glidePlugin)
             .apply {
-                if (vectorPreferences.latexMathsIsEnabled()) {
+                if (progressivePreferences.latexMathsIsEnabled()) {
                     // If latex maths is enabled in app preferences, reformat it so Markwon recognises it
                     // It needs to be in this specific format: https://noties.io/Markwon/docs/v4/ext-latex
                     latexPlugins.forEach(::usePlugin)
@@ -204,7 +204,7 @@ class EventHtmlRenderer @Inject constructor(
     val plugins: List<MarkwonPlugin> = markwon.plugins
 
     fun parse(text: String): Node {
-        val processed = if (vectorPreferences.isNativeMarkdownEnabled()) {
+        val processed = if (progressivePreferences.isNativeMarkdownEnabled()) {
             try {
                 ProgressiveNative.ensureLoaded()
                 ProgressiveNative.nativeMarkdownToHtml(text, true)
@@ -223,7 +223,7 @@ class EventHtmlRenderer @Inject constructor(
      */
     fun render(text: String, vararg postProcessors: PostProcessor): CharSequence {
         return try {
-            val markdown = if (vectorPreferences.isNativeMarkdownEnabled()) {
+            val markdown = if (progressivePreferences.isNativeMarkdownEnabled()) {
                 try {
                     ProgressiveNative.ensureLoaded()
                     ProgressiveNative.nativeMarkdownToHtml(text, true)
@@ -267,7 +267,7 @@ class EventHtmlRenderer @Inject constructor(
 class MatrixHtmlPluginConfigure @Inject constructor(
         private val colorProvider: ColorProvider,
         private val resources: Resources,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val dimensionConverter: DimensionConverter,
 ) : HtmlPlugin.HtmlConfigure {
 
@@ -277,7 +277,7 @@ class MatrixHtmlPluginConfigure @Inject constructor(
                 .addHandler(FontTagHandler())
                 .addHandler(ParagraphHandler(DimensionConverter(resources)))
                 .addHandler(MxReplyTagHandler())
-                .addHandler(CodePostProcessorTagHandler(vectorPreferences, dimensionConverter))
+                .addHandler(CodePostProcessorTagHandler(progressivePreferences, dimensionConverter))
                 .addHandler(CodePreTagHandler())
                 .addHandler(CodeTagHandler())
                 .addHandler(SpanHandler(colorProvider))

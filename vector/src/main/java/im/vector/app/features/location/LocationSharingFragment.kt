@@ -55,7 +55,7 @@ class LocationSharingFragment :
     @Inject lateinit var urlMapProvider: UrlMapProvider
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var matrixItemColorProvider: MatrixItemColorProvider
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
 
     private val viewModel: LocationSharingViewModel by fragmentViewModel()
 
@@ -218,7 +218,7 @@ class LocationSharingFragment :
 
     private fun handleLiveLocationLabsFlagPromotionResult(isApproved: Boolean) {
         if (isApproved) {
-            vectorPreferences.setLiveLocationLabsEnabled(isEnabled = true)
+            progressivePreferences.setLiveLocationLabsEnabled(isEnabled = true)
             startLiveLocationSharing()
         }
     }

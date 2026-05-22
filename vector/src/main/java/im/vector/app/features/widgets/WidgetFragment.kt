@@ -69,7 +69,7 @@ class WidgetFragment :
 
     @Inject lateinit var permissionUtils: WebviewPermissionUtils
     @Inject lateinit var checkWebViewPermissionsUseCase: CheckWebViewPermissionsUseCase
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
 
     private val fragmentArgs: WidgetArgs by args()
     private val viewModel: WidgetViewModel by activityViewModel()
@@ -303,7 +303,7 @@ class WidgetFragment :
                 context = requireContext(),
                 activity = requireActivity(),
                 activityResultLauncher = permissionResultLauncher,
-                autoApprove = fragmentArgs.kind == WidgetKind.ELEMENT_CALL && vectorPreferences.labsEnableElementCallPermissionShortcuts()
+                autoApprove = fragmentArgs.kind == WidgetKind.ELEMENT_CALL && progressivePreferences.labsEnableElementCallPermissionShortcuts()
         )
     }
 

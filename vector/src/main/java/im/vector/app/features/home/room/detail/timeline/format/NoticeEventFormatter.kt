@@ -51,7 +51,7 @@ class NoticeEventFormatter @Inject constructor(
         private val activeSessionDataSource: ActiveSessionDataSource,
         private val roomHistoryVisibilityFormatter: RoomHistoryVisibilityFormatter,
         private val roleFormatter: RoleFormatter,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val sp: StringProvider
 ) {
 
@@ -446,7 +446,7 @@ class NoticeEventFormatter @Inject constructor(
             if (eventContent.allowList.isEmpty()) {
                 // Special case for stuck room
                 appendNl(sp.getString(CommonStrings.notice_room_server_acl_allow_is_empty))
-            } else if (vectorPreferences.developerMode()) {
+            } else if (progressivePreferences.developerMode()) {
                 // Details, only in developer mode
                 appendAclDetails(eventContent, prevEventContent)
             }

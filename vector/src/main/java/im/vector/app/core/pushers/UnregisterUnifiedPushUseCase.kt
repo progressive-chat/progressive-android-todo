@@ -17,14 +17,14 @@ import javax.inject.Inject
 
 class UnregisterUnifiedPushUseCase @Inject constructor(
         @ApplicationContext private val context: Context,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val unifiedPushStore: UnifiedPushStore,
         private val unifiedPushHelper: UnifiedPushHelper,
 ) {
 
     suspend fun execute(pushersManager: PushersManager?) {
         val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
+        progressivePreferences.setFdroidSyncBackgroundMode(mode)
         try {
             unifiedPushHelper.getEndpointOrToken()?.let {
                 Timber.d("Removing $it")

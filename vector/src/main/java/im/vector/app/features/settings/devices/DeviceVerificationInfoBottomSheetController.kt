@@ -28,7 +28,7 @@ import javax.inject.Inject
 class DeviceVerificationInfoBottomSheetController @Inject constructor(
         private val stringProvider: StringProvider,
         private val colorProvider: ColorProvider,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) :
         TypedEpoxyController<DeviceVerificationInfoBottomSheetViewState>() {
 
@@ -246,7 +246,7 @@ class DeviceVerificationInfoBottomSheetController @Inject constructor(
 
     private fun addVerifyActions(cryptoDeviceInfo: CryptoDeviceInfo) {
         val host = this
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             bottomSheetDividerItem {
                 id("verifyDiv")
             }

@@ -27,7 +27,7 @@ import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.pushers.Pusher
 import javax.inject.Inject
 
-// Referenced in vector_settings_notifications.xml
+// Referenced in progressive_settings_notifications.xml
 @AndroidEntryPoint
 class PushGatewaysFragment :
         ProgressiveFragment<FragmentGenericRecyclerBinding>(),

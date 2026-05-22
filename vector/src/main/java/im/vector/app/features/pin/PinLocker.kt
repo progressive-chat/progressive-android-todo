@@ -31,7 +31,7 @@ private const val PERIOD_OF_GRACE_IN_MS = 2 * 60 * 1000L
 @Singleton
 class PinLocker @Inject constructor(
         private val pinCodeStore: PinCodeStore,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : DefaultLifecycleObserver {
 
     enum class State {
@@ -91,7 +91,7 @@ class PinLocker @Inject constructor(
     }
 
     private fun getGracePeriod(): Long {
-        return if (vectorPreferences.useGracePeriod()) {
+        return if (progressivePreferences.useGracePeriod()) {
             PERIOD_OF_GRACE_IN_MS
         } else {
             0L

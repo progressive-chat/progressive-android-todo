@@ -26,7 +26,7 @@ class ConfigureAndStartSessionUseCase @Inject constructor(
         @ApplicationContext private val context: Context,
         private val webRtcCallManager: WebRtcCallManager,
         private val updateMatrixClientInfoUseCase: UpdateMatrixClientInfoUseCase,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val notificationsSettingUpdater: NotificationsSettingUpdater,
         private val updateNotificationSettingsAccountDataUseCase: UpdateNotificationSettingsAccountDataUseCase,
         private val pushRulesUpdater: PushRulesUpdater,
@@ -48,7 +48,7 @@ class ConfigureAndStartSessionUseCase @Inject constructor(
 
     private fun updateMatrixClientInfoIfNeeded(session: Session) {
         session.coroutineScope.launch {
-            if (vectorPreferences.isClientInfoRecordingEnabled()) {
+            if (progressivePreferences.isClientInfoRecordingEnabled()) {
                 updateMatrixClientInfoUseCase.execute(session)
             }
         }

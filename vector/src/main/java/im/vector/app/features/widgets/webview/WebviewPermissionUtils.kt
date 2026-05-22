@@ -21,7 +21,7 @@ import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
 
 class WebviewPermissionUtils @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     private var permissionRequest: PermissionRequest? = null
@@ -92,7 +92,7 @@ class WebviewPermissionUtils @Inject constructor(
         if (permissionRequest == null) {
             fatalError(
                     message = "permissionRequest was null! Make sure to call promptForPermissions first.",
-                    failFast = vectorPreferences.failFast()
+                    failFast = progressivePreferences.failFast()
             )
             return
         }

@@ -36,7 +36,7 @@ import org.matrix.android.sdk.api.session.room.model.create.CreateRoomParams
 class CreateDirectRoomViewModel @AssistedInject constructor(
         @Assisted initialState: CreateDirectRoomViewState,
         private val rawService: RawService,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         val session: Session,
         val analyticsTracker: AnalyticsTracker,
 ) :
@@ -115,7 +115,7 @@ class CreateDirectRoomViewModel @AssistedInject constructor(
                     }
 
             val result = runCatchingToAsync {
-                if (vectorPreferences.isDeferredDmEnabled() && roomParams.invite3pids.isEmpty()) {
+                if (progressivePreferences.isDeferredDmEnabled() && roomParams.invite3pids.isEmpty()) {
                     session.roomService().createLocalRoom(roomParams)
                 } else {
                     analyticsTracker.capture(CreatedRoom(isDM = roomParams.isDirect.orFalse()))

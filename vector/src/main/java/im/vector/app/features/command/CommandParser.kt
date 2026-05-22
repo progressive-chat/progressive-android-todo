@@ -19,7 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class CommandParser @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     /**
@@ -399,7 +399,7 @@ class CommandParser @Inject constructor(
                     }
                 }
                 Command.JUMP_TO_DATE.matches(slashCommand) -> {
-                    if (!vectorPreferences.isJumpToDateEnabled()) {
+                    if (!progressivePreferences.isJumpToDateEnabled()) {
                         ParsedCommand.ErrorUnknownSlashCommand(slashCommand)
                     } else if (messageParts.size == 2) {
                         val dateString = messageParts[1]
@@ -412,7 +412,7 @@ class CommandParser @Inject constructor(
                         ParsedCommand.ErrorSyntax(Command.JUMP_TO_DATE)
                     }
                 }
-                Command.CRASH_APP.matches(slashCommand) && vectorPreferences.developerMode() -> {
+                Command.CRASH_APP.matches(slashCommand) && progressivePreferences.developerMode() -> {
                     throw RuntimeException("Application crashed from user demand")
                 }
                 // Progressive Chat commands (delegated to native C++ layer)

@@ -26,7 +26,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 class LocalePickerController @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val stringProvider: StringProvider,
         private val errorFormatter: ErrorFormatter,
         private val vectorLocale: VectorLocale,
@@ -46,7 +46,7 @@ class LocalePickerController @Inject constructor(
         localeItem {
             id(currentLocale.toString())
             title(host.vectorLocale.localeToLocalisedString(currentLocale).safeCapitalize(currentLocale))
-            if (host.vectorPreferences.developerMode()) {
+            if (host.progressivePreferences.developerMode()) {
                 subtitle(host.vectorLocale.localeToLocalisedStringInfo(currentLocale))
             }
             clickListener { host.listener?.onUseCurrentClicked() }
@@ -76,7 +76,7 @@ class LocalePickerController @Inject constructor(
                                 localeItem {
                                     id(locale.toString())
                                     title(host.vectorLocale.localeToLocalisedString(locale).safeCapitalize(locale))
-                                    if (host.vectorPreferences.developerMode()) {
+                                    if (host.progressivePreferences.developerMode()) {
                                         subtitle(host.vectorLocale.localeToLocalisedStringInfo(locale))
                                     }
                                     clickListener { host.listener?.onLocaleClicked(locale) }

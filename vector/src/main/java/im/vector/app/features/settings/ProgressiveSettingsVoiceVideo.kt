@@ -30,7 +30,7 @@ class ProgressiveSettingsVoiceVideo : VectorSettingsBaseFragment() {
     @Inject lateinit var ringtoneUtils: RingtoneUtils
 
     override var titleRes = CommonStrings.preference_voice_and_video
-    override val preferenceXmlRes = R.xml.vector_settings_voice_video
+    override val preferenceXmlRes = R.xml.progressive_settings_voice_video
 
     private val mUseRiotCallRingtonePreference by lazy {
         findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY)!!

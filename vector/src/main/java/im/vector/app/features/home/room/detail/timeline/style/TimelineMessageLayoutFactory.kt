@@ -29,7 +29,7 @@ class TimelineMessageLayoutFactory @Inject constructor(
         private val layoutSettingsProvider: TimelineLayoutSettingsProvider,
         private val localeProvider: LocaleProvider,
         private val resources: Resources,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     companion object {
@@ -170,7 +170,7 @@ class TimelineMessageLayoutFactory @Inject constructor(
         return TimelineMessageLayout.Default(
                 showAvatar = showInformation,
                 showDisplayName = showInformation,
-                showTimestamp = showInformation || vectorPreferences.alwaysShowTimeStamps()
+                showTimestamp = showInformation || progressivePreferences.alwaysShowTimeStamps()
         )
     }
 

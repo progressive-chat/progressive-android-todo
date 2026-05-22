@@ -23,7 +23,7 @@ import javax.inject.Inject
  * The class is responsible for handling thread specific tasks.
  */
 class ThreadsManager @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val lightweightSettingsStorage: LightweightSettingsStorage,
         private val stringProvider: StringProvider
 ) {
@@ -33,8 +33,8 @@ class ThreadsManager @Inject constructor(
      * the already saved DB schema for already received messages
      */
     fun enableThreadsAndRestart(activity: Activity) {
-        vectorPreferences.setThreadMessagesEnabled()
-        lightweightSettingsStorage.setThreadMessagesEnabled(vectorPreferences.areThreadMessagesEnabled())
+        progressivePreferences.setThreadMessagesEnabled()
+        lightweightSettingsStorage.setThreadMessagesEnabled(progressivePreferences.areThreadMessagesEnabled())
         MainActivity.restartApp(activity, MainActivityArgs(clearCache = true))
     }
 

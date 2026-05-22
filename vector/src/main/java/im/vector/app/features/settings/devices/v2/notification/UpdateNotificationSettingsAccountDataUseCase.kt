@@ -18,7 +18,7 @@ import javax.inject.Inject
  * the background sync is enabled or not.
  */
 class UpdateNotificationSettingsAccountDataUseCase @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val unifiedPushHelper: UnifiedPushHelper,
         private val getNotificationSettingsAccountDataUseCase: GetNotificationSettingsAccountDataUseCase,
         private val setNotificationSettingsAccountDataUseCase: SetNotificationSettingsAccountDataUseCase,
@@ -35,7 +35,7 @@ class UpdateNotificationSettingsAccountDataUseCase @Inject constructor(
 
     private suspend fun setCurrentNotificationStatus(session: Session) {
         val deviceId = session.sessionParams.deviceId
-        val areNotificationsSilenced = !vectorPreferences.areNotificationEnabledForDevice()
+        val areNotificationsSilenced = !progressivePreferences.areNotificationEnabledForDevice()
         val isSilencedAccountData = getNotificationSettingsAccountDataUseCase.execute(session, deviceId)?.isSilenced
         if (areNotificationsSilenced != isSilencedAccountData) {
             val notificationSettingsContent = LocalNotificationSettingsContent(

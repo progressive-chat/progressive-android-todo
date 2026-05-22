@@ -31,7 +31,7 @@ import javax.inject.Inject
 class LoginSplashFragment :
         AbstractLoginFragment<FragmentLoginSplashBinding>() {
 
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var buildMeta: BuildMeta
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoginSplashBinding {
@@ -52,7 +52,7 @@ class LoginSplashFragment :
     private fun setupViews() {
         views.loginSplashSubmit.debouncedClicks { getStarted() }
 
-        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
+        if (buildMeta.isDebug || progressivePreferences.developerMode()) {
             views.loginSplashVersion.isVisible = true
             @SuppressLint("SetTextI18n")
             views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +

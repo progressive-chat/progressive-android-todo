@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class ProgressiveFileLogger @Inject constructor(
         context: Context,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : Timber.Tree() {
 
     companion object {
@@ -36,8 +36,8 @@ class ProgressiveFileLogger @Inject constructor(
         private const val SIZE_50MB = 50 * 1024 * 1024
     }
 
-    private val maxLogSizeByte = if (vectorPreferences.labAllowedExtendedLogging()) SIZE_50MB else SIZE_20MB
-    private val logRotationCount = if (vectorPreferences.labAllowedExtendedLogging()) 15 else 7
+    private val maxLogSizeByte = if (progressivePreferences.labAllowedExtendedLogging()) SIZE_50MB else SIZE_20MB
+    private val logRotationCount = if (progressivePreferences.labAllowedExtendedLogging()) 15 else 7
 
     private val logger = Logger.getLogger(context.packageName).apply {
         tryOrNull {
@@ -93,7 +93,7 @@ class ProgressiveFileLogger @Inject constructor(
     }
 
     private fun skipLog(priority: Int): Boolean {
-        return if (vectorPreferences.labAllowedExtendedLogging()) {
+        return if (progressivePreferences.labAllowedExtendedLogging()) {
             false
         } else {
             // Exclude verbose logs

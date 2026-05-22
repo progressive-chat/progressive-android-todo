@@ -110,7 +110,7 @@ abstract class VectorSettingsBaseFragment : PreferenceFragmentCompat(), Maverick
         }
         vectorActivity.supportActionBar?.setTitle(titleRes)
         // find the view from parent activity
-        mLoadingView = vectorActivity.findViewById(R.id.vector_settings_spinner_views)
+        mLoadingView = vectorActivity.findViewById(R.id.progressive_settings_spinner_views)
     }
 
     abstract fun bindPref()
@@ -136,7 +136,7 @@ abstract class VectorSettingsBaseFragment : PreferenceFragmentCompat(), Maverick
             var parent = view
 
             while (parent != null && mLoadingView == null) {
-                mLoadingView = parent.findViewById(R.id.vector_settings_spinner_views)
+                mLoadingView = parent.findViewById(R.id.progressive_settings_spinner_views)
                 parent = parent.parent as View
             }
         } else {

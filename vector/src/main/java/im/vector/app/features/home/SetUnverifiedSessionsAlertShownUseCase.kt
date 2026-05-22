@@ -12,14 +12,14 @@ import im.vector.lib.core.utils.timer.Clock
 import javax.inject.Inject
 
 class SetUnverifiedSessionsAlertShownUseCase @Inject constructor(
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val clock: Clock,
 ) {
 
     fun execute(deviceIds: List<String>) {
         val epochMillis = clock.epochMillis()
         deviceIds.forEach {
-            vectorPreferences.setUnverifiedSessionsAlertLastShownMillis(it, epochMillis)
+            progressivePreferences.setUnverifiedSessionsAlertLastShownMillis(it, epochMillis)
         }
     }
 }

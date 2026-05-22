@@ -100,7 +100,7 @@ class WidgetActivity : ProgressiveActivity<ActivityWidgetBinding>() {
         }
 
         // Trust element call widget by default
-        if (widgetArgs.kind == WidgetKind.ELEMENT_CALL && vectorPreferences.labsEnableElementCallPermissionShortcuts()) {
+        if (widgetArgs.kind == WidgetKind.ELEMENT_CALL && progressivePreferences.labsEnableElementCallPermissionShortcuts()) {
             if (supportFragmentManager.findFragmentByTag(WIDGET_FRAGMENT_TAG) == null) {
                 addOnPictureInPictureModeChangedListener(pictureInPictureModeChangedInfoConsumer)
                 addFragment(views.fragmentContainer, WidgetFragment::class.java, widgetArgs, WIDGET_FRAGMENT_TAG)

@@ -36,7 +36,7 @@ class EncryptedItemFactory @Inject constructor(
         private val avatarSizeProvider: AvatarSizeProvider,
         private val drawableProvider: DrawableProvider,
         private val attributesFactory: MessageItemAttributesFactory,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     fun create(params: TimelineItemFactoryParams): ProgressiveEpoxyModel<*>? {
@@ -47,7 +47,7 @@ class EncryptedItemFactory @Inject constructor(
             EventType.ENCRYPTED == event.root.getClearType() -> {
                 val cryptoError = event.root.mCryptoError
 
-                val spannableStr = if (vectorPreferences.developerMode()) {
+                val spannableStr = if (progressivePreferences.developerMode()) {
                     val errorDescription =
                             if (cryptoError == MXCryptoError.ErrorType.UNKNOWN_INBOUND_SESSION_ID) {
                                 stringProvider.getString(CommonStrings.notice_crypto_error_unknown_inbound_session_id)

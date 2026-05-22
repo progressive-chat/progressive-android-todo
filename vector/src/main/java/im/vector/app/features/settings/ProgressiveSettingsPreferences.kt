@@ -35,13 +35,13 @@ import javax.inject.Inject
 class ProgressiveSettingsPreferences :
         VectorSettingsBaseFragment() {
 
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var fontScalePreferences: FontScalePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var vectorLocale: VectorLocale
 
     override var titleRes = CommonStrings.settings_preferences
-    override val preferenceXmlRes = R.xml.vector_settings_preferences
+    override val preferenceXmlRes = R.xml.progressive_settings_preferences
 
     private val selectedLanguagePreference by lazy {
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_INTERFACE_LANGUAGE_PREFERENCE_KEY)!!
@@ -76,7 +76,7 @@ class ProgressiveSettingsPreferences :
         }
 
         findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_PRESENCE_USER_ALWAYS_APPEARS_OFFLINE)!!.let { pref ->
-            pref.isChecked = vectorPreferences.userAlwaysAppearsOffline()
+            pref.isChecked = progressivePreferences.userAlwaysAppearsOffline()
             pref.setOnPreferenceChangeListener { _, newValue ->
                 val presenceOfflineModeEnabled = newValue as? Boolean ?: false
                 lifecycleScope.launch {
@@ -87,7 +87,7 @@ class ProgressiveSettingsPreferences :
         }
 
         findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_PREF_SPACE_SHOW_ALL_ROOM_IN_HOME)!!.let { pref ->
-            pref.isChecked = vectorPreferences.prefSpacesShowAllRoomInHome()
+            pref.isChecked = progressivePreferences.prefSpacesShowAllRoomInHome()
             pref.setOnPreferenceChangeListener { _, _ ->
                 MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = false))
                 true
@@ -95,8 +95,8 @@ class ProgressiveSettingsPreferences :
         }
 
         findPreference<Preference>(ProgressiveBasePreferences.SETTINGS_PREF_SPACE_CATEGORY)!!.let { pref ->
-            pref.isVisible = !vectorPreferences.isNewAppLayoutEnabled()
-            pref.isEnabled = !vectorPreferences.isNewAppLayoutEnabled()
+            pref.isVisible = !progressivePreferences.isNewAppLayoutEnabled()
+            pref.isEnabled = !progressivePreferences.isNewAppLayoutEnabled()
         }
 
         // Url preview
@@ -141,19 +141,19 @@ class ProgressiveSettingsPreferences :
 
         // update keep medias period
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_MEDIA_SAVING_PERIOD_KEY)!!.let {
-            it.summary = vectorPreferences.getSelectedMediasSavingPeriodString()
+            it.summary = progressivePreferences.getSelectedMediasSavingPeriodString()
 
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 context?.let { context: Context ->
                     MaterialAlertDialogBuilder(context)
                             .setSingleChoiceItems(
                                     im.vector.lib.strings.R.array.media_saving_choice,
-                                    vectorPreferences.getSelectedMediasSavingPeriod()
+                                    progressivePreferences.getSelectedMediasSavingPeriod()
                             ) { d, n ->
-                                vectorPreferences.setSelectedMediasSavingPeriod(n)
+                                progressivePreferences.setSelectedMediasSavingPeriod(n)
                                 d.cancel()
 
-                                it.summary = vectorPreferences.getSelectedMediasSavingPeriodString()
+                                it.summary = progressivePreferences.getSelectedMediasSavingPeriodString()
                             }
                             .show()
                 }
@@ -165,7 +165,7 @@ class ProgressiveSettingsPreferences :
         // Take photo or video
         updateTakePhotoOrVideoPreferenceSummary()
         takePhotoOrVideoPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            PhotoOrVideoDialog(requireActivity(), vectorPreferences).showForSettings(object : PhotoOrVideoDialog.PhotoOrVideoDialogSettingsListener {
+            PhotoOrVideoDialog(requireActivity(), progressivePreferences).showForSettings(object : PhotoOrVideoDialog.PhotoOrVideoDialogSettingsListener {
                 override fun onUpdated() {
                     updateTakePhotoOrVideoPreferenceSummary()
                 }
@@ -176,7 +176,7 @@ class ProgressiveSettingsPreferences :
 
     private fun updateTakePhotoOrVideoPreferenceSummary() {
         takePhotoOrVideoPreference.summary = getString(
-                when (vectorPreferences.getTakePhotoVideoMode()) {
+                when (progressivePreferences.getTakePhotoVideoMode()) {
                     ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> CommonStrings.option_take_photo
                     ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> CommonStrings.option_take_video
                     /* ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */

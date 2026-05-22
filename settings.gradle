@@ -1,4 +1,4 @@
-include ':vector-app'
+include ':progressive-app'
 include ':vector'
 include ':vector-config'
 

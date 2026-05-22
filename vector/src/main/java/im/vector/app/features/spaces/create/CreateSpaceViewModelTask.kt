@@ -52,7 +52,7 @@ data class CreateSpaceTaskParams(
 
 class CreateSpaceViewModelTask @Inject constructor(
         private val session: Session,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val rawService: RawService
 ) : ViewModelTask<CreateSpaceTaskParams, CreateSpaceTaskResult> {
 

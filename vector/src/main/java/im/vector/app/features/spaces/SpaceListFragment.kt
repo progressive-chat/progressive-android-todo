@@ -49,7 +49,7 @@ class SpaceListFragment :
 
     @Inject lateinit var spaceController: SpaceSummaryController
     @Inject lateinit var newSpaceController: NewSpaceSummaryController
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
 
     private lateinit var homeActivitySharedActionViewModel: HomeSharedActionViewModel
     private lateinit var roomListSharedActionViewModel: RoomListSharedActionViewModel
@@ -70,7 +70,7 @@ class SpaceListFragment :
     }
 
     private fun setupSpaceController() {
-        if (vectorPreferences.isNewAppLayoutEnabled()) {
+        if (progressivePreferences.isNewAppLayoutEnabled()) {
             newSpaceController.callback = this
             views.groupListView.configureWith(newSpaceController)
         } else {
@@ -160,7 +160,7 @@ class SpaceListFragment :
             else -> Unit
         }
 
-        if (vectorPreferences.isNewAppLayoutEnabled()) {
+        if (progressivePreferences.isNewAppLayoutEnabled()) {
             newSpaceController.update(state)
         } else {
             spaceController.update(state)

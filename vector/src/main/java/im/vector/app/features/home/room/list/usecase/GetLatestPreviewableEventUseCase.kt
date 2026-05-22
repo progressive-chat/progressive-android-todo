@@ -27,7 +27,7 @@ import javax.inject.Inject
 class GetLatestPreviewableEventUseCase @Inject constructor(
         private val sessionHolder: ActiveSessionHolder,
         private val getRoomLiveVoiceBroadcastsUseCase: GetRoomLiveVoiceBroadcastsUseCase,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute(roomId: String): TimelineEvent? {
@@ -35,7 +35,7 @@ class GetLatestPreviewableEventUseCase @Inject constructor(
         val roomSummary = room.roomSummary() ?: return null
         // FIXME Observing live broadcasts results in many db requests,
         //  to prevent performances issues, we only enable this mechanism if the voice broadcast flag is enabled
-        return if (vectorPreferences.isVoiceBroadcastEnabled()) {
+        return if (progressivePreferences.isVoiceBroadcastEnabled()) {
             getCallEvent(roomSummary)
                     ?: getLiveVoiceBroadcastEvent(room)
                     ?: getDefaultLatestEvent(room, roomSummary)

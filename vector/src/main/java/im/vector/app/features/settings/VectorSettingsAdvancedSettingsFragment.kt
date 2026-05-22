@@ -28,7 +28,7 @@ class VectorSettingsAdvancedSettingsFragment :
         VectorSettingsBaseFragment() {
 
     override var titleRes = CommonStrings.settings_advanced_settings
-    override val preferenceXmlRes = R.xml.vector_settings_advanced_settings
+    override val preferenceXmlRes = R.xml.progressive_settings_advanced_settings
 
     @Inject lateinit var nightlyProxy: NightlyProxy
 

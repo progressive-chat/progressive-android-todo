@@ -35,7 +35,7 @@ import javax.inject.Inject
 class RoomProfileController @Inject constructor(
         private val stringProvider: StringProvider,
         private val colorProvider: ColorProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val drawableProvider: DrawableProvider,
         private val shortcutCreator: ShortcutCreator
 ) : TypedEpoxyController<RoomProfileViewState>() {
@@ -319,12 +319,12 @@ class RoomProfileController @Inject constructor(
                 id = "permissions",
                 title = stringProvider.getString(CommonStrings.room_settings_permissions_title),
                 subtitle = stringProvider.getString(CommonStrings.room_settings_permissions_subtitle),
-                divider = vectorPreferences.developerMode(),
+                divider = progressivePreferences.developerMode(),
                 editable = true,
                 action = { callback?.onRoomPermissionsClicked() }
         )
 
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             buildProfileAction(
                     id = "roomId",
                     title = stringProvider.getString(CommonStrings.room_settings_room_internal_id),

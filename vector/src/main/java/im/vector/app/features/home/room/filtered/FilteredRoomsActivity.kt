@@ -73,7 +73,7 @@ class FilteredRoomsActivity : ProgressiveActivity<ActivityFilteredRoomsBinding>(
 
     private fun handleLlmQuery(query: String): Boolean {
         if (!query.startsWith("? ")) return false
-        if (!vectorPreferences.isLlmSlashEnabled()) return false
+        if (!progressivePreferences.isLlmSlashEnabled()) return false
         val prompt = query.removePrefix("? ").trim()
         if (prompt.isEmpty()) return false
 
@@ -94,10 +94,10 @@ class FilteredRoomsActivity : ProgressiveActivity<ActivityFilteredRoomsBinding>(
         return withContext(Dispatchers.IO) {
             try {
                 ProgressiveNative.ensureLoaded()
-                val provider = vectorPreferences.getLlmProvider()
-                val endpoint = vectorPreferences.getLlmEndpoint()
-                val token = vectorPreferences.getLlmToken()
-                val model = vectorPreferences.getLlmModel()
+                val provider = progressivePreferences.getLlmProvider()
+                val endpoint = progressivePreferences.getLlmEndpoint()
+                val token = progressivePreferences.getLlmToken()
+                val model = progressivePreferences.getLlmModel()
 
                 val body = ProgressiveNative.nativeBuildLlmRequest(
                     prompt, provider, endpoint, token, model, "", 0.7f, 1024

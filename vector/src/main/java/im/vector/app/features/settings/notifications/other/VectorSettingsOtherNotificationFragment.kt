@@ -18,7 +18,7 @@ class VectorSettingsOtherNotificationFragment :
 
     override var titleRes: Int = CommonStrings.settings_notification_other
 
-    override val preferenceXmlRes = R.xml.vector_settings_notification_other
+    override val preferenceXmlRes = R.xml.progressive_settings_notification_other
 
     override val prefKeyToPushRuleId = mapOf(
             "SETTINGS_PUSH_RULE_INVITED_TO_ROOM_PREFERENCE_KEY" to RuleIds.RULE_ID_INVITE_ME,

@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 class SharedPreferencesUiStateRepository @Inject constructor(
         private val sharedPreferences: SharedPreferences,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : UiStateRepository {
 
     override fun reset() {
@@ -31,7 +31,7 @@ class SharedPreferencesUiStateRepository @Inject constructor(
         return when (sharedPreferences.getInt(KEY_DISPLAY_MODE, VALUE_DISPLAY_MODE_CATCHUP)) {
             VALUE_DISPLAY_MODE_PEOPLE -> RoomListDisplayMode.PEOPLE
             VALUE_DISPLAY_MODE_ROOMS -> RoomListDisplayMode.ROOMS
-            else -> if (vectorPreferences.labAddNotificationTab()) {
+            else -> if (progressivePreferences.labAddNotificationTab()) {
                 RoomListDisplayMode.NOTIFICATIONS
             } else {
                 RoomListDisplayMode.PEOPLE

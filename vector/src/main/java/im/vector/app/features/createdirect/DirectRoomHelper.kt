@@ -23,7 +23,7 @@ class DirectRoomHelper @Inject constructor(
         private val rawService: RawService,
         private val session: Session,
         private val analyticsTracker: AnalyticsTracker,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     suspend fun ensureDMExists(userId: String): String {
@@ -41,7 +41,7 @@ class DirectRoomHelper @Inject constructor(
                 setDirectMessage()
                 enableEncryptionIfInvitedUsersSupportIt = adminE2EByDefault
             }
-            roomId = if (vectorPreferences.isDeferredDmEnabled()) {
+            roomId = if (progressivePreferences.isDeferredDmEnabled()) {
                 session.roomService().createLocalRoom(roomParams)
             } else {
                 analyticsTracker.capture(CreatedRoom(isDM = roomParams.isDirect.orFalse()))

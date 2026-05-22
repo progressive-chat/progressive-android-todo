@@ -23,7 +23,7 @@ class SystemKeyV1Migrator @Inject constructor(
         @BiometricKeyAlias private val systemKeyAlias: String,
         private val keyStore: KeyStore,
         private val keystoreCryptoFactory: KeyStoreCrypto.Factory,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) {
 
     /**
@@ -38,7 +38,7 @@ class SystemKeyV1Migrator @Inject constructor(
         }.onFailure { e ->
             Timber.e(e, "Could not migrate v1 biometric key. Biometric authentication will be disabled.")
             systemKeyStoreCrypto.deleteKey()
-            vectorPreferences.setUseBiometricToUnlock(false)
+            progressivePreferences.setUseBiometricToUnlock(false)
         }
     }
 

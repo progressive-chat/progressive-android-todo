@@ -47,7 +47,7 @@ class ShortcutCreator @Inject constructor(
             dimensionConverter.dpToPx(72)
         }
     }
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
 
     fun canCreateShortcut(): Boolean {
         return ShortcutManagerCompat.isRequestPinShortcutSupported(context)
@@ -67,7 +67,7 @@ class ShortcutCreator @Inject constructor(
             null
         }
         val categories = mutableSetOf<String>()
-        if (vectorPreferences.directShareEnabled()) {
+        if (progressivePreferences.directShareEnabled()) {
             categories.add(directShareCategory)
         }
         if (Build.VERSION.SDK_INT >= 25) {

@@ -32,7 +32,7 @@ import javax.inject.Inject
 class HomeserverSettingsController @Inject constructor(
         private val stringProvider: StringProvider,
         private val errorFormatter: ErrorFormatter,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<HomeServerSettingsViewState>() {
 
     var callback: Callback? = null
@@ -77,7 +77,7 @@ class HomeserverSettingsController @Inject constructor(
             id("urlValue")
             helperText(state.homeserverUrl)
         }
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             settingsSectionTitleItem {
                 id("urlApiTitle")
                 titleResId(CommonStrings.hs_client_url)
@@ -126,7 +126,7 @@ class HomeserverSettingsController @Inject constructor(
             }
         }
 
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             val roomCapabilities = data.homeServerCapabilities.roomVersions
             if (roomCapabilities != null) {
                 settingsSectionTitleItem {

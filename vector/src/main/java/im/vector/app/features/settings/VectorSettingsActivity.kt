@@ -74,7 +74,7 @@ class VectorSettingsActivity : ProgressiveActivity<ActivityVectorSettingsBinding
                 SettingsActivityPayload.SecurityPrivacy ->
                     replaceFragment(views.vectorSettingsPage, ProgressiveSettingsSecurity::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.SecurityPrivacyManageSessions -> {
-                    val fragmentClass = if (vectorPreferences.isNewSessionManagerEnabled()) {
+                    val fragmentClass = if (progressivePreferences.isNewSessionManagerEnabled()) {
                         im.vector.app.features.settings.devices.v2.ProgressiveSettingsDevices::class.java
                     } else {
                         ProgressiveSettingsDevices::class.java

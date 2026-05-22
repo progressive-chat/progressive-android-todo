@@ -17,7 +17,7 @@ import im.vector.lib.strings.CommonStrings
 
 class PhotoOrVideoDialog(
         private val activity: Activity,
-        private val vectorPreferences: ProgressiveBasePreferences
+        private val progressivePreferences: ProgressiveBasePreferences
 ) {
 
     interface PhotoOrVideoDialogListener {
@@ -30,7 +30,7 @@ class PhotoOrVideoDialog(
     }
 
     fun show(listener: PhotoOrVideoDialogListener) {
-        when (vectorPreferences.getTakePhotoVideoMode()) {
+        when (progressivePreferences.getTakePhotoVideoMode()) {
             ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> listener.takePhoto()
             ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> listener.takeVideo()
             /* ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */
@@ -47,7 +47,7 @@ class PhotoOrVideoDialog(
                         .setTitle(CommonStrings.option_take_photo_video)
                         .setView(dialogLayout)
                         .setPositiveButton(CommonStrings._continue) { _, _ ->
-                            submit(views, vectorPreferences, listener)
+                            submit(views, progressivePreferences, listener)
                         }
                         .setNegativeButton(CommonStrings.action_cancel, null)
                         .show()
@@ -57,7 +57,7 @@ class PhotoOrVideoDialog(
 
     private fun submit(
             views: DialogPhotoOrVideoBinding,
-            vectorPreferences: ProgressiveBasePreferences,
+            progressivePreferences: ProgressiveBasePreferences,
             listener: PhotoOrVideoDialogListener
     ) {
         val mode = if (views.dialogPhotoOrVideoPhoto.isChecked) {
@@ -67,7 +67,7 @@ class PhotoOrVideoDialog(
         }
 
         if (views.dialogPhotoOrVideoAsDefault.isChecked) {
-            vectorPreferences.setTakePhotoVideoMode(mode)
+            progressivePreferences.setTakePhotoVideoMode(mode)
         }
 
         when (mode) {
@@ -77,7 +77,7 @@ class PhotoOrVideoDialog(
     }
 
     fun showForSettings(listener: PhotoOrVideoDialogSettingsListener) {
-        val currentMode = vectorPreferences.getTakePhotoVideoMode()
+        val currentMode = progressivePreferences.getTakePhotoVideoMode()
 
         val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_photo_or_video, null)
         val views = DialogPhotoOrVideoBinding.bind(dialogLayout)
@@ -101,7 +101,7 @@ class PhotoOrVideoDialog(
     }
 
     private fun submitSettings(views: DialogPhotoOrVideoBinding) {
-        vectorPreferences.setTakePhotoVideoMode(
+        progressivePreferences.setTakePhotoVideoMode(
                 when {
                     views.dialogPhotoOrVideoPhoto.isChecked -> ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
                     views.dialogPhotoOrVideoVideo.isChecked -> ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO

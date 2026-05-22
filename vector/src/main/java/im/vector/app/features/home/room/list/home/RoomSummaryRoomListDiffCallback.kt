@@ -12,7 +12,7 @@ import org.matrix.android.sdk.api.session.room.model.RoomSummary
 import javax.inject.Inject
 
 class RoomSummaryRoomListDiffCallback @Inject constructor(
-//        vectorPreferences: ProgressiveBasePreferences
+//        progressivePreferences: ProgressiveBasePreferences
 ) : DiffUtil.ItemCallback<RoomSummary>() {
 
     override fun areItemsTheSame(oldItem: RoomSummary, newItem: RoomSummary): Boolean {

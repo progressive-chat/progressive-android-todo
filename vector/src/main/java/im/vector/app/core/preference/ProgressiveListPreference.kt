@@ -44,7 +44,7 @@ class ProgressiveListPreference : ListPreference {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     init {
-        widgetLayoutResource = R.layout.vector_settings_list_preference_with_warning
+        widgetLayoutResource = R.layout.progressive_settings_list_preference_with_warning
         // Set to false to remove the space when there is no icon
         isIconSpaceReserved = true
     }

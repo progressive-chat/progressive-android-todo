@@ -48,7 +48,7 @@ class SpaceListViewModel @AssistedInject constructor(
         @Assisted initialState: SpaceListViewState,
         private val spaceStateHandler: SpaceStateHandler,
         private val session: Session,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val analyticsTracker: AnalyticsTracker,
         getNotificationCountForSpacesUseCase: GetNotificationCountForSpacesUseCase,
         private val getSpacesUseCase: GetSpacesUseCase,
@@ -89,7 +89,7 @@ class SpaceListViewModel @AssistedInject constructor(
     }
 
     private fun roomsInSpaceFilter() = when {
-        vectorPreferences.prefSpacesShowAllRoomInHome() -> SpaceFilter.NoFilter
+        progressivePreferences.prefSpacesShowAllRoomInHome() -> SpaceFilter.NoFilter
         else -> SpaceFilter.OrphanRooms
     }
 

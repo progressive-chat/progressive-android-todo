@@ -176,15 +176,15 @@ class MainActivity : ProgressiveActivity<ActivityMainBinding>(), UnlockedActivit
 
     private fun handleAppStarted() {
         // On the first run with rust crypto this would be false
-        if (!vectorPreferences.isOnRustCrypto()) {
+        if (!progressivePreferences.isOnRustCrypto()) {
             if (activeSessionHolder.hasActiveSession()) {
-                vectorPreferences.setHadExistingLegacyData(activeSessionHolder.getActiveSession().isOpenable)
+                progressivePreferences.setHadExistingLegacyData(activeSessionHolder.getActiveSession().isOpenable)
             } else {
-                vectorPreferences.setHadExistingLegacyData(false)
+                progressivePreferences.setHadExistingLegacyData(false)
             }
         }
 
-        vectorPreferences.setIsOnRustCrypto(true)
+        progressivePreferences.setIsOnRustCrypto(true)
 
         if (intent.hasExtra(EXTRA_NEXT_INTENT)) {
             // Start the next Activity
@@ -309,7 +309,7 @@ class MainActivity : ProgressiveActivity<ActivityMainBinding>(), UnlockedActivit
         Glide.get(this@MainActivity).clearMemory()
 
         if (clearPreferences) {
-            vectorPreferences.clearPreferences()
+            progressivePreferences.clearPreferences()
             uiStateRepository.reset()
             pinLocker.unlock()
             pinCodeHelper.deletePinCode()

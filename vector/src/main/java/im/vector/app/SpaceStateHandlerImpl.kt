@@ -47,7 +47,7 @@ class SpaceStateHandlerImpl @Inject constructor(
         private val uiStateRepository: UiStateRepository,
         private val activeSessionHolder: ActiveSessionHolder,
         private val analyticsTracker: AnalyticsTracker,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
 ) : SpaceStateHandler {
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
@@ -104,11 +104,11 @@ class SpaceStateHandlerImpl @Inject constructor(
     private fun addToBackstack(spaceToLeave: RoomSummary?, spaceToSet: RoomSummary?) {
         // Only add to the backstack if the space to set is not All Chats, else clear the backstack
         if (spaceToSet != null) {
-            val currentPersistedBackstack = vectorPreferences.getSpaceBackstack().toMutableList()
+            val currentPersistedBackstack = progressivePreferences.getSpaceBackstack().toMutableList()
             currentPersistedBackstack.add(spaceToLeave?.roomId)
-            vectorPreferences.setSpaceBackstack(currentPersistedBackstack)
+            progressivePreferences.setSpaceBackstack(currentPersistedBackstack)
         } else {
-            vectorPreferences.setSpaceBackstack(emptyList())
+            progressivePreferences.setSpaceBackstack(emptyList())
         }
     }
 
@@ -136,14 +136,14 @@ class SpaceStateHandlerImpl @Inject constructor(
     }
 
     override fun popSpaceBackstack(): String? {
-        vectorPreferences.getSpaceBackstack().toMutableList().apply {
+        progressivePreferences.getSpaceBackstack().toMutableList().apply {
             val poppedSpaceId = removeAt(lastIndex)
-            vectorPreferences.setSpaceBackstack(this)
+            progressivePreferences.setSpaceBackstack(this)
             return poppedSpaceId
         }
     }
 
-    override fun getSpaceBackstack() = vectorPreferences.getSpaceBackstack()
+    override fun getSpaceBackstack() = progressivePreferences.getSpaceBackstack()
 
     override fun getSelectedSpaceFlow() = selectedSpaceFlow
 

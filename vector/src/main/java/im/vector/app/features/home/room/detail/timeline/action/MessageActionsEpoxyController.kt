@@ -57,7 +57,7 @@ class MessageActionsEpoxyController @Inject constructor(
         private val errorFormatter: ErrorFormatter,
         private val spanUtils: SpanUtils,
         private val eventDetailsFormatter: EventDetailsFormatter,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val dateFormatter: ProgressiveDateFormatter,
         private val urlMapProvider: UrlMapProvider,
         private val locationPinProvider: LocationPinProvider
@@ -240,7 +240,7 @@ class MessageActionsEpoxyController @Inject constructor(
     }
 
     private fun EventSharedAction.shouldShowBetaLabel(): Boolean =
-            this is EventSharedAction.ReplyInThread && !vectorPreferences.areThreadMessagesEnabled()
+            this is EventSharedAction.ReplyInThread && !progressivePreferences.areThreadMessagesEnabled()
 
     interface MessageActionsEpoxyControllerListener : TimelineEventController.UrlClickCallback {
         fun didSelectMenuAction(eventAction: EventSharedAction)

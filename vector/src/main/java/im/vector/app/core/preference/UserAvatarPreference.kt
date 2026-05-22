@@ -35,7 +35,7 @@ class UserAvatarPreference : Preference {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     init {
-        widgetLayoutResource = R.layout.vector_settings_round_avatar
+        widgetLayoutResource = R.layout.progressive_settings_round_avatar
         // Set to false to remove the space when there is no icon
         isIconSpaceReserved = true
     }

@@ -35,7 +35,7 @@ import javax.inject.Singleton
 class NotificationDrawerManager @Inject constructor(
         context: Context,
         private val notificationDisplayer: NotificationDisplayer,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val activeSessionDataSource: ActiveSessionDataSource,
         private val notifiableEventProcessor: NotifiableEventProcessor,
         private val notificationRenderer: NotificationRenderer,
@@ -60,7 +60,7 @@ class NotificationDrawerManager @Inject constructor(
     private var currentThreadId: String? = null
     private val firstThrottler = FirstThrottler(200)
 
-    private var useCompleteNotificationFormat = vectorPreferences.useCompleteNotificationFormat()
+    private var useCompleteNotificationFormat = progressivePreferences.useCompleteNotificationFormat()
 
     init {
         handlerThread.start()
@@ -82,7 +82,7 @@ class NotificationDrawerManager @Inject constructor(
     Events might be grouped and there might not be one notification per event!
      */
     fun NotificationEventQueue.onNotifiableEventReceived(notifiableEvent: NotifiableEvent) {
-        if (!vectorPreferences.areNotificationEnabledForDevice()) {
+        if (!progressivePreferences.areNotificationEnabledForDevice()) {
             Timber.i("Notification are disabled for this device")
             return
         }
@@ -149,7 +149,7 @@ class NotificationDrawerManager @Inject constructor(
 
     fun notificationStyleChanged() {
         updateEvents {
-            val newSettings = vectorPreferences.useCompleteNotificationFormat()
+            val newSettings = progressivePreferences.useCompleteNotificationFormat()
             if (newSettings != useCompleteNotificationFormat) {
                 // Settings has changed, remove all current notifications
                 notificationDisplayer.cancelAllNotifications()

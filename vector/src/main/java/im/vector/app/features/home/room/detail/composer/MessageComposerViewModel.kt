@@ -86,7 +86,7 @@ class MessageComposerViewModel @AssistedInject constructor(
         @Assisted initialState: MessageComposerViewState,
         private val session: Session,
         private val stringProvider: StringProvider,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val commandParser: CommandParser,
         private val rainbowGenerator: RainbowGenerator,
         private val audioMessageHelper: AudioMessageHelper,
@@ -171,7 +171,7 @@ class MessageComposerViewModel @AssistedInject constructor(
 
     private fun handleEnterEditMode(room: Room, action: MessageComposerAction.EnterEditMode) {
         room.getTimelineEvent(action.eventId)?.let { timelineEvent ->
-            val formatted = vectorPreferences.isRichTextEditorEnabled()
+            val formatted = progressivePreferences.isRichTextEditorEnabled()
             val editableContent = timelineEvent.getTextEditableContent(formatted)
             setState { copy(sendMode = SendMode.Edit(timelineEvent, editableContent)) }
         }
@@ -328,7 +328,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandNotImplemented)
                         }
                         is ParsedCommand.SetMarkdown -> {
-                            vectorPreferences.setMarkdownEnabled(parsedCommand.enable)
+                            progressivePreferences.setMarkdownEnabled(parsedCommand.enable)
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                             popDraft(room)
                         }
@@ -559,7 +559,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                          is ParsedCommand.ProgressiveChatCommand -> {
                              when (parsedCommand.command) {
                                  Command.HIDE_EMOJI -> {
-                                     vectorPreferences.toggleEmojiBlacklist()
+                                     progressivePreferences.toggleEmojiBlacklist()
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
                                  Command.STATS -> {
@@ -678,10 +678,10 @@ User: $args"
                                          viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
                                              try {
                                                  ProgressiveNative.ensureLoaded()
-                                                 val provider = vectorPreferences.getLlmProvider()
-                                                 val endpoint = vectorPreferences.getLlmEndpoint()
-                                                 val token = vectorPreferences.getLlmToken()
-                                                 val model = vectorPreferences.getLlmModel()
+                                                 val provider = progressivePreferences.getLlmProvider()
+                                                 val endpoint = progressivePreferences.getLlmEndpoint()
+                                                 val token = progressivePreferences.getLlmToken()
+                                                 val model = progressivePreferences.getLlmModel()
                                                  
                                                  val requestBody = ProgressiveNative.nativeBuildLlmRequest(
                                                      prompt, provider, endpoint, token, model, systemPrompt, 0.7f, 1024
@@ -864,7 +864,7 @@ User: $args"
     }
 
     private fun handleUserIsTyping(room: Room, action: MessageComposerAction.UserIsTyping) {
-        if (vectorPreferences.sendTypingNotifs()) {
+        if (progressivePreferences.sendTypingNotifs()) {
             if (action.isTyping) {
                 room.typingService().userIsTyping()
             } else {
@@ -1237,7 +1237,7 @@ User: $args"
                 val accessToken = sessionParams.credentials.accessToken
 
                 // Native C++ validation + URL construction, with Kotlin fallback
-                val isEnabled = vectorPreferences.isJumpToDateEnabled()
+                val isEnabled = progressivePreferences.isJumpToDateEnabled()
                 val resultJson = try {
                     val raw = ProgressiveNative.nativeValidateAndBuild(
                         room.roomId,

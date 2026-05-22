@@ -38,7 +38,7 @@ class OtherSessionsViewModel @AssistedInject constructor(
         private val signoutSessionsUseCase: SignoutSessionsUseCase,
         private val pendingAuthHandler: PendingAuthHandler,
         refreshDevicesUseCase: RefreshDevicesUseCase,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val toggleIpAddressVisibilityUseCase: ToggleIpAddressVisibilityUseCase,
 ) : ProgressiveSessionsList<OtherSessionsViewState, OtherSessionsAction, OtherSessionsViewEvents>(
         initialState, activeSessionHolder, refreshDevicesUseCase
@@ -77,16 +77,16 @@ class OtherSessionsViewModel @AssistedInject constructor(
     }
 
     private fun observePreferences() {
-        vectorPreferences.subscribeToChanges(this)
+        progressivePreferences.subscribeToChanges(this)
     }
 
     override fun onCleared() {
-        vectorPreferences.unsubscribeToChanges(this)
+        progressivePreferences.unsubscribeToChanges(this)
         super.onCleared()
     }
 
     private fun refreshIpAddressVisibility() {
-        val shouldShowIpAddress = vectorPreferences.showIpAddressInSessionManagerScreens()
+        val shouldShowIpAddress = progressivePreferences.showIpAddressInSessionManagerScreens()
         setState {
             copy(isShowingIpAddress = shouldShowIpAddress)
         }

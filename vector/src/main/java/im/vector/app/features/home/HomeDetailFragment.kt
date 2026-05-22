@@ -66,7 +66,7 @@ class HomeDetailFragment :
     @Inject lateinit var colorProvider: ColorProvider
     @Inject lateinit var alertManager: PopupAlertManager
     @Inject lateinit var callManager: WebRtcCallManager
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var spaceStateHandler: SpaceStateHandler
     @Inject lateinit var vectorLocale: VectorLocaleProvider
 
@@ -203,7 +203,7 @@ class HomeDetailFragment :
 
     override fun onResume() {
         super.onResume()
-        updateTabVisibilitySafely(R.id.bottom_action_notification, vectorPreferences.labAddNotificationTab())
+        updateTabVisibilitySafely(R.id.bottom_action_notification, progressivePreferences.labAddNotificationTab())
         callManager.checkForProtocolsSupportIfNeeded()
         refreshSpaceState()
     }
@@ -318,7 +318,7 @@ class HomeDetailFragment :
     }
 
     private fun setupBottomNavigationView() {
-        views.bottomNavigationView.menu.findItem(R.id.bottom_action_notification).isVisible = vectorPreferences.labAddNotificationTab()
+        views.bottomNavigationView.menu.findItem(R.id.bottom_action_notification).isVisible = progressivePreferences.labAddNotificationTab()
         views.bottomNavigationView.setOnItemSelectedListener {
             val tab = when (it.itemId) {
                 R.id.bottom_action_people -> HomeTab.RoomList(RoomListDisplayMode.PEOPLE)
@@ -417,7 +417,7 @@ class HomeDetailFragment :
                 it.syncState,
                 it.incrementalSyncRequestState,
                 it.pushCounter,
-                vectorPreferences.developerShowDebugInfo()
+                progressivePreferences.developerShowDebugInfo()
         )
 
         hasUnreadRooms = it.hasUnreadMessages

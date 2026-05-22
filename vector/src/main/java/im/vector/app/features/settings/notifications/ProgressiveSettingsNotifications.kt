@@ -62,7 +62,7 @@ import org.matrix.android.sdk.api.session.pushrules.RuleIds
 import org.matrix.android.sdk.api.session.pushrules.RuleKind
 import javax.inject.Inject
 
-// Referenced in vector_settings_preferences_root.xml
+// Referenced in progressive_settings_preferences_root.xml
 @AndroidEntryPoint
 class ProgressiveSettingsNotifications :
         VectorSettingsBaseFragment(),
@@ -72,14 +72,14 @@ class ProgressiveSettingsNotifications :
     @Inject lateinit var pushersManager: PushersManager
     @Inject lateinit var fcmHelper: FcmHelper
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var guardServiceStarter: GuardServiceStarter
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
     @Inject lateinit var ensureFcmTokenIsRetrievedUseCase: EnsureFcmTokenIsRetrievedUseCase
 
     override var titleRes: Int = CommonStrings.settings_notifications
-    override val preferenceXmlRes = R.xml.vector_settings_notifications
+    override val preferenceXmlRes = R.xml.progressive_settings_notifications
 
     private var interactionListener: VectorSettingsFragmentInteractionListener? = null
 
@@ -147,7 +147,7 @@ class ProgressiveSettingsNotifications :
 
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val initialMode = vectorPreferences.getFdroidSyncBackgroundMode()
+                val initialMode = progressivePreferences.getFdroidSyncBackgroundMode()
                 val dialogFragment = BackgroundSyncModeChooserDialog.newInstance(initialMode)
                 dialogFragment.interactionListener = this
                 activity?.supportFragmentManager?.let { fm ->
@@ -158,12 +158,12 @@ class ProgressiveSettingsNotifications :
         }
 
         findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
-            it.isEnabled = vectorPreferences.isBackgroundSyncEnabled()
-            it.summary = secondsToText(vectorPreferences.backgroundSyncTimeOut())
+            it.isEnabled = progressivePreferences.isBackgroundSyncEnabled()
+            it.summary = secondsToText(progressivePreferences.backgroundSyncTimeOut())
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 if (newValue is String) {
                     val syncTimeout = tryOrNull { Integer.parseInt(newValue) } ?: BackgroundSyncMode.DEFAULT_SYNC_TIMEOUT_SECONDS
-                    vectorPreferences.setBackgroundSyncTimeout(maxOf(0, syncTimeout))
+                    progressivePreferences.setBackgroundSyncTimeout(maxOf(0, syncTimeout))
                     refreshBackgroundSyncPrefs()
                 }
                 true
@@ -171,12 +171,12 @@ class ProgressiveSettingsNotifications :
         }
 
         findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
-            it.isEnabled = vectorPreferences.isBackgroundSyncEnabled()
-            it.summary = secondsToText(vectorPreferences.backgroundSyncDelay())
+            it.isEnabled = progressivePreferences.isBackgroundSyncEnabled()
+            it.summary = secondsToText(progressivePreferences.backgroundSyncDelay())
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 if (newValue is String) {
                     val syncDelay = tryOrNull { Integer.parseInt(newValue) } ?: BackgroundSyncMode.DEFAULT_SYNC_DELAY_SECONDS
-                    vectorPreferences.setBackgroundSyncDelay(maxOf(0, syncDelay))
+                    progressivePreferences.setBackgroundSyncDelay(maxOf(0, syncDelay))
                     refreshBackgroundSyncPrefs()
                 }
                 true
@@ -291,13 +291,13 @@ class ProgressiveSettingsNotifications :
                 requestDisablingBatteryOptimization(requireActivity(), batteryStartForActivityResult)
             }
         }
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
+        progressivePreferences.setFdroidSyncBackgroundMode(mode)
         refreshBackgroundSyncPrefs()
     }
 
     private fun refreshBackgroundSyncPrefs() {
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
-            it.summary = when (vectorPreferences.getFdroidSyncBackgroundMode()) {
+            it.summary = when (progressivePreferences.getFdroidSyncBackgroundMode()) {
                 BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_BATTERY -> getString(CommonStrings.settings_background_fdroid_sync_mode_battery)
                 BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME -> getString(CommonStrings.settings_background_fdroid_sync_mode_real_time)
                 BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_DISABLED -> getString(CommonStrings.settings_background_fdroid_sync_mode_disabled)
@@ -308,14 +308,14 @@ class ProgressiveSettingsNotifications :
             it.isVisible = unifiedPushHelper.isBackgroundSync()
         }
 
-        val backgroundSyncEnabled = vectorPreferences.isBackgroundSyncEnabled()
+        val backgroundSyncEnabled = progressivePreferences.isBackgroundSyncEnabled()
         findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
             it.isEnabled = backgroundSyncEnabled
-            it.summary = secondsToText(vectorPreferences.backgroundSyncTimeOut())
+            it.summary = secondsToText(progressivePreferences.backgroundSyncTimeOut())
         }
         findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
             it.isEnabled = backgroundSyncEnabled
-            it.summary = secondsToText(vectorPreferences.backgroundSyncDelay())
+            it.summary = secondsToText(progressivePreferences.backgroundSyncDelay())
         }
         when {
             backgroundSyncEnabled -> guardServiceStarter.start()
@@ -370,13 +370,13 @@ class ProgressiveSettingsNotifications :
         if (NotificationUtils.supportNotificationChannels()) {
             ringtonePreference.isVisible = false
         } else {
-            ringtonePreference.summary = vectorPreferences.getNotificationRingToneName()
+            ringtonePreference.summary = progressivePreferences.getNotificationRingToneName()
             ringtonePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
 
-                if (null != vectorPreferences.getNotificationRingTone()) {
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, vectorPreferences.getNotificationRingTone())
+                if (null != progressivePreferences.getNotificationRingTone()) {
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, progressivePreferences.getNotificationRingTone())
                 }
 
                 ringtoneStartForActivityResult.launch(intent)
@@ -387,12 +387,12 @@ class ProgressiveSettingsNotifications :
 
     private val ringtoneStartForActivityResult = registerStartForActivityResult { activityResult ->
         if (activityResult.resultCode == Activity.RESULT_OK) {
-            vectorPreferences.setNotificationRingTone(activityResult.data?.getParcelableExtraCompat<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI))
+            progressivePreferences.setNotificationRingTone(activityResult.data?.getParcelableExtraCompat<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI))
 
             // test if the selected ring tone can be played
-            val notificationRingToneName = vectorPreferences.getNotificationRingToneName()
+            val notificationRingToneName = progressivePreferences.getNotificationRingToneName()
             if (null != notificationRingToneName) {
-                vectorPreferences.setNotificationRingTone(vectorPreferences.getNotificationRingTone())
+                progressivePreferences.setNotificationRingTone(progressivePreferences.getNotificationRingTone())
                 findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY)!!
                         .summary = notificationRingToneName
             }
@@ -416,7 +416,7 @@ class ProgressiveSettingsNotifications :
         // This pref may have change from troubleshoot pref fragment
         if (unifiedPushHelper.isBackgroundSync()) {
             findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_START_ON_BOOT_PREFERENCE_KEY)
-                    ?.isChecked = vectorPreferences.autoStartOnBoot()
+                    ?.isChecked = progressivePreferences.autoStartOnBoot()
         }
     }
 

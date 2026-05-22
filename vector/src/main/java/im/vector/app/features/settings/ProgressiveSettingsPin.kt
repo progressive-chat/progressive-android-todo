@@ -40,7 +40,7 @@ class ProgressiveSettingsPin :
     @Inject lateinit var defaultLockScreenConfiguration: LockScreenConfiguration
 
     override var titleRes = CommonStrings.settings_security_application_protection_screen_title
-    override val preferenceXmlRes = R.xml.vector_settings_pin
+    override val preferenceXmlRes = R.xml.progressive_settings_pin
 
     private val biometricHelper by lazy {
         biometricHelperFactory.create(defaultLockScreenConfiguration.copy(mode = LockScreenMode.CREATE))

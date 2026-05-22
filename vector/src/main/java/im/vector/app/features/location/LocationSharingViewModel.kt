@@ -48,7 +48,7 @@ class LocationSharingViewModel @AssistedInject constructor(
         private val locationPinProvider: LocationPinProvider,
         private val session: Session,
         private val compareLocationsUseCase: CompareLocationsUseCase,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val permissionChecker: PermissionChecker,
 ) : ProgressiveViewModel<LocationSharingViewState, LocationSharingAction, LocationSharingViewEvents>(initialState), LocationTracker.Callback {
 
@@ -161,7 +161,7 @@ class LocationSharingViewModel @AssistedInject constructor(
     private fun handleLiveLocationSharingRequestedAction() = withState { state ->
         if (!state.canShareLiveLocation) {
             _viewEvents.post(LocationSharingViewEvents.LiveLocationSharingNotEnoughPermission)
-        } else if (vectorPreferences.labsEnableLiveLocation()) {
+        } else if (progressivePreferences.labsEnableLiveLocation()) {
             _viewEvents.post(LocationSharingViewEvents.ChooseLiveLocationDuration)
         } else {
             _viewEvents.post(LocationSharingViewEvents.ShowLabsFlagPromotion)

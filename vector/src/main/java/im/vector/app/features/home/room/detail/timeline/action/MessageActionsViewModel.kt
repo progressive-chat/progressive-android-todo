@@ -69,7 +69,7 @@ class MessageActionsViewModel @AssistedInject constructor(
         private val errorFormatter: ErrorFormatter,
         private val stringProvider: StringProvider,
         private val pillsPostProcessorFactory: PillsPostProcessor.Factory,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val checkIfCanReplyEventUseCase: CheckIfCanReplyEventUseCase,
         private val checkIfCanRedactEventUseCase: CheckIfCanRedactEventUseCase,
 ) : ProgressiveViewModel<MessageActionState, MessageActionsAction, EmptyViewEvents>(initialState) {
@@ -296,7 +296,7 @@ class MessageActionsViewModel @AssistedInject constructor(
             // TODO copy images? html? see ClipBoard
             add(EventSharedAction.Copy(messageContent!!.body))
         }
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             addViewSourceItems(timelineEvent)
         }
     }
@@ -395,12 +395,12 @@ class MessageActionsViewModel @AssistedInject constructor(
                 }
             }
 
-            if (vectorPreferences.isJumpToSourceEnabled()) {
+            if (progressivePreferences.isJumpToSourceEnabled()) {
                 val content = timelineEvent.root.toContentStringWithIndent()
                 val allowedTypes = buildString {
-                    if (vectorPreferences.isJumpToSourceReactionsEnabled()) append("m.annotation,")
-                    if (vectorPreferences.isJumpToSourceRepliesEnabled()) append("m.reference,")
-                    if (vectorPreferences.isJumpToSourceEditsEnabled()) append("m.replace,")
+                    if (progressivePreferences.isJumpToSourceReactionsEnabled()) append("m.annotation,")
+                    if (progressivePreferences.isJumpToSourceRepliesEnabled()) append("m.reference,")
+                    if (progressivePreferences.isJumpToSourceEditsEnabled()) append("m.replace,")
                 }.trimEnd(',')
                 val relation = chat.progressive.app.native.ProgressiveNative.parseRelationFallback(
                     content, allowedTypes
@@ -411,7 +411,7 @@ class MessageActionsViewModel @AssistedInject constructor(
                 }
             }
 
-            if (vectorPreferences.isTranslateEnabled() && timelineEvent.root.getClearType() == EventType.MESSAGE) {
+            if (progressivePreferences.isTranslateEnabled() && timelineEvent.root.getClearType() == EventType.MESSAGE) {
                 val text = messageContent?.body ?: timelineEvent.root.content?.get("body") as? String ?: ""
                 if (text.isNotBlank()) {
                     add(EventSharedAction.Translate(eventId, text))
@@ -419,7 +419,7 @@ class MessageActionsViewModel @AssistedInject constructor(
             }
         }
 
-        if (vectorPreferences.developerMode()) {
+        if (progressivePreferences.developerMode()) {
             if (timelineEvent.isEncrypted() && timelineEvent.root.mCryptoError != null) {
                 val keysBackupService = session.cryptoService().keysBackupService()
                 if (keysBackupService.getState() == KeysBackupState.NotTrusted ||
@@ -471,9 +471,9 @@ class MessageActionsViewModel @AssistedInject constructor(
             actionPermissions: ActionPermissions
     ): Boolean {
         // We let reply in thread visible even if threads are not enabled, with an enhanced flow to attract users
-//        if (!vectorPreferences.areThreadMessagesEnabled()) return false
+//        if (!progressivePreferences.areThreadMessagesEnabled()) return false
         // Disable beta prompt if the homeserver do not support threads
-        if (!vectorPreferences.areThreadMessagesEnabled() &&
+        if (!progressivePreferences.areThreadMessagesEnabled() &&
                 !session.homeServerCapabilitiesService().getHomeServerCapabilities().canUseThreading) return false
 
         if (initialState.isFromThreadTimeline) return false
@@ -503,7 +503,7 @@ class MessageActionsViewModel @AssistedInject constructor(
             messageContent: MessageContent?,
             actionPermissions: ActionPermissions
     ): Boolean {
-        if (!vectorPreferences.areThreadMessagesEnabled()) return false
+        if (!progressivePreferences.areThreadMessagesEnabled()) return false
         if (!initialState.isFromThreadTimeline) return false
         if (event.root.getClearType() != EventType.MESSAGE &&
                 !event.isSticker() && !event.isPoll()) return false

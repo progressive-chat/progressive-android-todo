@@ -33,7 +33,7 @@ class ProgressiveUnifiedPush : MessagingReceiver() {
     @Inject lateinit var pushersManager: PushersManager
     @Inject lateinit var pushParser: PushParser
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorPushHandler: ProgressivePushHandler
     @Inject lateinit var guardServiceStarter: GuardServiceStarter
     @Inject lateinit var unifiedPushStore: UnifiedPushStore
@@ -59,7 +59,7 @@ class ProgressiveUnifiedPush : MessagingReceiver() {
 
     override fun onNewEndpoint(context: Context, endpoint: String, instance: String) {
         Timber.tag(loggerTag.value).i("onNewEndpoint: adding $endpoint")
-        if (vectorPreferences.areNotificationEnabledForDevice() && activeSessionHolder.hasActiveSession()) {
+        if (progressivePreferences.areNotificationEnabledForDevice() && activeSessionHolder.hasActiveSession()) {
             // If the endpoint has changed
             // or the gateway has changed
             if (unifiedPushHelper.getEndpointOrToken() != endpoint) {
@@ -78,21 +78,21 @@ class ProgressiveUnifiedPush : MessagingReceiver() {
             }
         }
         val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_DISABLED
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
+        progressivePreferences.setFdroidSyncBackgroundMode(mode)
         guardServiceStarter.stop()
     }
 
     override fun onRegistrationFailed(context: Context, instance: String) {
         Toast.makeText(context, "Push service registration failed", Toast.LENGTH_SHORT).show()
         val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
+        progressivePreferences.setFdroidSyncBackgroundMode(mode)
         guardServiceStarter.start()
     }
 
     override fun onUnregistered(context: Context, instance: String) {
         Timber.tag(loggerTag.value).d("Unifiedpush: Unregistered")
         val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
+        progressivePreferences.setFdroidSyncBackgroundMode(mode)
         guardServiceStarter.start()
         runBlocking {
             try {

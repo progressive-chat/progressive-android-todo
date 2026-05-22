@@ -37,7 +37,7 @@ import timber.log.Timber
 
 class RoomDirectoryViewModel @AssistedInject constructor(
         @Assisted initialState: PublicRoomsViewState,
-        vectorPreferences: ProgressiveBasePreferences,
+        progressivePreferences: ProgressiveBasePreferences,
         private val session: Session,
         private val analyticsTracker: AnalyticsTracker,
         private val explicitTermFilter: ExplicitTermFilter
@@ -52,7 +52,7 @@ class RoomDirectoryViewModel @AssistedInject constructor(
         private const val PUBLIC_ROOMS_LIMIT = 20
     }
 
-    private val showAllRooms = vectorPreferences.showAllPublicRooms()
+    private val showAllRooms = progressivePreferences.showAllPublicRooms()
 
     private var since: String? = null
 

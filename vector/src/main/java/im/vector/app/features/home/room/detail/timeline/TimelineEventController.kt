@@ -75,7 +75,7 @@ import kotlin.system.measureTimeMillis
 
 class TimelineEventController @Inject constructor(
         private val dateFormatter: ProgressiveDateFormatter,
-        private val vectorPreferences: ProgressiveBasePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val contentUploadStateTrackerBinder: ContentUploadStateTrackerBinder,
         private val contentDownloadStateTrackerBinder: ContentDownloadStateTrackerBinder,
         private val timelineItemFactory: TimelineItemFactory,
@@ -583,7 +583,7 @@ class TimelineEventController @Inject constructor(
     }
 
     private fun updateUTDStates(event: TimelineEvent, nextEvent: TimelineEvent?) {
-        if (vectorPreferences.labShowCompleteHistoryInEncryptedRoom()) {
+        if (progressivePreferences.labShowCompleteHistoryInEncryptedRoom()) {
             return
         }
         if (event.root.type == EventType.STATE_ROOM_MEMBER &&

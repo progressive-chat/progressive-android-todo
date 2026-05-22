@@ -40,7 +40,7 @@ private const val CAROUSEL_TRANSITION_TIME_MS = 500L
 class FtueAuthSplashCarouselFragment :
         AbstractFtueAuthFragment<FragmentFtueSplashCarouselBinding>() {
 
-    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
+    @Inject lateinit var progressivePreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var carouselController: SplashCarouselController
     @Inject lateinit var carouselStateFactory: SplashCarouselStateFactory
@@ -82,7 +82,7 @@ class FtueAuthSplashCarouselFragment :
             debouncedClicks { alreadyHaveAnAccount() }
         }
 
-        if (buildMeta.isDebug || vectorPreferences.developerMode()) {
+        if (buildMeta.isDebug || progressivePreferences.developerMode()) {
             views.loginSplashVersion.isVisible = true
             @SuppressLint("SetTextI18n")
             views.loginSplashVersion.text = "Version : ${buildMeta.versionName}\n" +

@@ -10,45 +10,45 @@ package im.vector.app.core.resources
 import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
-class UserPreferencesProvider @Inject constructor(private val vectorPreferences: ProgressiveBasePreferences) {
+class UserPreferencesProvider @Inject constructor(private val progressivePreferences: ProgressiveBasePreferences) {
 
     fun shouldShowHiddenEvents(): Boolean {
-        return vectorPreferences.shouldShowHiddenEvents()
+        return progressivePreferences.shouldShowHiddenEvents()
     }
 
     fun shouldShowReadReceipts(): Boolean {
-        return vectorPreferences.showReadReceipts()
+        return progressivePreferences.showReadReceipts()
     }
 
     fun shouldShowRedactedMessages(): Boolean {
-        return vectorPreferences.showRedactedMessages()
+        return progressivePreferences.showRedactedMessages()
     }
 
     fun shouldShowLongClickOnRoomHelp(): Boolean {
-        return vectorPreferences.shouldShowLongClickOnRoomHelp()
+        return progressivePreferences.shouldShowLongClickOnRoomHelp()
     }
 
     fun neverShowLongClickOnRoomHelpAgain() {
-        vectorPreferences.neverShowLongClickOnRoomHelpAgain()
+        progressivePreferences.neverShowLongClickOnRoomHelpAgain()
     }
 
     fun shouldShowJoinLeaves(): Boolean {
-        return vectorPreferences.showJoinLeaveMessages()
+        return progressivePreferences.showJoinLeaveMessages()
     }
 
     fun shouldShowAvatarDisplayNameChanges(): Boolean {
-        return vectorPreferences.showAvatarDisplayNameChangeMessages()
+        return progressivePreferences.showAvatarDisplayNameChangeMessages()
     }
 
     fun areThreadMessagesEnabled(): Boolean {
-        return vectorPreferences.areThreadMessagesEnabled()
+        return progressivePreferences.areThreadMessagesEnabled()
     }
 
     fun showLiveSenderInfo(): Boolean {
-        return vectorPreferences.showLiveSenderInfo()
+        return progressivePreferences.showLiveSenderInfo()
     }
 
     fun autoplayAnimatedImages(): Boolean {
-        return vectorPreferences.autoplayAnimatedImages()
+        return progressivePreferences.autoplayAnimatedImages()
     }
 }
