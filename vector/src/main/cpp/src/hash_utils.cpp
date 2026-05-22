@@ -259,4 +259,27 @@ std::string base64ToUnpaddedBase64(const std::string& base64) {
     return result;
 }
 
+
+
+// ---- Hash helpers ----
+
+std::string hashString(const std::string& input, const std::string& algo) {
+    if (algo == "sha256") {
+        return sha256Hex(input);
+    }
+    return input;
+}
+
+bool verifyHash(const std::string& data, const std::string& expectedHash, const std::string& algo) {
+    return hashString(data, algo) == expectedHash;
+}
+
+std::string hashEventContent(const std::string& eventJson) {
+    // Extract content field and hash it
+    auto cPos = eventJson.find("\"content\":");
+    if (cPos == std::string::npos) return "";
+    // Simple content hash
+    return sha256Hex(eventJson);
+}
+
 } // namespace progressive

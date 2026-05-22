@@ -64,6 +64,15 @@ class AlarmListActivity : VectorBaseActivity<ActivityAlarmListBinding>() {
                     loadAlarms()
                 }
 
+                item.findViewById<android.widget.TextView>(R.id.alarmItemDelete + 1)?.setOnClickListener {
+                    try {
+                        val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(android.content.Intent.EXTRA_TEXT, note)
+                        }
+                        startActivity(android.content.Intent.createChooser(shareIntent, "Share alarm"))
+                    } catch (_: Exception) { }
+                }
                 item.setOnClickListener {
                     val trigger = a.optLong("triggerAtMs", 0)
                     val ttsDelay = a.optInt("ttsDelaySeconds", 5)
