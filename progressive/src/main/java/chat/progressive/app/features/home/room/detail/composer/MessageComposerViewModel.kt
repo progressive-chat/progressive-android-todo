@@ -635,6 +635,9 @@ class MessageComposerViewModel @AssistedInject constructor(
                                      room.sendService().sendTextMessage("Banned " + parsedCommand.args, autoMarkdown = false)
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
+                                 Command.IGNORE -> { room.sendService().sendTextMessage("Ignored "+parsedCommand.args,autoMarkdown=false); _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand)) }
+                                 Command.UNIGNORE -> { room.sendService().sendTextMessage("Unignored "+parsedCommand.args,autoMarkdown=false); _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand)) }
+                                 Command.WHOIS -> { room.sendService().sendTextMessage("Whois: "+parsedCommand.args,autoMarkdown=false); _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand)) }
                                  Command.UNBAN -> {
                                      room.sendService().sendTextMessage("Unbanned " + parsedCommand.args, autoMarkdown = false)
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
