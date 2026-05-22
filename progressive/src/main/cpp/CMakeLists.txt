@@ -87,6 +87,8 @@ add_library(
     src/hash_utils.cpp
     src/http_client.cpp
     src/room_stats.cpp
+    src/crypto_device_utils.cpp
+    src/content_builder_utils.cpp
     src/event_aggregation_utils.cpp
     src/room_alias_utils.cpp
     src/room_member_utils.cpp
