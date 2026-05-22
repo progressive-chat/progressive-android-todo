@@ -615,6 +615,14 @@ class MessageComposerViewModel @AssistedInject constructor(
                                      room.sendService().sendTextMessage(e, autoMarkdown = false)
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
+                                 Command.NICK -> {
+                                     room.sendService().sendTextMessage("Changed display name: " + parsedCommand.args, autoMarkdown = false)
+                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                 }
+                                 Command.MYROOMNICK -> {
+                                     room.sendService().sendTextMessage("Changed room display name: " + parsedCommand.args, autoMarkdown = false)
+                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                 }
                                  Command.REACT -> {
                                      val emoji = parsedCommand.args.ifBlank { "👍" }
                                      room.sendService().sendTextMessage(emoji, autoMarkdown = false)
