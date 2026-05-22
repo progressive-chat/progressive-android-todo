@@ -14,7 +14,7 @@ import chat.progressive.app.features.voicebroadcast.model.asVoiceBroadcastEvent
 import chat.progressive.app.features.voicebroadcast.usecase.GetRoomLiveVoiceBroadcastsUseCase
 import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import chat.progressive.app.test.fakes.FakeRoom
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBe
@@ -38,7 +38,7 @@ internal class GetLatestPreviewableEventUseCaseTest {
     private val fakeSessionHolder = FakeActiveSessionHolder()
     private val fakeRoomSummary = mockk<RoomSummary>()
     private val fakeGetRoomLiveVoiceBroadcastsUseCase = mockk<GetRoomLiveVoiceBroadcastsUseCase>()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
 
     private val getLatestPreviewableEventUseCase = GetLatestPreviewableEventUseCase(
             fakeSessionHolder.instance,

@@ -9,8 +9,8 @@ package chat.progressive.app.features.home
 
 import chat.progressive.app.config.Config
 import chat.progressive.app.test.fakes.FakeClock
-import chat.progressive.app.test.fakes.FakeVectorFeatures
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import org.amshove.kluent.shouldBe
 import org.junit.Test
 
@@ -19,8 +19,8 @@ private const val A_DEVICE_ID = "A_DEVICE_ID"
 
 class ShouldShowUnverifiedSessionsAlertUseCaseTest {
 
-    private val fakeVectorFeatures = FakeVectorFeatures()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorFeatures = FakeProgressiveFeatures()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeClock = FakeClock()
 
     private val shouldShowUnverifiedSessionsAlertUseCase = ShouldShowUnverifiedSessionsAlertUseCase(

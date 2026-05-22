@@ -15,7 +15,7 @@ import chat.progressive.app.test.fakes.FakeContext
 import chat.progressive.app.test.fakes.FakeNotificationsSettingUpdater
 import chat.progressive.app.test.fakes.FakePushRulesUpdater
 import chat.progressive.app.test.fakes.FakeSession
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fakes.FakeWebRtcCallManager
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -37,7 +37,7 @@ class ConfigureAndStartSessionUseCaseTest {
     private val fakeContext = FakeContext()
     private val fakeWebRtcCallManager = FakeWebRtcCallManager()
     private val fakeUpdateMatrixClientInfoUseCase = mockk<UpdateMatrixClientInfoUseCase>()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeNotificationsSettingUpdater = FakeNotificationsSettingUpdater()
     private val fakePushRulesUpdater = FakePushRulesUpdater()
     private val fakeUpdateNotificationSettingsAccountDataUseCase = mockk<UpdateNotificationSettingsAccountDataUseCase>()

@@ -18,7 +18,7 @@ import chat.progressive.app.features.settings.devices.v2.filter.DeviceManagerFil
 import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import chat.progressive.app.test.fakes.FakePendingAuthHandler
 import chat.progressive.app.test.fakes.FakeSignoutSessionsUseCase
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fakes.FakeVerificationService
 import chat.progressive.app.test.fixtures.aDeviceFullInfo
 import chat.progressive.app.test.test
@@ -59,7 +59,7 @@ class OtherSessionsViewModelTest {
     private val fakeRefreshDevicesUseCase = mockk<RefreshDevicesUseCase>(relaxed = true)
     private val fakeSignoutSessionsUseCase = FakeSignoutSessionsUseCase()
     private val fakePendingAuthHandler = FakePendingAuthHandler()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val toggleIpAddressVisibilityUseCase = mockk<ToggleIpAddressVisibilityUseCase>()
 
     private fun createViewModel(viewState: OtherSessionsViewState = OtherSessionsViewState(defaultArgs)) =

@@ -20,7 +20,7 @@ import chat.progressive.app.features.settings.devices.v2.verification.GetCurrent
 import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import chat.progressive.app.test.fakes.FakePendingAuthHandler
 import chat.progressive.app.test.fakes.FakeSignoutSessionsUseCase
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fakes.FakeVerificationService
 import chat.progressive.app.test.test
 import chat.progressive.app.test.testDispatcher
@@ -67,7 +67,7 @@ class DevicesViewModelTest {
     private val fakeSignoutSessionsUseCase = FakeSignoutSessionsUseCase()
     private val fakePendingAuthHandler = FakePendingAuthHandler()
     private val fakeRefreshDevicesUseCase = mockk<RefreshDevicesUseCase>(relaxUnitFun = true)
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val toggleIpAddressVisibilityUseCase = mockk<ToggleIpAddressVisibilityUseCase>()
     private val verifiedTransaction = mockk<VerificationTransaction>().apply {
         every { isSuccessful() } returns true

@@ -12,7 +12,7 @@ import chat.progressive.app.features.VectorFeatures
 import io.mockk.every
 import io.mockk.spyk
 
-class FakeVectorFeatures : VectorFeatures by spyk<DefaultVectorFeatures>() {
+class FakeProgressiveFeatures : VectorFeatures by spyk<DefaultVectorFeatures>() {
 
     fun givenPersonalisationEnabled() {
         every { isOnboardingPersonalizeEnabled() } returns true

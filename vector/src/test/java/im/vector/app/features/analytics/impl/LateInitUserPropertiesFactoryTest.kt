@@ -12,7 +12,7 @@ import chat.progressive.app.features.onboarding.FtueUseCase
 import chat.progressive.app.test.fakes.FakeActiveSessionDataSource
 import chat.progressive.app.test.fakes.FakeContext
 import chat.progressive.app.test.fakes.FakeSession
-import chat.progressive.app.test.fakes.FakeVectorStore
+import chat.progressive.app.test.fakes.FakeProgressiveStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -22,7 +22,7 @@ import org.junit.Test
 class LateInitUserPropertiesFactoryTest {
 
     private val fakeActiveSessionDataSource = FakeActiveSessionDataSource()
-    private val fakeVectorStore = FakeVectorStore()
+    private val fakeVectorStore = FakeProgressiveStore()
     private val fakeContext = FakeContext()
     private val fakeSession = FakeSession().also {
         it.givenVectorStore(fakeVectorStore.instance)

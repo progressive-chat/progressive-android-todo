@@ -8,8 +8,8 @@
 package chat.progressive.app.features.attachments
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import chat.progressive.app.test.fakes.FakeVectorFeatures
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.test
 import io.mockk.verifyOrder
 import org.junit.Before
@@ -21,8 +21,8 @@ internal class AttachmentTypeSelectorViewModelTest {
     @get:Rule
     val mavericksTestRule = MavericksTestRule()
 
-    private val fakeVectorFeatures = FakeVectorFeatures()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorFeatures = FakeProgressiveFeatures()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val initialState = AttachmentTypeSelectorViewState()
 
     @Before

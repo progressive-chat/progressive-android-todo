@@ -12,7 +12,7 @@ import chat.progressive.app.test.fakes.FakeContext
 import chat.progressive.app.test.fakes.FakePushersManager
 import chat.progressive.app.test.fakes.FakeUnifiedPushHelper
 import chat.progressive.app.test.fakes.FakeUnifiedPushStore
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import io.mockk.justRun
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
@@ -26,7 +26,7 @@ import org.unifiedpush.android.connector.UnifiedPush
 class UnregisterUnifiedPushUseCaseTest {
 
     private val fakeContext = FakeContext()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeUnifiedPushStore = FakeUnifiedPushStore()
     private val fakeUnifiedPushHelper = FakeUnifiedPushHelper()
 

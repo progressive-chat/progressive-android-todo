@@ -24,7 +24,7 @@ import org.junit.Test
 private const val A_SESSION_ID = "session_id"
 private val A_DEFAULT_FILTER = DeviceManagerFilterType.INACTIVE
 
-class VectorSettingsDevicesViewNavigatorTest {
+class ProgressiveSettingsDevicesNavTest {
 
     private val context = FakeContext()
     private val vectorSettingsDevicesViewNavigator = VectorSettingsDevicesViewNavigator()

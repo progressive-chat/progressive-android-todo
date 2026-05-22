@@ -10,7 +10,7 @@ package chat.progressive.app.features.widgets
 import android.Manifest
 import android.webkit.PermissionRequest
 import chat.progressive.app.features.widgets.webview.WebviewPermissionUtils
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -22,7 +22,7 @@ import org.junit.runners.MethodSorters
 @FixMethodOrder(MethodSorters.JVM)
 class WebviewPermissionUtilsTest {
 
-    private val prefs = FakeVectorPreferences()
+    private val prefs = FakeProgressivePreferences()
     private val utils = WebviewPermissionUtils(prefs.instance)
 
     @Test

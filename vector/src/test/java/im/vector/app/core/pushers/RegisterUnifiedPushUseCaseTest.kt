@@ -8,7 +8,7 @@
 package chat.progressive.app.core.pushers
 
 import chat.progressive.app.test.fakes.FakeContext
-import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockkStatic
@@ -26,7 +26,7 @@ import org.unifiedpush.android.connector.UnifiedPush
 class RegisterUnifiedPushUseCaseTest {
 
     private val fakeContext = FakeContext()
-    private val fakeVectorFeatures = FakeVectorFeatures()
+    private val fakeVectorFeatures = FakeProgressiveFeatures()
 
     private val registerUnifiedPushUseCase = RegisterUnifiedPushUseCase(
             context = fakeContext.instance,

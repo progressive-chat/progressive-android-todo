@@ -19,7 +19,7 @@ import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 
-class VectorSettingsLabsViewModelTest {
+class ProgressiveSettingsLabsTest {
 
     @get:Rule
     val mavericksTestRule = MavericksTestRule(testDispatcher = testDispatcher)

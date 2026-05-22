@@ -17,7 +17,7 @@ import chat.progressive.app.features.settings.notifications.usecase.DisableNotif
 import chat.progressive.app.features.settings.notifications.usecase.EnableNotificationsForCurrentSessionUseCase
 import chat.progressive.app.features.settings.notifications.usecase.ToggleNotificationsForCurrentSessionUseCase
 import chat.progressive.app.test.fakes.FakePushersManager
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.test
 import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
@@ -29,13 +29,13 @@ import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 
-class VectorSettingsNotificationViewModelTest {
+class ProgressiveSettingsNotifTest {
 
     @get:Rule
     val mavericksTestRule = MavericksTestRule(testDispatcher = testDispatcher)
 
     private val fakePushersManager = FakePushersManager()
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeEnableNotificationsForCurrentSessionUseCase = mockk<EnableNotificationsForCurrentSessionUseCase>()
     private val fakeDisableNotificationsForCurrentSessionUseCase = mockk<DisableNotificationsForCurrentSessionUseCase>()
     private val fakeUnregisterUnifiedPushUseCase = mockk<UnregisterUnifiedPushUseCase>()

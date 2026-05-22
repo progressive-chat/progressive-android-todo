@@ -10,7 +10,7 @@ package chat.progressive.app.core.notification
 import chat.progressive.app.features.settings.devices.v2.notification.NotificationsStatus
 import chat.progressive.app.test.fakes.FakeGetNotificationsStatusUseCase
 import chat.progressive.app.test.fakes.FakeSession
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -19,7 +19,7 @@ private const val A_SESSION_ID = "session-id"
 class UpdateEnableNotificationsSettingOnChangeUseCaseTest {
 
     private val fakeSession = FakeSession().also { it.givenSessionId(A_SESSION_ID) }
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeGetNotificationsStatusUseCase = FakeGetNotificationsStatusUseCase()
 
     private val updateEnableNotificationsSettingOnChangeUseCase = UpdateEnableNotificationsSettingOnChangeUseCase(

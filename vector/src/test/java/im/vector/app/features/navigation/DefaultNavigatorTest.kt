@@ -13,8 +13,8 @@ import chat.progressive.app.test.fakes.FakeContext
 import chat.progressive.app.test.fakes.FakeDebugNavigator
 import chat.progressive.app.test.fakes.FakeSpaceStateHandler
 import chat.progressive.app.test.fakes.FakeSupportedVerificationMethodsProvider
-import chat.progressive.app.test.fakes.FakeVectorFeatures
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fakes.FakeWidgetArgsBuilder
 import chat.progressive.app.test.fixtures.RoomSummaryFixture.aRoomSummary
 import kotlinx.coroutines.CoroutineScope
@@ -24,11 +24,11 @@ import org.junit.Test
 internal class DefaultNavigatorTest {
 
     private val sessionHolder = FakeActiveSessionHolder()
-    private val vectorPreferences = FakeVectorPreferences()
+    private val vectorPreferences = FakeProgressivePreferences()
     private val widgetArgsBuilder = FakeWidgetArgsBuilder()
     private val spaceStateHandler = FakeSpaceStateHandler()
     private val supportedVerificationMethodsProvider = FakeSupportedVerificationMethodsProvider()
-    private val features = FakeVectorFeatures()
+    private val features = FakeProgressiveFeatures()
     private val analyticsTracker = FakeAnalyticsTracker()
     private val debugNavigator = FakeDebugNavigator()
     private val coroutineScope = CoroutineScope(SupervisorJob())

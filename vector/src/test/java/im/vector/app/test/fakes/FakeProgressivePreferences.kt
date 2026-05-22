@@ -14,7 +14,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 
-class FakeVectorPreferences {
+class FakeProgressivePreferences {
 
     val instance = mockk<VectorPreferences>(relaxUnitFun = true)
 

@@ -7,14 +7,14 @@
 
 package chat.progressive.app.features.command
 
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 
 private const val A_SPACE_ID = "!my-space-id"
 
 class CommandParserTest {
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
 
     @Test
     fun parseSlashCommandEmpty() {

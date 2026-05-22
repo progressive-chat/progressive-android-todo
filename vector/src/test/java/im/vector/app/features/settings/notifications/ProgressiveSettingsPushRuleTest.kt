@@ -26,7 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.matrix.android.sdk.api.session.pushrules.RuleIds
 
-internal class VectorSettingsPushRuleNotificationViewModelTest {
+internal class ProgressiveSettingsPushRuleTest {
 
     @get:Rule
     val mavericksTestRule = MavericksTestRule(testDispatcher = testDispatcher)

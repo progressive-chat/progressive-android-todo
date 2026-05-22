@@ -12,7 +12,7 @@ import chat.progressive.app.features.session.VectorSessionStore
 import io.mockk.coEvery
 import io.mockk.mockk
 
-class FakeVectorStore {
+class FakeProgressiveStore {
     val instance = mockk<VectorSessionStore>()
 
     fun givenUseCase(useCase: FtueUseCase?) {

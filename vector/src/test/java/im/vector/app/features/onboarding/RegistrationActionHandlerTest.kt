@@ -11,8 +11,8 @@ import chat.progressive.app.test.fakes.FakeAuthenticationService
 import chat.progressive.app.test.fakes.FakeRegistrationWizardActionDelegate
 import chat.progressive.app.test.fakes.FakeSession
 import chat.progressive.app.test.fakes.FakeStringProvider
-import chat.progressive.app.test.fakes.FakeVectorFeatures
-import chat.progressive.app.test.fakes.FakeVectorOverrides
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
+import chat.progressive.app.test.fakes.FakeProgressiveOverrides
 import chat.progressive.app.test.fixtures.SelectedHomeserverStateFixture.aSelectedHomeserverState
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -26,8 +26,8 @@ class RegistrationActionHandlerTest {
 
     private val fakeWizardActionDelegate = FakeRegistrationWizardActionDelegate()
     private val fakeAuthenticationService = FakeAuthenticationService()
-    private val vectorOverrides = FakeVectorOverrides()
-    private val vectorFeatures = FakeVectorFeatures()
+    private val vectorOverrides = FakeProgressiveOverrides()
+    private val vectorFeatures = FakeProgressiveFeatures()
     private val fakeStringProvider = FakeStringProvider().also {
         it.given(chat.progressive.app.config.R.string.matrix_org_server_url, "https://matrix.org")
     }

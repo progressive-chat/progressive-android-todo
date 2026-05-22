@@ -7,12 +7,12 @@
 
 package chat.progressive.app.features.settings.devices.v2
 
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import org.junit.Test
 
 class ToggleIpAddressVisibilityUseCaseTest {
 
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
 
     private val toggleIpAddressVisibilityUseCase = ToggleIpAddressVisibilityUseCase(
             vectorPreferences = fakeVectorPreferences.instance,

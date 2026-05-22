@@ -30,7 +30,7 @@ private val AN_EVENT = aVectorAnalyticsEvent()
 private val A_LATE_INIT_USER_PROPERTIES = aUserProperties()
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DefaultVectorAnalyticsTest {
+class DefaultProgressiveAnalyticsTest {
 
     private val fakePostHog = FakePostHog()
     private val fakeAnalyticsStore = FakeAnalyticsStore()

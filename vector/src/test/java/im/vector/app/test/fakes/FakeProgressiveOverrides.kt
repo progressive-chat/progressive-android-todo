@@ -10,4 +10,4 @@ package chat.progressive.app.test.fakes
 import chat.progressive.app.features.DefaultVectorOverrides
 import chat.progressive.app.features.VectorOverrides
 
-class FakeVectorOverrides : VectorOverrides by DefaultVectorOverrides()
+class FakeProgressiveOverrides : VectorOverrides by DefaultVectorOverrides()

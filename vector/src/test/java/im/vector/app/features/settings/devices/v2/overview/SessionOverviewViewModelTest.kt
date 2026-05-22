@@ -21,7 +21,7 @@ import chat.progressive.app.test.fakes.FakeGetNotificationsStatusUseCase
 import chat.progressive.app.test.fakes.FakePendingAuthHandler
 import chat.progressive.app.test.fakes.FakeSignoutSessionsUseCase
 import chat.progressive.app.test.fakes.FakeToggleNotificationUseCase
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fakes.FakeVerificationService
 import chat.progressive.app.test.test
 import chat.progressive.app.test.testDispatcher
@@ -69,7 +69,7 @@ class SessionOverviewViewModelTest {
     private val toggleNotificationUseCase = FakeToggleNotificationUseCase()
     private val fakeGetNotificationsStatusUseCase = FakeGetNotificationsStatusUseCase()
     private val notificationsStatus = NotificationsStatus.ENABLED
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val toggleIpAddressVisibilityUseCase = mockk<ToggleIpAddressVisibilityUseCase>()
 
     private fun createViewModel() = SessionOverviewViewModel(

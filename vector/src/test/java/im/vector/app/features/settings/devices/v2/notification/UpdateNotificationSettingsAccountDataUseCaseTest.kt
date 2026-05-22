@@ -9,7 +9,7 @@ package chat.progressive.app.features.settings.devices.v2.notification
 
 import chat.progressive.app.test.fakes.FakeSession
 import chat.progressive.app.test.fakes.FakeUnifiedPushHelper
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
@@ -21,7 +21,7 @@ import org.matrix.android.sdk.api.account.LocalNotificationSettingsContent
 
 class UpdateNotificationSettingsAccountDataUseCaseTest {
 
-    private val fakeVectorPreferences = FakeVectorPreferences()
+    private val fakeVectorPreferences = FakeProgressivePreferences()
     private val fakeUnifiedPushHelper = FakeUnifiedPushHelper()
     private val fakeGetNotificationSettingsAccountDataUseCase = mockk<GetNotificationSettingsAccountDataUseCase>()
     private val fakeSetNotificationSettingsAccountDataUseCase = mockk<SetNotificationSettingsAccountDataUseCase>()

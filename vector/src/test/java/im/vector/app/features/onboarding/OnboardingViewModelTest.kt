@@ -35,8 +35,8 @@ import chat.progressive.app.test.fakes.FakeStartAuthenticationFlowUseCase
 import chat.progressive.app.test.fakes.FakeStringProvider
 import chat.progressive.app.test.fakes.FakeUri
 import chat.progressive.app.test.fakes.FakeUriFilenameResolver
-import chat.progressive.app.test.fakes.FakeVectorFeatures
-import chat.progressive.app.test.fakes.FakeVectorOverrides
+import chat.progressive.app.test.fakes.FakeProgressiveFeatures
+import chat.progressive.app.test.fakes.FakeProgressiveOverrides
 import chat.progressive.app.test.fakes.toTestString
 import chat.progressive.app.test.fixtures.a401ServerError
 import chat.progressive.app.test.fixtures.aHomeServerCapabilities
@@ -101,7 +101,7 @@ class OnboardingViewModelTest {
     private val fakeAuthenticationService = FakeAuthenticationService()
     private val fakeRegistrationActionHandler = FakeRegistrationActionHandler()
     private val fakeDirectLoginUseCase = FakeDirectLoginUseCase()
-    private val fakeVectorFeatures = FakeVectorFeatures()
+    private val fakeVectorFeatures = FakeProgressiveFeatures()
     private val fakeHomeServerConnectionConfigFactory = FakeHomeServerConnectionConfigFactory()
     private val fakeStartAuthenticationFlowUseCase = FakeStartAuthenticationFlowUseCase()
     private val fakeHomeServerHistoryService = FakeHomeServerHistoryService()
@@ -1086,7 +1086,7 @@ class OnboardingViewModelTest {
                 fakeUriFilenameResolver.instance,
                 fakeDirectLoginUseCase.instance,
                 fakeStartAuthenticationFlowUseCase.instance,
-                FakeVectorOverrides(),
+                FakeProgressiveOverrides(),
                 fakeRegistrationActionHandler.instance,
                 TestBuildVersionSdkIntProvider().also { it.value = Build.VERSION_CODES.O },
                 fakeConfigureAndStartSessionUseCase,

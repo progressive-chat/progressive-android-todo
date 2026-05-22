@@ -12,7 +12,7 @@ import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import chat.progressive.app.test.fakes.FakeAnalyticsTracker
 import chat.progressive.app.test.fakes.FakeSession
 import chat.progressive.app.test.fakes.FakeUiStateRepository
-import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeProgressivePreferences
 import chat.progressive.app.test.fixtures.RoomSummaryFixture.aRoomSummary
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -31,7 +31,7 @@ internal class SpaceStateHandlerImplTest {
     private val uiStateRepository = FakeUiStateRepository()
     private val activeSessionHolder = FakeActiveSessionHolder(session)
     private val analyticsTracker = FakeAnalyticsTracker()
-    private val vectorPreferences = FakeVectorPreferences()
+    private val vectorPreferences = FakeProgressivePreferences()
 
     private val spaceStateHandler = SpaceStateHandlerImpl(
             sessionDataSource.instance,
