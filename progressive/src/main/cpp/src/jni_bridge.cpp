@@ -77,6 +77,7 @@
 #include "progressive/link_preview.hpp"
 #include "progressive/hash_utils.hpp"
 #include "progressive/text_stats.hpp"
+#include "progressive/message_location.hpp"
 #include "progressive/room_stats.hpp"
 #include "progressive/mention_parser.hpp"
 #include "progressive/poll_utils.hpp"
@@ -6094,6 +6095,33 @@ JNI_FUNC(jstring, nativeFormatLlmBroadcast)(JNIEnv* env, jclass, jstring jPrompt
     auto formatted = progressive::formatLlmBroadcastMessage(jStr(env, jPrompt), jStr(env, jResponse));
     return env->NewStringUTF(formatted.c_str());
 }
+JNI_FUNC(jstring, nativeParseGeoUri)(JNIEnv* env, jclass, jstring jUri) {
+    auto coords = progressive::parseGeoUri(jStr(env, jUri));
+    std::string json = "{\"lat\":" + std::to_string(coords.latitude) +
+                       ",\"lon\":" + std::to_string(coords.longitude) +
+                       ",\"acc\":" + std::to_string(coords.accuracy) + "}";
+    return env->NewStringUTF(json.c_str());
+}
+
+JNI_FUNC(jstring, nativeBuildLocationContent)(JNIEnv* env, jclass, jdouble jLat, jdouble jLon, jstring jDesc) {
+    progressive::GeoCoordinates coords;
+    coords.latitude = jLat; coords.longitude = jLon;
+    auto json = progressive::buildLocationContent(coords, jStr(env, jDesc));
+    return env->NewStringUTF(json.c_str());
+}
+
+JNI_FUNC(jstring, nativeBuildStaticMap)(JNIEnv* env, jclass, jdouble jLat, jdouble jLon, jint jZoom, jint jW, jint jH) {
+    progressive::GeoCoordinates coords;
+    coords.latitude = jLat; coords.longitude = jLon;
+    auto url = progressive::buildStaticMapUrl(coords, jZoom, jW, jH);
+    return env->NewStringUTF(url.c_str());
+}
+
+JNI_FUNC(jdouble, nativeHaversine)(JNIEnv* env, jclass, jdouble jLat1, jdouble jLon1, jdouble jLat2, jdouble jLon2) {
+    progressive::GeoCoordinates a{jLat1, jLon1}, b{jLat2, jLon2};
+    return progressive::haversineDistance(a, b);
+}
+
 JNI_FUNC(jstring, nativeTextStats)(JNIEnv* env, jclass, jstring jText) {
     auto stats = progressive::computeTextStats(jStr(env, jText));
     return env->NewStringUTF(progressive::textStatsToJson(stats).c_str());

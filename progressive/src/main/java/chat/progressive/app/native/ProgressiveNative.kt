@@ -756,6 +756,11 @@ object ProgressiveNative {
     @JvmStatic external fun nativeAlarmSetRingtone(id: String, uri: String)
     @JvmStatic external fun nativeAlarmLoad(json: String)
 
+    @JvmStatic external fun nativeParseGeoUri(uri: String): String
+    @JvmStatic external fun nativeBuildLocationContent(lat: Double, lon: Double, desc: String): String
+    @JvmStatic external fun nativeBuildStaticMap(lat: Double, lon: Double, zoom: Int, width: Int, height: Int): String
+    @JvmStatic external fun nativeHaversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double
+
     @JvmStatic external fun nativeTextStats(text: String): String
 
     // --- Message Scheduler ---
