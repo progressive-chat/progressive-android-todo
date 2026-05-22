@@ -115,6 +115,7 @@ class ProgressiveBasePreferences @Inject constructor(
         const val SETTINGS_LABS_ROOM_MIRROR_KEY = "SETTINGS_LABS_ROOM_MIRROR_KEY"
         const val SETTINGS_LABS_SYMBOL_BAR_KEY = "SETTINGS_LABS_SYMBOL_BAR_KEY"
         const val SETTINGS_LABS_AUTO_REPLACE_KEY = "SETTINGS_LABS_AUTO_REPLACE_KEY"
+        const val SETTINGS_LABS_SMART_REPLY = "SETTINGS_LABS_SMART_REPLY"
         const val SETTINGS_LABS_LLM_SLASH_KEY = "SETTINGS_LABS_LLM_SLASH_KEY"
         const val SETTINGS_LLM_PROVIDER = "SETTINGS_LLM_PROVIDER"
         const val SETTINGS_LLM_ENDPOINT = "SETTINGS_LLM_ENDPOINT"
@@ -1548,6 +1549,10 @@ class ProgressiveBasePreferences @Inject constructor(
 
     fun isAutoReplaceEnabled(): Boolean {
         return defaultPrefs.getBoolean(SETTINGS_LABS_AUTO_REPLACE_KEY, false)
+    }
+
+    fun isSmartReplyEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_SMART_REPLY, false)
     }
 
     fun isLlmSlashEnabled(): Boolean {
