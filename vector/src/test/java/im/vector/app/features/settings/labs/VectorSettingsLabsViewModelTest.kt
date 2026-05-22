@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.labs
+package chat.progressive.app.features.settings.labs
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.core.session.clientinfo.DeleteMatrixClientInfoUseCase
-import im.vector.app.core.session.clientinfo.UpdateMatrixClientInfoUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.core.session.clientinfo.DeleteMatrixClientInfoUseCase
+import chat.progressive.app.core.session.clientinfo.UpdateMatrixClientInfoUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

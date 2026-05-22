@@ -5,23 +5,23 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.overview
+package chat.progressive.app.features.settings.devices.v2.overview
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
-import im.vector.app.core.session.clientinfo.GetMatrixClientInfoUseCase
-import im.vector.app.core.session.clientinfo.MatrixClientInfoContent
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.ParseDeviceUserAgentUseCase
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.list.CheckIfSessionIsInactiveUseCase
-import im.vector.app.features.settings.devices.v2.list.DeviceType
-import im.vector.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
-import im.vector.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
-import im.vector.app.features.settings.devices.v2.verification.GetEncryptionTrustLevelForDeviceUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.givenAsFlow
+import chat.progressive.app.core.session.clientinfo.GetMatrixClientInfoUseCase
+import chat.progressive.app.core.session.clientinfo.MatrixClientInfoContent
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.ParseDeviceUserAgentUseCase
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.list.CheckIfSessionIsInactiveUseCase
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
+import chat.progressive.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
+import chat.progressive.app.features.settings.devices.v2.verification.GetEncryptionTrustLevelForDeviceUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.givenAsFlow
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

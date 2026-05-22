@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
-import im.vector.app.features.home.room.detail.timeline.helper.MatrixItemColorProvider.Companion.getColorFromUserId
-import im.vector.lib.ui.styles.R
+import chat.progressive.app.features.home.room.detail.timeline.helper.MatrixItemColorProvider.Companion.getColorFromUserId
+import chat.progressive.lib.ui.styles.R
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

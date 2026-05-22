@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
-import im.vector.app.config.Config
-import im.vector.app.test.fakes.FakeClock
-import im.vector.app.test.fakes.FakeVectorFeatures
-import im.vector.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.config.Config
+import chat.progressive.app.test.fakes.FakeClock
+import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeVectorPreferences
 import org.amshove.kluent.shouldBe
 import org.junit.Test
 

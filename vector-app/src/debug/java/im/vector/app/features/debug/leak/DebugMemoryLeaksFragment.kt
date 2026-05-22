@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.leak
+package chat.progressive.app.features.debug.leak
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import android.view.ViewGroup
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.epoxy.onClick
-import im.vector.app.core.platform.VectorBaseFragment
-import im.vector.application.databinding.FragmentDebugMemoryLeaksBinding
+import chat.progressive.app.core.epoxy.onClick
+import chat.progressive.app.core.platform.VectorBaseFragment
+import chat.progressive.application.databinding.FragmentDebugMemoryLeaksBinding
 
 @AndroidEntryPoint
 class DebugMemoryLeaksFragment :

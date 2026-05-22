@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.notification
+package chat.progressive.app.core.notification
 
-import im.vector.app.features.session.coroutineScope
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.features.session.coroutineScope
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
@@ -31,7 +31,7 @@ class NotificationsSettingUpdaterTest {
 
     @Before
     fun setup() {
-        mockkStatic("im.vector.app.features.session.SessionCoroutineScopesKt")
+        mockkStatic("chat.progressive.app.features.session.SessionCoroutineScopesKt")
     }
 
     @After

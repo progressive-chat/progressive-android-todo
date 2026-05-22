@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.app.Activity
 import android.view.View
@@ -33,9 +33,9 @@ import com.adevinta.android.barista.interaction.BaristaClickInteractions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import im.vector.app.core.platform.VectorBaseBottomSheetDialogFragment
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.lib.core.utils.timer.DefaultClock
+import chat.progressive.app.core.platform.VectorBaseBottomSheetDialogFragment
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.lib.core.utils.timer.DefaultClock
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers

@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.attachments
+package chat.progressive.app.features.attachments
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.test.fakes.FakeVectorFeatures
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.test
+import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.test
 import io.mockk.verifyOrder
 import org.junit.Before
 import org.junit.Rule

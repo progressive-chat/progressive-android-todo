@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.session.clientinfo
+package chat.progressive.app.core.session.clientinfo
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import io.mockk.coVerify
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

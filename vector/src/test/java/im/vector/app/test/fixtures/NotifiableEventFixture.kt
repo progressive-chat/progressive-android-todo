@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.features.notifications.InviteNotifiableEvent
-import im.vector.app.features.notifications.NotifiableMessageEvent
-import im.vector.app.features.notifications.SimpleNotifiableEvent
+import chat.progressive.app.features.notifications.InviteNotifiableEvent
+import chat.progressive.app.features.notifications.NotifiableMessageEvent
+import chat.progressive.app.features.notifications.SimpleNotifiableEvent
 
 fun aSimpleNotifiableEvent(
         eventId: String = "simple-event-id",

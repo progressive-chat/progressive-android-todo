@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.app.Activity
 import android.app.Instrumentation.ActivityResult
@@ -29,11 +29,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import im.vector.app.core.utils.getMatrixInstance
-import im.vector.app.features.MainActivity
-import im.vector.app.features.crypto.recover.SetupMode
-import im.vector.app.features.home.HomeActivity
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.utils.getMatrixInstance
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.features.crypto.recover.SetupMode
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.lib.strings.CommonStrings
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Ignore

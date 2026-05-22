@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.notifications
+package chat.progressive.app.features.settings.notifications
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.settings.notifications.usecase.GetPushRulesOnInvalidStateUseCase
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fixtures.PushRuleFixture
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.features.settings.notifications.usecase.GetPushRulesOnInvalidStateUseCase
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fixtures.PushRuleFixture
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coVerifyOrder
 import io.mockk.every
 import io.mockk.mockk
@@ -44,7 +44,7 @@ internal class VectorSettingsPushRuleNotificationViewModelTest {
 
     @Before
     fun setup() {
-        mockkStatic("im.vector.app.features.settings.notifications.NotificationIndexKt")
+        mockkStatic("chat.progressive.app.features.settings.notifications.NotificationIndexKt")
         every { fakeGetPushRulesOnInvalidStateUseCase.execute(any()) } returns emptyList()
     }
 

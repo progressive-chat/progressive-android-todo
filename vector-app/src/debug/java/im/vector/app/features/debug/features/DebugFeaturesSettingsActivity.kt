@@ -5,15 +5,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.features
+package chat.progressive.app.features.debug.features
 
 import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.extensions.cleanup
-import im.vector.app.core.extensions.configureWith
-import im.vector.app.core.platform.VectorBaseActivity
-import im.vector.app.databinding.FragmentGenericRecyclerBinding
+import chat.progressive.app.core.extensions.cleanup
+import chat.progressive.app.core.extensions.configureWith
+import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.databinding.FragmentGenericRecyclerBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint

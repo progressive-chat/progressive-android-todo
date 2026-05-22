@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.font
+package chat.progressive.app.features.settings.font
 
-import im.vector.app.features.settings.FontScalePreferencesImpl
-import im.vector.app.test.fakes.FakeSharedPreferences
-import im.vector.app.test.fakes.FakeSystemSettingsProvider
+import chat.progressive.app.features.settings.FontScalePreferencesImpl
+import chat.progressive.app.test.fakes.FakeSharedPreferences
+import chat.progressive.app.test.fakes.FakeSystemSettingsProvider
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 

@@ -9,7 +9,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace "im.vector.lib.attachmentviewer"
+    namespace "chat.progressive.lib.attachmentviewer"
 
     compileSdk versions.compileSdk
 

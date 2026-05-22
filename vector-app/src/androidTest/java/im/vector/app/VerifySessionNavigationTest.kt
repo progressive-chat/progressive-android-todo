@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
@@ -16,13 +16,13 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import im.vector.app.core.utils.getMatrixInstance
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.MainActivity
-import im.vector.app.features.home.HomeActivity
-import im.vector.app.ui.robot.ElementRobot
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.utils.getMatrixInstance
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.app.ui.robot.ElementRobot
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before

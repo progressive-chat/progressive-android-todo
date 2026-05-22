@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.rename
+package chat.progressive.app.features.settings.devices.v2.rename
 
 import androidx.fragment.app.FragmentActivity
 import io.mockk.every

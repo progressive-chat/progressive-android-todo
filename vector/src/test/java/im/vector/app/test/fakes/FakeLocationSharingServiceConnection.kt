@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.location.live.tracking.LocationSharingServiceConnection
+import chat.progressive.app.features.location.live.tracking.LocationSharingServiceConnection
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify

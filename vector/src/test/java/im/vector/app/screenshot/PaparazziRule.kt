@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.screenshot
+package chat.progressive.app.screenshot
 
 import android.os.Build
 import app.cash.paparazzi.DeviceConfig.Companion.PIXEL_3

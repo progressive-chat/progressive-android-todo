@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.crypto
+package chat.progressive.app.features.pin.lockscreen.crypto
 
 import androidx.test.platform.app.InstrumentationRegistry
 import io.mockk.clearAllMocks

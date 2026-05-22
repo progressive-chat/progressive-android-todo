@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <im.vector.app.features.settings.devices.v2.list.SessionsListHeaderView
+        <chat.progressive.app.features.settings.devices.v2.list.SessionsListHeaderView
             android:id="@+id/deviceListHeaderSectionSecurityRecommendations"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             app:sessionsListHeaderHasLearnMoreLink="false"
             app:sessionsListHeaderTitle="@string/device_manager_header_section_security_recommendations_title" />
 
-        <im.vector.app.features.settings.devices.v2.list.SecurityRecommendationView
+        <chat.progressive.app.features.settings.devices.v2.list.SecurityRecommendationView
             android:id="@+id/deviceListUnverifiedSessionsRecommendation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             app:recommendationImageResource="@drawable/ic_shield_warning_no_border"
             app:recommendationTitle="@string/device_manager_unverified_sessions_title" />
 
-        <im.vector.app.features.settings.devices.v2.list.SecurityRecommendationView
+        <chat.progressive.app.features.settings.devices.v2.list.SecurityRecommendationView
             android:id="@+id/deviceListInactiveSessionsRecommendation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deviceListInactiveSessionsRecommendation" />
 
-        <im.vector.app.features.settings.devices.v2.list.SessionsListHeaderView
+        <chat.progressive.app.features.settings.devices.v2.list.SessionsListHeaderView
             android:id="@+id/deviceListHeaderCurrentSession"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             app:sessionsListHeaderMenu="@menu/menu_current_session_header"
             app:sessionsListHeaderTitle="@string/device_manager_current_session_title" />
 
-        <im.vector.app.features.settings.devices.v2.list.SessionInfoView
+        <chat.progressive.app.features.settings.devices.v2.list.SessionInfoView
             android:id="@+id/deviceListCurrentSession"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deviceListCurrentSession" />
 
-        <im.vector.app.features.settings.devices.v2.list.SessionsListHeaderView
+        <chat.progressive.app.features.settings.devices.v2.list.SessionsListHeaderView
             android:id="@+id/deviceListHeaderOtherSessions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             app:sessionsListHeaderMenu="@menu/menu_other_sessions_header"
             app:sessionsListHeaderTitle="@string/device_manager_sessions_other_title" />
 
-        <im.vector.app.features.settings.devices.v2.list.OtherSessionsView
+        <chat.progressive.app.features.settings.devices.v2.list.OtherSessionsView
             android:id="@+id/deviceListOtherSessions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

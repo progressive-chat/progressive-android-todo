@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.lib.ui.styles.debug
+package chat.progressive.lib.ui.styles.debug
 
 import android.os.Bundle
 import android.view.Menu
@@ -17,9 +17,9 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import im.vector.lib.ui.styles.R
-import im.vector.lib.ui.styles.databinding.ActivityDebugMaterialThemeBinding
-import im.vector.lib.ui.styles.dialogs.MaterialProgressDialog
+import chat.progressive.lib.ui.styles.R
+import chat.progressive.lib.ui.styles.databinding.ActivityDebugMaterialThemeBinding
+import chat.progressive.lib.ui.styles.dialogs.MaterialProgressDialog
 
 // Rendering is not the same with VectorBaseActivity
 abstract class DebugMaterialThemeActivity : AppCompatActivity() {

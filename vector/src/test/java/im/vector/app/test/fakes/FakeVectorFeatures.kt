@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.features.VectorFeatures
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.features.VectorFeatures
 import io.mockk.every
 import io.mockk.spyk
 

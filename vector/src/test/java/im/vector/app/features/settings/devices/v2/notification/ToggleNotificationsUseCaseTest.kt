@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.notification
+package chat.progressive.app.features.settings.devices.v2.notification
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fixtures.PusherFixture
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fixtures.PusherFixture
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every

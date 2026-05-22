@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.ActiveSessionDataSource
+import chat.progressive.app.ActiveSessionDataSource
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.util.toOptional
 

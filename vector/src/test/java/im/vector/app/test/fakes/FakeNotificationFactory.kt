@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.notifications.GroupedNotificationEvents
-import im.vector.app.features.notifications.NotificationFactory
-import im.vector.app.features.notifications.OneShotNotification
-import im.vector.app.features.notifications.RoomNotification
-import im.vector.app.features.notifications.SummaryNotification
+import chat.progressive.app.features.notifications.GroupedNotificationEvents
+import chat.progressive.app.features.notifications.NotificationFactory
+import chat.progressive.app.features.notifications.OneShotNotification
+import chat.progressive.app.features.notifications.RoomNotification
+import chat.progressive.app.features.notifications.SummaryNotification
 import io.mockk.every
 import io.mockk.mockk
 

@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.sas
+package chat.progressive.app.features.debug.sas
 
 import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
-import im.vector.app.core.epoxy.VectorEpoxyHolder
-import im.vector.app.core.epoxy.VectorEpoxyModel
-import im.vector.application.R
+import chat.progressive.app.core.epoxy.VectorEpoxyHolder
+import chat.progressive.app.core.epoxy.VectorEpoxyModel
+import chat.progressive.application.R
 import me.gujun.android.span.image
 import me.gujun.android.span.span
 import org.matrix.android.sdk.api.session.crypto.verification.EmojiRepresentation

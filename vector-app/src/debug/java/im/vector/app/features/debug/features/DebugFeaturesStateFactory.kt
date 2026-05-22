@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.features
+package chat.progressive.app.features.debug.features
 
 import androidx.datastore.preferences.core.Preferences
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.features.VectorFeatures
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.features.VectorFeatures
 import javax.inject.Inject
 import kotlin.reflect.KFunction1
 

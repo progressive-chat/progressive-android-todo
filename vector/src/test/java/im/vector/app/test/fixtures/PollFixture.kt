@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.features.home.room.detail.timeline.item.MessageInformationData
-import im.vector.app.features.home.room.detail.timeline.item.PollResponseData
-import im.vector.app.features.home.room.detail.timeline.item.ReactionsSummaryData
-import im.vector.app.features.home.room.detail.timeline.style.TimelineMessageLayout
+import chat.progressive.app.features.home.room.detail.timeline.item.MessageInformationData
+import chat.progressive.app.features.home.room.detail.timeline.item.PollResponseData
+import chat.progressive.app.features.home.room.detail.timeline.item.ReactionsSummaryData
+import chat.progressive.app.features.home.room.detail.timeline.style.TimelineMessageLayout
 import org.matrix.android.sdk.api.session.room.model.message.MessagePollContent
 import org.matrix.android.sdk.api.session.room.model.message.PollAnswer
 import org.matrix.android.sdk.api.session.room.model.message.PollCreationInfo

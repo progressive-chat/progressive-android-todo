@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.detail.ui
+package chat.progressive.app.features.roomprofile.polls.detail.ui
 
 import android.content.Context
-import im.vector.app.test.fakes.FakeNavigator
+import chat.progressive.app.test.fakes.FakeNavigator
 import io.mockk.mockk
 import org.junit.Test
 

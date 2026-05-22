@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.ui.fallbackprompt
+package chat.progressive.app.features.pin.lockscreen.ui.fallbackprompt
 
 import android.view.View
 import android.widget.Button
@@ -16,7 +16,7 @@ import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.platform.app.InstrumentationRegistry
 import com.airbnb.mvrx.Mavericks
-import im.vector.app.R
+import chat.progressive.app.R
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -71,7 +71,7 @@ class FallbackBiometricDialogFragmentTests {
             fragmentScenario.moveToState(Lifecycle.State.RESUMED)
             // Espresso wasn't fast enough to catch this value
             authFlow.tryEmit(true)
-            fragment.requireView().statusText() shouldBeEqualTo context.getString(im.vector.lib.ui.styles.R.string.lockscreen_fingerprint_success)
+            fragment.requireView().statusText() shouldBeEqualTo context.getString(chat.progressive.lib.ui.styles.R.string.lockscreen_fingerprint_success)
         }
         latch.await()
     }
@@ -86,7 +86,7 @@ class FallbackBiometricDialogFragmentTests {
             fragment.authenticationFlow = authFlow
             fragmentScenario.moveToState(Lifecycle.State.RESUMED)
             authFlow.tryEmit(false)
-            fragment.requireView().statusText() shouldBeEqualTo context.getString(im.vector.lib.ui.styles.R.string.lockscreen_fingerprint_not_recognized)
+            fragment.requireView().statusText() shouldBeEqualTo context.getString(chat.progressive.lib.ui.styles.R.string.lockscreen_fingerprint_not_recognized)
             latch.countDown()
         }
         latch.await()

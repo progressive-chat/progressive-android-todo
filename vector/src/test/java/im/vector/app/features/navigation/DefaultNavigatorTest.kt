@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.navigation
+package chat.progressive.app.features.navigation
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeAnalyticsTracker
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeDebugNavigator
-import im.vector.app.test.fakes.FakeSpaceStateHandler
-import im.vector.app.test.fakes.FakeSupportedVerificationMethodsProvider
-import im.vector.app.test.fakes.FakeVectorFeatures
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.fakes.FakeWidgetArgsBuilder
-import im.vector.app.test.fixtures.RoomSummaryFixture.aRoomSummary
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeAnalyticsTracker
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeDebugNavigator
+import chat.progressive.app.test.fakes.FakeSpaceStateHandler
+import chat.progressive.app.test.fakes.FakeSupportedVerificationMethodsProvider
+import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeWidgetArgsBuilder
+import chat.progressive.app.test.fixtures.RoomSummaryFixture.aRoomSummary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.junit.Test

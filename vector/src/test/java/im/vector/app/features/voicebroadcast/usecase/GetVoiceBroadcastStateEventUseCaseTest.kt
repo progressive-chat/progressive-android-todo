@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voicebroadcast.usecase
+package chat.progressive.app.features.voicebroadcast.usecase
 
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
-import im.vector.app.features.voicebroadcast.model.VoiceBroadcast
-import im.vector.app.features.voicebroadcast.model.VoiceBroadcastState
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
+import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcast
+import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcastState
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo

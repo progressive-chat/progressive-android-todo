@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.biometrics
+package chat.progressive.app.features.pin.lockscreen.biometrics
 
 import android.content.Intent
 import android.os.Build
@@ -20,14 +20,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.TestBuildVersionSdkIntProvider
-import im.vector.app.features.pin.lockscreen.configuration.LockScreenConfiguration
-import im.vector.app.features.pin.lockscreen.configuration.LockScreenMode
-import im.vector.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants
-import im.vector.app.features.pin.lockscreen.crypto.LockScreenKeyRepository
-import im.vector.app.features.pin.lockscreen.tests.LockScreenTestActivity
-import im.vector.app.features.pin.lockscreen.ui.fallbackprompt.FallbackBiometricDialogFragment
-import im.vector.app.features.pin.lockscreen.utils.DevicePromptCheck
+import chat.progressive.app.TestBuildVersionSdkIntProvider
+import chat.progressive.app.features.pin.lockscreen.configuration.LockScreenConfiguration
+import chat.progressive.app.features.pin.lockscreen.configuration.LockScreenMode
+import chat.progressive.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants
+import chat.progressive.app.features.pin.lockscreen.crypto.LockScreenKeyRepository
+import chat.progressive.app.features.pin.lockscreen.tests.LockScreenTestActivity
+import chat.progressive.app.features.pin.lockscreen.ui.fallbackprompt.FallbackBiometricDialogFragment
+import chat.progressive.app.features.pin.lockscreen.utils.DevicePromptCheck
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.justRun

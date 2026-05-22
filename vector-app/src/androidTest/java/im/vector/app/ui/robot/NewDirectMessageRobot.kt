@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.matcher.ViewMatchers
-import im.vector.app.R
-import im.vector.app.waitForView
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.waitForView
+import chat.progressive.lib.strings.CommonStrings
 
 class NewDirectMessageRobot {
 

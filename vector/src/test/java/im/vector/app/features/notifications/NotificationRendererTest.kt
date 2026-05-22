@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.notifications
+package chat.progressive.app.features.notifications
 
 import android.app.Notification
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeNotificationDisplayer
-import im.vector.app.test.fakes.FakeNotificationFactory
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeNotificationDisplayer
+import chat.progressive.app.test.fakes.FakeNotificationFactory
 import io.mockk.mockk
 import org.junit.Test
 

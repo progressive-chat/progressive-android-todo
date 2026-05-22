@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.overview
+package chat.progressive.app.features.settings.devices.v2.overview
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import im.vector.app.features.settings.devices.v2.details.SessionDetailsActivity
-import im.vector.app.features.settings.devices.v2.rename.RenameSessionActivity
-import im.vector.app.test.fakes.FakeContext
+import chat.progressive.app.features.settings.devices.v2.details.SessionDetailsActivity
+import chat.progressive.app.features.settings.devices.v2.rename.RenameSessionActivity
+import chat.progressive.app.test.fakes.FakeContext
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk

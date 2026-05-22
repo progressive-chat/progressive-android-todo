@@ -5,6 +5,6 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.lib.ui.styles.debug
+package chat.progressive.lib.ui.styles.debug
 
 class DebugVectorTextViewLightActivity : DebugVectorTextViewActivity()

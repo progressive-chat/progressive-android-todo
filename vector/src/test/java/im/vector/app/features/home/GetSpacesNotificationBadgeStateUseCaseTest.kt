@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
-import im.vector.app.features.home.room.list.UnreadCounterBadgeView
-import im.vector.app.features.spaces.GetSpacesUseCase
-import im.vector.app.features.spaces.notification.GetNotificationCountForSpacesUseCase
-import im.vector.app.test.test
+import chat.progressive.app.features.home.room.list.UnreadCounterBadgeView
+import chat.progressive.app.features.spaces.GetSpacesUseCase
+import chat.progressive.app.features.spaces.notification.GetNotificationCountForSpacesUseCase
+import chat.progressive.app.test.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

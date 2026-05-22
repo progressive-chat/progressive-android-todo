@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
 import android.content.Context
-import im.vector.app.features.analytics.plan.ViewRoom
-import im.vector.app.features.navigation.Navigator
+import chat.progressive.app.features.analytics.plan.ViewRoom
+import chat.progressive.app.features.navigation.Navigator
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify

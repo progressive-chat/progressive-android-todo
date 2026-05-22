@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.fdroid
+package chat.progressive.app.fdroid
 
 import android.content.Context
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.fdroid.receiver.AlarmSyncBroadcastReceiver
-import im.vector.app.features.settings.BackgroundSyncMode
-import im.vector.app.features.settings.VectorPreferences
-import im.vector.lib.core.utils.timer.Clock
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.fdroid.receiver.AlarmSyncBroadcastReceiver
+import chat.progressive.app.features.settings.BackgroundSyncMode
+import chat.progressive.app.features.settings.VectorPreferences
+import chat.progressive.lib.core.utils.timer.Clock
 import timber.log.Timber
 import javax.inject.Inject
 

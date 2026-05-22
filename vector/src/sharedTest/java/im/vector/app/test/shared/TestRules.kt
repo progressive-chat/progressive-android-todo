@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.shared
+package chat.progressive.app.test.shared
 
 import net.lachlanmckee.timberjunit.TimberTestRule
 

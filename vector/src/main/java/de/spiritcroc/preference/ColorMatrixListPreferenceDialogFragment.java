@@ -39,7 +39,7 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 
 import java.util.Arrays;
 
-import im.vector.app.R;
+import chat.progressive.app.R;
 
 import static de.spiritcroc.preference.ColorMatrixListPreference.COLOR_MAGIC_TEXT;
 

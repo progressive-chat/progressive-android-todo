@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voice
+package chat.progressive.app.features.voice
 
 import android.Manifest
 import androidx.test.platform.app.InstrumentationRegistry

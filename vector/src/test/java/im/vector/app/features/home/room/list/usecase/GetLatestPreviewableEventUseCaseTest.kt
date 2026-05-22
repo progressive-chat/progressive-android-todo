@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.list.usecase
+package chat.progressive.app.features.home.room.list.usecase
 
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants.VOICE_BROADCAST_CHUNK_KEY
-import im.vector.app.features.voicebroadcast.model.VoiceBroadcastState
-import im.vector.app.features.voicebroadcast.model.asVoiceBroadcastEvent
-import im.vector.app.features.voicebroadcast.usecase.GetRoomLiveVoiceBroadcastsUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeRoom
-import im.vector.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants.VOICE_BROADCAST_CHUNK_KEY
+import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcastState
+import chat.progressive.app.features.voicebroadcast.model.asVoiceBroadcastEvent
+import chat.progressive.app.features.voicebroadcast.usecase.GetRoomLiveVoiceBroadcastsUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeRoom
+import chat.progressive.app.test.fakes.FakeVectorPreferences
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBe

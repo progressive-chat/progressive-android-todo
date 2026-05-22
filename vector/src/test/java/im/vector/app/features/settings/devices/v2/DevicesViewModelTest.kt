@@ -5,25 +5,25 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2
+package chat.progressive.app.features.settings.devices.v2
 
 import android.os.SystemClock
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.core.session.clientinfo.MatrixClientInfoContent
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.filter.DeviceManagerFilterType
-import im.vector.app.features.settings.devices.v2.list.DeviceType
-import im.vector.app.features.settings.devices.v2.verification.CheckIfCurrentSessionCanBeVerifiedUseCase
-import im.vector.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
-import im.vector.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakePendingAuthHandler
-import im.vector.app.test.fakes.FakeSignoutSessionsUseCase
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.fakes.FakeVerificationService
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.core.session.clientinfo.MatrixClientInfoContent
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.filter.DeviceManagerFilterType
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.verification.CheckIfCurrentSessionCanBeVerifiedUseCase
+import chat.progressive.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
+import chat.progressive.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakePendingAuthHandler
+import chat.progressive.app.test.fakes.FakeSignoutSessionsUseCase
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeVerificationService
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

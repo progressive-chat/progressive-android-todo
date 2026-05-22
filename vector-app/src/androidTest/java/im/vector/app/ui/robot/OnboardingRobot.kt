@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
@@ -18,11 +18,11 @@ import com.adevinta.android.barista.assertion.BaristaEnabledAssertions.assertEna
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaEditTextInteractions.writeTo
-import im.vector.app.R
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.waitForView
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.waitForView
+import chat.progressive.lib.strings.CommonStrings
 
 class OnboardingRobot {
     private val defaultVectorFeatures = DefaultVectorFeatures()

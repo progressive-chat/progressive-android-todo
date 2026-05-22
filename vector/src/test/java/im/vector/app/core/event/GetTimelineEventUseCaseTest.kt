@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.event
+package chat.progressive.app.core.event
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.givenAsFlow
-import im.vector.app.test.test
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.givenAsFlow
+import chat.progressive.app.test.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

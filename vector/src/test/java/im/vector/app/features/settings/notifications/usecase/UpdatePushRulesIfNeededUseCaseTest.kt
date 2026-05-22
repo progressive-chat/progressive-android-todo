@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.notifications.usecase
+package chat.progressive.app.features.settings.notifications.usecase
 
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fixtures.PushRuleFixture
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fixtures.PushRuleFixture
 import io.mockk.coVerifySequence
 import io.mockk.every
 import io.mockk.mockk

@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.leak
+package chat.progressive.app.features.debug.leak
 
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.extensions.addFragment
-import im.vector.app.core.platform.VectorBaseActivity
-import im.vector.app.databinding.ActivitySimpleBinding
+import chat.progressive.app.core.extensions.addFragment
+import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.databinding.ActivitySimpleBinding
 
 @AndroidEntryPoint
 class DebugMemoryLeaksActivity : VectorBaseActivity<ActivitySimpleBinding>() {

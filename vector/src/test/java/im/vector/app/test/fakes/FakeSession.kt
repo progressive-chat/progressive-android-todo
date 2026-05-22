@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.core.extensions.startSyncing
-import im.vector.app.core.extensions.vectorStore
-import im.vector.app.core.session.ConfigureAndStartSessionUseCase
-import im.vector.app.features.session.VectorSessionStore
-import im.vector.app.test.testCoroutineDispatchers
+import chat.progressive.app.core.extensions.startSyncing
+import chat.progressive.app.core.extensions.vectorStore
+import chat.progressive.app.core.session.ConfigureAndStartSessionUseCase
+import chat.progressive.app.features.session.VectorSessionStore
+import chat.progressive.app.test.testCoroutineDispatchers
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.every
@@ -41,7 +41,7 @@ class FakeSession(
 ) : Session by mockk(relaxed = true) {
 
     init {
-        mockkStatic("im.vector.app.core.extensions.SessionKt")
+        mockkStatic("chat.progressive.app.core.extensions.SessionKt")
     }
 
     var fakeUserId = "@fake:server.fake"

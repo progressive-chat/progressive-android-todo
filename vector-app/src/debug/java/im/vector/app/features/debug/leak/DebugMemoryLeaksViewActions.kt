@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.leak
+package chat.progressive.app.features.debug.leak
 
-import im.vector.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.VectorViewModelAction
 
 sealed interface DebugMemoryLeaksViewActions : VectorViewModelAction {
     data class EnableMemoryLeaksAnalysis(val isEnabled: Boolean) : DebugMemoryLeaksViewActions

@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.settings.FontScalePreferences
-import im.vector.app.features.settings.FontScaleValue
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.features.settings.FontScalePreferences
+import chat.progressive.app.features.settings.FontScaleValue
+import chat.progressive.lib.strings.CommonStrings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <im.vector.app.core.ui.views.KeysBackupBanner
+    <chat.progressive.app.core.ui.views.KeysBackupBanner
         android:id="@+id/homeKeysBackupBanner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone" />
 
-    <im.vector.app.core.ui.views.CurrentCallsView
+    <chat.progressive.app.core.ui.views.CurrentCallsView
         android:id="@+id/currentCallsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/homeKeysBackupBanner"
         tools:visibility="gone" />
 
-    <im.vector.app.features.sync.widget.SyncStateView
+    <chat.progressive.app.features.sync.widget.SyncStateView
         android:id="@+id/syncStateView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:orientation="vertical"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <im.vector.app.core.ui.views.VerifyDeviceBanner
+            <chat.progressive.app.core.ui.views.VerifyDeviceBanner
                 android:id="@+id/homeVerifyDevice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
         tools:targetApi="lollipop_mr1"
         tools:visibility="visible" />
 
-    <im.vector.app.features.home.room.list.UnreadCounterBadgeView
+    <chat.progressive.app.features.home.room.list.UnreadCounterBadgeView
         android:id="@+id/spacesUnreadCounterBadge"
         style="@style/Widget.Vector.TextView.Micro"
         android:layout_width="wrap_content"

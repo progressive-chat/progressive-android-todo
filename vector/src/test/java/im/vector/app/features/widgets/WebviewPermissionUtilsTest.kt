@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.widgets
+package chat.progressive.app.features.widgets
 
 import android.Manifest
 import android.webkit.PermissionRequest
-import im.vector.app.features.widgets.webview.WebviewPermissionUtils
-import im.vector.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.features.widgets.webview.WebviewPermissionUtils
+import chat.progressive.app.test.fakes.FakeVectorPreferences
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.FixMethodOrder
 import org.junit.Test

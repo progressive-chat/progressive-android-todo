@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
 import android.widget.ImageView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -13,22 +13,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.paging.PagedList
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.R
-import im.vector.app.core.platform.StateView
-import im.vector.app.features.displayname.getBestName
-import im.vector.app.features.home.room.list.home.HomeRoomListAction
-import im.vector.app.features.home.room.list.home.HomeRoomListViewModel
-import im.vector.app.features.home.room.list.home.HomeRoomListViewState
-import im.vector.app.features.home.room.list.home.header.HomeRoomFilter
-import im.vector.app.test.fakes.FakeAnalyticsTracker
-import im.vector.app.test.fakes.FakeDrawableProvider
-import im.vector.app.test.fakes.FakeHomeLayoutPreferencesStore
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeSpaceStateHandler
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fixtures.RoomSummaryFixture.aRoomSummary
-import im.vector.app.test.test
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.core.platform.StateView
+import chat.progressive.app.features.displayname.getBestName
+import chat.progressive.app.features.home.room.list.home.HomeRoomListAction
+import chat.progressive.app.features.home.room.list.home.HomeRoomListViewModel
+import chat.progressive.app.features.home.room.list.home.HomeRoomListViewState
+import chat.progressive.app.features.home.room.list.home.header.HomeRoomFilter
+import chat.progressive.app.test.fakes.FakeAnalyticsTracker
+import chat.progressive.app.test.fakes.FakeDrawableProvider
+import chat.progressive.app.test.fakes.FakeHomeLayoutPreferencesStore
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeSpaceStateHandler
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fixtures.RoomSummaryFixture.aRoomSummary
+import chat.progressive.app.test.test
+import chat.progressive.lib.strings.CommonStrings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

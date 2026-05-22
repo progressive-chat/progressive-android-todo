@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.leakcanary
+package chat.progressive.app.leakcanary
 
-import im.vector.app.core.debug.LeakDetector
+import chat.progressive.app.core.debug.LeakDetector
 import leakcanary.LeakCanary
 import javax.inject.Inject
 

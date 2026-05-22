@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.nightly
+package chat.progressive.app.nightly
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.firebase.appdistribution.FirebaseAppDistribution
 import com.google.firebase.appdistribution.FirebaseAppDistributionException
-import im.vector.app.core.di.DefaultPreferences
-import im.vector.app.core.resources.BuildMeta
-import im.vector.app.features.home.NightlyProxy
-import im.vector.lib.core.utils.timer.Clock
+import chat.progressive.app.core.di.DefaultPreferences
+import chat.progressive.app.core.resources.BuildMeta
+import chat.progressive.app.features.home.NightlyProxy
+import chat.progressive.lib.core.utils.timer.Clock
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -77,7 +77,7 @@ class FirebaseNightlyProxy @Inject constructor(
         private const val SHARED_PREF_KEY = "LAST_NIGHTLY_POPUP_DAY"
 
         private val nightlyPackages = listOf(
-                "im.vector.app.nightly"
+                "chat.progressive.app.nightly"
         )
     }
 }

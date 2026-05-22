@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import android.view.View
 import androidx.test.core.app.ApplicationProvider
@@ -24,23 +24,23 @@ import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaDialogInteractions.clickDialogNegativeButton
 import com.adevinta.android.barista.interaction.BaristaDialogInteractions.clickDialogPositiveButton
 import com.adevinta.android.barista.interaction.BaristaDrawerInteractions.openDrawer
-import im.vector.app.EspressoHelper
-import im.vector.app.R
-import im.vector.app.espresso.tools.clickOnPreference
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilDialogVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.createdirect.CreateDirectRoomActivity
-import im.vector.app.features.home.HomeActivity
-import im.vector.app.features.onboarding.OnboardingActivity
-import im.vector.app.features.settings.VectorSettingsActivity
-import im.vector.app.initialSyncIdlingResource
-import im.vector.app.ui.robot.settings.SettingsRobot
-import im.vector.app.ui.robot.settings.labs.LabFeature
-import im.vector.app.ui.robot.settings.labs.LabFeaturesPreferences
-import im.vector.app.ui.robot.space.SpaceRobot
-import im.vector.app.withIdlingResource
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.EspressoHelper
+import chat.progressive.app.R
+import chat.progressive.app.espresso.tools.clickOnPreference
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilDialogVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.createdirect.CreateDirectRoomActivity
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.app.features.onboarding.OnboardingActivity
+import chat.progressive.app.features.settings.VectorSettingsActivity
+import chat.progressive.app.initialSyncIdlingResource
+import chat.progressive.app.ui.robot.settings.SettingsRobot
+import chat.progressive.app.ui.robot.settings.labs.LabFeature
+import chat.progressive.app.ui.robot.settings.labs.LabFeaturesPreferences
+import chat.progressive.app.ui.robot.space.SpaceRobot
+import chat.progressive.app.withIdlingResource
+import chat.progressive.lib.strings.CommonStrings
 import timber.log.Timber
 
 class ElementRobot(

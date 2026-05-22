@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.extensions
+package chat.progressive.app.core.extensions
 
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

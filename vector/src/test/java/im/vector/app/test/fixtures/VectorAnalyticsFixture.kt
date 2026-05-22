@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.features.analytics.itf.VectorAnalyticsEvent
-import im.vector.app.features.analytics.itf.VectorAnalyticsScreen
+import chat.progressive.app.features.analytics.itf.VectorAnalyticsEvent
+import chat.progressive.app.features.analytics.itf.VectorAnalyticsScreen
 
 fun aVectorAnalyticsScreen(
         name: String = "a-screen-name",

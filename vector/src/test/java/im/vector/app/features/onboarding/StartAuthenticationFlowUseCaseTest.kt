@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
-import im.vector.app.features.login.LoginMode
-import im.vector.app.features.login.SsoState
-import im.vector.app.features.onboarding.StartAuthenticationFlowUseCase.StartAuthenticationResult
-import im.vector.app.test.fakes.FakeAuthenticationService
-import im.vector.app.test.fakes.FakeUri
+import chat.progressive.app.features.login.LoginMode
+import chat.progressive.app.features.login.SsoState
+import chat.progressive.app.features.onboarding.StartAuthenticationFlowUseCase.StartAuthenticationResult
+import chat.progressive.app.test.fakes.FakeAuthenticationService
+import chat.progressive.app.test.fakes.FakeUri
 import io.mockk.coVerifyOrder
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo

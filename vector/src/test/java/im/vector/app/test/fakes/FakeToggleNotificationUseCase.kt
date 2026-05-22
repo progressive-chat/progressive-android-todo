@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.settings.devices.v2.notification.ToggleNotificationsUseCase
+import chat.progressive.app.features.settings.devices.v2.notification.ToggleNotificationsUseCase
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.mockk

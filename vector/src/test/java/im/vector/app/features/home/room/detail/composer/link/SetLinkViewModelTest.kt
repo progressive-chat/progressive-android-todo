@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.composer.link
+package chat.progressive.app.features.home.room.detail.composer.link
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import org.junit.Rule
 import org.junit.Test
 

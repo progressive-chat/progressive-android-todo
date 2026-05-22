@@ -5,17 +5,17 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.timeline.factory
+package chat.progressive.app.features.home.room.detail.timeline.factory
 
-import im.vector.app.features.home.room.detail.timeline.item.PollOptionViewState
-import im.vector.app.features.home.room.detail.timeline.item.PollVoteSummaryData
-import im.vector.app.features.poll.PollItemViewState
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fixtures.PollFixture.A_POLL_CONTENT
-import im.vector.app.test.fixtures.PollFixture.A_POLL_OPTION_IDS
-import im.vector.app.test.fixtures.PollFixture.A_POLL_RESPONSE_DATA
-import im.vector.lib.strings.CommonPlurals
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.features.home.room.detail.timeline.item.PollOptionViewState
+import chat.progressive.app.features.home.room.detail.timeline.item.PollVoteSummaryData
+import chat.progressive.app.features.poll.PollItemViewState
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_CONTENT
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_OPTION_IDS
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_RESPONSE_DATA
+import chat.progressive.lib.strings.CommonPlurals
+import chat.progressive.lib.strings.CommonStrings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

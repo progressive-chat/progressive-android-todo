@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.pushers
+package chat.progressive.app.core.pushers
 
-import im.vector.app.core.pushers.model.PushData
+import chat.progressive.app.core.pushers.model.PushData
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

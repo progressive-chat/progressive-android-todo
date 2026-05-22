@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.utils
+package chat.progressive.app.core.utils
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -13,7 +13,7 @@ import android.text.Layout
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
 import androidx.core.text.getSpans
-import im.vector.app.features.html.HtmlCodeSpan
+import chat.progressive.app.features.html.HtmlCodeSpan
 import io.element.android.wysiwyg.view.spans.InlineCodeSpan
 import io.mockk.justRun
 import io.mockk.mockk

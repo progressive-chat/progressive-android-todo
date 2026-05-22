@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
-import im.vector.app.test.fakes.FakeAuthenticationService
-import im.vector.app.test.fakes.FakeRegistrationWizard
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fixtures.a401ServerError
+import chat.progressive.app.test.fakes.FakeAuthenticationService
+import chat.progressive.app.test.fakes.FakeRegistrationWizard
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fixtures.a401ServerError
 import io.mockk.coVerifyAll
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo

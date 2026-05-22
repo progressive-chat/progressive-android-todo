@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.features
+package chat.progressive.app.features.debug.features
 
 import androidx.datastore.preferences.core.Preferences
 import com.airbnb.epoxy.TypedEpoxyController

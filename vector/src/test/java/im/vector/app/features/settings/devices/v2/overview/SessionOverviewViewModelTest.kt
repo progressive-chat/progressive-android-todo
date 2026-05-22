@@ -5,26 +5,26 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.overview
+package chat.progressive.app.features.settings.devices.v2.overview
 
 import android.os.SystemClock
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.airbnb.mvrx.Success
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.RefreshDevicesUseCase
-import im.vector.app.features.settings.devices.v2.ToggleIpAddressVisibilityUseCase
-import im.vector.app.features.settings.devices.v2.notification.NotificationsStatus
-import im.vector.app.features.settings.devices.v2.verification.CheckIfCurrentSessionCanBeVerifiedUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeGetNotificationsStatusUseCase
-import im.vector.app.test.fakes.FakePendingAuthHandler
-import im.vector.app.test.fakes.FakeSignoutSessionsUseCase
-import im.vector.app.test.fakes.FakeToggleNotificationUseCase
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.fakes.FakeVerificationService
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.RefreshDevicesUseCase
+import chat.progressive.app.features.settings.devices.v2.ToggleIpAddressVisibilityUseCase
+import chat.progressive.app.features.settings.devices.v2.notification.NotificationsStatus
+import chat.progressive.app.features.settings.devices.v2.verification.CheckIfCurrentSessionCanBeVerifiedUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeGetNotificationsStatusUseCase
+import chat.progressive.app.test.fakes.FakePendingAuthHandler
+import chat.progressive.app.test.fakes.FakeSignoutSessionsUseCase
+import chat.progressive.app.test.fakes.FakeToggleNotificationUseCase
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeVerificationService
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

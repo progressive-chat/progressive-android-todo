@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.call.conference
+package chat.progressive.app.features.call.conference
 
 import org.amshove.kluent.internal.assertFails
 import org.junit.Assert.assertEquals

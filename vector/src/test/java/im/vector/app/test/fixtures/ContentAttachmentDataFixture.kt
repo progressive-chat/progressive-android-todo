@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.test.fakes.FakeUri
+import chat.progressive.app.test.fakes.FakeUri
 import org.matrix.android.sdk.api.session.content.ContentAttachmentData
 
 object ContentAttachmentDataFixture {

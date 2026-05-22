@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.signout
+package chat.progressive.app.features.settings.devices.v2.signout
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeReAuthHelper
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeReAuthHelper
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk

@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.onboarding.UriFactory
+import chat.progressive.app.features.onboarding.UriFactory
 import io.mockk.every
 import io.mockk.mockk
 

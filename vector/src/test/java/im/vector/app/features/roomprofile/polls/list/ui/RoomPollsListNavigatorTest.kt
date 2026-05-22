@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.list.ui
+package chat.progressive.app.features.roomprofile.polls.list.ui
 
 import android.content.Intent
-import im.vector.app.features.roomprofile.polls.detail.ui.RoomPollDetailActivity
-import im.vector.app.test.fakes.FakeContext
+import chat.progressive.app.features.roomprofile.polls.detail.ui.RoomPollDetailActivity
+import chat.progressive.app.test.fakes.FakeContext
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject

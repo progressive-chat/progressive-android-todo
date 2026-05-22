@@ -5,17 +5,17 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls
+package chat.progressive.app.features.roomprofile.polls
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.roomprofile.polls.list.domain.DisposePollHistoryUseCase
-import im.vector.app.features.roomprofile.polls.list.domain.GetPollsUseCase
-import im.vector.app.features.roomprofile.polls.list.domain.LoadMorePollsUseCase
-import im.vector.app.features.roomprofile.polls.list.domain.SyncPollsUseCase
-import im.vector.app.features.roomprofile.polls.list.ui.PollSummary
-import im.vector.app.features.roomprofile.polls.list.ui.PollSummaryMapper
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.features.roomprofile.polls.list.domain.DisposePollHistoryUseCase
+import chat.progressive.app.features.roomprofile.polls.list.domain.GetPollsUseCase
+import chat.progressive.app.features.roomprofile.polls.list.domain.LoadMorePollsUseCase
+import chat.progressive.app.features.roomprofile.polls.list.domain.SyncPollsUseCase
+import chat.progressive.app.features.roomprofile.polls.list.ui.PollSummary
+import chat.progressive.app.features.roomprofile.polls.list.ui.PollSummaryMapper
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

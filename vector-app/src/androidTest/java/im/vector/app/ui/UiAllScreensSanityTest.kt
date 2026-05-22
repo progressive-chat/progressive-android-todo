@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui
+package chat.progressive.app.ui
 
 import android.Manifest
 import androidx.test.espresso.IdlingPolicies
@@ -14,13 +14,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import im.vector.app.espresso.tools.ScreenshotFailureRule
-import im.vector.app.features.MainActivity
-import im.vector.app.getString
-import im.vector.app.ui.robot.ElementRobot
-import im.vector.app.ui.robot.settings.labs.LabFeaturesPreferences
-import im.vector.app.ui.robot.withDeveloperMode
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.espresso.tools.ScreenshotFailureRule
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.getString
+import chat.progressive.app.ui.robot.ElementRobot
+import chat.progressive.app.ui.robot.settings.labs.LabFeaturesPreferences
+import chat.progressive.app.ui.robot.withDeveloperMode
+import chat.progressive.lib.strings.CommonStrings
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -46,7 +46,7 @@ class UiAllScreensSanityTest {
                     InstrumentationRegistry.getInstrumentation()
                             .targetContext
                             .resources
-                            .getBoolean(im.vector.app.config.R.bool.settings_labs_new_app_layout_default)
+                            .getBoolean(chat.progressive.app.config.R.bool.settings_labs_new_app_layout_default)
             )
     )
 

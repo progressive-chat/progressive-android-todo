@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.attachments
+package chat.progressive.app.features.attachments
 
 import android.content.Intent
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeFunction1
-import im.vector.app.test.fakes.FakeIntent
-import im.vector.app.test.fakes.FakeMultiPickerIncomingFiles
-import im.vector.app.test.fixtures.ContentAttachmentDataFixture.aContentAttachmentData
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeFunction1
+import chat.progressive.app.test.fakes.FakeIntent
+import chat.progressive.app.test.fakes.FakeMultiPickerIncomingFiles
+import chat.progressive.app.test.fixtures.ContentAttachmentDataFixture.aContentAttachmentData
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 import org.matrix.android.sdk.api.session.content.ContentAttachmentData

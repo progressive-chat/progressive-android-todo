@@ -5,17 +5,17 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.analytics
+package chat.progressive.app.features.debug.analytics
 
 import com.airbnb.mvrx.MavericksViewModelFactory
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import im.vector.app.core.di.MavericksAssistedViewModelFactory
-import im.vector.app.core.di.hiltMavericksViewModelFactory
-import im.vector.app.core.platform.EmptyViewEvents
-import im.vector.app.core.platform.VectorViewModel
-import im.vector.app.features.analytics.store.AnalyticsStore
+import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
+import chat.progressive.app.core.di.hiltMavericksViewModelFactory
+import chat.progressive.app.core.platform.EmptyViewEvents
+import chat.progressive.app.core.platform.VectorViewModel
+import chat.progressive.app.features.analytics.store.AnalyticsStore
 import kotlinx.coroutines.launch
 
 class DebugAnalyticsViewModel @AssistedInject constructor(

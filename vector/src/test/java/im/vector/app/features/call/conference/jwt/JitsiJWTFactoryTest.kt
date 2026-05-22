@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.call.conference.jwt
+package chat.progressive.app.features.call.conference.jwt
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

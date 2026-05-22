@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding.ftueauth
+package chat.progressive.app.features.onboarding.ftueauth
 
-import im.vector.app.test.fixtures.aDummyStage
-import im.vector.app.test.fixtures.aMsisdnStage
-import im.vector.app.test.fixtures.aRecaptchaStage
-import im.vector.app.test.fixtures.aTermsStage
-import im.vector.app.test.fixtures.anEmailStage
-import im.vector.app.test.fixtures.anOtherStage
+import chat.progressive.app.test.fixtures.aDummyStage
+import chat.progressive.app.test.fixtures.aMsisdnStage
+import chat.progressive.app.test.fixtures.aRecaptchaStage
+import chat.progressive.app.test.fixtures.aTermsStage
+import chat.progressive.app.test.fixtures.anEmailStage
+import chat.progressive.app.test.fixtures.anOtherStage
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 

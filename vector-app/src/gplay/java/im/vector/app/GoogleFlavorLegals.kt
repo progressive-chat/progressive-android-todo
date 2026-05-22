@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import im.vector.app.features.settings.legals.FlavorLegals
+import chat.progressive.app.features.settings.legals.FlavorLegals
 import javax.inject.Inject
 
 class GoogleFlavorLegals @Inject constructor() : FlavorLegals {

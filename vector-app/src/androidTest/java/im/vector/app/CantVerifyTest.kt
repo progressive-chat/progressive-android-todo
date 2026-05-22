@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.view.View
 import androidx.test.espresso.Espresso
@@ -15,9 +15,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.adevinta.android.barista.internal.viewaction.SleepViewAction
-import im.vector.app.features.MainActivity
-import im.vector.app.ui.robot.ElementRobot
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.ui.robot.ElementRobot
+import chat.progressive.lib.strings.CommonStrings
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain

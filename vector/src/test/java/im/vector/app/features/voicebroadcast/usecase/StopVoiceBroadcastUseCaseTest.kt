@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voicebroadcast.usecase
+package chat.progressive.app.features.voicebroadcast.usecase
 
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
-import im.vector.app.features.voicebroadcast.model.MessageVoiceBroadcastInfoContent
-import im.vector.app.features.voicebroadcast.model.VoiceBroadcastState
-import im.vector.app.features.voicebroadcast.recording.VoiceBroadcastRecorder
-import im.vector.app.features.voicebroadcast.recording.usecase.StopVoiceBroadcastUseCase
-import im.vector.app.test.fakes.FakeRoom
-import im.vector.app.test.fakes.FakeRoomService
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
+import chat.progressive.app.features.voicebroadcast.model.MessageVoiceBroadcastInfoContent
+import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcastState
+import chat.progressive.app.features.voicebroadcast.recording.VoiceBroadcastRecorder
+import chat.progressive.app.features.voicebroadcast.recording.usecase.StopVoiceBroadcastUseCase
+import chat.progressive.app.test.fakes.FakeRoom
+import chat.progressive.app.test.fakes.FakeRoomService
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify

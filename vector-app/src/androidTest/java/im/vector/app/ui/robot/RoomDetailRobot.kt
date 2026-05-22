@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.closeSoftKeyboard
@@ -23,14 +23,14 @@ import com.adevinta.android.barista.interaction.BaristaEditTextInteractions.writ
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.clickMenu
 import com.adevinta.android.barista.interaction.BaristaMenuClickInteractions.openMenu
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import im.vector.app.R
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.home.room.detail.timeline.action.MessageActionsBottomSheet
-import im.vector.app.features.home.room.detail.timeline.reactions.ViewReactionsBottomSheet
-import im.vector.app.features.reactions.data.EmojiDataSource
-import im.vector.app.interactWithSheet
-import im.vector.app.withRetry
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.home.room.detail.timeline.action.MessageActionsBottomSheet
+import chat.progressive.app.features.home.room.detail.timeline.reactions.ViewReactionsBottomSheet
+import chat.progressive.app.features.reactions.data.EmojiDataSource
+import chat.progressive.app.interactWithSheet
+import chat.progressive.app.withRetry
+import chat.progressive.lib.strings.CommonStrings
 import java.lang.Thread.sleep
 
 class RoomDetailRobot {

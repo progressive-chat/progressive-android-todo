@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -13,8 +13,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.EntryPoints
-import im.vector.app.core.di.SingletonEntryPoint
-import im.vector.app.features.analytics.store.AnalyticsStore
+import chat.progressive.app.core.di.SingletonEntryPoint
+import chat.progressive.app.features.analytics.store.AnalyticsStore
 import kotlinx.coroutines.runBlocking
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
@@ -46,7 +46,7 @@ class ClearCurrentSessionRule : TestWatcher() {
 private fun KClass<*>.asTopLevel() = Class.forName("${qualifiedName}Kt")
 
 /**
- * Fetches the top level, private [Context.dataStore] extension property from [im.vector.app.features.analytics.store.AnalyticsStore]
+ * Fetches the top level, private [Context.dataStore] extension property from [chat.progressive.app.features.analytics.store.AnalyticsStore]
  * via reflection to avoid exposing property to all callers.
  */
 @Suppress("UNCHECKED_CAST")

@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.DefaultVectorOverrides
-import im.vector.app.features.VectorOverrides
+import chat.progressive.app.features.DefaultVectorOverrides
+import chat.progressive.app.features.VectorOverrides
 
 class FakeVectorOverrides : VectorOverrides by DefaultVectorOverrides()

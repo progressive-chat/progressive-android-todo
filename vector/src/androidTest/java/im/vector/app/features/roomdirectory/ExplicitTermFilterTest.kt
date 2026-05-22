@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomdirectory
+package chat.progressive.app.features.roomdirectory
 
-import im.vector.app.InstrumentedTest
-import im.vector.app.core.utils.AssetReader
+import chat.progressive.app.InstrumentedTest
+import chat.progressive.app.core.utils.AssetReader
 import org.amshove.kluent.shouldBe
 import org.junit.FixMethodOrder
 import org.junit.Test

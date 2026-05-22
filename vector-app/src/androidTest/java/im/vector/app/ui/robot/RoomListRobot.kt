@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -17,17 +17,17 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import im.vector.app.R
-import im.vector.app.espresso.tools.selectTabAtPosition
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilDialogVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.home.HomeActivity
-import im.vector.app.features.home.room.list.home.header.HomeRoomFilter
-import im.vector.app.features.roomdirectory.RoomDirectoryActivity
-import im.vector.app.ui.robot.settings.labs.LabFeaturesPreferences
-import im.vector.app.waitForView
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.espresso.tools.selectTabAtPosition
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilDialogVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.app.features.home.room.list.home.header.HomeRoomFilter
+import chat.progressive.app.features.roomdirectory.RoomDirectoryActivity
+import chat.progressive.app.ui.robot.settings.labs.LabFeaturesPreferences
+import chat.progressive.app.waitForView
+import chat.progressive.lib.strings.CommonStrings
 
 class RoomListRobot(private val labsPreferences: LabFeaturesPreferences) {
 

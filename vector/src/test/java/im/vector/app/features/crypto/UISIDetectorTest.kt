@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.crypto
+package chat.progressive.app.features.crypto
 
-import im.vector.app.E2EMessageDetected
-import im.vector.app.UISIDetector
+import chat.progressive.app.E2EMessageDetected
+import chat.progressive.app.UISIDetector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

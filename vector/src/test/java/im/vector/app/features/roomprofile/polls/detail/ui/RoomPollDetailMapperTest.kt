@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.detail.ui
+package chat.progressive.app.features.roomprofile.polls.detail.ui
 
-import im.vector.app.features.home.room.detail.timeline.factory.PollItemViewStateFactory
-import im.vector.app.features.home.room.detail.timeline.helper.PollResponseDataFactory
-import im.vector.app.features.poll.PollItemViewState
-import im.vector.app.features.roomprofile.polls.detail.domain.GetEndedPollEventIdUseCase
-import im.vector.app.test.fixtures.RoomPollFixture
+import chat.progressive.app.features.home.room.detail.timeline.factory.PollItemViewStateFactory
+import chat.progressive.app.features.home.room.detail.timeline.helper.PollResponseDataFactory
+import chat.progressive.app.features.poll.PollItemViewState
+import chat.progressive.app.features.roomprofile.polls.detail.domain.GetEndedPollEventIdUseCase
+import chat.progressive.app.test.fixtures.RoomPollFixture
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -42,7 +42,7 @@ internal class RoomPollDetailMapperTest {
 
     @Before
     fun setup() {
-        mockkStatic("im.vector.app.core.extensions.TimelineEventKt")
+        mockkStatic("chat.progressive.app.core.extensions.TimelineEventKt")
     }
 
     @After

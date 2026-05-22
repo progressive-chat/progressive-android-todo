@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.utils
+package chat.progressive.app.core.utils
 
-import im.vector.app.test.test
+import chat.progressive.app.test.test
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

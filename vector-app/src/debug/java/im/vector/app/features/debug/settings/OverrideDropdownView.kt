@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.settings
+package chat.progressive.app.features.debug.settings
 
 import android.content.Context
 import android.util.AttributeSet
@@ -15,7 +15,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import im.vector.application.databinding.ViewBooleanDropdownBinding
+import chat.progressive.application.databinding.ViewBooleanDropdownBinding
 
 class OverrideDropdownView @JvmOverloads constructor(
         context: Context,

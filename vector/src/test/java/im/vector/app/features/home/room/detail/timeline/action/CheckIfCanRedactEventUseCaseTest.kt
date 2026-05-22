@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.timeline.action
+package chat.progressive.app.features.home.room.detail.timeline.action
 
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import io.mockk.mockk
 import org.amshove.kluent.shouldBe
 import org.junit.Test

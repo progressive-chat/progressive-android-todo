@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.pincode
+package chat.progressive.app.features.pin.lockscreen.pincode
 
-import im.vector.app.features.pin.lockscreen.crypto.LockScreenKeyRepository
+import chat.progressive.app.features.pin.lockscreen.crypto.LockScreenKeyRepository
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify

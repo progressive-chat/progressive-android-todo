@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features
+package chat.progressive.app.features
 
 import com.airbnb.mvrx.Success
-import im.vector.app.core.epoxy.profiles.ProfileMatrixItemWithPowerLevelWithPresence
-import im.vector.app.features.roomprofile.members.RoomMemberListCategories
-import im.vector.app.features.roomprofile.members.RoomMemberListController
-import im.vector.app.features.roomprofile.members.RoomMemberListViewState
+import chat.progressive.app.core.epoxy.profiles.ProfileMatrixItemWithPowerLevelWithPresence
+import chat.progressive.app.features.roomprofile.members.RoomMemberListCategories
+import chat.progressive.app.features.roomprofile.members.RoomMemberListController
+import chat.progressive.app.features.roomprofile.members.RoomMemberListViewState
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

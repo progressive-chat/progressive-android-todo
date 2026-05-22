@@ -5,6 +5,6 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot.settings.labs
+package chat.progressive.app.ui.robot.settings.labs
 
 data class LabFeaturesPreferences(val isNewAppLayoutEnabled: Boolean)

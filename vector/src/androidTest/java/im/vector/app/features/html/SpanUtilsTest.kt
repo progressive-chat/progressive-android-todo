@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.html
+package chat.progressive.app.features.html
 
 import android.graphics.Color
 import android.os.Build
@@ -17,7 +17,7 @@ import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
 import androidx.emoji2.text.EmojiCompat
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.InstrumentedTest
+import chat.progressive.app.InstrumentedTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.junit.BeforeClass

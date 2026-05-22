@@ -6,14 +6,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.fdroid.receiver
+package chat.progressive.app.fdroid.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.fdroid.BackgroundSyncStarter
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.fdroid.BackgroundSyncStarter
 import timber.log.Timber
 import javax.inject.Inject
 

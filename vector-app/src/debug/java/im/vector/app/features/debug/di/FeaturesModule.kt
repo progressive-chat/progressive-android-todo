@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.di
+package chat.progressive.app.features.debug.di
 
 import android.content.Context
 import dagger.Binds
@@ -13,12 +13,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.features.DefaultVectorOverrides
-import im.vector.app.features.VectorFeatures
-import im.vector.app.features.VectorOverrides
-import im.vector.app.features.debug.features.DebugVectorFeatures
-import im.vector.app.features.debug.features.DebugVectorOverrides
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.features.DefaultVectorOverrides
+import chat.progressive.app.features.VectorFeatures
+import chat.progressive.app.features.VectorOverrides
+import chat.progressive.app.features.debug.features.DebugVectorFeatures
+import chat.progressive.app.features.debug.features.DebugVectorOverrides
 
 @InstallIn(SingletonComponent::class)
 @Module

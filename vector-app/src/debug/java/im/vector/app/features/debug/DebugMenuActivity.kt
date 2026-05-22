@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug
+package chat.progressive.app.features.debug
 
 import android.app.Activity
 import android.app.NotificationChannel
@@ -17,32 +17,32 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.Person
 import androidx.core.content.getSystemService
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.R
-import im.vector.app.core.extensions.registerStartForActivityResult
-import im.vector.app.core.platform.VectorBaseActivity
-import im.vector.app.core.utils.PERMISSIONS_FOR_TAKING_PHOTO
-import im.vector.app.core.utils.checkPermissions
-import im.vector.app.core.utils.registerForPermissionsResult
-import im.vector.app.core.utils.toast
-import im.vector.app.features.debug.analytics.DebugAnalyticsActivity
-import im.vector.app.features.debug.features.DebugFeaturesSettingsActivity
-import im.vector.app.features.debug.jitsi.DebugJitsiActivity
-import im.vector.app.features.debug.leak.DebugMemoryLeaksActivity
-import im.vector.app.features.debug.sas.DebugSasEmojiActivity
-import im.vector.app.features.debug.settings.DebugPrivateSettingsActivity
-import im.vector.app.features.qrcode.QrCodeScannerActivity
-import im.vector.application.databinding.ActivityDebugMenuBinding
-import im.vector.lib.core.utils.timer.Clock
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeDarkDefaultActivity
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeDarkTestActivity
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeDarkVectorActivity
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeLightDefaultActivity
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeLightTestActivity
-import im.vector.lib.ui.styles.debug.DebugMaterialThemeLightVectorActivity
-import im.vector.lib.ui.styles.debug.DebugVectorButtonStylesDarkActivity
-import im.vector.lib.ui.styles.debug.DebugVectorButtonStylesLightActivity
-import im.vector.lib.ui.styles.debug.DebugVectorTextViewDarkActivity
-import im.vector.lib.ui.styles.debug.DebugVectorTextViewLightActivity
+import chat.progressive.app.R
+import chat.progressive.app.core.extensions.registerStartForActivityResult
+import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.core.utils.PERMISSIONS_FOR_TAKING_PHOTO
+import chat.progressive.app.core.utils.checkPermissions
+import chat.progressive.app.core.utils.registerForPermissionsResult
+import chat.progressive.app.core.utils.toast
+import chat.progressive.app.features.debug.analytics.DebugAnalyticsActivity
+import chat.progressive.app.features.debug.features.DebugFeaturesSettingsActivity
+import chat.progressive.app.features.debug.jitsi.DebugJitsiActivity
+import chat.progressive.app.features.debug.leak.DebugMemoryLeaksActivity
+import chat.progressive.app.features.debug.sas.DebugSasEmojiActivity
+import chat.progressive.app.features.debug.settings.DebugPrivateSettingsActivity
+import chat.progressive.app.features.qrcode.QrCodeScannerActivity
+import chat.progressive.application.databinding.ActivityDebugMenuBinding
+import chat.progressive.lib.core.utils.timer.Clock
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkDefaultActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkTestActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkVectorActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightDefaultActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightTestActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightVectorActivity
+import chat.progressive.lib.ui.styles.debug.DebugVectorButtonStylesDarkActivity
+import chat.progressive.lib.ui.styles.debug.DebugVectorButtonStylesLightActivity
+import chat.progressive.lib.ui.styles.debug.DebugVectorTextViewDarkActivity
+import chat.progressive.lib.ui.styles.debug.DebugVectorTextViewLightActivity
 import timber.log.Timber
 import javax.inject.Inject
 

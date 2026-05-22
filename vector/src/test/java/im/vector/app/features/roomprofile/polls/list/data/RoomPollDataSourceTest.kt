@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.list.data
+package chat.progressive.app.features.roomprofile.polls.list.data
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.FakePollHistoryService
-import im.vector.app.test.fakes.givenAsFlow
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.FakePollHistoryService
+import chat.progressive.app.test.fakes.givenAsFlow
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest

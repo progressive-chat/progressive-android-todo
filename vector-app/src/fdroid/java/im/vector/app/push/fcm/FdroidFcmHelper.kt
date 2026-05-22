@@ -6,14 +6,14 @@
  */
 @file:Suppress("UNUSED_PARAMETER")
 
-package im.vector.app.push.fcm
+package chat.progressive.app.push.fcm
 
 import android.content.Context
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.core.pushers.FcmHelper
-import im.vector.app.core.pushers.PushersManager
-import im.vector.app.fdroid.BackgroundSyncStarter
-import im.vector.app.fdroid.receiver.AlarmSyncBroadcastReceiver
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.core.pushers.FcmHelper
+import chat.progressive.app.core.pushers.PushersManager
+import chat.progressive.app.fdroid.BackgroundSyncStarter
+import chat.progressive.app.fdroid.receiver.AlarmSyncBroadcastReceiver
 import javax.inject.Inject
 
 /**

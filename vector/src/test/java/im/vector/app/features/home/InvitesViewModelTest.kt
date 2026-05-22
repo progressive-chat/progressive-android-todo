@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.home.room.list.home.invites.InvitesAction
-import im.vector.app.features.home.room.list.home.invites.InvitesViewEvents
-import im.vector.app.features.home.room.list.home.invites.InvitesViewModel
-import im.vector.app.features.home.room.list.home.invites.InvitesViewState
-import im.vector.app.test.fakes.FakeDrawableProvider
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fixtures.RoomSummaryFixture
-import im.vector.app.test.test
+import chat.progressive.app.features.home.room.list.home.invites.InvitesAction
+import chat.progressive.app.features.home.room.list.home.invites.InvitesViewEvents
+import chat.progressive.app.features.home.room.list.home.invites.InvitesViewModel
+import chat.progressive.app.features.home.room.list.home.invites.InvitesViewState
+import chat.progressive.app.test.fakes.FakeDrawableProvider
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fixtures.RoomSummaryFixture
+import chat.progressive.app.test.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

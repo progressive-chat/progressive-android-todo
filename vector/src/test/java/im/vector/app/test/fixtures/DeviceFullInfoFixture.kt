@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
 import org.matrix.android.sdk.api.session.crypto.model.DeviceInfo
 import org.matrix.android.sdk.api.session.crypto.model.RoomEncryptionTrustLevel
 

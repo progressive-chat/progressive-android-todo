@@ -5,15 +5,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
-import im.vector.app.test.fakes.FakeAuthenticationService
-import im.vector.app.test.fakes.FakeRegistrationWizardActionDelegate
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fakes.FakeVectorFeatures
-import im.vector.app.test.fakes.FakeVectorOverrides
-import im.vector.app.test.fixtures.SelectedHomeserverStateFixture.aSelectedHomeserverState
+import chat.progressive.app.test.fakes.FakeAuthenticationService
+import chat.progressive.app.test.fakes.FakeRegistrationWizardActionDelegate
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeVectorOverrides
+import chat.progressive.app.test.fixtures.SelectedHomeserverStateFixture.aSelectedHomeserverState
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
@@ -29,7 +29,7 @@ class RegistrationActionHandlerTest {
     private val vectorOverrides = FakeVectorOverrides()
     private val vectorFeatures = FakeVectorFeatures()
     private val fakeStringProvider = FakeStringProvider().also {
-        it.given(im.vector.app.config.R.string.matrix_org_server_url, "https://matrix.org")
+        it.given(chat.progressive.app.config.R.string.matrix_org_server_url, "https://matrix.org")
     }
 
     private val registrationActionHandler = RegistrationActionHandler(

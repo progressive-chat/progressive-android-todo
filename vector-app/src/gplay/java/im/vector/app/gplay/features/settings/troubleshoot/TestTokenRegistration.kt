@@ -4,19 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
-package im.vector.app.gplay.features.settings.troubleshoot
+package chat.progressive.app.gplay.features.settings.troubleshoot
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.core.pushers.FcmHelper
-import im.vector.app.core.pushers.PushersManager
-import im.vector.app.core.resources.StringProvider
-import im.vector.app.features.settings.troubleshoot.TroubleshootTest
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.core.pushers.FcmHelper
+import chat.progressive.app.core.pushers.PushersManager
+import chat.progressive.app.core.resources.StringProvider
+import chat.progressive.app.features.settings.troubleshoot.TroubleshootTest
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.matrix.android.sdk.api.session.pushers.PusherState

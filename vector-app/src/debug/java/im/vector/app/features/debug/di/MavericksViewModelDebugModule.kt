@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.di
+package chat.progressive.app.features.debug.di
 
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.multibindings.IntoMap
-import im.vector.app.core.di.MavericksAssistedViewModelFactory
-import im.vector.app.core.di.MavericksViewModelComponent
-import im.vector.app.core.di.MavericksViewModelKey
-import im.vector.app.features.debug.analytics.DebugAnalyticsViewModel
-import im.vector.app.features.debug.leak.DebugMemoryLeaksViewModel
-import im.vector.app.features.debug.settings.DebugPrivateSettingsViewModel
+import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
+import chat.progressive.app.core.di.MavericksViewModelComponent
+import chat.progressive.app.core.di.MavericksViewModelKey
+import chat.progressive.app.features.debug.analytics.DebugAnalyticsViewModel
+import chat.progressive.app.features.debug.leak.DebugMemoryLeaksViewModel
+import chat.progressive.app.features.debug.settings.DebugPrivateSettingsViewModel
 
 @InstallIn(MavericksViewModelComponent::class)
 @Module

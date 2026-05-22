@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voice
+package chat.progressive.app.features.voice
 
 import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.TestBuildVersionSdkIntProvider
-import im.vector.app.features.DefaultVectorFeatures
+import chat.progressive.app.TestBuildVersionSdkIntProvider
+import chat.progressive.app.features.DefaultVectorFeatures
 import io.mockk.every
 import io.mockk.spyk
 import org.amshove.kluent.shouldBeInstanceOf

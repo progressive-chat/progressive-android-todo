@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features
+package chat.progressive.app.features
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.InstrumentedTest
-import im.vector.app.features.analytics.ReportedDecryptionFailurePersistence
+import chat.progressive.app.InstrumentedTest
+import chat.progressive.app.features.analytics.ReportedDecryptionFailurePersistence
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

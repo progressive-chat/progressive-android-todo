@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.di
+package chat.progressive.app.core.di
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import im.vector.app.core.debug.DebugNavigator
-import im.vector.app.core.debug.DebugReceiver
-import im.vector.app.core.debug.LeakDetector
+import chat.progressive.app.core.debug.DebugNavigator
+import chat.progressive.app.core.debug.DebugReceiver
+import chat.progressive.app.core.debug.LeakDetector
 
 @InstallIn(SingletonComponent::class)
 @Module

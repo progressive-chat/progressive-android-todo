@@ -5,17 +5,17 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.media.domain.usecase
+package chat.progressive.app.features.media.domain.usecase
 
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import im.vector.app.core.intent.getMimeTypeFromUri
-import im.vector.app.core.utils.saveMedia
-import im.vector.app.features.notifications.NotificationUtils
-import im.vector.app.test.fakes.FakeClock
-import im.vector.app.test.fakes.FakeFile
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.core.intent.getMimeTypeFromUri
+import chat.progressive.app.core.utils.saveMedia
+import chat.progressive.app.features.notifications.NotificationUtils
+import chat.progressive.app.test.fakes.FakeClock
+import chat.progressive.app.test.fakes.FakeFile
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -54,14 +54,14 @@ class DownloadMediaUseCaseTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        mockkStatic("im.vector.app.core.utils.ExternalApplicationsUtilKt")
-        mockkStatic("im.vector.app.core.intent.VectorMimeTypeKt")
+        mockkStatic("chat.progressive.app.core.utils.ExternalApplicationsUtilKt")
+        mockkStatic("chat.progressive.app.core.intent.VectorMimeTypeKt")
     }
 
     @After
     fun tearDown() {
-        unmockkStatic("im.vector.app.core.utils.ExternalApplicationsUtilKt")
-        unmockkStatic("im.vector.app.core.intent.VectorMimeTypeKt")
+        unmockkStatic("chat.progressive.app.core.utils.ExternalApplicationsUtilKt")
+        unmockkStatic("chat.progressive.app.core.intent.VectorMimeTypeKt")
         file.tearDown()
     }
 

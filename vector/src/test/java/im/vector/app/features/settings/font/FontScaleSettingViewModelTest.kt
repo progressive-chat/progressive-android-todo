@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.font
+package chat.progressive.app.features.settings.font
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.settings.FontScaleValue
-import im.vector.app.test.fakes.FakeConfiguration
-import im.vector.app.test.fakes.FakeFontScalePreferences
-import im.vector.app.test.test
+import chat.progressive.app.features.settings.FontScaleValue
+import chat.progressive.app.test.fakes.FakeConfiguration
+import chat.progressive.app.test.fakes.FakeFontScalePreferences
+import chat.progressive.app.test.test
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule

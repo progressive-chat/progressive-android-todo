@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.list.data
+package chat.progressive.app.features.roomprofile.polls.list.data
 
 import io.mockk.coEvery
 import io.mockk.coJustRun

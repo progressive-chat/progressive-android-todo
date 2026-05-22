@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.lib.ui.styles.debug
+package chat.progressive.lib.ui.styles.debug
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import im.vector.lib.ui.styles.databinding.ActivityDebugButtonStylesBinding
+import chat.progressive.lib.ui.styles.databinding.ActivityDebugButtonStylesBinding
 
 abstract class DebugVectorButtonStylesActivity : AppCompatActivity() {
 

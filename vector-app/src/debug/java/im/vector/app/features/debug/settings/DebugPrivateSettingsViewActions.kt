@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.settings
+package chat.progressive.app.features.debug.settings
 
-import im.vector.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.VectorViewModelAction
 
 sealed interface DebugPrivateSettingsViewActions : VectorViewModelAction {
     data class SetDialPadVisibility(val force: Boolean) : DebugPrivateSettingsViewActions

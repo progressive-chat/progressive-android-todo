@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot
+package chat.progressive.app.ui.robot
 
 import android.annotation.SuppressLint
 import androidx.test.espresso.Espresso.pressBack
@@ -16,12 +16,12 @@ import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assert
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaDialogInteractions.clickDialogNegativeButton
 import com.adevinta.android.barista.interaction.BaristaListInteractions.clickListItem
-import im.vector.app.R
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilDialogVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.roommemberprofile.RoomMemberProfileActivity
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilDialogVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.roommemberprofile.RoomMemberProfileActivity
+import chat.progressive.lib.strings.CommonStrings
 
 class RoomSettingsRobot {
 

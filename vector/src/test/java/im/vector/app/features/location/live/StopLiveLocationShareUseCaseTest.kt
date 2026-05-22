@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.live
+package chat.progressive.app.features.location.live
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import io.mockk.unmockkAll
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo

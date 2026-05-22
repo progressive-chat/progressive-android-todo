@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.notifications.usecase
+package chat.progressive.app.features.settings.notifications.usecase
 
-import im.vector.app.features.settings.devices.v2.notification.CheckIfCanToggleNotificationsViaPusherUseCase
-import im.vector.app.features.settings.devices.v2.notification.DeleteNotificationSettingsAccountDataUseCase
-import im.vector.app.features.settings.devices.v2.notification.SetNotificationSettingsAccountDataUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeUnifiedPushHelper
-import im.vector.app.test.fixtures.PusherFixture
+import chat.progressive.app.features.settings.devices.v2.notification.CheckIfCanToggleNotificationsViaPusherUseCase
+import chat.progressive.app.features.settings.devices.v2.notification.DeleteNotificationSettingsAccountDataUseCase
+import chat.progressive.app.features.settings.devices.v2.notification.SetNotificationSettingsAccountDataUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeUnifiedPushHelper
+import chat.progressive.app.test.fixtures.PusherFixture
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every

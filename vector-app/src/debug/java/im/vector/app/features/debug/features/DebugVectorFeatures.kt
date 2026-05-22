@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.features
+package chat.progressive.app.features.debug.features
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -15,9 +15,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import im.vector.app.config.OnboardingVariant
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.features.VectorFeatures
+import chat.progressive.app.config.OnboardingVariant
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.features.VectorFeatures
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlin.reflect.KClass

@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.jitsi
+package chat.progressive.app.features.debug.jitsi
 
 import android.annotation.SuppressLint
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.platform.VectorBaseActivity
-import im.vector.application.databinding.ActivityDebugJitsiBinding
+import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.application.databinding.ActivityDebugJitsiBinding
 import org.jitsi.meet.sdk.JitsiMeet
 
 @AndroidEntryPoint

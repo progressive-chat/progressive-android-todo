@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.screenshot
+package chat.progressive.app.screenshot
 
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import im.vector.app.R
-import im.vector.app.features.home.room.list.UnreadCounterBadgeView
+import chat.progressive.app.R
+import chat.progressive.app.features.home.room.list.UnreadCounterBadgeView
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test

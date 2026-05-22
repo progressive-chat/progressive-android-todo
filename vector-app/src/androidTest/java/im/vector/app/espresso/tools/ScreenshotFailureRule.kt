@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.espresso.tools
+package chat.progressive.app.espresso.tools
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -15,7 +15,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import im.vector.lib.core.utils.timer.DefaultClock
+import chat.progressive.lib.core.utils.timer.DefaultClock
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import timber.log.Timber

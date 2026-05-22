@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.poll
+package chat.progressive.app.features.home.room.detail.poll
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fixtures.RoomPollFixture
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fixtures.RoomPollFixture
 import io.mockk.every
 import io.mockk.verify
 import org.junit.Test

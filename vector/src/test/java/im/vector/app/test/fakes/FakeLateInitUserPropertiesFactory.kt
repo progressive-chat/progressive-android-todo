@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.analytics.impl.LateInitUserPropertiesFactory
-import im.vector.app.features.analytics.plan.UserProperties
+import chat.progressive.app.features.analytics.impl.LateInitUserPropertiesFactory
+import chat.progressive.app.features.analytics.plan.UserProperties
 import io.mockk.coEvery
 import io.mockk.mockk
 

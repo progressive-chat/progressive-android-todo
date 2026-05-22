@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.core.notification.NotificationsSettingUpdater
+import chat.progressive.app.core.notification.NotificationsSettingUpdater
 import io.mockk.justRun
 import io.mockk.mockk
 import org.matrix.android.sdk.api.session.Session

@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home
+package chat.progressive.app.features.home
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.home.room.list.UnreadCounterBadgeView
-import im.vector.app.test.test
+import chat.progressive.app.features.home.room.list.UnreadCounterBadgeView
+import chat.progressive.app.test.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.notifications.usecase
+package chat.progressive.app.features.settings.notifications.usecase
 
-import im.vector.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
-import im.vector.app.core.pushers.RegisterUnifiedPushUseCase
-import im.vector.app.test.fakes.FakePushersManager
+import chat.progressive.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
+import chat.progressive.app.core.pushers.RegisterUnifiedPushUseCase
+import chat.progressive.app.test.fakes.FakePushersManager
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every

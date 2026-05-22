@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.pushers
+package chat.progressive.app.core.pushers
 
-import im.vector.app.features.settings.BackgroundSyncMode
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakePushersManager
-import im.vector.app.test.fakes.FakeUnifiedPushHelper
-import im.vector.app.test.fakes.FakeUnifiedPushStore
-import im.vector.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.features.settings.BackgroundSyncMode
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakePushersManager
+import chat.progressive.app.test.fakes.FakeUnifiedPushHelper
+import chat.progressive.app.test.fakes.FakeUnifiedPushStore
+import chat.progressive.app.test.fakes.FakeVectorPreferences
 import io.mockk.justRun
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll

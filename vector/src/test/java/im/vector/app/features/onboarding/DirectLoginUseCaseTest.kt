@@ -5,15 +5,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
-import im.vector.app.test.fakes.FakeAuthenticationService
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fakes.FakeUri
-import im.vector.app.test.fakes.FakeUriFactory
-import im.vector.app.test.fakes.toTestString
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.test.fakes.FakeAuthenticationService
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fakes.FakeUri
+import chat.progressive.app.test.fakes.FakeUriFactory
+import chat.progressive.app.test.fakes.toTestString
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.should
 import org.amshove.kluent.shouldBeEqualTo

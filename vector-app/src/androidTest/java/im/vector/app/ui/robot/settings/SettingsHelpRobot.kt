@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot.settings
+package chat.progressive.app.ui.robot.settings
 
 class SettingsHelpRobot {
 

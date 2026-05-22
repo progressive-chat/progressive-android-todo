@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.features.analytics.AnalyticsConfig
+import chat.progressive.app.features.analytics.AnalyticsConfig
 
 object AnalyticsConfigFixture {
     fun anAnalyticsConfig(

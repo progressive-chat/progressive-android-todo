@@ -8,4 +8,4 @@
 /**
  * Code exclusively used by the GPlay build and not referenced on the main source code
  */
-package im.vector.app.gplay
+package chat.progressive.app.gplay

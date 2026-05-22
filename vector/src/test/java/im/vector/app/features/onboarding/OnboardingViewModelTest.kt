@@ -5,43 +5,43 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
 import android.net.Uri
 import android.os.Build
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.core.session.ConfigureAndStartSessionUseCase
-import im.vector.app.features.login.LoginConfig
-import im.vector.app.features.login.LoginMode
-import im.vector.app.features.login.ReAuthHelper
-import im.vector.app.features.login.ServerType
-import im.vector.app.features.login.SignMode
-import im.vector.app.features.mdm.NoOpMdmService
-import im.vector.app.features.onboarding.RegistrationStateFixture.aRegistrationState
-import im.vector.app.features.onboarding.StartAuthenticationFlowUseCase.StartAuthenticationResult
-import im.vector.app.test.TestBuildVersionSdkIntProvider
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeAnalyticsTracker
-import im.vector.app.test.fakes.FakeAuthenticationService
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeDirectLoginUseCase
-import im.vector.app.test.fakes.FakeHomeServerConnectionConfigFactory
-import im.vector.app.test.fakes.FakeHomeServerHistoryService
-import im.vector.app.test.fakes.FakeLoginWizard
-import im.vector.app.test.fakes.FakeRegistrationActionHandler
-import im.vector.app.test.fakes.FakeRegistrationWizard
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStartAuthenticationFlowUseCase
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fakes.FakeUri
-import im.vector.app.test.fakes.FakeUriFilenameResolver
-import im.vector.app.test.fakes.FakeVectorFeatures
-import im.vector.app.test.fakes.FakeVectorOverrides
-import im.vector.app.test.fakes.toTestString
-import im.vector.app.test.fixtures.a401ServerError
-import im.vector.app.test.fixtures.aHomeServerCapabilities
-import im.vector.app.test.fixtures.anUnrecognisedCertificateError
-import im.vector.app.test.test
+import chat.progressive.app.core.session.ConfigureAndStartSessionUseCase
+import chat.progressive.app.features.login.LoginConfig
+import chat.progressive.app.features.login.LoginMode
+import chat.progressive.app.features.login.ReAuthHelper
+import chat.progressive.app.features.login.ServerType
+import chat.progressive.app.features.login.SignMode
+import chat.progressive.app.features.mdm.NoOpMdmService
+import chat.progressive.app.features.onboarding.RegistrationStateFixture.aRegistrationState
+import chat.progressive.app.features.onboarding.StartAuthenticationFlowUseCase.StartAuthenticationResult
+import chat.progressive.app.test.TestBuildVersionSdkIntProvider
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeAnalyticsTracker
+import chat.progressive.app.test.fakes.FakeAuthenticationService
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeDirectLoginUseCase
+import chat.progressive.app.test.fakes.FakeHomeServerConnectionConfigFactory
+import chat.progressive.app.test.fakes.FakeHomeServerHistoryService
+import chat.progressive.app.test.fakes.FakeLoginWizard
+import chat.progressive.app.test.fakes.FakeRegistrationActionHandler
+import chat.progressive.app.test.fakes.FakeRegistrationWizard
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStartAuthenticationFlowUseCase
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fakes.FakeUri
+import chat.progressive.app.test.fakes.FakeUriFilenameResolver
+import chat.progressive.app.test.fakes.FakeVectorFeatures
+import chat.progressive.app.test.fakes.FakeVectorOverrides
+import chat.progressive.app.test.fakes.toTestString
+import chat.progressive.app.test.fixtures.a401ServerError
+import chat.progressive.app.test.fixtures.aHomeServerCapabilities
+import chat.progressive.app.test.fixtures.anUnrecognisedCertificateError
+import chat.progressive.app.test.test
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -70,7 +70,7 @@ private val A_FINGERPRINT = Fingerprint(ByteArray(1), Fingerprint.HashType.SHA1)
 private val ANY_CONTINUING_REGISTRATION_RESULT = RegistrationActionHandler.Result.NextStage(Stage.Dummy(mandatory = true))
 private val A_DIRECT_LOGIN = OnboardingAction.AuthenticateAction.LoginDirect("@a-user:id.org", "a-password", "a-device-name")
 private const val A_HOMESERVER_URL = "https://edited-homeserver.org"
-private val A_DEFAULT_HOMESERVER_URL = "${im.vector.app.config.R.string.matrix_org_server_url.toTestString()}/"
+private val A_DEFAULT_HOMESERVER_URL = "${chat.progressive.app.config.R.string.matrix_org_server_url.toTestString()}/"
 private val A_HOMESERVER_CONFIG = HomeServerConnectionConfig(FakeUri().instance)
 private val SELECTED_HOMESERVER_STATE = SelectedHomeserverState(preferredLoginMode = LoginMode.Password, userFacingUrl = A_HOMESERVER_URL)
 private val SELECTED_HOMESERVER_STATE_SUPPORTED_LOGOUT_DEVICES = SelectedHomeserverState(isLogoutDevicesSupported = true)

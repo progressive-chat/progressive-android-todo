@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.analytics.impl
+package chat.progressive.app.features.analytics.impl
 
-import im.vector.app.features.analytics.plan.UserProperties
-import im.vector.app.features.onboarding.FtueUseCase
-import im.vector.app.test.fakes.FakeActiveSessionDataSource
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeVectorStore
+import chat.progressive.app.features.analytics.plan.UserProperties
+import chat.progressive.app.features.onboarding.FtueUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionDataSource
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeVectorStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo

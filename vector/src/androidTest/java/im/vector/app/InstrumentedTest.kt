@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import im.vector.app.test.shared.createTimberTestRule
+import chat.progressive.app.test.shared.createTimberTestRule
 import org.junit.Rule
 
 interface InstrumentedTest {

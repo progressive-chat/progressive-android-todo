@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices
+package chat.progressive.app.features.settings.devices
 
-import im.vector.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

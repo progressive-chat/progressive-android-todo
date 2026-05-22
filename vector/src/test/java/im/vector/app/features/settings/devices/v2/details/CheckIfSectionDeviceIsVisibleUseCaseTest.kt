@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.details
+package chat.progressive.app.features.settings.devices.v2.details
 
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo

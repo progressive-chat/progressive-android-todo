@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.rename
+package chat.progressive.app.features.settings.devices.v2.rename
 
-import im.vector.app.features.settings.devices.v2.RefreshDevicesUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.features.settings.devices.v2.RefreshDevicesUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

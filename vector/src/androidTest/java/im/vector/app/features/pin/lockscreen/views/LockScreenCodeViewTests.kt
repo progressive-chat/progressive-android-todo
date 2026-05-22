@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.views
+package chat.progressive.app.features.pin.lockscreen.views
 
 import androidx.test.platform.app.InstrumentationRegistry
 import org.amshove.kluent.shouldBeEqualTo

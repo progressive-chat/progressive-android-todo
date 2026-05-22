@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.analytics.impl
+package chat.progressive.app.features.analytics.impl
 
-import im.vector.app.features.analytics.plan.SuperProperties
-import im.vector.app.test.fakes.FakeAnalyticsStore
-import im.vector.app.test.fakes.FakeLateInitUserPropertiesFactory
-import im.vector.app.test.fakes.FakePostHog
-import im.vector.app.test.fakes.FakePostHogFactory
-import im.vector.app.test.fakes.FakeSentryAnalytics
-import im.vector.app.test.fixtures.AnalyticsConfigFixture.anAnalyticsConfig
-import im.vector.app.test.fixtures.aUserProperties
-import im.vector.app.test.fixtures.aVectorAnalyticsEvent
-import im.vector.app.test.fixtures.aVectorAnalyticsScreen
+import chat.progressive.app.features.analytics.plan.SuperProperties
+import chat.progressive.app.test.fakes.FakeAnalyticsStore
+import chat.progressive.app.test.fakes.FakeLateInitUserPropertiesFactory
+import chat.progressive.app.test.fakes.FakePostHog
+import chat.progressive.app.test.fakes.FakePostHogFactory
+import chat.progressive.app.test.fakes.FakeSentryAnalytics
+import chat.progressive.app.test.fixtures.AnalyticsConfigFixture.anAnalyticsConfig
+import chat.progressive.app.test.fixtures.aUserProperties
+import chat.progressive.app.test.fixtures.aVectorAnalyticsEvent
+import chat.progressive.app.test.fixtures.aVectorAnalyticsScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

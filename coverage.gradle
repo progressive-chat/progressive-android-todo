@@ -86,6 +86,6 @@ task unitTestsWithCoverage(type: GradleBuild) {
 
 task instrumentationTestsWithCoverage(type: GradleBuild) {
     startParameter.projectProperties.coverage = "true"
-    startParameter.projectProperties['android.testInstrumentationRunnerArguments.notPackage'] = 'im.vector.app.ui'
+    startParameter.projectProperties['android.testInstrumentationRunnerArguments.notPackage'] = 'chat.progressive.app.ui'
     tasks = [':progressive-app:connectedGplayDebugAndroidTest', ':vector:connectedDebugAndroidTest', 'matrix-sdk-android:connectedDebugAndroidTest']
 }

@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.list
+package chat.progressive.app.features.settings.devices.v2.list
 
-import im.vector.app.test.fakes.FakeClock
+import chat.progressive.app.test.fakes.FakeClock
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.junit.Test

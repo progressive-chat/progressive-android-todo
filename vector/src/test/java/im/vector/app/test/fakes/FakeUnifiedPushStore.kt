@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.core.pushers.UnifiedPushStore
+import chat.progressive.app.core.pushers.UnifiedPushStore
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify

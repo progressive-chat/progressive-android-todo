@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.poll.PollMode
-import im.vector.app.features.poll.create.CreatePollArgs
-import im.vector.app.features.poll.create.CreatePollViewModel
-import im.vector.app.features.poll.create.CreatePollViewState
+import chat.progressive.app.features.poll.PollMode
+import chat.progressive.app.features.poll.create.CreatePollArgs
+import chat.progressive.app.features.poll.create.CreatePollViewModel
+import chat.progressive.app.features.poll.create.CreatePollViewState
 import org.matrix.android.sdk.api.session.events.model.Event
 import org.matrix.android.sdk.api.session.events.model.EventType
 import org.matrix.android.sdk.api.session.events.model.toContent

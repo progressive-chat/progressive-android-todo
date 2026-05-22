@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
-package im.vector.app.fdroid.features.settings.troubleshoot
+package chat.progressive.app.fdroid.features.settings.troubleshoot
 
 import androidx.fragment.app.FragmentActivity
-import im.vector.app.core.resources.StringProvider
-import im.vector.app.core.utils.isIgnoringBatteryOptimizations
-import im.vector.app.core.utils.requestDisablingBatteryOptimization
-import im.vector.app.features.settings.troubleshoot.TroubleshootTest
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.resources.StringProvider
+import chat.progressive.app.core.utils.isIgnoringBatteryOptimizations
+import chat.progressive.app.core.utils.requestDisablingBatteryOptimization
+import chat.progressive.app.features.settings.troubleshoot.TroubleshootTest
+import chat.progressive.lib.strings.CommonStrings
 import javax.inject.Inject
 
 class TestBatteryOptimization @Inject constructor(

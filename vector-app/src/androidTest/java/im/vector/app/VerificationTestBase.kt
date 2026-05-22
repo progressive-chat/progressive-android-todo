@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.net.Uri
 import android.view.View
@@ -13,12 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.home.HomeActivity
-import im.vector.app.ui.robot.AnalyticsRobot
-import im.vector.app.ui.robot.OnboardingRobot
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.app.ui.robot.AnalyticsRobot
+import chat.progressive.app.ui.robot.OnboardingRobot
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi

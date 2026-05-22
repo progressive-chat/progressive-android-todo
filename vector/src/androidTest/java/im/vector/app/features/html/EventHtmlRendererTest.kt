@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.html
+package chat.progressive.app.features.html
 
 import android.widget.TextView
 import androidx.core.text.toSpanned
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.core.resources.ColorProvider
-import im.vector.app.core.utils.DimensionConverter
-import im.vector.app.core.utils.toTestSpan
-import im.vector.app.features.settings.VectorPreferences
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.core.resources.ColorProvider
+import chat.progressive.app.core.utils.DimensionConverter
+import chat.progressive.app.core.utils.toTestSpan
+import chat.progressive.app.features.settings.VectorPreferences
 import io.mockk.every
 import io.mockk.mockk
 import org.amshove.kluent.shouldBeEqualTo

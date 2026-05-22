@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.reactions.data
+package chat.progressive.app.features.reactions.data
 
-import im.vector.app.InstrumentedTest
+import chat.progressive.app.InstrumentedTest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

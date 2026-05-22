@@ -5,15 +5,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
-import im.vector.app.test.fakes.FakeActiveSessionDataSource
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeAnalyticsTracker
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeUiStateRepository
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.fixtures.RoomSummaryFixture.aRoomSummary
+import chat.progressive.app.test.fakes.FakeActiveSessionDataSource
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeAnalyticsTracker
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeUiStateRepository
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fixtures.RoomSummaryFixture.aRoomSummary
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBe

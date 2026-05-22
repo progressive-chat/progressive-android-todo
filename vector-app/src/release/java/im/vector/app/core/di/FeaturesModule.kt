@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.di
+package chat.progressive.app.core.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import im.vector.app.features.DefaultVectorFeatures
-import im.vector.app.features.DefaultVectorOverrides
-import im.vector.app.features.VectorFeatures
-import im.vector.app.features.VectorOverrides
+import chat.progressive.app.features.DefaultVectorFeatures
+import chat.progressive.app.features.DefaultVectorOverrides
+import chat.progressive.app.features.VectorFeatures
+import chat.progressive.app.features.VectorOverrides
 
 @InstallIn(SingletonComponent::class)
 @Module

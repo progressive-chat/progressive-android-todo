@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.timeline.render
+package chat.progressive.app.features.home.room.detail.timeline.render
 
 import androidx.annotation.StringRes
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.lib.strings.CommonStrings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

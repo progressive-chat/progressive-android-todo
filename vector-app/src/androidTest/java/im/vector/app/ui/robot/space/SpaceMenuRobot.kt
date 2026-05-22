@@ -5,21 +5,21 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot.space
+package chat.progressive.app.ui.robot.space
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.matcher.ViewMatchers
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import im.vector.app.R
-import im.vector.app.clickOnSheet
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilDialogVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.invite.InviteUsersToRoomActivity
-import im.vector.app.features.roomprofile.RoomProfileActivity
-import im.vector.app.features.spaces.SpaceExploreActivity
-import im.vector.app.features.spaces.leave.SpaceLeaveAdvancedActivity
-import im.vector.app.features.spaces.manage.SpaceManageActivity
+import chat.progressive.app.R
+import chat.progressive.app.clickOnSheet
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilDialogVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.invite.InviteUsersToRoomActivity
+import chat.progressive.app.features.roomprofile.RoomProfileActivity
+import chat.progressive.app.features.spaces.SpaceExploreActivity
+import chat.progressive.app.features.spaces.leave.SpaceLeaveAdvancedActivity
+import chat.progressive.app.features.spaces.manage.SpaceManageActivity
 
 class SpaceMenuRobot {
 

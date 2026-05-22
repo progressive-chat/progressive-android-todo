@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.session
+package chat.progressive.app.core.session
 
-import im.vector.app.core.extensions.startSyncing
-import im.vector.app.core.session.clientinfo.UpdateMatrixClientInfoUseCase
-import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.devices.v2.notification.UpdateNotificationSettingsAccountDataUseCase
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeNotificationsSettingUpdater
-import im.vector.app.test.fakes.FakePushRulesUpdater
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.fakes.FakeWebRtcCallManager
+import chat.progressive.app.core.extensions.startSyncing
+import chat.progressive.app.core.session.clientinfo.UpdateMatrixClientInfoUseCase
+import chat.progressive.app.features.session.coroutineScope
+import chat.progressive.app.features.settings.devices.v2.notification.UpdateNotificationSettingsAccountDataUseCase
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeNotificationsSettingUpdater
+import chat.progressive.app.test.fakes.FakePushRulesUpdater
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.fakes.FakeWebRtcCallManager
 import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
@@ -54,8 +54,8 @@ class ConfigureAndStartSessionUseCaseTest {
 
     @Before
     fun setup() {
-        mockkStatic("im.vector.app.core.extensions.SessionKt")
-        mockkStatic("im.vector.app.features.session.SessionCoroutineScopesKt")
+        mockkStatic("chat.progressive.app.core.extensions.SessionKt")
+        mockkStatic("chat.progressive.app.features.session.SessionCoroutineScopesKt")
     }
 
     @After

@@ -1,0 +1,18 @@
+/*
+ * Copyright 2020-2024 Progressive Chat
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive
+ * Please see LICENSE files in the repository root for full details.
+ */
+
+package chat.progressive.app.features.roomprofile.alias
+
+import chat.progressive.app.core.platform.VectorViewEvents
+
+/**
+ * Transient events for room settings screen.
+ */
+sealed class RoomAliasViewEvents : VectorViewEvents {
+    data class Failure(val throwable: Throwable) : RoomAliasViewEvents()
+    object Success : RoomAliasViewEvents()
+}

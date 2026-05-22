@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.crypto.keys
+package chat.progressive.app.features.crypto.keys
 
 import android.net.Uri
-import im.vector.app.core.dispatchers.CoroutineDispatchers
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeCryptoService
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.core.dispatchers.CoroutineDispatchers
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeCryptoService
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk

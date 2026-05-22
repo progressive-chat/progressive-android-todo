@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.verification
+package chat.progressive.app.features.settings.devices.v2.verification
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

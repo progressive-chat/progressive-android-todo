@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.onboarding.RegisterAction
-import im.vector.app.features.onboarding.RegistrationResult
-import im.vector.app.features.onboarding.RegistrationWizardActionDelegate
+import chat.progressive.app.features.onboarding.RegisterAction
+import chat.progressive.app.features.onboarding.RegistrationResult
+import chat.progressive.app.features.onboarding.RegistrationWizardActionDelegate
 import io.mockk.coEvery
 import io.mockk.mockk
 

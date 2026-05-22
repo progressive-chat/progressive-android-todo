@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.details
+package chat.progressive.app.features.settings.devices.v2.details
 
-import im.vector.app.core.session.clientinfo.MatrixClientInfoContent
+import chat.progressive.app.core.session.clientinfo.MatrixClientInfoContent
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 

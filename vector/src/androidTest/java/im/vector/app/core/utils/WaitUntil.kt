@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.utils
+package chat.progressive.app.core.utils
 
 import kotlinx.coroutines.delay
 import org.amshove.kluent.fail

@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.crypto.migrations
+package chat.progressive.app.features.pin.lockscreen.crypto.migrations
 
 import android.os.Build
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.UserNotAuthenticatedException
-import im.vector.app.features.pin.lockscreen.crypto.KeyStoreCrypto
-import im.vector.app.features.settings.VectorPreferences
-import im.vector.app.test.TestBuildVersionSdkIntProvider
+import chat.progressive.app.features.pin.lockscreen.crypto.KeyStoreCrypto
+import chat.progressive.app.features.settings.VectorPreferences
+import chat.progressive.app.test.TestBuildVersionSdkIntProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

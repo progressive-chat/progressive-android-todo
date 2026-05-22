@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.settings
+package chat.progressive.app.features.debug.settings
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,9 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import im.vector.app.core.platform.VectorBaseFragment
-import im.vector.app.features.home.room.list.home.release.ReleaseNotesActivity
-import im.vector.application.databinding.FragmentDebugPrivateSettingsBinding
+import chat.progressive.app.core.platform.VectorBaseFragment
+import chat.progressive.app.features.home.room.list.home.release.ReleaseNotesActivity
+import chat.progressive.application.databinding.FragmentDebugPrivateSettingsBinding
 
 class DebugPrivateSettingsFragment : VectorBaseFragment<FragmentDebugPrivateSettingsBinding>() {
 

@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.notifications.NotificationDisplayer
-import im.vector.app.features.notifications.NotificationDrawerManager
+import chat.progressive.app.features.notifications.NotificationDisplayer
+import chat.progressive.app.features.notifications.NotificationDrawerManager
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify

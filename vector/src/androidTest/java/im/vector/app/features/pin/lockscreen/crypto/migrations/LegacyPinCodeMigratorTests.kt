@@ -7,7 +7,7 @@
 
 @file:Suppress("DEPRECATION")
 
-package im.vector.app.features.pin.lockscreen.crypto.migrations
+package chat.progressive.app.features.pin.lockscreen.crypto.migrations
 
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
@@ -16,11 +16,11 @@ import android.security.keystore.KeyProperties
 import android.util.Base64
 import androidx.preference.PreferenceManager
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.TestBuildVersionSdkIntProvider
-import im.vector.app.features.pin.PinCodeStore
-import im.vector.app.features.pin.SharedPrefPinCodeStore
-import im.vector.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants.ANDROID_KEY_STORE
-import im.vector.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants.LEGACY_PIN_CODE_KEY_ALIAS
+import chat.progressive.app.TestBuildVersionSdkIntProvider
+import chat.progressive.app.features.pin.PinCodeStore
+import chat.progressive.app.features.pin.SharedPrefPinCodeStore
+import chat.progressive.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants.ANDROID_KEY_STORE
+import chat.progressive.app.features.pin.lockscreen.crypto.LockScreenCryptoConstants.LEGACY_PIN_CODE_KEY_ALIAS
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

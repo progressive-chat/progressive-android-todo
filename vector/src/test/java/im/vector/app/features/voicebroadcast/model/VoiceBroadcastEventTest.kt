@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voicebroadcast.model
+package chat.progressive.app.features.voicebroadcast.model
 
-import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
+import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull

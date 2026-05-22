@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
 import io.mockk.mockk
 import org.matrix.android.sdk.api.session.room.model.message.PollType

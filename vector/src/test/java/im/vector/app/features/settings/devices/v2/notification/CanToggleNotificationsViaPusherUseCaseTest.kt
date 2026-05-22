@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.notification
+package chat.progressive.app.features.settings.devices.v2.notification
 
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.givenAsFlow
-import im.vector.app.test.fixtures.aHomeServerCapabilities
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.givenAsFlow
+import chat.progressive.app.test.fixtures.aHomeServerCapabilities
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest

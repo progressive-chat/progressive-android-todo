@@ -5,26 +5,26 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.poll.create
+package chat.progressive.app.features.poll.create
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.poll.PollMode
-import im.vector.app.test.fakes.FakeCreatePollViewStates.A_FAKE_OPTIONS
-import im.vector.app.test.fakes.FakeCreatePollViewStates.A_FAKE_QUESTION
-import im.vector.app.test.fakes.FakeCreatePollViewStates.A_FAKE_ROOM_ID
-import im.vector.app.test.fakes.FakeCreatePollViewStates.A_POLL_START_TIMELINE_EVENT
-import im.vector.app.test.fakes.FakeCreatePollViewStates.createPollArgs
-import im.vector.app.test.fakes.FakeCreatePollViewStates.editPollArgs
-import im.vector.app.test.fakes.FakeCreatePollViewStates.editedPollViewState
-import im.vector.app.test.fakes.FakeCreatePollViewStates.initialCreatePollViewState
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithOnlyQuestion
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndEnoughOptions
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndEnoughOptionsButDeletedLastOption
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndMaxOptions
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndNotEnoughOptions
-import im.vector.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithoutQuestionAndEnoughOptions
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.test
+import chat.progressive.app.features.poll.PollMode
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.A_FAKE_OPTIONS
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.A_FAKE_QUESTION
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.A_FAKE_ROOM_ID
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.A_POLL_START_TIMELINE_EVENT
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.createPollArgs
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.editPollArgs
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.editedPollViewState
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.initialCreatePollViewState
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithOnlyQuestion
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndEnoughOptions
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndEnoughOptionsButDeletedLastOption
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndMaxOptions
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithQuestionAndNotEnoughOptions
+import chat.progressive.app.test.fakes.FakeCreatePollViewStates.pollViewStateWithoutQuestionAndEnoughOptions
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.test
 import io.mockk.unmockkAll
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest

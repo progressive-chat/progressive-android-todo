@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.screenshot
+package chat.progressive.app.screenshot
 
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import im.vector.app.R
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.lib.strings.CommonStrings
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test

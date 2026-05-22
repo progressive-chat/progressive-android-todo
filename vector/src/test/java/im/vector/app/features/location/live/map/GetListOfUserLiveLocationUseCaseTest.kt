@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.live.map
+package chat.progressive.app.features.location.live.map
 
-import im.vector.app.features.location.LocationData
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.givenAsFlow
+import chat.progressive.app.features.location.LocationData
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.givenAsFlow
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll

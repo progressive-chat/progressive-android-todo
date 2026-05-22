@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.leak
+package chat.progressive.app.features.debug.leak
 
 import com.airbnb.mvrx.MavericksState
 

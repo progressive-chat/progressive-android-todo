@@ -5,20 +5,20 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.push.fcm
+package chat.progressive.app.push.fcm
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.core.pushers.FcmHelper
-import im.vector.app.core.pushers.PushParser
-import im.vector.app.core.pushers.PushersManager
-import im.vector.app.core.pushers.UnifiedPushHelper
-import im.vector.app.core.pushers.VectorPushHandler
-import im.vector.app.features.mdm.MdmData
-import im.vector.app.features.mdm.MdmService
-import im.vector.app.features.settings.VectorPreferences
+import chat.progressive.app.core.di.ActiveSessionHolder
+import chat.progressive.app.core.pushers.FcmHelper
+import chat.progressive.app.core.pushers.PushParser
+import chat.progressive.app.core.pushers.PushersManager
+import chat.progressive.app.core.pushers.UnifiedPushHelper
+import chat.progressive.app.core.pushers.VectorPushHandler
+import chat.progressive.app.features.mdm.MdmData
+import chat.progressive.app.features.mdm.MdmService
+import chat.progressive.app.features.settings.VectorPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -60,7 +60,7 @@ class VectorFirebaseMessagingService : FirebaseMessagingService() {
                         pushKey = token,
                         gateway = mdmService.getData(
                                 mdmData = MdmData.DefaultPushGatewayUrl,
-                                defaultValue = getString(im.vector.app.config.R.string.pusher_http_url),
+                                defaultValue = getString(chat.progressive.app.config.R.string.pusher_http_url),
                         ),
                 )
             }

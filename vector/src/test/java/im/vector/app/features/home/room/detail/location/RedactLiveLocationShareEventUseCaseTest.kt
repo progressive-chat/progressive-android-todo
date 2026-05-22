@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.location
+package chat.progressive.app.features.home.room.detail.location
 
-import im.vector.app.test.fakes.FakeRoom
+import chat.progressive.app.test.fakes.FakeRoom
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.matrix.android.sdk.api.session.events.model.Event

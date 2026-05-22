@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fixtures
+package chat.progressive.app.test.fixtures
 
-import im.vector.app.core.extensions.getVectorLastMessageContent
-import im.vector.app.features.home.room.detail.timeline.item.PollResponseData
+import chat.progressive.app.core.extensions.getVectorLastMessageContent
+import chat.progressive.app.features.home.room.detail.timeline.item.PollResponseData
 import io.mockk.every
 import io.mockk.mockk
 import org.matrix.android.sdk.api.session.room.model.message.MessageContent

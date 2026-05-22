@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.session.clientinfo
+package chat.progressive.app.core.session.clientinfo
 
-import im.vector.app.core.resources.BuildMeta
-import im.vector.app.test.fakes.FakeAppNameProvider
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.core.resources.BuildMeta
+import chat.progressive.app.test.fakes.FakeAppNameProvider
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

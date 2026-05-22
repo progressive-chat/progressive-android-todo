@@ -5,17 +5,17 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features
+package chat.progressive.app.features
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.roomprofile.RoomProfileArgs
-import im.vector.app.features.roomprofile.members.RoomMemberListComparator
-import im.vector.app.features.roomprofile.members.RoomMemberListViewModel
-import im.vector.app.features.roomprofile.members.RoomMemberListViewState
-import im.vector.app.test.test
-import im.vector.app.test.testCoroutineDispatchers
+import chat.progressive.app.features.roomprofile.RoomProfileArgs
+import chat.progressive.app.features.roomprofile.members.RoomMemberListComparator
+import chat.progressive.app.features.roomprofile.members.RoomMemberListViewModel
+import chat.progressive.app.features.roomprofile.members.RoomMemberListViewState
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testCoroutineDispatchers
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

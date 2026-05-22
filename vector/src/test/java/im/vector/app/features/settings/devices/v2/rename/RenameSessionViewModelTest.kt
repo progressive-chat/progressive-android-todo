@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.rename
+package chat.progressive.app.features.settings.devices.v2.rename
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.overview.GetDeviceFullInfoUseCase
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.overview.GetDeviceFullInfoUseCase
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

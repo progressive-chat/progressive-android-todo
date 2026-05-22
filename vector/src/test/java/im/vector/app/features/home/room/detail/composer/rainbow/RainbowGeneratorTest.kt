@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.composer.rainbow
+package chat.progressive.app.features.home.room.detail.composer.rainbow
 
-import im.vector.app.test.trimIndentOneLine
+import chat.progressive.app.test.trimIndentOneLine
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

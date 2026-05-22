@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.voice
+package chat.progressive.app.features.voice
 
-import im.vector.app.core.utils.waitUntil
-import im.vector.app.test.fakes.FakeOggOpusEncoder
+import chat.progressive.app.core.utils.waitUntil
+import chat.progressive.app.test.fakes.FakeOggOpusEncoder
 import org.amshove.kluent.shouldExist
 import org.amshove.kluent.shouldNotBeNull
 import java.io.File

@@ -5,21 +5,21 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2
+package chat.progressive.app.features.settings.devices.v2
 
-import im.vector.app.core.session.clientinfo.GetMatrixClientInfoUseCase
-import im.vector.app.core.session.clientinfo.MatrixClientInfoContent
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.filter.DeviceManagerFilterType
-import im.vector.app.features.settings.devices.v2.filter.FilterDevicesUseCase
-import im.vector.app.features.settings.devices.v2.list.CheckIfSessionIsInactiveUseCase
-import im.vector.app.features.settings.devices.v2.list.DeviceType
-import im.vector.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
-import im.vector.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
-import im.vector.app.features.settings.devices.v2.verification.GetEncryptionTrustLevelForDeviceUseCase
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.core.session.clientinfo.GetMatrixClientInfoUseCase
+import chat.progressive.app.core.session.clientinfo.MatrixClientInfoContent
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.filter.DeviceManagerFilterType
+import chat.progressive.app.features.settings.devices.v2.filter.FilterDevicesUseCase
+import chat.progressive.app.features.settings.devices.v2.list.CheckIfSessionIsInactiveUseCase
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
+import chat.progressive.app.features.settings.devices.v2.verification.GetCurrentSessionCrossSigningInfoUseCase
+import chat.progressive.app.features.settings.devices.v2.verification.GetEncryptionTrustLevelForDeviceUseCase
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

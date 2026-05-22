@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.notification
+package chat.progressive.app.features.settings.devices.v2.notification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fixtures.PusherFixture
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fixtures.PusherFixture
+import chat.progressive.app.test.testDispatcher
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

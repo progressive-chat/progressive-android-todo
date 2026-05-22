@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.notification
+package chat.progressive.app.core.notification
 
-import im.vector.app.features.settings.devices.v2.notification.NotificationsStatus
-import im.vector.app.test.fakes.FakeGetNotificationsStatusUseCase
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.features.settings.devices.v2.notification.NotificationsStatus
+import chat.progressive.app.test.fakes.FakeGetNotificationsStatusUseCase
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeVectorPreferences
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 

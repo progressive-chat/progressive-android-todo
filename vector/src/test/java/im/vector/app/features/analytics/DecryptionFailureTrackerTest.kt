@@ -5,15 +5,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.analytics
+package chat.progressive.app.features.analytics
 
-import im.vector.app.features.analytics.itf.VectorAnalyticsEvent
-import im.vector.app.features.analytics.plan.Error
-import im.vector.app.test.fakes.FakeActiveSessionDataSource
-import im.vector.app.test.fakes.FakeAnalyticsTracker
-import im.vector.app.test.fakes.FakeClock
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.shared.createTimberTestRule
+import chat.progressive.app.features.analytics.itf.VectorAnalyticsEvent
+import chat.progressive.app.features.analytics.plan.Error
+import chat.progressive.app.test.fakes.FakeActiveSessionDataSource
+import chat.progressive.app.test.fakes.FakeAnalyticsTracker
+import chat.progressive.app.test.fakes.FakeClock
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.shared.createTimberTestRule
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
@@ -143,7 +143,7 @@ class DecryptionFailureTrackerTest {
 
         verify {
             fakeAnalyticsTracker.capture(
-                    im.vector.app.features.analytics.plan.Error(
+                    chat.progressive.app.features.analytics.plan.Error(
                             "mxc_crypto_error_type|",
                             cryptoModule = Error.CryptoModule.Rust,
                             domain = Error.Domain.E2EE,

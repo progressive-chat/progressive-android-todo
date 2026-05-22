@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.notifications
+package chat.progressive.app.features.notifications
 
-import im.vector.app.features.notifications.ProcessedEvent.Type
-import im.vector.app.test.fakes.FakeAutoAcceptInvites
-import im.vector.app.test.fakes.FakeOutdatedEventDetector
-import im.vector.app.test.fixtures.aNotifiableMessageEvent
-import im.vector.app.test.fixtures.aSimpleNotifiableEvent
-import im.vector.app.test.fixtures.anInviteNotifiableEvent
+import chat.progressive.app.features.notifications.ProcessedEvent.Type
+import chat.progressive.app.test.fakes.FakeAutoAcceptInvites
+import chat.progressive.app.test.fakes.FakeOutdatedEventDetector
+import chat.progressive.app.test.fixtures.aNotifiableMessageEvent
+import chat.progressive.app.test.fixtures.aSimpleNotifiableEvent
+import chat.progressive.app.test.fixtures.anInviteNotifiableEvent
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 import org.matrix.android.sdk.api.session.events.model.EventType

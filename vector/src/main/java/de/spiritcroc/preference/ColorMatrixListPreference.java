@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 
 import androidx.preference.ListPreference;
 
-import im.vector.app.R;
+import chat.progressive.app.R;
 
 public class ColorMatrixListPreference extends ListPreference {
 

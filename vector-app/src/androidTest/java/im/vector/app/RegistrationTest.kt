@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -19,10 +19,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import im.vector.app.features.MainActivity
-import im.vector.app.features.analytics.ui.consent.AnalyticsOptInActivity
-import im.vector.app.features.home.HomeActivity
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.features.analytics.ui.consent.AnalyticsOptInActivity
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.lib.strings.CommonStrings
 import org.hamcrest.CoreMatchers.not
 import org.junit.Ignore
 import org.junit.Rule

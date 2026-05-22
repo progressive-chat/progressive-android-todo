@@ -5,18 +5,18 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location
+package chat.progressive.app.features.location
 
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
-import im.vector.app.features.session.coroutineScope
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeLocationManager
-import im.vector.app.test.fakes.FakePermissionChecker
-import im.vector.app.test.fixtures.aBuildMeta
-import im.vector.app.test.test
+import chat.progressive.app.features.session.coroutineScope
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeLocationManager
+import chat.progressive.app.test.fakes.FakePermissionChecker
+import chat.progressive.app.test.fixtures.aBuildMeta
+import chat.progressive.app.test.test
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -48,7 +48,7 @@ class LocationTrackerTest {
 
     @Before
     fun setUp() {
-        mockkStatic("im.vector.app.features.session.SessionCoroutineScopesKt")
+        mockkStatic("chat.progressive.app.features.session.SessionCoroutineScopesKt")
         locationTracker = LocationTracker(fakeContext.instance, fakeActiveSessionHolder.instance, aBuildMeta(), FakePermissionChecker())
         fakeLocationManager.givenRemoveUpdates(locationTracker)
     }

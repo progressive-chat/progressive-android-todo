@@ -5,20 +5,20 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.pushers
+package chat.progressive.app.core.pushers
 
-import im.vector.app.features.mdm.NoOpMdmService
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeAppNameProvider
-import im.vector.app.test.fakes.FakeGetDeviceInfoUseCase
-import im.vector.app.test.fakes.FakeLocaleProvider
-import im.vector.app.test.fakes.FakePushersService
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.fixtures.CredentialsFixture
-import im.vector.app.test.fixtures.CryptoDeviceInfoFixture.aCryptoDeviceInfo
-import im.vector.app.test.fixtures.PusherFixture
-import im.vector.app.test.fixtures.SessionParamsFixture
+import chat.progressive.app.features.mdm.NoOpMdmService
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeAppNameProvider
+import chat.progressive.app.test.fakes.FakeGetDeviceInfoUseCase
+import chat.progressive.app.test.fakes.FakeLocaleProvider
+import chat.progressive.app.test.fakes.FakePushersService
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.fixtures.CredentialsFixture
+import chat.progressive.app.test.fixtures.CryptoDeviceInfoFixture.aCryptoDeviceInfo
+import chat.progressive.app.test.fixtures.PusherFixture
+import chat.progressive.app.test.fixtures.SessionParamsFixture
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -55,7 +55,7 @@ class PushersManagerTest {
         val pusherAppId = "app-id"
         val appName = "element"
         val deviceDisplayName = "iPhone Lollipop"
-        stringProvider.given(im.vector.app.config.R.string.pusher_app_id, pusherAppId)
+        stringProvider.given(chat.progressive.app.config.R.string.pusher_app_id, pusherAppId)
         localeProvider.givenCurrent(Locale.UK)
         appNameProvider.givenAppName(appName)
         getDeviceInfoUseCase.givenDeviceInfo(aCryptoDeviceInfo(unsigned = UnsignedDeviceInfo(deviceDisplayName)))

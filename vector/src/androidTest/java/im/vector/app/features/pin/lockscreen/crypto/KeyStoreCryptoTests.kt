@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen.crypto
+package chat.progressive.app.features.pin.lockscreen.crypto
 
 import android.os.Build
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.UserNotAuthenticatedException
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.TestBuildVersionSdkIntProvider
+import chat.progressive.app.TestBuildVersionSdkIntProvider
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify

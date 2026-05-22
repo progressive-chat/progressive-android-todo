@@ -5,12 +5,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test
+package chat.progressive.app.test
 
 import com.airbnb.mvrx.MavericksState
-import im.vector.app.core.platform.VectorViewEvents
-import im.vector.app.core.platform.VectorViewModel
-import im.vector.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.VectorViewEvents
+import chat.progressive.app.core.platform.VectorViewModel
+import chat.progressive.app.core.platform.VectorViewModelAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 

@@ -5,16 +5,16 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.live.map
+package chat.progressive.app.features.location.live.map
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.features.location.LocationData
-import im.vector.app.features.location.live.StopLiveLocationShareUseCase
-import im.vector.app.test.fakes.FakeLocationSharingServiceConnection
-import im.vector.app.test.fakes.FakeLocationTracker
-import im.vector.app.test.fakes.FakePermissionChecker
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.test
+import chat.progressive.app.features.location.LocationData
+import chat.progressive.app.features.location.live.StopLiveLocationShareUseCase
+import chat.progressive.app.test.fakes.FakeLocationSharingServiceConnection
+import chat.progressive.app.test.fakes.FakeLocationTracker
+import chat.progressive.app.test.fakes.FakePermissionChecker
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.test
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

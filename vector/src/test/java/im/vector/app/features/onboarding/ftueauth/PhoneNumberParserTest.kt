@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding.ftueauth
+package chat.progressive.app.features.onboarding.ftueauth
 
-import im.vector.app.test.fakes.FakePhoneNumberUtil
+import chat.progressive.app.test.fakes.FakePhoneNumberUtil
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 

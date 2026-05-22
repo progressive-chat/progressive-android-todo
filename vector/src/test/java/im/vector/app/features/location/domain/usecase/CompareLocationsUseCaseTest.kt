@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.domain.usecase
+package chat.progressive.app.features.location.domain.usecase
 
-import im.vector.app.features.location.LocationData
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.features.location.LocationData
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.OverrideMockKs
 import kotlinx.coroutines.test.runTest

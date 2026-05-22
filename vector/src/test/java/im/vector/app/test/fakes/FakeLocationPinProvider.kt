@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
 import android.graphics.drawable.Drawable
-import im.vector.app.features.home.room.detail.timeline.helper.LocationPinProvider
+import chat.progressive.app.features.home.room.detail.timeline.helper.LocationPinProvider
 import io.mockk.every
 import io.mockk.invoke
 import io.mockk.mockk

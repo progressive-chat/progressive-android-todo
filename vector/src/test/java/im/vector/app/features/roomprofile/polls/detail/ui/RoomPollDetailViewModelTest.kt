@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.detail.ui
+package chat.progressive.app.features.roomprofile.polls.detail.ui
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.core.event.GetTimelineEventUseCase
-import im.vector.app.features.home.room.detail.poll.VoteToPollUseCase
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.core.event.GetTimelineEventUseCase
+import chat.progressive.app.features.home.room.detail.poll.VoteToPollUseCase
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk

@@ -5,10 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.settings.devices.v2.notification.GetNotificationsStatusUseCase
-import im.vector.app.features.settings.devices.v2.notification.NotificationsStatus
+import chat.progressive.app.features.settings.devices.v2.notification.GetNotificationsStatusUseCase
+import chat.progressive.app.features.settings.devices.v2.notification.NotificationsStatus
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf

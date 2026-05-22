@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.analytics
+package chat.progressive.app.features.debug.analytics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import im.vector.app.core.epoxy.onClick
-import im.vector.app.core.extensions.toOnOff
-import im.vector.app.core.platform.VectorBaseFragment
-import im.vector.application.databinding.FragmentDebugAnalyticsBinding
+import chat.progressive.app.core.epoxy.onClick
+import chat.progressive.app.core.extensions.toOnOff
+import chat.progressive.app.core.platform.VectorBaseFragment
+import chat.progressive.application.databinding.FragmentDebugAnalyticsBinding
 import me.gujun.android.span.span
 
 class DebugAnalyticsFragment : VectorBaseFragment<FragmentDebugAnalyticsBinding>() {

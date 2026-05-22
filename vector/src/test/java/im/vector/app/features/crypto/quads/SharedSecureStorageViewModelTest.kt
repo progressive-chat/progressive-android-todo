@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.crypto.quads
+package chat.progressive.app.features.crypto.quads
 
 import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.app.test.test
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.app.test.test
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule

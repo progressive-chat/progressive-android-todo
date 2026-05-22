@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.mdm
+package chat.progressive.app.features.mdm
 
 import android.content.Context
 

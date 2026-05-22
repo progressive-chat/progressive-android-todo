@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.sas
+package chat.progressive.app.features.debug.sas
 
 import com.airbnb.epoxy.TypedEpoxyController
 import org.matrix.android.sdk.api.session.crypto.verification.EmojiRepresentation

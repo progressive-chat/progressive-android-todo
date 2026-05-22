@@ -5,21 +5,21 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.notifications
+package chat.progressive.app.features.settings.notifications
 
 import com.airbnb.mvrx.test.MavericksTestRule
-import im.vector.app.core.platform.VectorDummyViewState
-import im.vector.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
-import im.vector.app.core.pushers.RegisterUnifiedPushUseCase
-import im.vector.app.core.pushers.UnregisterUnifiedPushUseCase
-import im.vector.app.features.settings.VectorPreferences.Companion.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY
-import im.vector.app.features.settings.notifications.usecase.DisableNotificationsForCurrentSessionUseCase
-import im.vector.app.features.settings.notifications.usecase.EnableNotificationsForCurrentSessionUseCase
-import im.vector.app.features.settings.notifications.usecase.ToggleNotificationsForCurrentSessionUseCase
-import im.vector.app.test.fakes.FakePushersManager
-import im.vector.app.test.fakes.FakeVectorPreferences
-import im.vector.app.test.test
-import im.vector.app.test.testDispatcher
+import chat.progressive.app.core.platform.VectorDummyViewState
+import chat.progressive.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
+import chat.progressive.app.core.pushers.RegisterUnifiedPushUseCase
+import chat.progressive.app.core.pushers.UnregisterUnifiedPushUseCase
+import chat.progressive.app.features.settings.VectorPreferences.Companion.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY
+import chat.progressive.app.features.settings.notifications.usecase.DisableNotificationsForCurrentSessionUseCase
+import chat.progressive.app.features.settings.notifications.usecase.EnableNotificationsForCurrentSessionUseCase
+import chat.progressive.app.features.settings.notifications.usecase.ToggleNotificationsForCurrentSessionUseCase
+import chat.progressive.app.test.fakes.FakePushersManager
+import chat.progressive.app.test.fakes.FakeVectorPreferences
+import chat.progressive.app.test.test
+import chat.progressive.app.test.testDispatcher
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify

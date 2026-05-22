@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.live
+package chat.progressive.app.features.location.live
 
-import im.vector.app.test.fakes.FakeFlowLiveDataConversions
-import im.vector.app.test.fakes.FakeSession
-import im.vector.app.test.fakes.givenAsFlow
+import chat.progressive.app.test.fakes.FakeFlowLiveDataConversions
+import chat.progressive.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.givenAsFlow
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

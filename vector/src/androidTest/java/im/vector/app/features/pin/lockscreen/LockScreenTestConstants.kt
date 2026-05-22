@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.pin.lockscreen
+package chat.progressive.app.features.pin.lockscreen
 
 object LockScreenTestConstants {
     const val ALIAS = "some_alias"

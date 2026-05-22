@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug
+package chat.progressive.app.features.debug
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,14 +16,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import im.vector.app.core.platform.VectorBaseActivity
-import im.vector.app.core.utils.checkPermissions
-import im.vector.app.core.utils.onPermissionDeniedDialog
-import im.vector.app.core.utils.onPermissionDeniedSnackbar
-import im.vector.app.core.utils.registerForPermissionsResult
-import im.vector.application.R
-import im.vector.application.databinding.ActivityDebugPermissionBinding
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.core.utils.checkPermissions
+import chat.progressive.app.core.utils.onPermissionDeniedDialog
+import chat.progressive.app.core.utils.onPermissionDeniedSnackbar
+import chat.progressive.app.core.utils.registerForPermissionsResult
+import chat.progressive.application.R
+import chat.progressive.application.databinding.ActivityDebugPermissionBinding
+import chat.progressive.lib.strings.CommonStrings
 import timber.log.Timber
 
 @AndroidEntryPoint

@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.receivers
+package chat.progressive.app.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -14,9 +14,9 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import im.vector.app.core.debug.DebugReceiver
-import im.vector.app.core.di.DefaultPreferences
-import im.vector.app.core.utils.lsFiles
+import chat.progressive.app.core.debug.DebugReceiver
+import chat.progressive.app.core.di.DefaultPreferences
+import chat.progressive.app.core.utils.lsFiles
 import timber.log.Timber
 import javax.inject.Inject
 

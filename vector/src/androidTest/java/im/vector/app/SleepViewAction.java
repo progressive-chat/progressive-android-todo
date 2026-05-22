@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app;
+package chat.progressive.app;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 

@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.roomprofile.polls.detail.domain
+package chat.progressive.app.features.roomprofile.polls.detail.domain
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.redaction
+package chat.progressive.app.features.redaction
 
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.test.fakes.FakeSession
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test

@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.debug.features
+package chat.progressive.app.features.debug.features
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -13,8 +13,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import im.vector.app.features.HomeserverCapabilitiesOverride
-import im.vector.app.features.VectorOverrides
+import chat.progressive.app.features.HomeserverCapabilitiesOverride
+import chat.progressive.app.features.VectorOverrides
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import org.matrix.android.sdk.api.extensions.orFalse

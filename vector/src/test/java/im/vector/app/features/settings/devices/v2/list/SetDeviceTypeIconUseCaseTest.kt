@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.list
+package chat.progressive.app.features.settings.devices.v2.list
 
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import im.vector.app.R
-import im.vector.app.test.fakes.FakeStringProvider
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.R
+import chat.progressive.app.test.fakes.FakeStringProvider
+import chat.progressive.lib.strings.CommonStrings
 import io.mockk.mockk
 import io.mockk.verifyAll
 import org.junit.Test

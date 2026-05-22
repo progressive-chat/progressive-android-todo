@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.lib.ui.styles.debug
+package chat.progressive.lib.ui.styles.debug
 
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import im.vector.lib.ui.styles.databinding.ActivityDebugTextViewBinding
+import chat.progressive.lib.ui.styles.databinding.ActivityDebugTextViewBinding
 
 // Rendering is not the same with VectorBaseActivity
 abstract class DebugVectorTextViewActivity : AppCompatActivity() {

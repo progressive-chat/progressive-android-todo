@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.filter
+package chat.progressive.app.features.settings.devices.v2.filter
 
-import im.vector.app.core.session.clientinfo.MatrixClientInfoContent
-import im.vector.app.features.settings.devices.v2.DeviceFullInfo
-import im.vector.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
-import im.vector.app.features.settings.devices.v2.list.DeviceType
-import im.vector.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
+import chat.progressive.app.core.session.clientinfo.MatrixClientInfoContent
+import chat.progressive.app.features.settings.devices.v2.DeviceFullInfo
+import chat.progressive.app.features.settings.devices.v2.details.extended.DeviceExtendedInfo
+import chat.progressive.app.features.settings.devices.v2.list.DeviceType
+import chat.progressive.app.features.settings.devices.v2.verification.CurrentSessionCrossSigningInfo
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldContainAll

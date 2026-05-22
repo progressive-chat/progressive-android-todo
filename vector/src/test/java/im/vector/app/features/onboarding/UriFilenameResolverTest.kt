@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.onboarding
+package chat.progressive.app.features.onboarding
 
 import android.provider.OpenableColumns
-import im.vector.app.test.fakes.FakeContentResolver
-import im.vector.app.test.fakes.FakeContext
-import im.vector.app.test.fakes.FakeCursor
-import im.vector.app.test.fakes.FakeUri
+import chat.progressive.app.test.fakes.FakeContentResolver
+import chat.progressive.app.test.fakes.FakeContext
+import chat.progressive.app.test.fakes.FakeCursor
+import chat.progressive.app.test.fakes.FakeUri
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 

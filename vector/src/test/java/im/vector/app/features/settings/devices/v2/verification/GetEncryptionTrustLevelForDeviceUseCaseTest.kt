@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2.verification
+package chat.progressive.app.features.settings.devices.v2.verification
 
 import io.mockk.every
 import io.mockk.mockk

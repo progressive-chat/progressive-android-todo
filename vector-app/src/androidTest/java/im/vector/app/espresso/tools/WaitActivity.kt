@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.espresso.tools
+package chat.progressive.app.espresso.tools
 
 import android.app.Activity
 import android.view.View
@@ -13,9 +13,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers
-import im.vector.app.activityIdlingResource
-import im.vector.app.waitForView
-import im.vector.app.withIdlingResource
+import chat.progressive.app.activityIdlingResource
+import chat.progressive.app.waitForView
+import chat.progressive.app.withIdlingResource
 import org.hamcrest.Matcher
 
 inline fun <reified T : Activity> waitUntilActivityVisible(noinline block: (() -> Unit) = {}) {

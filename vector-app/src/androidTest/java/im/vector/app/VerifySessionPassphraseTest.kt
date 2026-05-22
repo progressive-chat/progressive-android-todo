@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app
+package chat.progressive.app
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -23,18 +23,18 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import im.vector.app.core.resources.StringProvider
-import im.vector.app.core.utils.getMatrixInstance
-import im.vector.app.espresso.tools.waitUntilActivityVisible
-import im.vector.app.espresso.tools.waitUntilViewVisible
-import im.vector.app.features.MainActivity
-import im.vector.app.features.crypto.quads.SharedSecureStorageActivity
-import im.vector.app.features.crypto.recover.BootstrapCrossSigningTask
-import im.vector.app.features.crypto.recover.Params
-import im.vector.app.features.crypto.recover.SetupMode
-import im.vector.app.features.home.HomeActivity
-import im.vector.app.ui.robot.AnalyticsRobot
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.core.resources.StringProvider
+import chat.progressive.app.core.utils.getMatrixInstance
+import chat.progressive.app.espresso.tools.waitUntilActivityVisible
+import chat.progressive.app.espresso.tools.waitUntilViewVisible
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.features.crypto.quads.SharedSecureStorageActivity
+import chat.progressive.app.features.crypto.recover.BootstrapCrossSigningTask
+import chat.progressive.app.features.crypto.recover.Params
+import chat.progressive.app.features.crypto.recover.SetupMode
+import chat.progressive.app.features.home.HomeActivity
+import chat.progressive.app.ui.robot.AnalyticsRobot
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Ignore

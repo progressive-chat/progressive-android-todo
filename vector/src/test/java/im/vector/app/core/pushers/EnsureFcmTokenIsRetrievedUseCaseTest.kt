@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.core.pushers
+package chat.progressive.app.core.pushers
 
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeFcmHelper
-import im.vector.app.test.fakes.FakePushersManager
-import im.vector.app.test.fakes.FakeUnifiedPushHelper
-import im.vector.app.test.fixtures.PusherFixture
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeFcmHelper
+import chat.progressive.app.test.fakes.FakePushersManager
+import chat.progressive.app.test.fakes.FakeUnifiedPushHelper
+import chat.progressive.app.test.fixtures.PusherFixture
 import org.junit.Test
 
 class EnsureFcmTokenIsRetrievedUseCaseTest {

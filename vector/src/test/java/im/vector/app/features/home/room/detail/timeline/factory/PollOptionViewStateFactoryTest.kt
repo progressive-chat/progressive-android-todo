@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.timeline.factory
+package chat.progressive.app.features.home.room.detail.timeline.factory
 
-import im.vector.app.features.home.room.detail.timeline.item.PollOptionViewState
-import im.vector.app.features.home.room.detail.timeline.item.PollVoteSummaryData
-import im.vector.app.test.fixtures.PollFixture.A_POLL_CONTENT
-import im.vector.app.test.fixtures.PollFixture.A_POLL_OPTION_IDS
-import im.vector.app.test.fixtures.PollFixture.A_POLL_RESPONSE_DATA
+import chat.progressive.app.features.home.room.detail.timeline.item.PollOptionViewState
+import chat.progressive.app.features.home.room.detail.timeline.item.PollVoteSummaryData
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_CONTENT
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_OPTION_IDS
+import chat.progressive.app.test.fixtures.PollFixture.A_POLL_RESPONSE_DATA
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 import org.matrix.android.sdk.api.session.room.model.message.PollType

@@ -5,14 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.settings.devices.v2
+package chat.progressive.app.features.settings.devices.v2
 
 import android.content.Intent
-import im.vector.app.features.settings.devices.v2.filter.DeviceManagerFilterType
-import im.vector.app.features.settings.devices.v2.othersessions.OtherSessionsActivity
-import im.vector.app.features.settings.devices.v2.overview.SessionOverviewActivity
-import im.vector.app.features.settings.devices.v2.rename.RenameSessionActivity
-import im.vector.app.test.fakes.FakeContext
+import chat.progressive.app.features.settings.devices.v2.filter.DeviceManagerFilterType
+import chat.progressive.app.features.settings.devices.v2.othersessions.OtherSessionsActivity
+import chat.progressive.app.features.settings.devices.v2.overview.SessionOverviewActivity
+import chat.progressive.app.features.settings.devices.v2.rename.RenameSessionActivity
+import chat.progressive.app.test.fakes.FakeContext
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject

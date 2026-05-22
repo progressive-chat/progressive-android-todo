@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.ui.robot.settings
+package chat.progressive.app.ui.robot.settings
 
 import androidx.test.espresso.Espresso.pressBack
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
-import im.vector.app.espresso.tools.clickOnPreference
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.app.espresso.tools.clickOnPreference
+import chat.progressive.lib.strings.CommonStrings
 
 class SettingsNotificationsRobot {
 

@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.location.live.map
+package chat.progressive.app.features.location.live.map
 
 import android.graphics.drawable.Drawable
-import im.vector.app.features.location.LocationData
-import im.vector.app.test.fakes.FakeActiveSessionHolder
-import im.vector.app.test.fakes.FakeLocationPinProvider
-import im.vector.app.test.fakes.FakeSession
+import chat.progressive.app.features.location.LocationData
+import chat.progressive.app.test.fakes.FakeActiveSessionHolder
+import chat.progressive.app.test.fakes.FakeLocationPinProvider
+import chat.progressive.app.test.fakes.FakeSession
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

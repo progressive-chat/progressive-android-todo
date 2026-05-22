@@ -5,7 +5,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.features.home.room.detail.composer.mentions
+package chat.progressive.app.features.home.room.detail.composer.mentions
 
 import android.graphics.Canvas
 import android.graphics.Paint

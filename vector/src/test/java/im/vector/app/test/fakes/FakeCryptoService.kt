@@ -5,11 +5,11 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import im.vector.app.test.fixtures.CryptoDeviceInfoFixture.aCryptoDeviceInfo
+import chat.progressive.app.test.fixtures.CryptoDeviceInfoFixture.aCryptoDeviceInfo
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.matrix.android.sdk.api.auth.UserInteractiveAuthInterceptor

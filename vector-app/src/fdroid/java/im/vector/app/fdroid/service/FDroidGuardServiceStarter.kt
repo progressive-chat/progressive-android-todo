@@ -5,13 +5,13 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.fdroid.service
+package chat.progressive.app.fdroid.service
 
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import im.vector.app.core.services.GuardServiceStarter
-import im.vector.app.features.settings.VectorPreferences
+import chat.progressive.app.core.services.GuardServiceStarter
+import chat.progressive.app.features.settings.VectorPreferences
 import timber.log.Timber
 import javax.inject.Inject
 

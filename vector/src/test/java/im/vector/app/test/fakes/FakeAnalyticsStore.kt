@@ -5,9 +5,9 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-package im.vector.app.test.fakes
+package chat.progressive.app.test.fakes
 
-import im.vector.app.features.analytics.store.AnalyticsStore
+import chat.progressive.app.features.analytics.store.AnalyticsStore
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
