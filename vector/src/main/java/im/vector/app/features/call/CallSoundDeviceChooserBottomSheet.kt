@@ -25,7 +25,7 @@ class CallSoundDeviceChooserBottomSheet : ProgressiveBottomSheet<BottomSheetGene
         return BottomSheetGenericListBinding.inflate(inflater, container, false)
     }
 
-    private val callViewModel: VectorCallViewModel by activityViewModel()
+    private val callViewModel: ProgressiveCallViewModel by activityViewModel()
     private val controller = SimpleEpoxyController()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class CallSoundDeviceChooserBottomSheet : ProgressiveBottomSheet<BottomSheetGene
         views.bottomSheetRecyclerView.configureWith(controller, hasFixedSize = false)
         callViewModel.observeViewEvents {
             when (it) {
-                is VectorCallViewEvents.ShowSoundDeviceChooser -> {
+                is ProgressiveCallViewEvents.ShowSoundDeviceChooser -> {
                     render(it.available, it.current)
                 }
                 else -> {

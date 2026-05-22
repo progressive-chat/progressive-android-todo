@@ -30,7 +30,7 @@ import timber.log.Timber
  * create a Preference with a dedicated click/long click methods.
  * It also allow the title to be displayed on several lines
  */
-open class VectorPreference : Preference {
+open class ProgressiveBasePreference : Preference {
 
     var mTypeface = Typeface.NORMAL
 
@@ -143,12 +143,12 @@ open class VectorPreference : Preference {
      */
     private fun addClickListeners(view: View) {
         view.setOnLongClickListener {
-            onPreferenceLongClickListener?.onPreferenceLongClick(this@VectorPreference).orFalse()
+            onPreferenceLongClickListener?.onPreferenceLongClick(this@ProgressiveBasePreference).orFalse()
         }
 
         view.setOnClickListener {
             // call only the click listener
-            onPreferenceClickListener?.onPreferenceClick(this@VectorPreference)
+            onPreferenceClickListener?.onPreferenceClick(this@ProgressiveBasePreference)
         }
     }
 }

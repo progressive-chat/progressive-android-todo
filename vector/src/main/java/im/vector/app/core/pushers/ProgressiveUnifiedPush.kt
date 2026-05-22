@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.services.GuardServiceStarter
 import im.vector.app.features.settings.BackgroundSyncMode
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ class ProgressiveUnifiedPush : MessagingReceiver() {
     @Inject lateinit var pushersManager: PushersManager
     @Inject lateinit var pushParser: PushParser
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorPushHandler: ProgressivePushHandler
     @Inject lateinit var guardServiceStarter: GuardServiceStarter
     @Inject lateinit var unifiedPushStore: UnifiedPushStore

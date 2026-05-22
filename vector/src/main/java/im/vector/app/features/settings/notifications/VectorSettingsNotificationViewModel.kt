@@ -21,7 +21,7 @@ import im.vector.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
 import im.vector.app.core.pushers.PushersManager
 import im.vector.app.core.pushers.RegisterUnifiedPushUseCase
 import im.vector.app.core.pushers.UnregisterUnifiedPushUseCase
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.notifications.usecase.DisableNotificationsForCurrentSessionUseCase
 import im.vector.app.features.settings.notifications.usecase.EnableNotificationsForCurrentSessionUseCase
 import im.vector.app.features.settings.notifications.usecase.ToggleNotificationsForCurrentSessionUseCase
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class VectorSettingsNotificationViewModel @AssistedInject constructor(
         @Assisted initialState: ProgressiveDummyViewState,
         private val pushersManager: PushersManager,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val enableNotificationsForCurrentSessionUseCase: EnableNotificationsForCurrentSessionUseCase,
         private val disableNotificationsForCurrentSessionUseCase: DisableNotificationsForCurrentSessionUseCase,
         private val unregisterUnifiedPushUseCase: UnregisterUnifiedPushUseCase,
@@ -49,7 +49,7 @@ class VectorSettingsNotificationViewModel @AssistedInject constructor(
     @VisibleForTesting
     val notificationsPreferenceListener: SharedPreferences.OnSharedPreferenceChangeListener =
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                if (key == VectorPreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY) {
+                if (key == ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY) {
                     if (vectorPreferences.areNotificationEnabledForDevice()) {
                         _viewEvents.post(VectorSettingsNotificationViewEvent.NotificationsForDeviceEnabled)
                     } else {

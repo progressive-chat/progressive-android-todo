@@ -12,7 +12,7 @@ import android.text.style.ClickableSpan
 import android.view.MotionEvent
 import android.widget.TextView
 import androidx.core.text.toSpannable
-import im.vector.app.core.linkify.VectorLinkify
+import im.vector.app.core.linkify.ProgressiveLinkify
 import im.vector.app.core.utils.EvenBetterLinkMovementMethod
 import im.vector.app.core.utils.isValidUrl
 import im.vector.app.features.home.room.detail.timeline.TimelineEventController
@@ -42,7 +42,7 @@ fun CharSequence.linkify(callback: TimelineEventController.UrlClickCallback?): C
             callback?.onUrlClicked(url, this.toString())
         }
     })
-    VectorLinkify.addLinks(spannable, true)
+    ProgressiveLinkify.addLinks(spannable, true)
     return spannable
 }
 

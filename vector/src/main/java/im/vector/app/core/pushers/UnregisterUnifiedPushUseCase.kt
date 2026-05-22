@@ -10,14 +10,14 @@ package im.vector.app.core.pushers
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import im.vector.app.features.settings.BackgroundSyncMode
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.unifiedpush.android.connector.UnifiedPush
 import timber.log.Timber
 import javax.inject.Inject
 
 class UnregisterUnifiedPushUseCase @Inject constructor(
         @ApplicationContext private val context: Context,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val unifiedPushStore: UnifiedPushStore,
         private val unifiedPushHelper: UnifiedPushHelper,
 ) {

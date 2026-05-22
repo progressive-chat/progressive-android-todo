@@ -12,7 +12,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ private const val PERIOD_OF_GRACE_IN_MS = 2 * 60 * 1000L
 @Singleton
 class PinLocker @Inject constructor(
         private val pinCodeStore: PinCodeStore,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : DefaultLifecycleObserver {
 
     enum class State {

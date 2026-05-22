@@ -30,7 +30,7 @@ import im.vector.app.features.home.HomeActivitySharedAction
 import im.vector.app.features.home.HomeSharedActionViewModel
 import im.vector.app.features.home.room.list.actions.RoomListSharedAction
 import im.vector.app.features.home.room.list.actions.RoomListSharedActionViewModel
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.session.room.model.RoomSummary
 import javax.inject.Inject
 
@@ -49,7 +49,7 @@ class SpaceListFragment :
 
     @Inject lateinit var spaceController: SpaceSummaryController
     @Inject lateinit var newSpaceController: NewSpaceSummaryController
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
 
     private lateinit var homeActivitySharedActionViewModel: HomeSharedActionViewModel
     private lateinit var roomListSharedActionViewModel: RoomListSharedActionViewModel

@@ -10,7 +10,7 @@ package im.vector.app.features.pin.lockscreen.crypto.migrations
 import android.os.Build
 import im.vector.app.features.pin.lockscreen.crypto.KeyStoreCrypto
 import im.vector.app.features.pin.lockscreen.di.BiometricKeyAlias
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.util.BuildVersionSdkIntProvider
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MissingSystemKeyMigrator @Inject constructor(
         @BiometricKeyAlias private val systemKeyAlias: String,
         private val keystoreCryptoFactory: KeyStoreCrypto.Factory,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val buildVersionSdkIntProvider: BuildVersionSdkIntProvider,
 ) {
 

@@ -10,7 +10,7 @@ package im.vector.app.features.settings
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.lib.strings.CommonStrings
 
@@ -32,7 +32,7 @@ class VectorSettingsRootFragment :
 
     private fun tintIcons() {
         for (i in 0 until preferenceScreen.preferenceCount) {
-            (preferenceScreen.getPreference(i) as? VectorPreference)?.let { it.tintIcon = true }
+            (preferenceScreen.getPreference(i) as? ProgressiveBasePreference)?.let { it.tintIcon = true }
         }
     }
 }

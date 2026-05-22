@@ -16,12 +16,12 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.vector.app.core.error.fatalError
 import im.vector.app.core.utils.checkPermissions
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
 
 class WebviewPermissionUtils @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
 
     private var permissionRequest: PermissionRequest? = null

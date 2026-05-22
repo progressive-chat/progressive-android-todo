@@ -20,7 +20,7 @@ import im.vector.app.core.platform.EmptyAction
 import im.vector.app.core.platform.EmptyViewEvents
 import im.vector.app.core.platform.ProgressiveViewModel
 import im.vector.app.features.invite.AutoAcceptInvites
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.flow.throttleFirst
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
@@ -48,7 +48,7 @@ data class CountInfo(
 class UnreadMessagesSharedViewModel @AssistedInject constructor(
         @Assisted initialState: UnreadMessagesState,
         session: Session,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         spaceStateHandler: SpaceStateHandler,
         private val autoAcceptInvites: AutoAcceptInvites
 ) :

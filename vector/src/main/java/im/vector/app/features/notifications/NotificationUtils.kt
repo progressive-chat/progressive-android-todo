@@ -56,7 +56,7 @@ import im.vector.app.features.home.room.detail.RoomDetailActivity
 import im.vector.app.features.home.room.detail.arguments.TimelineArgs
 import im.vector.app.features.home.room.threads.ThreadsActivity
 import im.vector.app.features.home.room.threads.arguments.ThreadTimelineArgs
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.troubleshoot.TestNotificationReceiver
 import im.vector.app.features.themes.ThemeUtils
 import im.vector.lib.core.utils.timer.Clock
@@ -71,7 +71,7 @@ import kotlin.random.Random
 class NotificationUtils @Inject constructor(
         private val context: Context,
         private val stringProvider: StringProvider,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val clock: Clock,
         private val actionIds: NotificationActionIds,
         private val buildMeta: BuildMeta,

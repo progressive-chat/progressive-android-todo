@@ -33,7 +33,7 @@
             android:persistent="false"
             />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_KEYWORDS_FOOTER"
             android:focusable="false"
             android:persistent="false"

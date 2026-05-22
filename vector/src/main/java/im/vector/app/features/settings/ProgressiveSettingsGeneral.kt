@@ -35,7 +35,7 @@ import im.vector.app.core.extensions.toMvRxBundle
 import im.vector.app.core.intent.getFilenameFromUri
 import im.vector.app.core.platform.SimpleTextWatcher
 import im.vector.app.core.preference.UserAvatarPreference
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressivePreferenceCategory
 import im.vector.app.core.preference.ProgressiveSwitchPreference
 import im.vector.app.core.utils.TextUtils
@@ -71,7 +71,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsGeneralFragment :
+class ProgressiveSettingsGeneral :
         VectorSettingsBaseFragment(),
         GalleryOrCameraDialogHelper.Listener {
 
@@ -83,25 +83,25 @@ class VectorSettingsGeneralFragment :
     private lateinit var galleryOrCameraDialogHelper: GalleryOrCameraDialogHelper
 
     private val mUserSettingsCategory by lazy {
-        findPreference<PreferenceCategory>(VectorPreferences.SETTINGS_USER_SETTINGS_PREFERENCE_KEY)!!
+        findPreference<PreferenceCategory>(ProgressiveBasePreferences.SETTINGS_USER_SETTINGS_PREFERENCE_KEY)!!
     }
     private val mUserAvatarPreference by lazy {
-        findPreference<UserAvatarPreference>(VectorPreferences.SETTINGS_PROFILE_PICTURE_PREFERENCE_KEY)!!
+        findPreference<UserAvatarPreference>(ProgressiveBasePreferences.SETTINGS_PROFILE_PICTURE_PREFERENCE_KEY)!!
     }
     private val mDisplayNamePreference by lazy {
         findPreference<EditTextPreference>("SETTINGS_DISPLAY_NAME_PREFERENCE_KEY")!!
     }
     private val mPasswordPreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CHANGE_PASSWORD_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CHANGE_PASSWORD_PREFERENCE_KEY)!!
     }
     private val mManage3pidsPreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_EMAILS_AND_PHONE_NUMBERS_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_EMAILS_AND_PHONE_NUMBERS_PREFERENCE_KEY)!!
     }
     private val mIdentityServerPreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_IDENTITY_SERVER_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_IDENTITY_SERVER_PREFERENCE_KEY)!!
     }
     private val mExternalAccountManagementPreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_EXTERNAL_ACCOUNT_MANAGEMENT_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_EXTERNAL_ACCOUNT_MANAGEMENT_KEY)!!
     }
     private val mDeactivateAccountCategory by lazy {
         findPreference<ProgressivePreferenceCategory>("SETTINGS_DEACTIVATE_ACCOUNT_CATEGORY_KEY")!!
@@ -109,11 +109,11 @@ class VectorSettingsGeneralFragment :
 
     // Local contacts
     private val mContactSettingsCategory by lazy {
-        findPreference<PreferenceCategory>(VectorPreferences.SETTINGS_CONTACT_PREFERENCE_KEYS)!!
+        findPreference<PreferenceCategory>(ProgressiveBasePreferences.SETTINGS_CONTACT_PREFERENCE_KEYS)!!
     }
 
     private val mContactPhonebookCountryPreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CONTACTS_PHONEBOOK_COUNTRY_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CONTACTS_PHONEBOOK_COUNTRY_PREFERENCE_KEY)!!
     }
 
     private val integrationServiceListener = object : IntegrationManagerService.Listener {
@@ -208,7 +208,7 @@ class VectorSettingsGeneralFragment :
             true
         }
 
-        val discoveryPreference = findPreference<VectorPreference>(VectorPreferences.SETTINGS_DISCOVERY_PREFERENCE_KEY)!!
+        val discoveryPreference = findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DISCOVERY_PREFERENCE_KEY)!!
         discoveryPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
 
         mIdentityServerPreference.onPreferenceClickListener = openDiscoveryScreenPreferenceClickListener
@@ -234,18 +234,18 @@ class VectorSettingsGeneralFragment :
         // Advanced settings
 
         // user account
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_LOGGED_IN_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_LOGGED_IN_PREFERENCE_KEY)!!
                 .summary = session.myUserId
 
         // homeserver
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_HOME_SERVER_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_HOME_SERVER_PREFERENCE_KEY)!!
                 .summary = session.sessionParams.homeServerUrl
 
         // Contacts
         setContactsPreferences()
 
         // clear cache
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CLEAR_CACHE_PREFERENCE_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CLEAR_CACHE_PREFERENCE_KEY)!!.let {
             /*
             TODO
             MXSession.getApplicationSizeCaches(activity, object : SimpleApiCallback<Long>() {
@@ -264,7 +264,7 @@ class VectorSettingsGeneralFragment :
             }
         }
 
-        (findPreference(VectorPreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY) as? ProgressiveSwitchPreference)?.let {
+        (findPreference(ProgressiveBasePreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY) as? ProgressiveSwitchPreference)?.let {
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 // Disable it while updating the state, will be re-enabled by the account data listener.
                 it.isEnabled = false
@@ -286,7 +286,7 @@ class VectorSettingsGeneralFragment :
         }
 
         // clear medias cache
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CLEAR_MEDIA_CACHE_PREFERENCE_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CLEAR_MEDIA_CACHE_PREFERENCE_KEY)!!.let {
             lifecycleScope.launch(Dispatchers.Main) {
                 it.summary = getString(CommonStrings.loading)
                 val size = getCacheSize()
@@ -310,7 +310,7 @@ class VectorSettingsGeneralFragment :
             }
         }
         // Sign out
-        findPreference<VectorPreference>("SETTINGS_SIGN_OUT_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_SIGN_OUT_KEY")!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
             activity?.let {
                 SignOutUiWorker(requireActivity()).perform()
@@ -342,14 +342,14 @@ class VectorSettingsGeneralFragment :
 
     private fun refreshIntegrationManagerSettings() {
         val integrationAllowed = session.integrationManagerService().isIntegrationEnabled()
-        (findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY))!!.let {
+        (findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_ALLOW_INTEGRATIONS_KEY))!!.let {
             val savedListener = it.onPreferenceChangeListener
             it.onPreferenceChangeListener = null
             it.isChecked = integrationAllowed
             it.isEnabled = true
             it.onPreferenceChangeListener = savedListener
         }
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_INTEGRATION_MANAGER_UI_URL_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_INTEGRATION_MANAGER_UI_URL_KEY)!!.let {
             if (integrationAllowed) {
                 it.summary = session.integrationManagerService().getPreferredConfig().uiUrl
                 it.isVisible = true

@@ -9,7 +9,7 @@ package im.vector.app.features
 
 import im.vector.app.config.Config
 import im.vector.app.config.OnboardingVariant
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 
 interface VectorFeatures {
 
@@ -28,7 +28,7 @@ interface VectorFeatures {
     /**
      * This is only to enable if the labs flag should be visible and effective.
      * If on the client-side you want functionality that should be enabled with the new layout,
-     * use [VectorPreferences.isNewAppLayoutEnabled] instead.
+     * use [ProgressiveBasePreferences.isNewAppLayoutEnabled] instead.
      */
     fun isNewAppLayoutFeatureEnabled(): Boolean
     fun isVoiceBroadcastEnabled(): Boolean

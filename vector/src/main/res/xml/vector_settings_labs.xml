@@ -6,7 +6,7 @@
     <!--android:key="SETTINGS_LABS_PREFERENCE_KEY"-->
     <!--android:title="@string/room_settings_labs_pref_title">-->
 
-    <im.vector.app.core.preference.VectorPreference
+    <im.vector.app.core.preference.ProgressiveBasePreference
         android:focusable="false"
         android:key="labs_warning"
         android:summary="@string/room_settings_labs_warning_message" />
@@ -15,7 +15,7 @@
     <!--android:key="SETTINGS_ROOM_SETTINGS_LABS_END_TO_END_PREFERENCE_KEY"-->
     <!--android:title="@string/room_settings_labs_end_to_end" />-->
 
-    <!--<im.vector.app.core.preference.VectorPreference-->
+    <!--<im.vector.app.core.preference.ProgressiveBasePreference-->
     <!--android:focusable="false"-->
     <!--android:key="SETTINGS_ROOM_SETTINGS_LABS_END_TO_END_IS_ACTIVE_PREFERENCE_KEY"-->
     <!--android:title="@string/room_settings_labs_end_to_end_is_active" />-->

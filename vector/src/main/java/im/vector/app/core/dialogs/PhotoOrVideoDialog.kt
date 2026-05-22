@@ -12,12 +12,12 @@ import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.vector.app.R
 import im.vector.app.databinding.DialogPhotoOrVideoBinding
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 
 class PhotoOrVideoDialog(
         private val activity: Activity,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) {
 
     interface PhotoOrVideoDialogListener {
@@ -31,9 +31,9 @@ class PhotoOrVideoDialog(
 
     fun show(listener: PhotoOrVideoDialogListener) {
         when (vectorPreferences.getTakePhotoVideoMode()) {
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> listener.takePhoto()
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> listener.takeVideo()
-            /* VectorPreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> listener.takePhoto()
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> listener.takeVideo()
+            /* ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */
             else -> {
                 val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_photo_or_video, null)
                 val views = DialogPhotoOrVideoBinding.bind(dialogLayout)
@@ -57,13 +57,13 @@ class PhotoOrVideoDialog(
 
     private fun submit(
             views: DialogPhotoOrVideoBinding,
-            vectorPreferences: VectorPreferences,
+            vectorPreferences: ProgressiveBasePreferences,
             listener: PhotoOrVideoDialogListener
     ) {
         val mode = if (views.dialogPhotoOrVideoPhoto.isChecked) {
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
         } else {
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
         }
 
         if (views.dialogPhotoOrVideoAsDefault.isChecked) {
@@ -71,8 +71,8 @@ class PhotoOrVideoDialog(
         }
 
         when (mode) {
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> listener.takePhoto()
-            VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> listener.takeVideo()
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> listener.takePhoto()
+            ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> listener.takeVideo()
         }
     }
 
@@ -85,9 +85,9 @@ class PhotoOrVideoDialog(
         // Show option for always ask in this case
         views.dialogPhotoOrVideoAlwaysAsk.isVisible = true
         // Always default to photo
-        views.dialogPhotoOrVideoPhoto.isChecked = currentMode == VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
-        views.dialogPhotoOrVideoVideo.isChecked = currentMode == VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
-        views.dialogPhotoOrVideoAlwaysAsk.isChecked = currentMode == VectorPreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK
+        views.dialogPhotoOrVideoPhoto.isChecked = currentMode == ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
+        views.dialogPhotoOrVideoVideo.isChecked = currentMode == ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
+        views.dialogPhotoOrVideoAlwaysAsk.isChecked = currentMode == ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK
 
         MaterialAlertDialogBuilder(activity)
                 .setTitle(CommonStrings.option_take_photo_video)
@@ -103,9 +103,9 @@ class PhotoOrVideoDialog(
     private fun submitSettings(views: DialogPhotoOrVideoBinding) {
         vectorPreferences.setTakePhotoVideoMode(
                 when {
-                    views.dialogPhotoOrVideoPhoto.isChecked -> VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
-                    views.dialogPhotoOrVideoVideo.isChecked -> VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
-                    else -> VectorPreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK
+                    views.dialogPhotoOrVideoPhoto.isChecked -> ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO
+                    views.dialogPhotoOrVideoVideo.isChecked -> ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO
+                    else -> ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK
                 }
         )
     }

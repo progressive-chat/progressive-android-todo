@@ -65,7 +65,7 @@ class CallControlsView @JvmOverloads constructor(
         interactionListener?.didTapMore()
     }
 
-    fun updateForState(state: VectorCallViewState) {
+    fun updateForState(state: ProgressiveCallViewState) {
         val callState = state.callState.invoke()
         if (state.isAudioMuted) {
             views.muteIcon.setImageResource(R.drawable.ic_mic_off)

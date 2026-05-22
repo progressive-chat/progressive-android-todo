@@ -28,7 +28,7 @@ import org.matrix.android.sdk.api.extensions.tryOrNull
 import org.matrix.android.sdk.api.util.getPackageInfoCompat
 import timber.log.Timber
 
-class VectorActivityLifecycleCallbacks constructor(private val popupAlertManager: PopupAlertManager) : Application.ActivityLifecycleCallbacks {
+class ProgressiveLifecycleCallbacks constructor(private val popupAlertManager: PopupAlertManager) : Application.ActivityLifecycleCallbacks {
     /**
      * The activities information collected from the app manifest.
      */

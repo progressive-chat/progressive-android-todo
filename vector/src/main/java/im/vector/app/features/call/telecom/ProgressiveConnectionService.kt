@@ -38,7 +38,7 @@ import im.vector.app.core.services.CallAndroidService
  *            the parameter followed by a call to the destroy() method if the user rejects the incoming call.
  *</pre>
  */
-@RequiresApi(Build.VERSION_CODES.M) class VectorConnectionAndroidService : ConnectionService() {
+@RequiresApi(Build.VERSION_CODES.M) class ProgressiveConnectionService : ConnectionService() {
 
     /**
      * The telecom subsystem calls this method in response to your app calling placeCall(Uri, Bundle) to create a new outgoing call.

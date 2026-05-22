@@ -10,14 +10,14 @@ package im.vector.app.features.home.room.detail.timeline.helper
 import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.scopes.ActivityScoped
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @ActivityScoped
 class TimelineMediaSizeProvider @Inject constructor(
         private val resources: Resources,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) {
 
     var recyclerView: RecyclerView? = null

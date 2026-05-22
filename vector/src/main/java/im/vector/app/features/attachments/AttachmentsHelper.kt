@@ -16,7 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import im.vector.app.core.dialogs.PhotoOrVideoDialog
 import im.vector.app.core.platform.Restorable
 import im.vector.app.core.resources.BuildMeta
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.compat.getParcelableCompat
 import im.vector.lib.core.utils.compat.getSerializableCompat
 import im.vector.lib.multipicker.MultiPicker
@@ -91,7 +91,7 @@ class AttachmentsHelper(
      */
     fun openCamera(
             activity: Activity,
-            vectorPreferences: VectorPreferences,
+            vectorPreferences: ProgressiveBasePreferences,
             cameraActivityResultLauncher: ActivityResultLauncher<Intent>,
             cameraVideoActivityResultLauncher: ActivityResultLauncher<Intent>
     ) {

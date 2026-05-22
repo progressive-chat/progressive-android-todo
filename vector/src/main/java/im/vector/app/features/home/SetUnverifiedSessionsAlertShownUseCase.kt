@@ -7,12 +7,12 @@
 
 package im.vector.app.features.home
 
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.timer.Clock
 import javax.inject.Inject
 
 class SetUnverifiedSessionsAlertShownUseCase @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val clock: Clock,
 ) {
 

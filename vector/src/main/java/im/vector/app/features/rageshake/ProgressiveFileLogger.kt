@@ -9,7 +9,7 @@ package im.vector.app.features.rageshake
 
 import android.content.Context
 import android.util.Log
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class ProgressiveFileLogger @Inject constructor(
         context: Context,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : Timber.Tree() {
 
     companion object {

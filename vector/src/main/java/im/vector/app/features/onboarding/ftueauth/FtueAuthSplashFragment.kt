@@ -19,7 +19,7 @@ import im.vector.app.databinding.FragmentFtueAuthSplashBinding
 import im.vector.app.features.VectorFeatures
 import im.vector.app.features.onboarding.OnboardingAction
 import im.vector.app.features.onboarding.OnboardingFlow
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class FtueAuthSplashFragment :
         AbstractFtueAuthFragment<FragmentFtueAuthSplashBinding>() {
 
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var buildMeta: BuildMeta
 

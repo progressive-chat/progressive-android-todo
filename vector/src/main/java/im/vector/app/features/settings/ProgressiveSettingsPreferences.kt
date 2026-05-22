@@ -18,7 +18,7 @@ import im.vector.app.R
 import im.vector.app.core.dialogs.PhotoOrVideoDialog
 import im.vector.app.core.extensions.restart
 import im.vector.app.core.preference.ProgressiveListPreference
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressiveSwitchPreference
 import im.vector.app.features.MainActivity
 import im.vector.app.features.MainActivityArgs
@@ -32,10 +32,10 @@ import org.matrix.android.sdk.api.session.presence.model.PresenceEnum
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsPreferencesFragment :
+class ProgressiveSettingsPreferences :
         VectorSettingsBaseFragment() {
 
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var fontScalePreferences: FontScalePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var vectorLocale: VectorLocale
@@ -44,13 +44,13 @@ class VectorSettingsPreferencesFragment :
     override val preferenceXmlRes = R.xml.vector_settings_preferences
 
     private val selectedLanguagePreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_INTERFACE_LANGUAGE_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_INTERFACE_LANGUAGE_PREFERENCE_KEY)!!
     }
     private val textSizePreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_INTERFACE_TEXT_SIZE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_INTERFACE_TEXT_SIZE_KEY)!!
     }
     private val takePhotoOrVideoPreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_INTERFACE_TAKE_PHOTO_VIDEO")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_INTERFACE_TAKE_PHOTO_VIDEO")!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +75,7 @@ class VectorSettingsPreferencesFragment :
             }
         }
 
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_PRESENCE_USER_ALWAYS_APPEARS_OFFLINE)!!.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_PRESENCE_USER_ALWAYS_APPEARS_OFFLINE)!!.let { pref ->
             pref.isChecked = vectorPreferences.userAlwaysAppearsOffline()
             pref.setOnPreferenceChangeListener { _, newValue ->
                 val presenceOfflineModeEnabled = newValue as? Boolean ?: false
@@ -86,7 +86,7 @@ class VectorSettingsPreferencesFragment :
             }
         }
 
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_PREF_SPACE_SHOW_ALL_ROOM_IN_HOME)!!.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_PREF_SPACE_SHOW_ALL_ROOM_IN_HOME)!!.let { pref ->
             pref.isChecked = vectorPreferences.prefSpacesShowAllRoomInHome()
             pref.setOnPreferenceChangeListener { _, _ ->
                 MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = false))
@@ -94,7 +94,7 @@ class VectorSettingsPreferencesFragment :
             }
         }
 
-        findPreference<Preference>(VectorPreferences.SETTINGS_PREF_SPACE_CATEGORY)!!.let { pref ->
+        findPreference<Preference>(ProgressiveBasePreferences.SETTINGS_PREF_SPACE_CATEGORY)!!.let { pref ->
             pref.isVisible = !vectorPreferences.isNewAppLayoutEnabled()
             pref.isEnabled = !vectorPreferences.isNewAppLayoutEnabled()
         }
@@ -102,7 +102,7 @@ class VectorSettingsPreferencesFragment :
         // Url preview
         /*
         TODO Note: we keep the setting client side for now
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_SHOW_URL_PREVIEW_KEY)!!.let {
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_SHOW_URL_PREVIEW_KEY)!!.let {
             it.isChecked = session.isURLPreviewEnabled
 
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
@@ -140,7 +140,7 @@ class VectorSettingsPreferencesFragment :
          */
 
         // update keep medias period
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_MEDIA_SAVING_PERIOD_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_MEDIA_SAVING_PERIOD_KEY)!!.let {
             it.summary = vectorPreferences.getSelectedMediasSavingPeriodString()
 
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -177,9 +177,9 @@ class VectorSettingsPreferencesFragment :
     private fun updateTakePhotoOrVideoPreferenceSummary() {
         takePhotoOrVideoPreference.summary = getString(
                 when (vectorPreferences.getTakePhotoVideoMode()) {
-                    VectorPreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> CommonStrings.option_take_photo
-                    VectorPreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> CommonStrings.option_take_video
-                    /* VectorPreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */
+                    ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_PHOTO -> CommonStrings.option_take_photo
+                    ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_VIDEO -> CommonStrings.option_take_video
+                    /* ProgressiveBasePreferences.TAKE_PHOTO_VIDEO_MODE_ALWAYS_ASK */
                     else -> CommonStrings.option_always_ask
                 }
         )

@@ -12,7 +12,7 @@ import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.core.extensions.orEmpty
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.resources.BuildMeta
 import im.vector.app.core.utils.FirstThrottler
 import im.vector.app.core.utils.copyToClipboard
@@ -25,7 +25,7 @@ import org.matrix.android.sdk.api.Matrix
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsHelpAboutFragment :
+class ProgressiveSettingsHelp :
         VectorSettingsBaseFragment() {
 
     @Inject lateinit var versionProvider: VersionProvider
@@ -43,7 +43,7 @@ class VectorSettingsHelpAboutFragment :
 
     override fun bindPref() {
         // Help
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_HELP_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_HELP_PREFERENCE_KEY)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
             if (firstThrottler.canHandle() is FirstThrottler.CanHandlerResult.Yes) {
                 openUrlInChromeCustomTab(requireContext(), null, ProgressiveSettingsUrls.HELP)
@@ -52,14 +52,14 @@ class VectorSettingsHelpAboutFragment :
         }
 
         // preference to start the App info screen, to facilitate App permissions access
-        findPreference<VectorPreference>(APP_INFO_LINK_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(APP_INFO_LINK_PREFERENCE_KEY)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
             activity?.let { openAppSettingsPage(it) }
             true
         }
 
         // application version
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_VERSION_PREFERENCE_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_VERSION_PREFERENCE_KEY)!!.let {
             it.summary = buildString {
                 append("Progressive Chat (development)")
                 if (buildMeta.isDebug) {
@@ -77,7 +77,7 @@ class VectorSettingsHelpAboutFragment :
         }
 
         // Native core version
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_NATIVE_CORE_VERSION_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NATIVE_CORE_VERSION_KEY)!!.let {
             it.summary = "libprogressive_native.so — 95 C++ modules"
             it.setOnPreferenceClickListener { pref ->
                 copyToClipboard(requireContext(), pref.summary.orEmpty())
@@ -86,7 +86,7 @@ class VectorSettingsHelpAboutFragment :
         }
 
         // SDK version
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SDK_VERSION_PREFERENCE_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SDK_VERSION_PREFERENCE_KEY)!!.let {
             it.summary = Matrix.getSdkVersion()
 
             it.setOnPreferenceClickListener { pref ->
@@ -96,7 +96,7 @@ class VectorSettingsHelpAboutFragment :
         }
 
         // crypto version (libolm)
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CRYPTO_VERSION_PREFERENCE_KEY)!!.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CRYPTO_VERSION_PREFERENCE_KEY)!!.let {
             val cryptoVersion = Matrix.getCryptoVersion(true)
             it.summary = "libolm ${cryptoVersion}"
             it.setOnPreferenceClickListener { pref ->
@@ -106,14 +106,14 @@ class VectorSettingsHelpAboutFragment :
         }
 
         // Legacy init sync
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_DO_LEGACY_INIT_SYNC)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_LEGACY_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // vectorPreferences.didAskLegacyInitSync() — FIXME: restore when accessible
             true
         }
 
         // Optimized init sync
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_DO_OPTIMIZED_INIT_SYNC)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_OPTIMIZED_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // vectorPreferences.didAskOptimizedInitSync() — FIXME: restore when accessible
             true

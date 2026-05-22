@@ -17,7 +17,7 @@ import im.vector.app.features.form.formEditableSquareAvatarItem
 import im.vector.app.features.form.formMultiLineEditTextItem
 import im.vector.app.features.home.AvatarRenderer
 import im.vector.app.features.roomprofile.settings.RoomSettingsViewState
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.room.model.RoomJoinRules
 import org.matrix.android.sdk.api.util.toMatrixItem
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class SpaceSettingsController @Inject constructor(
         private val stringProvider: StringProvider,
         private val avatarRenderer: AvatarRenderer,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<RoomSettingsViewState>() {
 
     interface Callback {

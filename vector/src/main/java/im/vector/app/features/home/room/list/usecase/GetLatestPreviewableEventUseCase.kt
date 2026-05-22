@@ -8,7 +8,7 @@
 package im.vector.app.features.home.room.list.usecase
 
 import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.voicebroadcast.isLive
 import im.vector.app.features.voicebroadcast.isVoiceBroadcast
 import im.vector.app.features.voicebroadcast.model.asVoiceBroadcastEvent
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class GetLatestPreviewableEventUseCase @Inject constructor(
         private val sessionHolder: ActiveSessionHolder,
         private val getRoomLiveVoiceBroadcastsUseCase: GetRoomLiveVoiceBroadcastsUseCase,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute(roomId: String): TimelineEvent? {

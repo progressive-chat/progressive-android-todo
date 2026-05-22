@@ -82,7 +82,7 @@ import im.vector.app.features.home.room.detail.upgrade.MigrateRoomBottomSheet
 import im.vector.app.features.html.PillImageSpan
 import im.vector.app.features.location.LocationSharingMode
 import im.vector.app.features.poll.PollMode
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.share.SharedData
 import im.vector.app.features.voice.VoiceFailure
 import im.vector.lib.strings.CommonStrings
@@ -111,7 +111,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     @Inject lateinit var autoCompleterFactory: AutoCompleter.Factory
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var shareIntentHandler: ShareIntentHandler
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var buildMeta: BuildMeta
     @Inject lateinit var session: Session

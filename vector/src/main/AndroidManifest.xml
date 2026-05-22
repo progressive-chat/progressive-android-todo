@@ -401,7 +401,7 @@
             tools:ignore="Instantiatable" />
 
         <service
-            android:name=".features.call.telecom.VectorConnectionAndroidService"
+            android:name=".features.call.telecom.ProgressiveConnectionService"
             android:exported="false"
             android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
             tools:targetApi="M">

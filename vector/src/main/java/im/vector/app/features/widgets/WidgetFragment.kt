@@ -38,7 +38,7 @@ import im.vector.app.core.platform.VectorMenuProvider
 import im.vector.app.core.utils.CheckWebViewPermissionsUseCase
 import im.vector.app.core.utils.openUrlInExternalBrowser
 import im.vector.app.databinding.FragmentRoomWidgetBinding
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.webview.WebEventListener
 import im.vector.app.features.widgets.webview.WebviewPermissionUtils
 import im.vector.app.features.widgets.webview.clearAfterWidget
@@ -69,7 +69,7 @@ class WidgetFragment :
 
     @Inject lateinit var permissionUtils: WebviewPermissionUtils
     @Inject lateinit var checkWebViewPermissionsUseCase: CheckWebViewPermissionsUseCase
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
 
     private val fragmentArgs: WidgetArgs by args()
     private val viewModel: WidgetViewModel by activityViewModel()

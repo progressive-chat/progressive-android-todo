@@ -34,7 +34,7 @@ import im.vector.app.features.home.room.detail.composer.voice.VoiceMessageRecord
 import im.vector.app.features.home.room.detail.toMessageType
 import chat.progressive.app.native.ProgressiveNative
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.voice.VoiceFailure
 import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
 import im.vector.app.features.voicebroadcast.VoiceBroadcastHelper
@@ -86,7 +86,7 @@ class MessageComposerViewModel @AssistedInject constructor(
         @Assisted initialState: MessageComposerViewState,
         private val session: Session,
         private val stringProvider: StringProvider,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val commandParser: CommandParser,
         private val rainbowGenerator: RainbowGenerator,
         private val audioMessageHelper: AudioMessageHelper,

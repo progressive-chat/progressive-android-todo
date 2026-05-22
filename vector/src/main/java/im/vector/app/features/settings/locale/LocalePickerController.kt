@@ -20,13 +20,13 @@ import im.vector.app.core.error.ErrorFormatter
 import im.vector.app.core.resources.StringProvider
 import im.vector.app.core.utils.safeCapitalize
 import im.vector.app.features.settings.VectorLocale
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import java.util.Locale
 import javax.inject.Inject
 
 class LocalePickerController @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val stringProvider: StringProvider,
         private val errorFormatter: ErrorFormatter,
         private val vectorLocale: VectorLocale,

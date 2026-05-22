@@ -34,7 +34,7 @@ import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.resources.ColorProvider
 import im.vector.app.core.utils.DimensionConverter
 import chat.progressive.app.native.ProgressiveNative
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import io.element.android.wysiwyg.view.spans.InlineCodeSpan
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -65,7 +65,7 @@ import javax.inject.Singleton
 class EventHtmlRenderer @Inject constructor(
         htmlConfigure: MatrixHtmlPluginConfigure,
         private val context: Context,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val activeSessionHolder: ActiveSessionHolder
 ) {
 
@@ -267,7 +267,7 @@ class EventHtmlRenderer @Inject constructor(
 class MatrixHtmlPluginConfigure @Inject constructor(
         private val colorProvider: ColorProvider,
         private val resources: Resources,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val dimensionConverter: DimensionConverter,
 ) : HtmlPlugin.HtmlConfigure {
 

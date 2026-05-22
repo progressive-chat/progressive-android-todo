@@ -14,7 +14,7 @@ import androidx.core.text.HtmlCompat
 import im.vector.app.core.resources.StringProvider
 import im.vector.app.features.MainActivity
 import im.vector.app.features.MainActivityArgs
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.settings.LightweightSettingsStorage
 import javax.inject.Inject
@@ -23,7 +23,7 @@ import javax.inject.Inject
  * The class is responsible for handling thread specific tasks.
  */
 class ThreadsManager @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val lightweightSettingsStorage: LightweightSettingsStorage,
         private val stringProvider: StringProvider
 ) {

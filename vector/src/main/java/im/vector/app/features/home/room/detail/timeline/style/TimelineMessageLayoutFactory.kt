@@ -13,7 +13,7 @@ import im.vector.app.core.extensions.localDateTime
 import im.vector.app.core.resources.LocaleProvider
 import im.vector.app.core.resources.isRTL
 import im.vector.app.features.home.room.detail.timeline.factory.TimelineItemFactoryParams
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.events.model.EventType
 import org.matrix.android.sdk.api.session.room.model.message.MessageContent
@@ -29,7 +29,7 @@ class TimelineMessageLayoutFactory @Inject constructor(
         private val layoutSettingsProvider: TimelineLayoutSettingsProvider,
         private val localeProvider: LocaleProvider,
         private val resources: Resources,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) {
 
     companion object {

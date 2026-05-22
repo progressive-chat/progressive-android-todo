@@ -7,10 +7,10 @@
 
 package im.vector.app.core.resources
 
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
-class UserPreferencesProvider @Inject constructor(private val vectorPreferences: VectorPreferences) {
+class UserPreferencesProvider @Inject constructor(private val vectorPreferences: ProgressiveBasePreferences) {
 
     fun shouldShowHiddenEvents(): Boolean {
         return vectorPreferences.shouldShowHiddenEvents()

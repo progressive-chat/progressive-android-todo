@@ -9,14 +9,14 @@ package im.vector.app.core.dialogs
 
 import androidx.fragment.app.Fragment
 import im.vector.app.core.resources.ColorProvider
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.timer.Clock
 import javax.inject.Inject
 
 class GalleryOrCameraDialogHelperFactory @Inject constructor(
         private val colorProvider: ColorProvider,
         private val clock: Clock,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
     fun create(fragment: Fragment, skipCrop: Boolean = false): GalleryOrCameraDialogHelper {
         return GalleryOrCameraDialogHelper(fragment, colorProvider, clock, vectorPreferences, skipCrop)

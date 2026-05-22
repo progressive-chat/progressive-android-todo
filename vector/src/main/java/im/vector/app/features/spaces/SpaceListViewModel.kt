@@ -21,7 +21,7 @@ import im.vector.app.core.platform.ProgressiveViewModel
 import im.vector.app.features.analytics.AnalyticsTracker
 import im.vector.app.features.analytics.plan.Interaction
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.spaces.notification.GetNotificationCountForSpacesUseCase
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -48,7 +48,7 @@ class SpaceListViewModel @AssistedInject constructor(
         @Assisted initialState: SpaceListViewState,
         private val spaceStateHandler: SpaceStateHandler,
         private val session: Session,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val analyticsTracker: AnalyticsTracker,
         getNotificationCountForSpacesUseCase: GetNotificationCountForSpacesUseCase,
         private val getSpacesUseCase: GetSpacesUseCase,

@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class VectorHtmlCompressor @Inject constructor() {
+class ProgressiveHtmlCompressor @Inject constructor() {
 
     // All default options are suitable so far
     private val htmlCompressor: Compressor = HtmlCompressor()

@@ -17,7 +17,7 @@
             android:title="@string/settings_call_ringtone_use_app_ringtone"
             app:isPreferenceVisible="@bool/false_not_implemented" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dependency="SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY"
             android:key="SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY"
             android:title="@string/settings_call_ringtone_title"

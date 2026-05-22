@@ -105,7 +105,7 @@ class ProgressiveCallActivity :
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var screenCaptureServiceConnection: ScreenCaptureServiceConnection
 
-    private val callViewModel: VectorCallViewModel by viewModel()
+    private val callViewModel: ProgressiveCallViewModel by viewModel()
 
     private val dialPadCallback = object : DialPadFragment.Callback {
         override fun onDigitAppended(digit: String) {
@@ -149,7 +149,7 @@ class ProgressiveCallActivity :
             renderState(it)
         }
 
-        callViewModel.onAsync(VectorCallViewState::callState) {
+        callViewModel.onAsync(ProgressiveCallViewState::callState) {
             if (it is CallState.Ended) {
                 handleCallEnded(it)
             }
@@ -159,7 +159,7 @@ class ProgressiveCallActivity :
             handleViewEvents(it)
         }
 
-        callViewModel.onEach(VectorCallViewState::callId, VectorCallViewState::isVideoCall) { _, isVideoCall ->
+        callViewModel.onEach(ProgressiveCallViewState::callId, ProgressiveCallViewState::isVideoCall) { _, isVideoCall ->
             if (isVideoCall) {
                 if (checkPermissions(PERMISSIONS_FOR_VIDEO_IP_CALL, this, permissionCameraLauncher, CommonStrings.permissions_rationale_msg_camera_and_audio)) {
                     setupRenderersIfNeeded()
@@ -315,7 +315,7 @@ class ProgressiveCallActivity :
         }
     }
 
-    private fun renderState(state: VectorCallViewState) {
+    private fun renderState(state: ProgressiveCallViewState) {
         Timber.tag(loggerTag.value).v("renderState call $state")
         if (state.callState is Fail) {
             finish()
@@ -328,7 +328,7 @@ class ProgressiveCallActivity :
         }
     }
 
-    private fun renderFullScreenMode(state: VectorCallViewState) {
+    private fun renderFullScreenMode(state: ProgressiveCallViewState) {
         views.callToolbar.isVisible = true
         views.callControlsView.isVisible = true
         views.callControlsView.updateForState(state)
@@ -374,8 +374,8 @@ class ProgressiveCallActivity :
                                 toolbar?.subtitle = getString(CommonStrings.call_held_by_user, it.getBestName())
                             }
                         }
-                    } else if (state.transferee !is VectorCallViewState.TransfereeState.NoTransferee) {
-                        val transfereeName = if (state.transferee is VectorCallViewState.TransfereeState.KnownTransferee) {
+                    } else if (state.transferee !is ProgressiveCallViewState.TransfereeState.NoTransferee) {
+                        val transfereeName = if (state.transferee is ProgressiveCallViewState.TransfereeState.KnownTransferee) {
                             state.transferee.name
                         } else {
                             getString(CommonStrings.call_transfer_unknown_person)
@@ -421,7 +421,7 @@ class ProgressiveCallActivity :
         }
     }
 
-    private fun renderPiPMode(state: VectorCallViewState) {
+    private fun renderPiPMode(state: ProgressiveCallViewState) {
         val callState = state.callState.invoke()
         views.callToolbar.isVisible = false
         views.callControlsView.isVisible = false
@@ -491,11 +491,11 @@ class ProgressiveCallActivity :
                 .show()
     }
 
-    private fun configureCallInfo(state: VectorCallViewState, blurAvatar: Boolean = false) {
+    private fun configureCallInfo(state: ProgressiveCallViewState, blurAvatar: Boolean = false) {
         state.callInfo?.opponentUserItem?.let {
             val colorFilter = ContextCompat.getColor(this, im.vector.lib.ui.styles.R.color.bg_call_screen_blur)
             avatarRenderer.renderBlur(it, views.bgCallView, sampling = 20, rounded = false, colorFilter = colorFilter, addPlaceholder = false)
-            if (state.transferee is VectorCallViewState.TransfereeState.NoTransferee) {
+            if (state.transferee is ProgressiveCallViewState.TransfereeState.NoTransferee) {
                 views.participantNameText.setTextOrHide(null)
                 toolbar?.title = if (state.isVideoCall) {
                     getString(CommonStrings.video_call_with_participant, it.getBestName())
@@ -592,24 +592,24 @@ class ProgressiveCallActivity :
         surfaceRenderersAreInitialized = true
     }
 
-    private fun handleViewEvents(event: VectorCallViewEvents?) {
+    private fun handleViewEvents(event: ProgressiveCallViewEvents?) {
         Timber.tag(loggerTag.value).v("handleViewEvents $event")
         when (event) {
-            is VectorCallViewEvents.ConnectionTimeout -> {
+            is ProgressiveCallViewEvents.ConnectionTimeout -> {
                 onErrorTimoutConnect(event.turn)
             }
-            is VectorCallViewEvents.ShowDialPad -> {
+            is ProgressiveCallViewEvents.ShowDialPad -> {
                 CallDialPadBottomSheet.newInstance(false).apply {
                     callback = dialPadCallback
                 }.show(supportFragmentManager, FRAGMENT_DIAL_PAD_TAG)
             }
-            is VectorCallViewEvents.ShowCallTransferScreen -> {
+            is ProgressiveCallViewEvents.ShowCallTransferScreen -> {
                 val callId = withState(callViewModel) { it.callId }
                 navigator.openCallTransfer(this, callTransferActivityResultLauncher, callId)
             }
-            is VectorCallViewEvents.FailToTransfer -> showSnackbar(getString(CommonStrings.call_transfer_failure))
-            is VectorCallViewEvents.ShowScreenSharingPermissionDialog -> handleShowScreenSharingPermissionDialog()
-            is VectorCallViewEvents.StopScreenSharingService -> handleStopScreenSharingService()
+            is ProgressiveCallViewEvents.FailToTransfer -> showSnackbar(getString(CommonStrings.call_transfer_failure))
+            is ProgressiveCallViewEvents.ShowScreenSharingPermissionDialog -> handleShowScreenSharingPermissionDialog()
+            is ProgressiveCallViewEvents.StopScreenSharingService -> handleStopScreenSharingService()
             else -> Unit
         }
     }

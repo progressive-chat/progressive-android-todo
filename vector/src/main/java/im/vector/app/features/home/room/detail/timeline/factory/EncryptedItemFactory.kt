@@ -17,7 +17,7 @@ import im.vector.app.features.home.room.detail.timeline.helper.MessageInformatio
 import im.vector.app.features.home.room.detail.timeline.helper.MessageItemAttributesFactory
 import im.vector.app.features.home.room.detail.timeline.item.MessageTextItem_
 import im.vector.app.features.home.room.detail.timeline.tools.createLinkMovementMethod
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
 import im.vector.lib.strings.CommonStrings
 import me.gujun.android.span.image
@@ -36,7 +36,7 @@ class EncryptedItemFactory @Inject constructor(
         private val avatarSizeProvider: AvatarSizeProvider,
         private val drawableProvider: DrawableProvider,
         private val attributesFactory: MessageItemAttributesFactory,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) {
 
     fun create(params: TimelineItemFactoryParams): ProgressiveEpoxyModel<*>? {

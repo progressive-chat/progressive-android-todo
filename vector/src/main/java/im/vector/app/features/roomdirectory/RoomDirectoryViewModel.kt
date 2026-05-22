@@ -21,7 +21,7 @@ import im.vector.app.core.platform.ProgressiveViewModel
 import im.vector.app.features.analytics.AnalyticsTracker
 import im.vector.app.features.analytics.extensions.toAnalyticsJoinedRoom
 import im.vector.app.features.analytics.plan.JoinedRoom
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
@@ -37,7 +37,7 @@ import timber.log.Timber
 
 class RoomDirectoryViewModel @AssistedInject constructor(
         @Assisted initialState: PublicRoomsViewState,
-        vectorPreferences: VectorPreferences,
+        vectorPreferences: ProgressiveBasePreferences,
         private val session: Session,
         private val analyticsTracker: AnalyticsTracker,
         private val explicitTermFilter: ExplicitTermFilter

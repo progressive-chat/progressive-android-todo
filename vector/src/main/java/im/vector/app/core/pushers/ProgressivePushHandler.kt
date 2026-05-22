@@ -23,7 +23,7 @@ import im.vector.app.features.notifications.NotifiableMessageEvent
 import im.vector.app.features.notifications.NotificationActionIds
 import im.vector.app.features.notifications.NotificationDrawerManager
 import im.vector.app.features.settings.VectorDataStore
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -43,7 +43,7 @@ class ProgressivePushHandler @Inject constructor(
     private val notificationDrawerManager: NotificationDrawerManager,
     private val notifiableEventResolver: NotifiableEventResolver,
     private val activeSessionHolder: ActiveSessionHolder,
-    private val vectorPreferences: VectorPreferences,
+    private val vectorPreferences: ProgressiveBasePreferences,
     private val vectorDataStore: VectorDataStore,
     private val wifiDetector: WifiDetector,
     private val actionIds: NotificationActionIds,

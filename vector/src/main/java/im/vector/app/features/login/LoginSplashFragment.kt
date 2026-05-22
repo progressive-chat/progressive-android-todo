@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.core.resources.BuildMeta
 import im.vector.app.databinding.FragmentLoginSplashBinding
 import im.vector.app.features.analytics.plan.MobileScreen
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.failure.Failure
 import java.net.UnknownHostException
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class LoginSplashFragment :
         AbstractLoginFragment<FragmentLoginSplashBinding>() {
 
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var buildMeta: BuildMeta
 
     override fun getBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoginSplashBinding {

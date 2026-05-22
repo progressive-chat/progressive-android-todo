@@ -17,6 +17,6 @@ fun MatrixItem.getBestName(): String {
     } else {
         displayName
                 ?.takeIf { it.isNotBlank() }
-                ?: VectorMatrixItemDisplayNameFallbackProvider.getDefaultName(this)
+                ?: ProgressiveDisplayNameFallback.getDefaultName(this)
     }
 }

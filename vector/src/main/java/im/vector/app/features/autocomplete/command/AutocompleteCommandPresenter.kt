@@ -15,13 +15,13 @@ import dagger.assisted.AssistedInject
 import im.vector.app.features.autocomplete.AutocompleteClickListener
 import im.vector.app.features.autocomplete.RecyclerViewPresenter
 import im.vector.app.features.command.Command
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 
 class AutocompleteCommandPresenter @AssistedInject constructor(
         @Assisted val isInThreadTimeline: Boolean,
         context: Context,
         private val controller: AutocompleteCommandController,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) :
         RecyclerViewPresenter<Command>(context), AutocompleteClickListener<Command> {
 

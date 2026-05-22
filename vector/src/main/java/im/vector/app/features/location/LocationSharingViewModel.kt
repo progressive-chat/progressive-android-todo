@@ -19,7 +19,7 @@ import im.vector.app.core.platform.ProgressiveViewModel
 import im.vector.app.core.utils.PermissionChecker
 import im.vector.app.features.home.room.detail.timeline.helper.LocationPinProvider
 import im.vector.app.features.location.domain.usecase.CompareLocationsUseCase
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.lastOrNull
@@ -48,7 +48,7 @@ class LocationSharingViewModel @AssistedInject constructor(
         private val locationPinProvider: LocationPinProvider,
         private val session: Session,
         private val compareLocationsUseCase: CompareLocationsUseCase,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val permissionChecker: PermissionChecker,
 ) : ProgressiveViewModel<LocationSharingViewState, LocationSharingAction, LocationSharingViewEvents>(initialState), LocationTracker.Callback {
 

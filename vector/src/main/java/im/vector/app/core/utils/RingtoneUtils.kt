@@ -14,7 +14,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import androidx.core.content.edit
 import im.vector.app.core.di.DefaultPreferences
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 /**
@@ -38,7 +38,7 @@ class RingtoneUtils @Inject constructor(
      */
     fun getCallRingtoneUri(): Uri? {
         val callRingtone: String? = sharedPreferences
-                .getString(VectorPreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY, null)
+                .getString(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY, null)
 
         callRingtone?.let {
             return Uri.parse(it)
@@ -93,7 +93,7 @@ class RingtoneUtils @Inject constructor(
     fun setCallRingtoneUri(ringtoneUri: Uri) {
         sharedPreferences
                 .edit {
-                    putString(VectorPreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY, ringtoneUri.toString())
+                    putString(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY, ringtoneUri.toString())
                 }
     }
 
@@ -101,7 +101,7 @@ class RingtoneUtils @Inject constructor(
      * Set using Riot default ringtone.
      */
     fun useRiotDefaultRingtone(): Boolean {
-        return sharedPreferences.getBoolean(VectorPreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY, true)
+        return sharedPreferences.getBoolean(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY, true)
     }
 
     /**
@@ -110,7 +110,7 @@ class RingtoneUtils @Inject constructor(
     fun setUseRiotDefaultRingtone(useRiotDefault: Boolean) {
         sharedPreferences
                 .edit {
-                    putBoolean(VectorPreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY, useRiotDefault)
+                    putBoolean(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY, useRiotDefault)
                 }
     }
 }

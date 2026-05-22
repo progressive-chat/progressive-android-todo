@@ -27,7 +27,7 @@ import org.matrix.android.sdk.api.extensions.tryOrNull
 import timber.log.Timber
 import javax.inject.Inject
 
-class VectorPreferences @Inject constructor(
+class ProgressiveBasePreferences @Inject constructor(
         private val context: Context,
         private val clock: Clock,
         private val buildMeta: BuildMeta,

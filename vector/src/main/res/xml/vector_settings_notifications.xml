@@ -20,21 +20,21 @@
         <!--android:key="SETTINGS_TURN_SCREEN_ON_PREFERENCE_KEY"-->
         <!--android:title="@string/settings_turn_screen_on" />-->
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dependency="SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY"
             android:key="SETTINGS_NOTIFICATION_DEFAULT_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_notification_default"
             app:fragment="im.vector.app.features.settings.notifications.defaults.VectorSettingsDefaultNotificationFragment" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dependency="SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY"
             android:key="SETTINGS_NOTIFICATION_KEYWORD_AND_MENTIONS_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_notification_mentions_and_keywords"
             app:fragment="im.vector.app.features.settings.notifications.keywordandmentions.VectorSettingsKeywordAndMentionsNotificationFragment" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dependency="SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY"
             android:key="SETTINGS_NOTIFICATION_OTHER_PREFERENCE_KEY"
             android:persistent="false"
@@ -51,33 +51,33 @@
         android:persistent="false"
         android:title="@string/settings_notification_configuration">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dependency="SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY"
             android:key="SETTINGS_NOTIFICATION_METHOD_KEY"
             android:persistent="false"
             android:title="@string/settings_notification_method" />
 
         <!-- For API < 26 -->
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dialogTitle="@string/settings_notification_ringtone"
             android:key="SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_notification_ringtone" />
 
         <!-- For API >= 26 -->
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SYSTEM_NOISY_NOTIFICATION_PREFERENCE_KEY"
             android:persistent="false"
             android:summary="@string/settings_system_preferences_summary"
             android:title="@string/settings_noisy_notifications_preferences" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SYSTEM_SILENT_NOTIFICATION_PREFERENCE_KEY"
             android:persistent="false"
             android:summary="@string/settings_system_preferences_summary"
             android:title="@string/settings_silent_notifications_preferences" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SYSTEM_CALL_NOTIFICATION_PREFERENCE_KEY"
             android:persistent="false"
             android:summary="@string/settings_system_preferences_summary"
@@ -90,7 +90,7 @@
         android:title="@string/settings_background_sync"
         app:isPreferenceVisible="false">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_FDROID_BACKGROUND_SYNC_MODE"
             android:persistent="false"
             android:title="@string/settings_background_fdroid_sync_mode" />
@@ -116,7 +116,7 @@
 
     <im.vector.app.core.preference.ProgressivePreferenceCategory android:title="@string/settings_troubleshoot_title">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_NOTIFICATION_TROUBLESHOOT_PREFERENCE_KEY"
             android:title="@string/settings_notification_troubleshoot"
             app:fragment="im.vector.app.features.settings.notifications.troubleshoot.VectorSettingsNotificationsTroubleshootFragment" />

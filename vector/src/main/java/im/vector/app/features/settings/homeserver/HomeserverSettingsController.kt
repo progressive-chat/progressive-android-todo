@@ -21,7 +21,7 @@ import im.vector.app.core.ui.list.genericWithValueItem
 import im.vector.app.features.discovery.settingsCenteredImageItem
 import im.vector.app.features.discovery.settingsInfoItem
 import im.vector.app.features.discovery.settingsSectionTitleItem
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.federation.FederationVersion
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class HomeserverSettingsController @Inject constructor(
         private val stringProvider: StringProvider,
         private val errorFormatter: ErrorFormatter,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<HomeServerSettingsViewState>() {
 
     var callback: Callback? = null

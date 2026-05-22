@@ -11,7 +11,7 @@ import im.vector.app.features.voicebroadcast.VoiceBroadcastConstants
 import org.matrix.android.sdk.api.provider.CustomEventTypesProvider
 import javax.inject.Inject
 
-class VectorCustomEventTypesProvider @Inject constructor() : CustomEventTypesProvider {
+class ProgressiveEventTypes @Inject constructor() : CustomEventTypesProvider {
 
     override val customPreviewableEventTypes = listOf(
             VoiceBroadcastConstants.STATE_ROOM_VOICE_BROADCAST_INFO

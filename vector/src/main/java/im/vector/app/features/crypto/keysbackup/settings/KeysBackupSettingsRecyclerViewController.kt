@@ -18,7 +18,7 @@ import im.vector.app.core.epoxy.loadingItem
 import im.vector.app.core.resources.StringProvider
 import im.vector.app.core.ui.list.ItemStyle
 import im.vector.app.core.ui.list.genericItem
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
 import im.vector.lib.strings.CommonPlurals
 import im.vector.lib.strings.CommonStrings
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 class KeysBackupSettingsRecyclerViewController @Inject constructor(
         private val stringProvider: StringProvider,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val session: Session
 ) : TypedEpoxyController<KeysBackupSettingViewState>() {
 

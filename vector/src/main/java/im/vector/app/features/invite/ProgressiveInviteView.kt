@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
-import im.vector.app.databinding.VectorInviteViewBinding
+import im.vector.app.databinding.ProgressiveInviteViewBinding
 import im.vector.app.features.home.AvatarRenderer
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.room.members.ChangeMembershipState
@@ -23,7 +23,7 @@ import org.matrix.android.sdk.api.util.toMatrixItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorInviteView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
+class ProgressiveInviteView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
         ConstraintLayout(context, attrs, defStyle) {
 
     interface Callback {
@@ -36,14 +36,14 @@ class VectorInviteView @JvmOverloads constructor(context: Context, attrs: Attrib
         SMALL
     }
 
-    private val views: VectorInviteViewBinding
+    private val views: ProgressiveInviteViewBinding
 
     @Inject lateinit var avatarRenderer: AvatarRenderer
     var callback: Callback? = null
 
     init {
         inflate(context, R.layout.vector_invite_view, this)
-        views = VectorInviteViewBinding.bind(this)
+        views = ProgressiveInviteViewBinding.bind(this)
         views.inviteAcceptView.commonClicked = { callback?.onAcceptInvite() }
         views.inviteRejectView.commonClicked = { callback?.onRejectInvite() }
     }

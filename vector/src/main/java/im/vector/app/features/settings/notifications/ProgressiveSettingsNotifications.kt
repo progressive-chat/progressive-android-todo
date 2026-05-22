@@ -27,7 +27,7 @@ import im.vector.app.R
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.extensions.registerStartForActivityResult
 import im.vector.app.core.preference.ProgressiveEditTextPreference
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressivePreferenceCategory
 import im.vector.app.core.preference.ProgressiveSwitchPreference
 import im.vector.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
@@ -46,7 +46,7 @@ import im.vector.app.features.home.NotificationPermissionManager
 import im.vector.app.features.notifications.NotificationUtils
 import im.vector.app.features.settings.BackgroundSyncMode
 import im.vector.app.features.settings.BackgroundSyncModeChooserDialog
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.VectorSettingsBaseFragment
 import im.vector.app.features.settings.VectorSettingsFragmentInteractionListener
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
@@ -64,7 +64,7 @@ import javax.inject.Inject
 
 // Referenced in vector_settings_preferences_root.xml
 @AndroidEntryPoint
-class VectorSettingsNotificationFragment :
+class ProgressiveSettingsNotifications :
         VectorSettingsBaseFragment(),
         BackgroundSyncModeChooserDialog.InteractionListener {
 
@@ -72,7 +72,7 @@ class VectorSettingsNotificationFragment :
     @Inject lateinit var pushersManager: PushersManager
     @Inject lateinit var fcmHelper: FcmHelper
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var guardServiceStarter: GuardServiceStarter
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
@@ -118,7 +118,7 @@ class VectorSettingsNotificationFragment :
     }
 
     override fun bindPref() {
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_ENABLE_ALL_NOTIF_PREFERENCE_KEY)!!.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_ENABLE_ALL_NOTIF_PREFERENCE_KEY)!!.let { pref ->
             val pushRuleService = session.pushRuleService()
             val mRuleMaster = pushRuleService.getPushRules().getAllRules()
                     .find { it.ruleId == RuleIds.RULE_ID_DISABLE_ALL }
@@ -133,7 +133,7 @@ class VectorSettingsNotificationFragment :
             (pref as SwitchPreference).isChecked = areNotifEnabledAtAccountLevel
         }
 
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
                 ?.setOnPreferenceChangeListener { _, isChecked ->
                     val action = if (isChecked as Boolean) {
                         VectorSettingsNotificationViewAction.EnableNotificationsForDevice(pushDistributor = "")
@@ -145,7 +145,7 @@ class VectorSettingsNotificationFragment :
                     false
                 }
 
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val initialMode = vectorPreferences.getFdroidSyncBackgroundMode()
                 val dialogFragment = BackgroundSyncModeChooserDialog.newInstance(initialMode)
@@ -157,7 +157,7 @@ class VectorSettingsNotificationFragment :
             }
         }
 
-        findPreference<ProgressiveEditTextPreference>(VectorPreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
+        findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
             it.isEnabled = vectorPreferences.isBackgroundSyncEnabled()
             it.summary = secondsToText(vectorPreferences.backgroundSyncTimeOut())
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
@@ -170,7 +170,7 @@ class VectorSettingsNotificationFragment :
             }
         }
 
-        findPreference<ProgressiveEditTextPreference>(VectorPreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
+        findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
             it.isEnabled = vectorPreferences.isBackgroundSyncEnabled()
             it.summary = secondsToText(vectorPreferences.backgroundSyncDelay())
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
@@ -183,7 +183,7 @@ class VectorSettingsNotificationFragment :
             }
         }
 
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_NOTIFICATION_METHOD_KEY)?.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_METHOD_KEY)?.let {
             if (vectorFeatures.allowExternalUnifiedPushDistributors()) {
                 it.summary = unifiedPushHelper.getCurrentDistributorName()
                 it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -202,9 +202,9 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun onNotificationsForDeviceEnabled() {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
                 ?.isChecked = true
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_NOTIFICATION_METHOD_KEY)
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_METHOD_KEY)
                 ?.summary = unifiedPushHelper.getCurrentDistributorName()
 
         notificationPermissionManager.eventuallyRequestPermission(
@@ -216,7 +216,7 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun onNotificationsForDeviceDisabled() {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
                 ?.isChecked = false
         notificationPermissionManager.eventuallyRevokePermission(requireActivity())
     }
@@ -232,7 +232,7 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun onNotificationMethodChanged() {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_NOTIFICATION_METHOD_KEY)?.summary = unifiedPushHelper.getCurrentDistributorName()
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_METHOD_KEY)?.summary = unifiedPushHelper.getCurrentDistributorName()
         session.pushersService().refreshPushers()
         refreshBackgroundSyncPrefs()
     }
@@ -248,10 +248,10 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun bindEmailNotificationCategory(emails: List<Pair<ThreePid.Email, Boolean>>) {
-        findPreference<ProgressivePreferenceCategory>(VectorPreferences.SETTINGS_EMAIL_NOTIFICATION_CATEGORY_PREFERENCE_KEY)?.let { category ->
+        findPreference<ProgressivePreferenceCategory>(ProgressiveBasePreferences.SETTINGS_EMAIL_NOTIFICATION_CATEGORY_PREFERENCE_KEY)?.let { category ->
             category.removeAll()
             if (emails.isEmpty()) {
-                val vectorPreference = VectorPreference(requireContext())
+                val vectorPreference = ProgressiveBasePreference(requireContext())
                 vectorPreference.title = resources.getString(CommonStrings.settings_notification_emails_no_emails)
                 category.addPreference(vectorPreference)
                 vectorPreference.setOnPreferenceClickListener {
@@ -296,7 +296,7 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun refreshBackgroundSyncPrefs() {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_FDROID_BACKGROUND_SYNC_MODE)?.let {
             it.summary = when (vectorPreferences.getFdroidSyncBackgroundMode()) {
                 BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_BATTERY -> getString(CommonStrings.settings_background_fdroid_sync_mode_battery)
                 BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME -> getString(CommonStrings.settings_background_fdroid_sync_mode_real_time)
@@ -304,16 +304,16 @@ class VectorSettingsNotificationFragment :
             }
         }
 
-        findPreference<ProgressivePreferenceCategory>(VectorPreferences.SETTINGS_BACKGROUND_SYNC_PREFERENCE_KEY)?.let {
+        findPreference<ProgressivePreferenceCategory>(ProgressiveBasePreferences.SETTINGS_BACKGROUND_SYNC_PREFERENCE_KEY)?.let {
             it.isVisible = unifiedPushHelper.isBackgroundSync()
         }
 
         val backgroundSyncEnabled = vectorPreferences.isBackgroundSyncEnabled()
-        findPreference<ProgressiveEditTextPreference>(VectorPreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
+        findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_TIMEOUT_PREFERENCE_KEY)?.let {
             it.isEnabled = backgroundSyncEnabled
             it.summary = secondsToText(vectorPreferences.backgroundSyncTimeOut())
         }
-        findPreference<ProgressiveEditTextPreference>(VectorPreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
+        findPreference<ProgressiveEditTextPreference>(ProgressiveBasePreferences.SETTINGS_SET_SYNC_DELAY_PREFERENCE_KEY)?.let {
             it.isEnabled = backgroundSyncEnabled
             it.summary = secondsToText(vectorPreferences.backgroundSyncDelay())
         }
@@ -334,7 +334,7 @@ class VectorSettingsNotificationFragment :
     }
 
     private fun handleSystemPreference() {
-        val callNotificationsSystemOptions = findPreference<VectorPreference>(VectorPreferences.SETTINGS_SYSTEM_CALL_NOTIFICATION_PREFERENCE_KEY)!!
+        val callNotificationsSystemOptions = findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SYSTEM_CALL_NOTIFICATION_PREFERENCE_KEY)!!
         if (NotificationUtils.supportNotificationChannels()) {
             callNotificationsSystemOptions.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 NotificationUtils.openSystemSettingsForCallCategory(this)
@@ -344,7 +344,7 @@ class VectorSettingsNotificationFragment :
             callNotificationsSystemOptions.isVisible = false
         }
 
-        val noisyNotificationsSystemOptions = findPreference<VectorPreference>(VectorPreferences.SETTINGS_SYSTEM_NOISY_NOTIFICATION_PREFERENCE_KEY)!!
+        val noisyNotificationsSystemOptions = findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SYSTEM_NOISY_NOTIFICATION_PREFERENCE_KEY)!!
         if (NotificationUtils.supportNotificationChannels()) {
             noisyNotificationsSystemOptions.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 NotificationUtils.openSystemSettingsForNoisyCategory(this)
@@ -354,7 +354,7 @@ class VectorSettingsNotificationFragment :
             noisyNotificationsSystemOptions.isVisible = false
         }
 
-        val silentNotificationsSystemOptions = findPreference<VectorPreference>(VectorPreferences.SETTINGS_SYSTEM_SILENT_NOTIFICATION_PREFERENCE_KEY)!!
+        val silentNotificationsSystemOptions = findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SYSTEM_SILENT_NOTIFICATION_PREFERENCE_KEY)!!
         if (NotificationUtils.supportNotificationChannels()) {
             silentNotificationsSystemOptions.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 NotificationUtils.openSystemSettingsForSilentCategory(this)
@@ -365,7 +365,7 @@ class VectorSettingsNotificationFragment :
         }
 
         // Ringtone
-        val ringtonePreference = findPreference<VectorPreference>(VectorPreferences.SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY)!!
+        val ringtonePreference = findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY)!!
 
         if (NotificationUtils.supportNotificationChannels()) {
             ringtonePreference.isVisible = false
@@ -393,7 +393,7 @@ class VectorSettingsNotificationFragment :
             val notificationRingToneName = vectorPreferences.getNotificationRingToneName()
             if (null != notificationRingToneName) {
                 vectorPreferences.setNotificationRingTone(vectorPreferences.getNotificationRingTone())
-                findPreference<VectorPreference>(VectorPreferences.SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY)!!
+                findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_RINGTONE_SELECTION_PREFERENCE_KEY)!!
                         .summary = notificationRingToneName
             }
         }
@@ -415,7 +415,7 @@ class VectorSettingsNotificationFragment :
     private fun refreshPref() {
         // This pref may have change from troubleshoot pref fragment
         if (unifiedPushHelper.isBackgroundSync()) {
-            findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_START_ON_BOOT_PREFERENCE_KEY)
+            findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_START_ON_BOOT_PREFERENCE_KEY)
                     ?.isChecked = vectorPreferences.autoStartOnBoot()
         }
     }
@@ -437,7 +437,7 @@ class VectorSettingsNotificationFragment :
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         return when (preference.key) {
-            VectorPreferences.SETTINGS_ENABLE_ALL_NOTIF_PREFERENCE_KEY -> {
+            ProgressiveBasePreferences.SETTINGS_ENABLE_ALL_NOTIF_PREFERENCE_KEY -> {
                 updateEnabledForAccount(preference)
                 true
             }

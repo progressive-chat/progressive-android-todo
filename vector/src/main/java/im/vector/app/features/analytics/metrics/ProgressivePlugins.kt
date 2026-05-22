@@ -18,7 +18,7 @@ import javax.inject.Singleton
  * Class that contains the all plugins which can be used for tracking.
  */
 @Singleton
-data class VectorPlugins @Inject constructor(
+data class ProgressivePlugins @Inject constructor(
         val sentryDownloadDeviceKeysMetrics: SentryDownloadDeviceKeysMetrics,
         val sentrySyncDurationMetrics: SentrySyncDurationMetrics,
         val cryptoMetricPlugin: SentryCryptoAnalytics

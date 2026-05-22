@@ -56,7 +56,7 @@ class TestPushRulesSettings @Inject constructor(
 //                    override fun doFix() {
 //                        val activity = fragment.activity
 //                        if (activity is VectorSettingsFragmentInteractionListener) {
-//                            activity.requestHighlightPreferenceKeyOnResume(VectorPreferences.SETTINGS_NOTIFICATION_ADVANCED_PREFERENCE_KEY)
+//                            activity.requestHighlightPreferenceKeyOnResume(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_ADVANCED_PREFERENCE_KEY)
 //                        }
 //                        activity?.supportFragmentManager?.popBackStack()
 //                    }

@@ -11,7 +11,7 @@ import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.core.preference.PushRulePreference
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.utils.toast
 import im.vector.app.features.settings.VectorSettingsBaseFragment
 import im.vector.app.features.settings.notifications.NotificationIndex
@@ -34,7 +34,7 @@ class VectorSettingsAdvancedNotificationPreferenceFragment :
 
     override fun bindPref() {
         for (preferenceKey in prefKeyToPushRuleId.keys) {
-            val preference = findPreference<VectorPreference>(preferenceKey)
+            val preference = findPreference<ProgressiveBasePreference>(preferenceKey)
             if (preference is PushRulePreference) {
                 val ruleAndKind: PushRuleAndKind? = prefKeyToPushRuleId[preferenceKey]?.let { session.pushRuleService().getPushRules().findDefaultRule(it) }
 

@@ -15,14 +15,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import im.vector.app.core.utils.checkPermissions
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.util.BuildVersionSdkIntProvider
 import javax.inject.Inject
 
 class NotificationPermissionManager @Inject constructor(
         private val sdkIntProvider: BuildVersionSdkIntProvider,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

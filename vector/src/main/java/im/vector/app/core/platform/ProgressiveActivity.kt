@@ -68,7 +68,7 @@ import im.vector.app.features.MainActivityArgs
 import im.vector.app.features.VectorFeatures
 import im.vector.app.features.analytics.AnalyticsTracker
 import im.vector.app.features.analytics.plan.MobileScreen
-import im.vector.app.features.configuration.VectorConfiguration
+import im.vector.app.features.configuration.ProgressiveConfiguration
 import im.vector.app.features.consent.ConsentNotGivenHelper
 import im.vector.app.features.mdm.MdmService
 import im.vector.app.features.navigation.Navigator
@@ -82,7 +82,7 @@ import im.vector.app.features.session.SessionListener
 import im.vector.app.features.settings.FontScalePreferences
 import im.vector.app.features.settings.FontScalePreferencesImpl
 import im.vector.app.features.settings.VectorLocaleProvider
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.themes.ActivityOtherThemes
 import im.vector.app.features.themes.ThemeUtils
 import im.vector.lib.strings.CommonStrings
@@ -165,7 +165,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var errorFormatter: ErrorFormatter
     @Inject lateinit var mdmService: MdmService
 
@@ -183,7 +183,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
         val preferences = PreferenceManager.getDefaultSharedPreferences(base)
         val fontScalePreferences = FontScalePreferencesImpl(preferences, AndroidSystemSettingsProvider(base))
         val vectorLocaleProvider = VectorLocaleProvider(preferences)
-        val vectorConfiguration = VectorConfiguration(this, fontScalePreferences, vectorLocaleProvider)
+        val vectorConfiguration = ProgressiveConfiguration(this, fontScalePreferences, vectorLocaleProvider)
         super.attachBaseContext(vectorConfiguration.getLocalisedContext(base))
     }
 

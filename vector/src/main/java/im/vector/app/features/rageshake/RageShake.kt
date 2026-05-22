@@ -17,7 +17,7 @@ import com.squareup.seismic.ShakeDetector
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.hardware.vibrate
 import im.vector.app.features.navigation.Navigator
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.VectorSettingsActivity
 import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class RageShake @Inject constructor(
         private val bugReporter: BugReporter,
         private val navigator: Navigator,
         private val sessionHolder: ActiveSessionHolder,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : ShakeDetector.Listener {
 
     private var shakeDetector: ShakeDetector? = null

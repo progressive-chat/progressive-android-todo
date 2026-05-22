@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <im.vector.app.core.preference.VectorPreference
+    <im.vector.app.core.preference.ProgressiveBasePreference
         android:icon="@drawable/ic_notification_privacy_warning"
         android:key="SETTINGS_CRYPTOGRAPHY_HS_ADMIN_DISABLED_E2E_DEFAULT"
         android:persistent="false"
@@ -11,14 +11,14 @@
         tools:isPreferenceVisible="true"
         tools:summary="@string/settings_hs_admin_e2e_disabled">
 
-    </im.vector.app.core.preference.VectorPreference>
+    </im.vector.app.core.preference.ProgressiveBasePreference>
 
     <!-- ************ Cryptography section ************ -->
     <im.vector.app.core.preference.ProgressivePreferenceCategory
         android:key="SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY"
         android:title="@string/settings_cryptography">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_CROSS_SIGNING_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/encryption_information_cross_signing_state"
@@ -26,19 +26,19 @@
             tools:icon="@drawable/ic_shield_trusted"
             tools:summary="@string/encryption_information_dg_xsigning_complete" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_INFORMATION_DEVICE_NAME_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/encryption_information_device_name"
             tools:summary="My public device name" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_INFORMATION_DEVICE_ID_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/device_manager_session_details_session_id"
             tools:summary="VZRHETBEER" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_INFORMATION_DEVICE_KEY_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/encryption_information_device_key"
@@ -57,12 +57,12 @@
         android:key="SETTINGS_DEVICES_LIST_PREFERENCE_KEY"
         android:title="@string/settings_active_sessions_list">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SHOW_DEVICES_LIST_PREFERENCE_KEY"
             android:title="@string/settings_active_sessions_show_all"
             app:fragment="im.vector.app.features.settings.devices.ProgressiveSettingsDevices" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SHOW_DEVICES_LIST_V2_PREFERENCE_KEY"
             android:title="@string/settings_active_sessions_show_all"
             app:fragment="im.vector.app.features.settings.devices.v2.ProgressiveSettingsDevices" />
@@ -73,13 +73,13 @@
         android:key="SETTINGS_CRYPTOGRAPHY_MANAGE_4S_CATEGORY_KEY"
         android:title="@string/settings_secure_backup_section_title">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:icon="@drawable/ic_secure_backup"
             android:key="SETTINGS_SECURE_BACKUP_RECOVERY_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_secure_backup_setup" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:focusable="false"
             android:persistent="false"
             android:summary="@string/settings_secure_backup_section_info" />
@@ -89,17 +89,17 @@
         android:key="SETTINGS_CRYPTOGRAPHY_MANAGE_PREFERENCE_KEY"
         android:title="@string/settings_cryptography_manage_keys">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SECURE_MESSAGE_RECOVERY_PREFERENCE_KEY"
             android:persistent="false"
             android:summary="@string/encryption_settings_manage_message_recovery_summary"
             android:title="@string/encryption_message_recovery" />
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_EXPORT_E2E_ROOM_KEYS_PREFERENCE_KEY"
             android:summary="@string/encryption_export_room_keys_summary"
             android:title="@string/encryption_export_e2e_room_keys" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ENCRYPTION_IMPORT_E2E_ROOM_KEYS_PREFERENCE_KEY"
             android:summary="@string/encryption_import_room_keys_summary"
             android:title="@string/encryption_import_e2e_room_keys" />
@@ -111,7 +111,7 @@
         android:title="@string/settings_ignored_users"
         app:isPreferenceVisible="@bool/settings_ignored_users_visible">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:icon="@drawable/ic_settings_root_ignored_users"
             android:key="SETTINGS_IGNORED_USERS_PREFERENCE_KEY"
             android:title="@string/settings_ignored_users"
@@ -135,7 +135,7 @@
         android:key="SETTINGS_SECURITY_OTHER_CATEGORY"
         android:title="@string/settings_other">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_SECURITY_PIN"
             android:persistent="false"
             android:summary="@string/settings_security_application_protection_summary"

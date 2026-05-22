@@ -7,11 +7,11 @@
 
 package im.vector.app.features.settings.devices.v2
 
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 class ToggleIpAddressVisibilityUseCase @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute() {

@@ -22,9 +22,9 @@ import im.vector.app.core.resources.StringProvider
 import im.vector.app.features.home.room.detail.timeline.format.NoticeEventFormatter
 import im.vector.app.features.html.EventHtmlRenderer
 import im.vector.app.features.html.PillsPostProcessor
-import im.vector.app.features.html.VectorHtmlCompressor
+import im.vector.app.features.html.ProgressiveHtmlCompressor
 import im.vector.app.features.reactions.data.EmojiDataSource
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -63,13 +63,13 @@ import org.matrix.android.sdk.flow.unwrap
 class MessageActionsViewModel @AssistedInject constructor(
         @Assisted private val initialState: MessageActionState,
         private val eventHtmlRenderer: Lazy<EventHtmlRenderer>,
-        private val htmlCompressor: VectorHtmlCompressor,
+        private val htmlCompressor: ProgressiveHtmlCompressor,
         private val session: Session,
         private val noticeEventFormatter: NoticeEventFormatter,
         private val errorFormatter: ErrorFormatter,
         private val stringProvider: StringProvider,
         private val pillsPostProcessorFactory: PillsPostProcessor.Factory,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val checkIfCanReplyEventUseCase: CheckIfCanReplyEventUseCase,
         private val checkIfCanRedactEventUseCase: CheckIfCanRedactEventUseCase,
 ) : ProgressiveViewModel<MessageActionState, MessageActionsAction, EmptyViewEvents>(initialState) {

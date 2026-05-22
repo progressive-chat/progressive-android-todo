@@ -14,12 +14,12 @@ import dagger.assisted.AssistedInject
 import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
 import im.vector.app.core.platform.ProgressiveViewModel
-import im.vector.app.features.configuration.VectorConfiguration
+import im.vector.app.features.configuration.ProgressiveConfiguration
 import im.vector.app.features.settings.FontScalePreferences
 
 class FontScaleSettingViewModel @AssistedInject constructor(
         @Assisted initialState: FontScaleSettingViewState,
-        private val vectorConfiguration: VectorConfiguration,
+        private val vectorConfiguration: ProgressiveConfiguration,
         private val fontScalePreferences: FontScalePreferences,
 ) : ProgressiveViewModel<FontScaleSettingViewState, FontScaleSettingAction, FontScaleSettingViewEvents>(initialState) {
 

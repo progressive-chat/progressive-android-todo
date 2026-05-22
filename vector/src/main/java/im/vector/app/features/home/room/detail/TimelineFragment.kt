@@ -152,7 +152,7 @@ import im.vector.app.features.home.room.detail.widget.RoomWidgetsBottomSheet
 import im.vector.app.features.home.room.threads.ThreadsManager
 import im.vector.app.features.home.room.threads.arguments.ThreadTimelineArgs
 import im.vector.app.features.html.EventHtmlRenderer
-import im.vector.app.features.invite.VectorInviteView
+import im.vector.app.features.invite.ProgressiveInviteView
 import im.vector.app.features.location.LocationSharingMode
 import im.vector.app.features.location.toLocationData
 import im.vector.app.features.media.AttachmentData
@@ -167,7 +167,7 @@ import im.vector.app.features.poll.PollMode
 import im.vector.app.features.reactions.EmojiReactionPickerActivity
 import im.vector.app.features.roomprofile.RoomProfileActivity
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.VectorSettingsActivity
 import im.vector.app.features.spaces.share.ShareSpaceBottomSheet
 import im.vector.app.features.themes.ThemeUtils
@@ -222,7 +222,7 @@ import java.util.concurrent.TimeUnit
 class TimelineFragment :
         ProgressiveFragment<FragmentTimelineBinding>(),
         TimelineEventController.Callback,
-        VectorInviteView.Callback,
+        ProgressiveInviteView.Callback,
         GalleryOrCameraDialogHelper.Listener,
         CurrentCallsView.Callback,
         VectorMenuProvider {
@@ -233,7 +233,7 @@ class TimelineFragment :
     @Inject lateinit var permalinkHandler: PermalinkHandler
     @Inject lateinit var notificationDrawerManager: NotificationDrawerManager
     @Inject lateinit var eventHtmlRenderer: EventHtmlRenderer
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var threadsManager: ThreadsManager
     @Inject lateinit var colorProvider: ColorProvider
     @Inject lateinit var dimensionConverter: DimensionConverter
@@ -1255,7 +1255,7 @@ class TimelineFragment :
             lazyLoadedViews.inviteView(true)?.apply {
                 callback = this@TimelineFragment
                 isVisible = true
-                render(inviter, VectorInviteView.Mode.LARGE, mainState.changeMembershipState)
+                render(inviter, ProgressiveInviteView.Mode.LARGE, mainState.changeMembershipState)
                 setOnClickListener(null)
             }
             Unit
@@ -2088,7 +2088,7 @@ class TimelineFragment :
         }
     }
 
-    // VectorInviteView.Callback
+    // ProgressiveInviteView.Callback
     override fun onAcceptInvite() {
         timelineViewModel.handle(RoomDetailAction.AcceptInvite)
     }

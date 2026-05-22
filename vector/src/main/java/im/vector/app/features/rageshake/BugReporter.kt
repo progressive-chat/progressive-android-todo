@@ -23,7 +23,7 @@ import im.vector.app.core.extensions.getAllChildFragments
 import im.vector.app.core.extensions.toOnOff
 import im.vector.app.core.resources.BuildMeta
 import im.vector.app.features.settings.VectorLocaleProvider
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.devtools.GossipingEventsSerializer
 import im.vector.app.features.settings.locale.SystemLocaleProvider
 import im.vector.app.features.themes.ThemeUtils
@@ -64,7 +64,7 @@ class BugReporter @Inject constructor(
         private val context: Context,
         private val activeSessionHolder: ActiveSessionHolder,
         private val versionProvider: VersionProvider,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val vectorFileLogger: ProgressiveFileLogger,
         private val systemLocaleProvider: SystemLocaleProvider,
         private val matrix: Matrix,

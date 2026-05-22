@@ -14,7 +14,7 @@ import androidx.preference.Preference
 import im.vector.app.R
 import im.vector.app.core.preference.KeywordPreference
 import im.vector.app.core.preference.ProgressiveCheckboxPreference
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressivePreferenceCategory
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.settings.notifications.NotificationIndex
@@ -67,7 +67,7 @@ class VectorSettingsKeywordAndMentionsNotificationFragment :
         keywordPreference.isIconSpaceReserved = false
         keywordPreference.isChecked = enableKeywords
 
-        val footerPreference = findPreference<VectorPreference>("SETTINGS_KEYWORDS_FOOTER")!!
+        val footerPreference = findPreference<ProgressiveBasePreference>("SETTINGS_KEYWORDS_FOOTER")!!
         footerPreference.isIconSpaceReserved = false
         keywordPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val keywords = editKeywordPreference.keywords

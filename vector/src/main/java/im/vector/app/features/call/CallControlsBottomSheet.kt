@@ -30,7 +30,7 @@ class CallControlsBottomSheet : ProgressiveBottomSheet<BottomSheetCallControlsBi
 
     @Inject lateinit var vectorFeatures: VectorFeatures
 
-    private val callViewModel: VectorCallViewModel by activityViewModel()
+    private val callViewModel: ProgressiveCallViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,7 +70,7 @@ class CallControlsBottomSheet : ProgressiveBottomSheet<BottomSheetCallControlsBi
         }
     }
 
-    private fun renderState(state: VectorCallViewState) {
+    private fun renderState(state: ProgressiveCallViewState) {
         views.callControlsSwitchCamera.isVisible = state.isVideoCall && state.canSwitchCamera
         views.callControlsSwitchCamera.subTitle = getString(if (state.isFrontCamera) CommonStrings.call_camera_front else CommonStrings.call_camera_back)
         if (state.isVideoCall) {

@@ -7,7 +7,7 @@
         android:summary="@string/settings_security_pin_code_summary"
         android:title="@string/settings_security_pin_code_title" />
 
-    <im.vector.app.core.preference.VectorPreference
+    <im.vector.app.core.preference.ProgressiveBasePreference
         android:dependency="SETTINGS_SECURITY_USE_PIN_CODE_FLAG"
         android:key="SETTINGS_SECURITY_CHANGE_PIN_CODE_FLAG"
         android:summary="@string/settings_security_pin_code_change_pin_summary"

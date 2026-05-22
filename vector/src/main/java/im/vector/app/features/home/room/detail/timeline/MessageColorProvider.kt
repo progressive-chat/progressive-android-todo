@@ -10,7 +10,7 @@ package im.vector.app.features.home.room.detail.timeline
 import androidx.annotation.ColorInt
 import im.vector.app.core.resources.ColorProvider
 import im.vector.app.features.home.room.detail.timeline.helper.MatrixItemColorProvider
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.session.room.send.SendState
 import org.matrix.android.sdk.api.util.MatrixItem
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class MessageColorProvider @Inject constructor(
         private val colorProvider: ColorProvider,
         private val matrixItemColorProvider: MatrixItemColorProvider,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) {
 
     @ColorInt

@@ -62,18 +62,18 @@
 
     <im.vector.app.core.preference.ProgressivePreferenceCategory android:title="@string/settings_notifications">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_PUSH_GATEWAY_INFO"
             android:summary="@string/settings_push_gateway_info_summary"
             android:title="@string/settings_push_gateway_info_title"
             android:selectable="false" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:persistent="false"
             android:title="@string/settings_notifications_targets"
             app:fragment="im.vector.app.features.settings.push.PushGatewaysFragment" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:persistent="false"
             android:title="@string/settings_push_rules"
             app:fragment="im.vector.app.features.settings.push.PushRulesFragment" />
@@ -83,18 +83,18 @@
         android:dependency="SETTINGS_DEVELOPER_MODE_PREFERENCE_KEY"
         android:title="@string/settings_dev_tools">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:persistent="false"
             android:title="@string/settings_account_data"
             app:fragment="im.vector.app.features.settings.devtools.AccountDataFragment" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:persistent="false"
             android:key="SETTINGS_DEVELOPER_MODE_KEY_REQUEST_AUDIT_KEY"
             android:title="@string/settings_key_requests"
             app:fragment="im.vector.app.features.settings.devtools.KeyRequestsFragment" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_ACCESS_TOKEN"
             android:persistent="false"
             android:summary="@string/settings_access_token_summary"
@@ -106,25 +106,25 @@
         android:dependency="SETTINGS_DEVELOPER_MODE_PREFERENCE_KEY"
         android:title="Progressive Chat Debug">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_NATIVE_MODULE_STATUS"
             android:persistent="false"
             android:summary="Shows which of the 101 C++ modules are loaded in libprogressive_native.so"
             android:title="Native Module Status" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_LIBOLM_VERSION_DETAIL"
             android:persistent="false"
             android:summary="Detailed libolm crypto library version and capabilities"
             android:title="libolm Version &amp; Status" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_FEATURE_FLAGS_DUMP"
             android:persistent="false"
             android:summary="Quick overview of all Labs feature flags and their current state"
             android:title="Feature Flag Status" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_RECALC_POWER_LEVELS"
             android:persistent="false"
             android:summary="Re-parse all room power levels and dump computed permissions"
@@ -137,7 +137,7 @@
         android:title="@string/settings_nightly_build"
         app:isPreferenceVisible="true">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_NIGHTLY_BUILD_UPDATE_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_nightly_build_update" />

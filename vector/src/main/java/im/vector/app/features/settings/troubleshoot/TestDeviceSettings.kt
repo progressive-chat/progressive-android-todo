@@ -7,7 +7,7 @@
 package im.vector.app.features.settings.troubleshoot
 
 import im.vector.app.core.resources.StringProvider
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
  * Checks if notifications are enable in the system settings for this app.
  */
 class TestDeviceSettings @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val stringProvider: StringProvider
 ) :
         TroubleshootTest(CommonStrings.settings_troubleshoot_test_device_settings_title) {

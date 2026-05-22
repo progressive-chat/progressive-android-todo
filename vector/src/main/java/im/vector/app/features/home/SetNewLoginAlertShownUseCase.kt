@@ -7,11 +7,11 @@
 
 package im.vector.app.features.home
 
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 class SetNewLoginAlertShownUseCase @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) {
 
     fun execute(deviceIds: List<String>) {

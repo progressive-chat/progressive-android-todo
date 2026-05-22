@@ -16,7 +16,7 @@ import im.vector.app.core.resources.BuildMeta
 import im.vector.app.core.utils.FirstThrottler
 import im.vector.app.features.displayname.getBestName
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.launch
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.content.ContentUrlResolver
@@ -35,7 +35,7 @@ import javax.inject.Singleton
 class NotificationDrawerManager @Inject constructor(
         context: Context,
         private val notificationDisplayer: NotificationDisplayer,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val activeSessionDataSource: ActiveSessionDataSource,
         private val notifiableEventProcessor: NotifiableEventProcessor,
         private val notificationRenderer: NotificationRenderer,

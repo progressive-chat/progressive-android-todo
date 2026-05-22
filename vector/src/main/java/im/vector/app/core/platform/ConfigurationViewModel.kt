@@ -12,12 +12,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import im.vector.app.core.extensions.postLiveEvent
 import im.vector.app.core.utils.LiveEvent
-import im.vector.app.features.configuration.VectorConfiguration
+import im.vector.app.features.configuration.ProgressiveConfiguration
 import timber.log.Timber
 import javax.inject.Inject
 
 class ConfigurationViewModel @Inject constructor(
-        private val vectorConfiguration: VectorConfiguration
+        private val vectorConfiguration: ProgressiveConfiguration
 ) : ViewModel() {
 
     private var currentConfigurationValue: String? = null

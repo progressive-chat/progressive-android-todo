@@ -8,7 +8,7 @@
 package im.vector.app.features.settings.devices.v2.notification
 
 import im.vector.app.core.pushers.UnifiedPushHelper
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.account.LocalNotificationSettingsContent
 import org.matrix.android.sdk.api.session.Session
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * the background sync is enabled or not.
  */
 class UpdateNotificationSettingsAccountDataUseCase @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val unifiedPushHelper: UnifiedPushHelper,
         private val getNotificationSettingsAccountDataUseCase: GetNotificationSettingsAccountDataUseCase,
         private val setNotificationSettingsAccountDataUseCase: SetNotificationSettingsAccountDataUseCase,

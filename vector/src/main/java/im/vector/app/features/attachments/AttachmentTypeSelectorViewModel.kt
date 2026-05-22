@@ -18,12 +18,12 @@ import im.vector.app.core.platform.EmptyViewEvents
 import im.vector.app.core.platform.ProgressiveViewModel
 import im.vector.app.core.platform.ProgressiveViewModelAction
 import im.vector.app.features.VectorFeatures
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 
 class AttachmentTypeSelectorViewModel @AssistedInject constructor(
         @Assisted initialState: AttachmentTypeSelectorViewState,
         private val vectorFeatures: VectorFeatures,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
 ) : ProgressiveViewModel<AttachmentTypeSelectorViewState, AttachmentTypeSelectorAction, EmptyViewEvents>(initialState) {
     @AssistedFactory
     interface Factory : MavericksAssistedViewModelFactory<AttachmentTypeSelectorViewModel, AttachmentTypeSelectorViewState> {

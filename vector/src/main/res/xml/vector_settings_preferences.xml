@@ -7,7 +7,7 @@
         android:key="SETTINGS_USER_INTERFACE_KEY"
         android:title="@string/settings_user_interface">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_INTERFACE_LANGUAGE_PREFERENCE_KEY"
             android:persistent="false"
             android:title="@string/settings_interface_language"
@@ -22,7 +22,7 @@
             android:title="@string/settings_theme"
             app:iconSpaceReserved="false" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:dialogTitle="@string/font_size"
             android:key="SETTINGS_INTERFACE_TEXT_SIZE_KEY"
             android:persistent="false"
@@ -68,7 +68,7 @@
             android:summary="@string/settings_show_emoji_keyboard_summary"
             android:title="@string/settings_show_emoji_keyboard" />
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_INTERFACE_TAKE_PHOTO_VIDEO"
             android:persistent="false"
             android:title="@string/option_take_photo_video"
@@ -176,7 +176,7 @@
         android:title="@string/settings_media"
         app:isPreferenceVisible="@bool/false_not_implemented">
 
-        <im.vector.app.core.preference.VectorPreference
+        <im.vector.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_MEDIA_SAVING_PERIOD_KEY"
             android:title="@string/settings_keep_media" />
 

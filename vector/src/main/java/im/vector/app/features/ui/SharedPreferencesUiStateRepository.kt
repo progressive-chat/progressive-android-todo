@@ -10,7 +10,7 @@ package im.vector.app.features.ui
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import im.vector.app.features.home.RoomListDisplayMode
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import javax.inject.Inject
 
 /**
@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 class SharedPreferencesUiStateRepository @Inject constructor(
         private val sharedPreferences: SharedPreferences,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : UiStateRepository {
 
     override fun reset() {

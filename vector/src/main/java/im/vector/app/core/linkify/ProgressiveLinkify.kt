@@ -11,7 +11,7 @@ import android.text.style.URLSpan
 import android.text.util.Linkify
 import androidx.core.text.util.LinkifyCompat
 
-object VectorLinkify {
+object ProgressiveLinkify {
     /**
      * Better support for auto link than the default implementation.
      */
@@ -85,7 +85,7 @@ object VectorLinkify {
             createdSpans.add(LinkSpec(URLSpan(urlSpan.url), start, end))
         }
 
-        LinkifyCompat.addLinks(spannable, VectorAutoLinkPatterns.GEO_URI.toPattern(), "geo:", arrayOf("geo:"), geoMatchFilter, null)
+        LinkifyCompat.addLinks(spannable, ProgressiveAutoLink.GEO_URI.toPattern(), "geo:", arrayOf("geo:"), geoMatchFilter, null)
         spannable.forEachUrlSpanIndexed { _, urlSpan, start, end ->
             spannable.removeSpan(urlSpan)
             createdSpans.add(LinkSpec(URLSpan(urlSpan.url), start, end))

@@ -11,17 +11,17 @@ import im.vector.app.core.platform.VectorViewEvents
 import im.vector.app.features.call.audio.CallAudioManager
 import org.matrix.android.sdk.api.session.call.TurnServerResponse
 
-sealed class VectorCallViewEvents : VectorViewEvents {
+sealed class ProgressiveCallViewEvents : VectorViewEvents {
 
-    data class ConnectionTimeout(val turn: TurnServerResponse?) : VectorCallViewEvents()
+    data class ConnectionTimeout(val turn: TurnServerResponse?) : ProgressiveCallViewEvents()
     data class ShowSoundDeviceChooser(
             val available: Set<CallAudioManager.Device>,
             val current: CallAudioManager.Device
-    ) : VectorCallViewEvents()
+    ) : ProgressiveCallViewEvents()
 
-    object ShowDialPad : VectorCallViewEvents()
-    object ShowCallTransferScreen : VectorCallViewEvents()
-    object FailToTransfer : VectorCallViewEvents()
-    object ShowScreenSharingPermissionDialog : VectorCallViewEvents()
-    object StopScreenSharingService : VectorCallViewEvents()
+    object ShowDialPad : ProgressiveCallViewEvents()
+    object ShowCallTransferScreen : ProgressiveCallViewEvents()
+    object FailToTransfer : ProgressiveCallViewEvents()
+    object ShowScreenSharingPermissionDialog : ProgressiveCallViewEvents()
+    object StopScreenSharingService : ProgressiveCallViewEvents()
 }

@@ -13,7 +13,7 @@ import androidx.preference.SeekBarPreference
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.core.platform.ProgressiveActivity
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressivePreferenceCategory
 import im.vector.app.core.preference.ProgressiveSwitchPreference
 import im.vector.app.core.utils.copyToClipboard
@@ -61,12 +61,12 @@ class VectorSettingsAdvancedSettingsFragment :
     }
 
     private fun setupDevToolsSection() {
-        findPreference<VectorPreference>("SETTINGS_ACCESS_TOKEN")?.setOnPreferenceClickListener {
+        findPreference<ProgressiveBasePreference>("SETTINGS_ACCESS_TOKEN")?.setOnPreferenceClickListener {
             copyToClipboard(requireActivity(), session.sessionParams.credentials.accessToken)
             true
         }
 
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_DEVELOPER_MODE_KEY_REQUEST_AUDIT_KEY)?.apply {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DEVELOPER_MODE_KEY_REQUEST_AUDIT_KEY)?.apply {
             isVisible = session.cryptoService().supportKeyRequestInspection()
         }
     }
@@ -75,7 +75,7 @@ class VectorSettingsAdvancedSettingsFragment :
         val isRageShakeAvailable = RageShake.isAvailable(requireContext())
 
         if (isRageShakeAvailable) {
-            findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_USE_RAGE_SHAKE_KEY)!!
+            findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_USE_RAGE_SHAKE_KEY)!!
                     .onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
 
                 if (newValue as? Boolean == true) {
@@ -87,7 +87,7 @@ class VectorSettingsAdvancedSettingsFragment :
                 true
             }
 
-            findPreference<SeekBarPreference>(VectorPreferences.SETTINGS_RAGE_SHAKE_DETECTION_THRESHOLD_KEY)!!
+            findPreference<SeekBarPreference>(ProgressiveBasePreferences.SETTINGS_RAGE_SHAKE_DETECTION_THRESHOLD_KEY)!!
                     .onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 (activity as? ProgressiveActivity<*>)?.let {
                     val newValueAsInt = newValue as? Int ?: return@OnPreferenceChangeListener true
@@ -104,7 +104,7 @@ class VectorSettingsAdvancedSettingsFragment :
 
     private fun setupNightlySection() {
         findPreference<ProgressivePreferenceCategory>("SETTINGS_NIGHTLY_BUILD_PREFERENCE_KEY")?.isVisible = nightlyProxy.isNightlyBuild()
-        findPreference<VectorPreference>("SETTINGS_NIGHTLY_BUILD_UPDATE_PREFERENCE_KEY")?.setOnPreferenceClickListener {
+        findPreference<ProgressiveBasePreference>("SETTINGS_NIGHTLY_BUILD_UPDATE_PREFERENCE_KEY")?.setOnPreferenceClickListener {
             nightlyProxy.updateApplication()
             true
         }

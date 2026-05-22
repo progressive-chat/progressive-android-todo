@@ -26,7 +26,7 @@ import im.vector.app.core.utils.startSharePlainTextIntent
 import im.vector.app.databinding.FragmentHomeDrawerBinding
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.permalink.PermalinkFactory
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.VectorSettingsActivity
 import im.vector.app.features.spaces.SpaceListFragment
 import im.vector.app.features.usercode.UserCodeActivity
@@ -41,7 +41,7 @@ class HomeDrawerFragment :
         ProgressiveFragment<FragmentHomeDrawerBinding>() {
 
     @Inject lateinit var session: Session
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var buildMeta: BuildMeta
     @Inject lateinit var permalinkFactory: PermalinkFactory

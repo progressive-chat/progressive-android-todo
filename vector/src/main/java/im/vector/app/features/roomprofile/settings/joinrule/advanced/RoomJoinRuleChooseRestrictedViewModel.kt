@@ -24,7 +24,7 @@ import im.vector.app.core.resources.StringProvider
 import im.vector.app.core.utils.styleMatchingText
 import im.vector.app.features.displayname.getBestName
 import im.vector.app.features.roomprofile.settings.joinrule.toOption
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.launch
 import org.matrix.android.sdk.api.query.QueryStringValue
@@ -46,7 +46,7 @@ import org.matrix.android.sdk.api.util.toMatrixItem
 class RoomJoinRuleChooseRestrictedViewModel @AssistedInject constructor(
         @Assisted initialState: RoomJoinRuleChooseRestrictedState,
         private val session: Session,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val stringProvider: StringProvider
 ) : ProgressiveViewModel<RoomJoinRuleChooseRestrictedState, RoomJoinRuleChooseRestrictedActions, RoomJoinRuleChooseRestrictedEvents>(initialState) {
 

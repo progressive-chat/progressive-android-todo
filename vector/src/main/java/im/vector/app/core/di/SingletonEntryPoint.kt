@@ -19,7 +19,7 @@ import im.vector.app.features.navigation.Navigator
 import im.vector.app.features.pin.PinLocker
 import im.vector.app.features.rageshake.BugReporter
 import im.vector.app.features.session.SessionListener
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.ui.UiStateRepository
 import im.vector.lib.core.utils.timer.Clock
 import kotlinx.coroutines.CoroutineScope
@@ -44,7 +44,7 @@ interface SingletonEntryPoint {
 
     fun bugReporter(): BugReporter
 
-    fun vectorPreferences(): VectorPreferences
+    fun vectorPreferences(): ProgressiveBasePreferences
 
     fun uiStateRepository(): UiStateRepository
 

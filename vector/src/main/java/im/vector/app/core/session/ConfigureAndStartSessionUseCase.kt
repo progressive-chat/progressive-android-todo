@@ -15,7 +15,7 @@ import im.vector.app.core.notification.PushRulesUpdater
 import im.vector.app.core.session.clientinfo.UpdateMatrixClientInfoUseCase
 import im.vector.app.features.call.webrtc.WebRtcCallManager
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.devices.v2.notification.UpdateNotificationSettingsAccountDataUseCase
 import kotlinx.coroutines.launch
 import org.matrix.android.sdk.api.session.Session
@@ -26,7 +26,7 @@ class ConfigureAndStartSessionUseCase @Inject constructor(
         @ApplicationContext private val context: Context,
         private val webRtcCallManager: WebRtcCallManager,
         private val updateMatrixClientInfoUseCase: UpdateMatrixClientInfoUseCase,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val notificationsSettingUpdater: NotificationsSettingUpdater,
         private val updateNotificationSettingsAccountDataUseCase: UpdateNotificationSettingsAccountDataUseCase,
         private val pushRulesUpdater: PushRulesUpdater,

@@ -26,7 +26,7 @@ import im.vector.app.databinding.FragmentFtueSplashCarouselBinding
 import im.vector.app.features.VectorFeatures
 import im.vector.app.features.onboarding.OnboardingAction
 import im.vector.app.features.onboarding.OnboardingFlow
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -40,7 +40,7 @@ private const val CAROUSEL_TRANSITION_TIME_MS = 500L
 class FtueAuthSplashCarouselFragment :
         AbstractFtueAuthFragment<FragmentFtueSplashCarouselBinding>() {
 
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var carouselController: SplashCarouselController
     @Inject lateinit var carouselStateFactory: SplashCarouselStateFactory

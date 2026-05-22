@@ -17,7 +17,7 @@ import androidx.preference.SwitchPreference
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.core.extensions.registerStartForActivityResult
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.utils.RingtoneUtils
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
@@ -25,7 +25,7 @@ import im.vector.lib.strings.CommonStrings
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsVoiceVideoFragment : VectorSettingsBaseFragment() {
+class ProgressiveSettingsVoiceVideo : VectorSettingsBaseFragment() {
 
     @Inject lateinit var ringtoneUtils: RingtoneUtils
 
@@ -33,10 +33,10 @@ class VectorSettingsVoiceVideoFragment : VectorSettingsBaseFragment() {
     override val preferenceXmlRes = R.xml.vector_settings_voice_video
 
     private val mUseRiotCallRingtonePreference by lazy {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY)!!
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_USE_RIOT_PREFERENCE_KEY)!!
     }
     private val mCallRingtonePreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CALL_RINGTONE_URI_PREFERENCE_KEY)!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

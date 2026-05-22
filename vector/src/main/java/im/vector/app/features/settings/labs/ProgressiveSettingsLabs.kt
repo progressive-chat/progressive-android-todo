@@ -24,19 +24,19 @@ import im.vector.app.features.MainActivityArgs
 import im.vector.app.features.VectorFeatures
 import im.vector.app.features.analytics.plan.MobileScreen
 import im.vector.app.features.home.room.threads.ThreadsManager
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.VectorSettingsBaseFragment
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.settings.LightweightSettingsStorage
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsLabsFragment :
+class ProgressiveSettingsLabs :
         VectorSettingsBaseFragment() {
 
     private val viewModel: VectorSettingsLabsViewModel by fragmentViewModel()
 
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var lightweightSettingsStorage: LightweightSettingsStorage
     @Inject lateinit var threadsManager: ThreadsManager
     @Inject lateinit var vectorFeatures: VectorFeatures
@@ -50,20 +50,20 @@ class VectorSettingsLabsFragment :
     }
 
     override fun bindPref() {
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_AUTO_REPORT_UISI)?.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_AUTO_REPORT_UISI)?.let { pref ->
             // ensure correct default
             pref.isChecked = vectorPreferences.labsAutoReportUISI()
         }
 
         // clear cache
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_ENABLE_THREAD_MESSAGES)?.let { vectorPref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_ENABLE_THREAD_MESSAGES)?.let { vectorPref ->
             vectorPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 onThreadsPreferenceClickedInterceptor(vectorPref)
                 false
             }
         }
 
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_LABS_MSC3061_SHARE_KEYS_HISTORY)?.let { pref ->
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_MSC3061_SHARE_KEYS_HISTORY)?.let { pref ->
             if (session.cryptoService().supportsShareKeysOnInvite()) {
                 // ensure correct default
                 pref.isChecked = session.cryptoService().isShareKeysOnInviteEnabled()
@@ -79,7 +79,7 @@ class VectorSettingsLabsFragment :
             }
         }
 
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_NEW_APP_LAYOUT_KEY)?.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_NEW_APP_LAYOUT_KEY)?.let { pref ->
             pref.isVisible = vectorFeatures.isNewAppLayoutFeatureEnabled()
 
             pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -88,7 +88,7 @@ class VectorSettingsLabsFragment :
             }
         }
 
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_VOICE_BROADCAST_KEY)?.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_VOICE_BROADCAST_KEY)?.let { pref ->
             // Voice Broadcast recording is not available on Android < 10
             pref.isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && vectorFeatures.isVoiceBroadcastEnabled()
         }
@@ -98,7 +98,7 @@ class VectorSettingsLabsFragment :
     }
 
     private fun configureUnreadNotificationsAsTabPreference() {
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB)?.let { pref ->
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_UNREAD_NOTIFICATIONS_AS_TAB)?.let { pref ->
             pref.isVisible = !vectorFeatures.isNewAppLayoutFeatureEnabled()
             pref.isEnabled = !vectorPreferences.isNewAppLayoutEnabled()
         }
@@ -153,7 +153,7 @@ class VectorSettingsLabsFragment :
     }
 
     private fun configureEnableClientInfoRecordingPreference() {
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_LABS_CLIENT_INFO_RECORDING_KEY)?.onPreferenceChangeListener =
                 OnPreferenceChangeListener { _, newValue ->
                     when (newValue as? Boolean) {
                         false -> viewModel.handle(VectorSettingsLabsAction.DeleteRecordedClientInfo)

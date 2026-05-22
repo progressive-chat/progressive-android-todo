@@ -7,7 +7,7 @@
 
 package im.vector.app.core.notification
 
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.app.features.settings.devices.v2.notification.GetNotificationsStatusUseCase
 import im.vector.app.features.settings.devices.v2.notification.NotificationsStatus
 import kotlinx.coroutines.flow.collect
@@ -20,7 +20,7 @@ import javax.inject.Inject
  * setting for the current device.
  */
 class UpdateEnableNotificationsSettingOnChangeUseCase @Inject constructor(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val getNotificationsStatusUseCase: GetNotificationsStatusUseCase,
 ) {
 

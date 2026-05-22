@@ -34,7 +34,7 @@ import im.vector.app.features.location.INITIAL_MAP_ZOOM_IN_TIMELINE
 import im.vector.app.features.location.UrlMapProvider
 import im.vector.app.features.location.toLocationData
 import im.vector.app.features.media.ImageContentRenderer
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.extensions.orFalse
@@ -57,7 +57,7 @@ class MessageActionsEpoxyController @Inject constructor(
         private val errorFormatter: ErrorFormatter,
         private val spanUtils: SpanUtils,
         private val eventDetailsFormatter: EventDetailsFormatter,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val dateFormatter: ProgressiveDateFormatter,
         private val urlMapProvider: UrlMapProvider,
         private val locationPinProvider: LocationPinProvider

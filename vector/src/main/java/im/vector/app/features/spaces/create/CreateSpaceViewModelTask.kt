@@ -11,7 +11,7 @@ import android.net.Uri
 import im.vector.app.core.platform.ViewModelTask
 import im.vector.app.features.raw.wellknown.getElementWellknown
 import im.vector.app.features.raw.wellknown.isE2EByDefault
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.extensions.tryOrNull
 import org.matrix.android.sdk.api.raw.RawService
 import org.matrix.android.sdk.api.session.Session
@@ -52,7 +52,7 @@ data class CreateSpaceTaskParams(
 
 class CreateSpaceViewModelTask @Inject constructor(
         private val session: Session,
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val rawService: RawService
 ) : ViewModelTask<CreateSpaceTaskParams, CreateSpaceTaskResult> {
 

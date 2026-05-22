@@ -14,7 +14,7 @@ import im.vector.app.features.call.audio.CallAudioManager
 import org.matrix.android.sdk.api.session.call.CallState
 import org.matrix.android.sdk.api.util.MatrixItem
 
-data class VectorCallViewState(
+data class ProgressiveCallViewState(
         val callId: String,
         val roomId: String,
         val isVideoCall: Boolean,

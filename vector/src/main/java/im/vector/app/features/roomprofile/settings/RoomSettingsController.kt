@@ -19,7 +19,7 @@ import im.vector.app.features.form.formEditableAvatarItem
 import im.vector.app.features.form.formSwitchItem
 import im.vector.app.features.home.AvatarRenderer
 import im.vector.app.features.home.room.detail.timeline.format.RoomHistoryVisibilityFormatter
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.room.model.GuestAccess
 import org.matrix.android.sdk.api.session.room.model.RoomJoinRules
@@ -31,7 +31,7 @@ class RoomSettingsController @Inject constructor(
         private val avatarRenderer: AvatarRenderer,
         private val dimensionConverter: DimensionConverter,
         private val roomHistoryVisibilityFormatter: RoomHistoryVisibilityFormatter,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : TypedEpoxyController<RoomSettingsViewState>() {
 
     interface Callback {

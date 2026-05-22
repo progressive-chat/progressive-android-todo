@@ -20,7 +20,7 @@ import im.vector.app.core.glide.GlideApp
 import im.vector.app.core.resources.BuildMeta
 import im.vector.app.core.utils.DimensionConverter
 import im.vector.app.features.MainActivity
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import org.matrix.android.sdk.api.session.room.model.RoomSummary
 import org.matrix.android.sdk.api.util.toMatrixItem
 import javax.inject.Inject
@@ -47,7 +47,7 @@ class ShortcutCreator @Inject constructor(
             dimensionConverter.dpToPx(72)
         }
     }
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
 
     fun canCreateShortcut(): Boolean {
         return ShortcutManagerCompat.isRequestPinShortcutSupported(context)

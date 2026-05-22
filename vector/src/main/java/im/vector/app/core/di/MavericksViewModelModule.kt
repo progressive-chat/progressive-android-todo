@@ -15,7 +15,7 @@ import im.vector.app.features.analytics.accountdata.AnalyticsAccountDataViewMode
 import im.vector.app.features.analytics.ui.consent.AnalyticsConsentViewModel
 import im.vector.app.features.attachments.AttachmentTypeSelectorViewModel
 import im.vector.app.features.auth.ReAuthViewModel
-import im.vector.app.features.call.VectorCallViewModel
+import im.vector.app.features.call.ProgressiveCallViewModel
 import im.vector.app.features.call.conference.JitsiCallViewModel
 import im.vector.app.features.call.transfer.CallTransferViewModel
 import im.vector.app.features.contactsbook.ContactsBookViewModel
@@ -155,8 +155,8 @@ interface MavericksViewModelModule {
 
     @Binds
     @IntoMap
-    @MavericksViewModelKey(VectorCallViewModel::class)
-    fun vectorCallViewModelFactory(factory: VectorCallViewModel.Factory): MavericksAssistedViewModelFactory<*, *>
+    @MavericksViewModelKey(ProgressiveCallViewModel::class)
+    fun vectorCallViewModelFactory(factory: ProgressiveCallViewModel.Factory): MavericksAssistedViewModelFactory<*, *>
 
     @Binds
     @IntoMap

@@ -23,7 +23,7 @@ import im.vector.app.core.epoxy.addTextChangedListenerOnce
 import im.vector.app.core.platform.SimpleTextWatcher
 import im.vector.lib.strings.CommonStrings
 
-class KeywordPreference : VectorPreference {
+class KeywordPreference : ProgressiveBasePreference {
 
     interface Listener {
         fun onFocusDidChange(hasFocus: Boolean)

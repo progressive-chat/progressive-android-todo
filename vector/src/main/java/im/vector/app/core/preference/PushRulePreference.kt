@@ -16,7 +16,7 @@ import im.vector.app.R
 import im.vector.app.features.settings.notifications.NotificationIndex
 import im.vector.lib.strings.CommonStrings
 
-class PushRulePreference : VectorPreference {
+class PushRulePreference : ProgressiveBasePreference {
 
     /**
      * @return the selected push rule index

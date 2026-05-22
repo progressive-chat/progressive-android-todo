@@ -21,7 +21,7 @@ import im.vector.app.core.resources.ColorProvider
 import im.vector.app.core.resources.StringProvider
 import im.vector.app.core.ui.list.genericHeaderItem
 import im.vector.app.core.utils.DimensionConverter
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.crypto.crosssigning.DeviceTrustLevel
 import org.matrix.android.sdk.api.session.crypto.model.DeviceInfo
@@ -33,7 +33,7 @@ class DevicesController @Inject constructor(
         private val colorProvider: ColorProvider,
         private val dateFormatter: ProgressiveDateFormatter,
         private val dimensionConverter: DimensionConverter,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : EpoxyController() {
 
     var callback: Callback? = null

@@ -9,7 +9,7 @@ package im.vector.app.core.linkify
 /**
  * Better support for geo URI.
  */
-object VectorAutoLinkPatterns {
+object ProgressiveAutoLink {
 
     // geo:
     private const val LAT_OR_LONG_OR_ALT_NUMBER = "-?\\d+(?:\\.\\d+)?"

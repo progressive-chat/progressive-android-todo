@@ -12,7 +12,7 @@ import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.features.rageshake.BugReporter
 import im.vector.app.features.rageshake.ReportType
 import im.vector.app.features.session.coroutineScope
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -38,7 +38,7 @@ class AutoRageShaker @Inject constructor(
         private val sessionDataSource: ActiveSessionDataSource,
         private val activeSessionHolder: ActiveSessionHolder,
         private val bugReporter: BugReporter,
-        private val vectorPreferences: VectorPreferences
+        private val vectorPreferences: ProgressiveBasePreferences
 ) : Session.Listener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val activeSessionIds = mutableSetOf<String>()

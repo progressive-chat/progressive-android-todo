@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * Handle locale configuration change, such as theme, font size and locale chosen by the user.
  */
-class VectorConfiguration @Inject constructor(
+class ProgressiveConfiguration @Inject constructor(
         private val context: Context,
         private val fontScalePreferences: FontScalePreferences,
         private val vectorLocale: VectorLocaleProvider,

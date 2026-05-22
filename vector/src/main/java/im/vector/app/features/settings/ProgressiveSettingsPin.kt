@@ -13,7 +13,7 @@ import androidx.preference.SwitchPreference
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.R
 import im.vector.app.core.extensions.registerStartForActivityResult
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.utils.toast
 import im.vector.app.features.navigation.Navigator
 import im.vector.app.features.notifications.NotificationDrawerManager
@@ -30,7 +30,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsPinFragment :
+class ProgressiveSettingsPin :
         VectorSettingsBaseFragment() {
 
     @Inject lateinit var pinCodeStore: PinCodeStore
@@ -47,19 +47,19 @@ class VectorSettingsPinFragment :
     }
 
     private val usePinCodePref by lazy {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_SECURITY_USE_PIN_CODE_FLAG)!!
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_SECURITY_USE_PIN_CODE_FLAG)!!
     }
 
     private val changePinCodePref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SECURITY_CHANGE_PIN_CODE_FLAG)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SECURITY_CHANGE_PIN_CODE_FLAG)!!
     }
 
     private val useCompleteNotificationPref by lazy {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_SECURITY_USE_COMPLETE_NOTIFICATIONS_FLAG)!!
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_SECURITY_USE_COMPLETE_NOTIFICATIONS_FLAG)!!
     }
 
     private val useBiometricPref by lazy {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_SECURITY_USE_BIOMETRICS_FLAG)!!
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_SECURITY_USE_BIOMETRICS_FLAG)!!
     }
 
     private fun updateBiometricPrefState(isPinCodeChecked: Boolean) {

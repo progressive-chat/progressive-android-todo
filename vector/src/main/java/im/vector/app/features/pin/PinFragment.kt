@@ -31,7 +31,7 @@ import im.vector.app.features.pin.lockscreen.configuration.LockScreenMode
 import im.vector.app.features.pin.lockscreen.ui.AuthMethod
 import im.vector.app.features.pin.lockscreen.ui.LockScreenFragment
 import im.vector.app.features.pin.lockscreen.ui.LockScreenListener
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonPlurals
 import im.vector.lib.strings.CommonStrings
 import kotlinx.parcelize.Parcelize
@@ -48,7 +48,7 @@ class PinFragment :
         ProgressiveFragment<FragmentPinBinding>() {
 
     @Inject lateinit var pinCodeStore: PinCodeStore
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var defaultConfiguration: LockScreenConfiguration
 
     private val fragmentArgs: PinArgs by args()

@@ -36,7 +36,7 @@ import im.vector.app.core.intent.ExternalIntentData
 import im.vector.app.core.intent.analyseIntent
 import im.vector.app.core.intent.getFilenameFromUri
 import im.vector.app.core.platform.SimpleTextWatcher
-import im.vector.app.core.preference.VectorPreference
+import im.vector.app.core.preference.ProgressiveBasePreference
 import im.vector.app.core.preference.ProgressivePreferenceCategory
 import im.vector.app.core.preference.ProgressiveSwitchPreference
 import im.vector.app.core.resources.BuildMeta
@@ -76,7 +76,7 @@ import org.matrix.android.sdk.api.session.crypto.model.DeviceInfo
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VectorSettingsSecurityPrivacyFragment :
+class ProgressiveSettingsSecurity :
         VectorSettingsBaseFragment() {
 
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
@@ -86,7 +86,7 @@ class VectorSettingsSecurityPrivacyFragment :
     @Inject lateinit var rawService: RawService
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var analyticsConfig: AnalyticsConfig
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
     @Inject lateinit var buildMeta: BuildMeta
 
     override var titleRes = CommonStrings.settings_security_and_privacy
@@ -101,52 +101,52 @@ class VectorSettingsSecurityPrivacyFragment :
 
     // cryptography
     private val mCryptographyCategory by lazy {
-        findPreference<PreferenceCategory>(VectorPreferences.SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY)!!
+        findPreference<PreferenceCategory>(ProgressiveBasePreferences.SETTINGS_CRYPTOGRAPHY_PREFERENCE_KEY)!!
     }
 
     private val cryptoInfoDeviceNamePreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_NAME_PREFERENCE_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_NAME_PREFERENCE_KEY")!!
     }
 
     private val cryptoInfoDeviceIdPreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_ID_PREFERENCE_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_ID_PREFERENCE_KEY")!!
     }
 
     private val cryptoInfoDeviceKeyPreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_KEY_PREFERENCE_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_ENCRYPTION_INFORMATION_DEVICE_KEY_PREFERENCE_KEY")!!
     }
 
     private val mCrossSigningStatePreference by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_ENCRYPTION_CROSS_SIGNING_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_ENCRYPTION_CROSS_SIGNING_PREFERENCE_KEY)!!
     }
 
     private val manageBackupPref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SECURE_MESSAGE_RECOVERY_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SECURE_MESSAGE_RECOVERY_PREFERENCE_KEY)!!
     }
 
     private val exportPref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_ENCRYPTION_EXPORT_E2E_ROOM_KEYS_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_ENCRYPTION_EXPORT_E2E_ROOM_KEYS_PREFERENCE_KEY)!!
     }
 
     private val importPref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_ENCRYPTION_IMPORT_E2E_ROOM_KEYS_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_ENCRYPTION_IMPORT_E2E_ROOM_KEYS_PREFERENCE_KEY)!!
     }
 
     private val showDeviceListPref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SHOW_DEVICES_LIST_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SHOW_DEVICES_LIST_PREFERENCE_KEY)!!
     }
 
     private val showDevicesListV2Pref by lazy {
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SHOW_DEVICES_LIST_V2_PREFERENCE_KEY)!!
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SHOW_DEVICES_LIST_V2_PREFERENCE_KEY)!!
     }
 
     // encrypt to unverified devices
     private val sendToUnverifiedDevicesPref by lazy {
-        findPreference<SwitchPreference>(VectorPreferences.SETTINGS_ENCRYPTION_NEVER_SENT_TO_PREFERENCE_KEY)!!
+        findPreference<SwitchPreference>(ProgressiveBasePreferences.SETTINGS_ENCRYPTION_NEVER_SENT_TO_PREFERENCE_KEY)!!
     }
 
     private val openPinCodeSettingsPref by lazy {
-        findPreference<VectorPreference>("SETTINGS_SECURITY_PIN")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_SECURITY_PIN")!!
     }
 
     private val analyticsCategory by lazy {
@@ -158,7 +158,7 @@ class VectorSettingsSecurityPrivacyFragment :
     }
 
     private val incognitoKeyboardPref by lazy {
-        findPreference<ProgressiveSwitchPreference>(VectorPreferences.SETTINGS_SECURITY_INCOGNITO_KEYBOARD_PREFERENCE_KEY)!!
+        findPreference<ProgressiveSwitchPreference>(ProgressiveBasePreferences.SETTINGS_SECURITY_INCOGNITO_KEYBOARD_PREFERENCE_KEY)!!
     }
 
     override fun onCreateRecyclerView(inflater: LayoutInflater, parent: ViewGroup, savedInstanceState: Bundle?): RecyclerView {
@@ -180,7 +180,7 @@ class VectorSettingsSecurityPrivacyFragment :
                 .launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            findPreference<VectorPreference>(VectorPreferences.SETTINGS_CRYPTOGRAPHY_HS_ADMIN_DISABLED_E2E_DEFAULT)?.isVisible =
+            findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CRYPTOGRAPHY_HS_ADMIN_DISABLED_E2E_DEFAULT)?.isVisible =
                     rawService
                             .getElementWellknown(session.sessionParams)
                             ?.isE2EByDefault() == false
@@ -195,14 +195,14 @@ class VectorSettingsSecurityPrivacyFragment :
         findPreference<ProgressivePreferenceCategory>("SETTINGS_CRYPTOGRAPHY_MANAGE_4S_CATEGORY_KEY")!!
     }
     private val secureBackupPreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_SECURE_BACKUP_RECOVERY_PREFERENCE_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_SECURE_BACKUP_RECOVERY_PREFERENCE_KEY")!!
     }
 
     private val ignoredUsersPreference by lazy {
-        findPreference<VectorPreference>("SETTINGS_IGNORED_USERS_PREFERENCE_KEY")!!
+        findPreference<ProgressiveBasePreference>("SETTINGS_IGNORED_USERS_PREFERENCE_KEY")!!
     }
 //    private val secureBackupResetPreference by lazy {
-//        findPreference<VectorPreference>(VectorPreferences.SETTINGS_SECURE_BACKUP_RESET_PREFERENCE_KEY)
+//        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_SECURE_BACKUP_RESET_PREFERENCE_KEY)
 //    }
 
     private fun refresh4SSection(info: SecretsSynchronisationInfo) {
@@ -300,7 +300,7 @@ class VectorSettingsSecurityPrivacyFragment :
             )
         }
 
-        findPreference<VectorPreference>(VectorPreferences.SETTINGS_CRYPTOGRAPHY_HS_ADMIN_DISABLED_E2E_DEFAULT)?.let {
+        findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CRYPTOGRAPHY_HS_ADMIN_DISABLED_E2E_DEFAULT)?.let {
             it.icon = ThemeUtils.tintDrawableWithColor(
                     ContextCompat.getDrawable(requireContext(), R.drawable.ic_notification_privacy_warning)!!,
                     ThemeUtils.getColor(requireContext(), com.google.android.material.R.attr.colorError)
@@ -432,7 +432,7 @@ class VectorSettingsSecurityPrivacyFragment :
     }
 
     private fun doOpenPinCodePreferenceScreen() {
-        (vectorActivity as? VectorSettingsActivity)?.navigateTo(VectorSettingsPinFragment::class.java)
+        (vectorActivity as? VectorSettingsActivity)?.navigateTo(ProgressiveSettingsPin::class.java)
     }
 
     private fun refreshKeysManagementSection() {

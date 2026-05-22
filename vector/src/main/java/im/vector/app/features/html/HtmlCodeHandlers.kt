@@ -8,7 +8,7 @@
 package im.vector.app.features.html
 
 import im.vector.app.core.utils.DimensionConverter
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import io.element.android.wysiwyg.view.spans.CodeBlockSpan
 import io.element.android.wysiwyg.view.spans.InlineCodeSpan
 import io.noties.markwon.MarkwonVisitor
@@ -60,7 +60,7 @@ internal class CodePreTagHandler : TagHandler() {
 }
 
 internal class CodePostProcessorTagHandler(
-        private val vectorPreferences: VectorPreferences,
+        private val vectorPreferences: ProgressiveBasePreferences,
         private val dimensionConverter: DimensionConverter,
 ) : TagHandler() {
 

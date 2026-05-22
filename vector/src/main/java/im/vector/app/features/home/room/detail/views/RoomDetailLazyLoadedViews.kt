@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewStub
 import im.vector.app.core.ui.views.FailedMessagesWarningView
 import im.vector.app.databinding.FragmentTimelineBinding
-import im.vector.app.features.invite.VectorInviteView
+import im.vector.app.features.invite.ProgressiveInviteView
 import kotlin.reflect.KMutableProperty0
 
 /**
@@ -23,7 +23,7 @@ class RoomDetailLazyLoadedViews {
     private var roomDetailBinding: FragmentTimelineBinding? = null
 
     private var failedMessagesWarningView: FailedMessagesWarningView? = null
-    private var inviteView: VectorInviteView? = null
+    private var inviteView: ProgressiveInviteView? = null
 
     fun bind(roomDetailBinding: FragmentTimelineBinding) {
         this.roomDetailBinding = roomDetailBinding
@@ -41,7 +41,7 @@ class RoomDetailLazyLoadedViews {
         }
     }
 
-    fun inviteView(inflateIfNeeded: Boolean): VectorInviteView? {
+    fun inviteView(inflateIfNeeded: Boolean): ProgressiveInviteView? {
         return getOrInflate(inflateIfNeeded, roomDetailBinding?.inviteViewStub, this::inviteView)
     }
 

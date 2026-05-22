@@ -24,7 +24,7 @@ import im.vector.app.databinding.ActivityVectorSettingsBinding
 import im.vector.app.features.discovery.DiscoverySettingsFragment
 import im.vector.app.features.navigation.SettingsActivityPayload
 import im.vector.app.features.settings.devices.ProgressiveSettingsDevices
-import im.vector.app.features.settings.notifications.VectorSettingsNotificationFragment
+import im.vector.app.features.settings.notifications.ProgressiveSettingsNotifications
 import im.vector.app.features.settings.threepids.ThreePidsSettingsFragment
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
 import im.vector.lib.strings.CommonStrings
@@ -68,11 +68,11 @@ class VectorSettingsActivity : ProgressiveActivity<ActivityVectorSettingsBinding
 
             when (val payload = readPayload<SettingsActivityPayload>(SettingsActivityPayload.Root)) {
                 SettingsActivityPayload.General ->
-                    replaceFragment(views.vectorSettingsPage, VectorSettingsGeneralFragment::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsGeneral::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.AdvancedSettings ->
                     replaceFragment(views.vectorSettingsPage, VectorSettingsAdvancedSettingsFragment::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.SecurityPrivacy ->
-                    replaceFragment(views.vectorSettingsPage, VectorSettingsSecurityPrivacyFragment::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsSecurity::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.SecurityPrivacyManageSessions -> {
                     val fragmentClass = if (vectorPreferences.isNewSessionManagerEnabled()) {
                         im.vector.app.features.settings.devices.v2.ProgressiveSettingsDevices::class.java
@@ -87,8 +87,8 @@ class VectorSettingsActivity : ProgressiveActivity<ActivityVectorSettingsBinding
                     )
                 }
                 SettingsActivityPayload.Notifications -> {
-                    requestHighlightPreferenceKeyOnResume(VectorPreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
-                    replaceFragment(views.vectorSettingsPage, VectorSettingsNotificationFragment::class.java, null, FRAGMENT_TAG)
+                    requestHighlightPreferenceKeyOnResume(ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
+                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsNotifications::class.java, null, FRAGMENT_TAG)
                 }
                 is SettingsActivityPayload.DiscoverySettings -> {
                     replaceFragment(views.vectorSettingsPage, DiscoverySettingsFragment::class.java, payload, FRAGMENT_TAG)
@@ -193,7 +193,7 @@ class VectorSettingsActivity : ProgressiveActivity<ActivityVectorSettingsBinding
         const val EXTRA_DIRECT_ACCESS_NOTIFICATIONS = 5
         const val EXTRA_DIRECT_ACCESS_DISCOVERY_SETTINGS = 6
 
-        private const val FRAGMENT_TAG = "VectorSettingsPreferencesFragment"
+        private const val FRAGMENT_TAG = "ProgressiveSettingsPreferences"
     }
 }
 

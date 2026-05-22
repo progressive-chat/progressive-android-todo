@@ -35,7 +35,7 @@ import im.vector.app.features.location.live.LiveLocationLabsFlagPromotionBottomS
 import im.vector.app.features.location.live.duration.ChooseLiveDurationBottomSheet
 import im.vector.app.features.location.live.tracking.LocationSharingAndroidService
 import im.vector.app.features.location.option.LocationSharingOption
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.launch
 import org.maplibre.android.maps.MapView
@@ -55,7 +55,7 @@ class LocationSharingFragment :
     @Inject lateinit var urlMapProvider: UrlMapProvider
     @Inject lateinit var avatarRenderer: AvatarRenderer
     @Inject lateinit var matrixItemColorProvider: MatrixItemColorProvider
-    @Inject lateinit var vectorPreferences: VectorPreferences
+    @Inject lateinit var vectorPreferences: ProgressiveBasePreferences
 
     private val viewModel: LocationSharingViewModel by fragmentViewModel()
 

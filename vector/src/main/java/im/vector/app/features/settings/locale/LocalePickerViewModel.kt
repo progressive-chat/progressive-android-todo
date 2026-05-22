@@ -15,13 +15,13 @@ import dagger.assisted.AssistedInject
 import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
 import im.vector.app.core.platform.ProgressiveViewModel
-import im.vector.app.features.configuration.VectorConfiguration
+import im.vector.app.features.configuration.ProgressiveConfiguration
 import im.vector.app.features.settings.VectorLocale
 import kotlinx.coroutines.launch
 
 class LocalePickerViewModel @AssistedInject constructor(
         @Assisted initialState: LocalePickerViewState,
-        private val vectorConfiguration: VectorConfiguration,
+        private val vectorConfiguration: ProgressiveConfiguration,
         private val vectorLocale: VectorLocale,
 ) : ProgressiveViewModel<LocalePickerViewState, LocalePickerAction, LocalePickerViewEvents>(initialState) {
 

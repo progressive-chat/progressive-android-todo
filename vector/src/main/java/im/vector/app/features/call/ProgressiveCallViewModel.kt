@@ -37,14 +37,14 @@ import org.matrix.android.sdk.api.session.getRoomSummary
 import org.matrix.android.sdk.api.session.room.model.call.supportCallTransfer
 import org.matrix.android.sdk.api.util.MatrixItem
 
-class VectorCallViewModel @AssistedInject constructor(
-        @Assisted initialState: VectorCallViewState,
+class ProgressiveCallViewModel @AssistedInject constructor(
+        @Assisted initialState: ProgressiveCallViewState,
         val session: Session,
         val callManager: WebRtcCallManager,
         val proximityManager: CallProximityManager,
         private val dialPadLookup: DialPadLookup,
         private val directRoomHelper: DirectRoomHelper,
-) : ProgressiveViewModel<VectorCallViewState, VectorCallViewActions, VectorCallViewEvents>(initialState) {
+) : ProgressiveViewModel<ProgressiveCallViewState, VectorCallViewActions, ProgressiveCallViewEvents>(initialState) {
 
     private var call: WebRtcCall? = null
 
@@ -106,9 +106,9 @@ class VectorCallViewModel @AssistedInject constructor(
                         delay(30_000)
                         try {
                             val turn = session.callSignalingService().getTurnServer()
-                            _viewEvents.post(VectorCallViewEvents.ConnectionTimeout(turn))
+                            _viewEvents.post(ProgressiveCallViewEvents.ConnectionTimeout(turn))
                         } catch (failure: Throwable) {
-                            _viewEvents.post(VectorCallViewEvents.ConnectionTimeout(null))
+                            _viewEvents.post(ProgressiveCallViewEvents.ConnectionTimeout(null))
                         }
                     }
                 }
@@ -123,12 +123,12 @@ class VectorCallViewModel @AssistedInject constructor(
         }
     }
 
-    private fun computeTransfereeState(call: MxCall): VectorCallViewState.TransfereeState {
-        val transfereeCall = callManager.getTransfereeForCallId(call.callId) ?: return VectorCallViewState.TransfereeState.NoTransferee
+    private fun computeTransfereeState(call: MxCall): ProgressiveCallViewState.TransfereeState {
+        val transfereeCall = callManager.getTransfereeForCallId(call.callId) ?: return ProgressiveCallViewState.TransfereeState.NoTransferee
         val transfereeRoom = session.getRoomSummary(transfereeCall.nativeRoomId)
         return transfereeRoom?.displayName?.let {
-            VectorCallViewState.TransfereeState.KnownTransferee(it)
-        } ?: VectorCallViewState.TransfereeState.UnknownTransferee
+            ProgressiveCallViewState.TransfereeState.KnownTransferee(it)
+        } ?: ProgressiveCallViewState.TransfereeState.UnknownTransferee
     }
 
     private val callManagerListener = object : WebRtcCallManager.Listener {
@@ -139,7 +139,7 @@ class VectorCallViewModel @AssistedInject constructor(
                     setState { copy(otherKnownCallInfo = null, isSharingScreen = false) }
                 }
             }
-            _viewEvents.post(VectorCallViewEvents.StopScreenSharingService)
+            _viewEvents.post(ProgressiveCallViewEvents.StopScreenSharingService)
         }
 
         override fun onCurrentCallChange(call: WebRtcCall?) {
@@ -229,7 +229,7 @@ class VectorCallViewModel @AssistedInject constructor(
         return callManager.audioManager.selectedDevice == CallAudioManager.Device.Phone && !webRtcCall.isSharingScreen()
     }
 
-    private fun WebRtcCall.extractCallInfo(): VectorCallViewState.CallInfo {
+    private fun WebRtcCall.extractCallInfo(): ProgressiveCallViewState.CallInfo {
         val assertedIdentity = this.remoteAssertedIdentity
         val matrixItem = if (assertedIdentity != null) {
             val userId = if (MatrixPatterns.isUserId(assertedIdentity.id)) {
@@ -242,7 +242,7 @@ class VectorCallViewModel @AssistedInject constructor(
         } else {
             getOpponentAsMatrixItem(session)
         }
-        return VectorCallViewState.CallInfo(callId, matrixItem)
+        return ProgressiveCallViewState.CallInfo(callId, matrixItem)
     }
 
     override fun onCleared() {
@@ -257,7 +257,7 @@ class VectorCallViewModel @AssistedInject constructor(
         when (action) {
             VectorCallViewActions.EndCall -> {
                 call?.endCall()
-                _viewEvents.post(VectorCallViewEvents.StopScreenSharingService)
+                _viewEvents.post(ProgressiveCallViewEvents.StopScreenSharingService)
             }
             VectorCallViewActions.AcceptCall -> {
                 setState {
@@ -297,7 +297,7 @@ class VectorCallViewModel @AssistedInject constructor(
             }
             VectorCallViewActions.SwitchSoundDevice -> {
                 _viewEvents.post(
-                        VectorCallViewEvents.ShowSoundDeviceChooser(state.availableDevices, state.device)
+                        ProgressiveCallViewEvents.ShowSoundDeviceChooser(state.availableDevices, state.device)
                 )
             }
             VectorCallViewActions.HeadSetButtonPressed -> {
@@ -319,7 +319,7 @@ class VectorCallViewModel @AssistedInject constructor(
                 call?.setCaptureFormat(if (state.isHD) CaptureFormat.SD else CaptureFormat.HD)
             }
             VectorCallViewActions.OpenDialPad -> {
-                _viewEvents.post(VectorCallViewEvents.ShowDialPad)
+                _viewEvents.post(ProgressiveCallViewEvents.ShowDialPad)
             }
             is VectorCallViewActions.SendDtmfDigit -> {
                 call?.sendDtmfDigit(action.digit)
@@ -327,7 +327,7 @@ class VectorCallViewModel @AssistedInject constructor(
             VectorCallViewActions.InitiateCallTransfer -> {
                 call?.updateRemoteOnHold(true)
                 _viewEvents.post(
-                        VectorCallViewEvents.ShowCallTransferScreen
+                        ProgressiveCallViewEvents.ShowCallTransferScreen
                 )
             }
             VectorCallViewActions.CallTransferSelectionCancelled -> {
@@ -340,7 +340,7 @@ class VectorCallViewModel @AssistedInject constructor(
                 handleCallTransfer()
             }
             is VectorCallViewActions.SwitchCall -> {
-                setState { VectorCallViewState(action.callArgs) }
+                setState { ProgressiveCallViewState(action.callArgs) }
                 setupCallWithCurrentState()
             }
             is VectorCallViewActions.ToggleScreenSharing -> {
@@ -363,14 +363,14 @@ class VectorCallViewModel @AssistedInject constructor(
                 copy(isSharingScreen = false)
             }
             _viewEvents.post(
-                    VectorCallViewEvents.StopScreenSharingService
+                    ProgressiveCallViewEvents.StopScreenSharingService
             )
             if (callManager.audioManager.selectedDevice == CallAudioManager.Device.Phone) {
                 proximityManager.start()
             }
         } else {
             _viewEvents.post(
-                    VectorCallViewEvents.ShowScreenSharingPermissionDialog
+                    ProgressiveCallViewEvents.ShowScreenSharingPermissionDialog
             )
         }
     }
@@ -405,7 +405,7 @@ class VectorCallViewModel @AssistedInject constructor(
                     call?.transferToUser(result.selectedUserId, null)
                 }
             } catch (failure: Throwable) {
-                _viewEvents.post(VectorCallViewEvents.FailToTransfer)
+                _viewEvents.post(ProgressiveCallViewEvents.FailToTransfer)
             }
         }
     }
@@ -425,15 +425,15 @@ class VectorCallViewModel @AssistedInject constructor(
                     call?.transferToUser(result.userId, result.roomId)
                 }
             } catch (failure: Throwable) {
-                _viewEvents.post(VectorCallViewEvents.FailToTransfer)
+                _viewEvents.post(ProgressiveCallViewEvents.FailToTransfer)
             }
         }
     }
 
     @AssistedFactory
-    interface Factory : MavericksAssistedViewModelFactory<VectorCallViewModel, VectorCallViewState> {
-        override fun create(initialState: VectorCallViewState): VectorCallViewModel
+    interface Factory : MavericksAssistedViewModelFactory<ProgressiveCallViewModel, ProgressiveCallViewState> {
+        override fun create(initialState: ProgressiveCallViewState): ProgressiveCallViewModel
     }
 
-    companion object : MavericksViewModelFactory<VectorCallViewModel, VectorCallViewState> by hiltMavericksViewModelFactory()
+    companion object : MavericksViewModelFactory<ProgressiveCallViewModel, ProgressiveCallViewState> by hiltMavericksViewModelFactory()
 }

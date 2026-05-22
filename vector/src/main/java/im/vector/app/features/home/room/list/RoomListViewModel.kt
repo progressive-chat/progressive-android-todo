@@ -28,7 +28,7 @@ import im.vector.app.features.displayname.getBestName
 import im.vector.app.features.invite.AutoAcceptInvites
 import im.vector.app.features.room.LeaveRoomPrompt
 import im.vector.app.features.room.getLeaveRoomWarning
-import im.vector.app.features.settings.VectorPreferences
+import im.vector.app.features.settings.ProgressiveBasePreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -52,7 +52,7 @@ class RoomListViewModel @AssistedInject constructor(
         private val session: Session,
         stringProvider: StringProvider,
         spaceStateHandler: SpaceStateHandler,
-        vectorPreferences: VectorPreferences,
+        vectorPreferences: ProgressiveBasePreferences,
         autoAcceptInvites: AutoAcceptInvites,
         private val analyticsTracker: AnalyticsTracker
 ) : ProgressiveViewModel<RoomListViewState, RoomListAction, RoomListViewEvents>(initialState) {
