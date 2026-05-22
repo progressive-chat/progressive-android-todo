@@ -205,6 +205,7 @@ add_library(
     src/unified_push.cpp
     src/url_preview.cpp
     src/web_search.cpp
+    src/event_encryption_helper.cpp
     src/room_version_utils.cpp
     src/avatar_utils.cpp
     src/user_directory_search.cpp
