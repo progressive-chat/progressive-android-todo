@@ -1,7 +1,7 @@
 /*
- * Copyright 2021-2024 Progressive Chat
+ * Copyright 2021-2024 New Vector Ltd.
  *
- * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
 
@@ -16,7 +16,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
-import chat.progressive.app.core.extensions.getVectorLastMessageContent
+import chat.progressive.app.core.extensions.getProgressiveLastMessageContent
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
@@ -24,17 +24,15 @@ import chat.progressive.app.features.analytics.extensions.toAnalyticsComposer
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
 import chat.progressive.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.attachments.toContentAttachmentData
-import chat.progressive.app.features.command.Command
 import chat.progressive.app.features.command.CommandParser
-import okhttp3.MediaType
 import chat.progressive.app.features.command.ParsedCommand
 import chat.progressive.app.features.home.room.detail.ChatEffect
 import chat.progressive.app.features.home.room.detail.composer.rainbow.RainbowGenerator
 import chat.progressive.app.features.home.room.detail.composer.voice.VoiceMessageRecorderView
 import chat.progressive.app.features.home.room.detail.toMessageType
-import chat.progressive.app.native.ProgressiveNative
+import chat.progressive.app.features.jumptodate.ProgressiveNative
 import chat.progressive.app.features.session.coroutineScope
-import chat.progressive.app.features.settings.ProgressiveBasePreferences
+import chat.progressive.app.features.settings.ProgressivePreferences
 import chat.progressive.app.features.voice.VoiceFailure
 import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
 import chat.progressive.app.features.voicebroadcast.VoiceBroadcastHelper
@@ -43,16 +41,16 @@ import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcastState
 import chat.progressive.app.features.voicebroadcast.model.asVoiceBroadcastEvent
 import chat.progressive.app.features.voicebroadcast.usecase.GetVoiceBroadcastStateEventLiveUseCase
 import chat.progressive.app.features.voicebroadcast.voiceBroadcastId
-import chat.progressive.lib.core.utils.timer.Clock
-import chat.progressive.lib.strings.CommonStrings
+import im.vector.lib.core.utils.timer.Clock
+import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import org.json.JSONObject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import org.json.JSONObject
 import org.matrix.android.sdk.api.query.QueryStringValue
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.content.ContentAttachmentData
@@ -86,7 +84,7 @@ class MessageComposerViewModel @AssistedInject constructor(
         @Assisted initialState: MessageComposerViewState,
         private val session: Session,
         private val stringProvider: StringProvider,
-        private val progressivePreferences: ProgressiveBasePreferences,
+        private val vectorPreferences: ProgressivePreferences,
         private val commandParser: CommandParser,
         private val rainbowGenerator: RainbowGenerator,
         private val audioMessageHelper: AudioMessageHelper,
@@ -171,7 +169,7 @@ class MessageComposerViewModel @AssistedInject constructor(
 
     private fun handleEnterEditMode(room: Room, action: MessageComposerAction.EnterEditMode) {
         room.getTimelineEvent(action.eventId)?.let { timelineEvent ->
-            val formatted = progressivePreferences.isRichTextEditorEnabled()
+            val formatted = vectorPreferences.isRichTextEditorEnabled()
             val editableContent = timelineEvent.getTextEditableContent(formatted)
             setState { copy(sendMode = SendMode.Edit(timelineEvent, editableContent)) }
         }
@@ -328,7 +326,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandNotImplemented)
                         }
                         is ParsedCommand.SetMarkdown -> {
-                            progressivePreferences.setMarkdownEnabled(parsedCommand.enable)
+                            vectorPreferences.setMarkdownEnabled(parsedCommand.enable)
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                             popDraft(room)
                         }
@@ -553,182 +551,9 @@ class MessageComposerViewModel @AssistedInject constructor(
                         }
                         is ParsedCommand.JumpToDate -> {
                             handleJumpToDate(parsedCommand)
-                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                             popDraft(room)
-                         }
-                         is ParsedCommand.ProgressiveChatCommand -> {
-                             when (parsedCommand.command) {
-                                 Command.HIDE_EMOJI -> {
-                                     progressivePreferences.toggleEmojiBlacklist()
-                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                 }
-                                 Command.STATS -> {
-                                     val stats = room.roomSummary()
-                                     val msg = if (stats != null) {
-                                         "Room stats: ${stats.joinedMembersCount ?: 0} members, ${stats.isEncrypted?.let { if (it) "encrypted" else "unencrypted" } ?: "unknown"}"
-                                     } else "Room stats unavailable"
-                                     room.sendService().sendTextMessage(msg, autoMarkdown = false)
-                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                 }
-                                 Command.REMIND -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         room.sendService().sendTextMessage("Reminder set: $args", autoMarkdown = false)
-                                         try {
-                                             ProgressiveNative.ensureLoaded()
-                                             ProgressiveNative.nativeAlarmCreate("напомни $args")
-                                         } catch (_: Exception) { }
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 Command.WEATHER -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         // Send a placeholder, then fetch weather
-                                         room.sendService().sendTextMessage("Fetching weather for $args...", autoMarkdown = false)
-                                         viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-                                             try {
-                                                 ProgressiveNative.ensureLoaded()
-                                                 val url = ProgressiveNative.nativeWeatherBuildUrl(args, "")
-                                                 val response = java.net.URL(url).readText()
-                                                 val summary = ProgressiveNative.nativeWeatherParseWttr(response)
-                                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                     room.sendService().sendTextMessage(summary, autoMarkdown = false)
-                                                 }
-                                             } catch (e: Exception) {
-                                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                     room.sendService().sendTextMessage("Weather fetch failed: ${e.message}", autoMarkdown = false)
-                                                 }
-                                             }
-                                         }
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 Command.TRANSLATE -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         room.sendService().sendTextMessage(
-                                             "[Translation requested: $args] (Configure LLM API)",
-                                             autoMarkdown = false
-                                         )
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 Command.SCHEDULE -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         // Parse HH:MM from args
-                                         val parts = args.split(" ", limit = 2)
-                                         if (parts.size >= 2) {
-                                             val timeStr = parts[0]
-                                             val msgBody = parts[1]
-                                             val timeParts = timeStr.split(":")
-                                             if (timeParts.size == 2) {
-                                                 val hour = timeParts[0].toIntOrNull() ?: 0
-                                                 val minute = timeParts[1].toIntOrNull() ?: 0
-                                                 val now = java.util.Calendar.getInstance()
-                                                 val sched = java.util.Calendar.getInstance()
-                                                 sched.set(java.util.Calendar.HOUR_OF_DAY, hour)
-                                                 sched.set(java.util.Calendar.MINUTE, minute)
-                                                 sched.set(java.util.Calendar.SECOND, 0)
-                                                 if (sched.timeInMillis <= now.timeInMillis) sched.add(java.util.Calendar.DAY_OF_MONTH, 1)
-                                                 try {
-                                                     ProgressiveNative.ensureLoaded()
-                                                     ProgressiveNative.nativeSchedSchedule(room.roomId, msgBody, "", sched.timeInMillis)
-                                                 } catch (_: Exception) { }
-                                                 _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                             }
-                                         }
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 Command.SMSAGENT -> {
-                                     val args = parsedCommand.args
-                                     if (args.isNotBlank()) {
-                                         room.sendService().sendTextMessage(args, autoMarkdown = false)
-                                         try {
-                                             ProgressiveNative.ensureLoaded()
-                                             ProgressiveNative.nativeAlarmCreate(args)
-                                         } catch (_: Exception) { }
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 Command.LLM, Command.LLMP, Command.AGENT -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         var systemPrompt = ""
-                                         when (parsedCommand.command) {
-                                             Command.AGENT -> systemPrompt = "You are a helpful assistant. Be concise."
-                                             Command.LLMP -> systemPrompt = "Answer briefly in plain text."
-                                             else -> {}
-                                         }
-                                         val prompt = if (systemPrompt.isEmpty()) args else "$systemPrompt
-
-User: $args"
-                                         
-                                         viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-                                             try {
-                                                 ProgressiveNative.ensureLoaded()
-                                                 val provider = progressivePreferences.getLlmProvider()
-                                                 val endpoint = progressivePreferences.getLlmEndpoint()
-                                                 val token = progressivePreferences.getLlmToken()
-                                                 val model = progressivePreferences.getLlmModel()
-                                                 
-                                                 val requestBody = ProgressiveNative.nativeBuildLlmRequest(
-                                                     prompt, provider, endpoint, token, model, systemPrompt, 0.7f, 1024
-                                                 )
-                                                 val headers = ProgressiveNative.nativeBuildLlmHeaders(provider, token)
-                                                 
-                                                 val request = okhttp3.Request.Builder()
-                                                     .url(endpoint)
-                                                     .post(okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), requestBody))
-                                                     .apply {
-                                                         for (line in headers.split("
-")) {
-                                                             val colon = line.indexOf(": ")
-                                                             if (colon > 0) addHeader(line.substring(0, colon), line.substring(colon + 2))
-                                                         }
-                                                     }.build()
-                                                 
-                                                 val session = activeSessionHolder.getActiveSession()
-                                                 if (session != null) {
-                                                     val response = session.getOkHttpClient().newCall(request).execute()
-                                                     val body = response.body?.string() ?: ""
-                                                     val code = response.code
-                                                     val parsed = ProgressiveNative.nativeParseLlmResponse(body, code, provider)
-                                                     val json = org.json.JSONObject(parsed)
-                                                     val text = if (json.getBoolean("success")) json.getString("text") else json.getString("errorMessage")
-                                                     
-                                                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                         room.sendService().sendTextMessage(text, autoMarkdown = false)
-                                                     }
-                                                 }
-                                             } catch (e: Exception) {
-                                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                     room.sendService().sendTextMessage("Error: ${e.message}", autoMarkdown = false)
-                                                 }
-                                             }
-                                         }
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 else -> {
-                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                 }
-                             }
-                             popDraft(room)
-                         }
+                            _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                            popDraft(room)
+                        }
                     }
                 }
                 is SendMode.Edit -> {
@@ -754,7 +579,7 @@ User: $args"
                             room.relationService().editReply(state.sendMode.timelineEvent, it, action.text, action.formattedText)
                         }
                     } else {
-                        val messageContent = state.sendMode.timelineEvent.getVectorLastMessageContent()
+                        val messageContent = state.sendMode.timelineEvent.getProgressiveLastMessageContent()
                         val existingBody: String
                         val needsEdit = if (messageContent is MessageContentWithFormattedBody) {
                             existingBody = messageContent.formattedBody ?: ""
@@ -864,7 +689,7 @@ User: $args"
     }
 
     private fun handleUserIsTyping(room: Room, action: MessageComposerAction.UserIsTyping) {
-        if (progressivePreferences.sendTypingNotifs()) {
+        if (vectorPreferences.sendTypingNotifs()) {
             if (action.isTyping) {
                 room.typingService().userIsTyping()
             } else {
@@ -1233,18 +1058,23 @@ User: $args"
 
                 val sessionParams = session.sessionParams
                 val serverUrl = sessionParams.homeServerUrlBase
+                        ?: sessionParams.homeServerConnectionConfig?.homeServerUri?.toString()
+                    ?: run {
+                        _viewEvents.post(MessageComposerViewEvents.ShowMessage(
+                            stringProvider.getString(CommonStrings.error_unknown)
+                        ))
+                        return@launch
+                    }
 
                 val accessToken = sessionParams.credentials.accessToken
 
                 // Native C++ validation + URL construction, with Kotlin fallback
-                val isEnabled = progressivePreferences.isJumpToDateEnabled()
                 val resultJson = try {
                     val raw = ProgressiveNative.nativeValidateAndBuild(
                         room.roomId,
                         command.dateString,
                         serverUrl,
-                        accessToken,
-                        isEnabled
+                        accessToken
                     )
                     JSONObject(raw)
                 } catch (e: UnsatisfiedLinkError) {
@@ -1253,8 +1083,7 @@ User: $args"
                         room.roomId,
                         command.dateString,
                         serverUrl,
-                        accessToken,
-                        isEnabled
+                        accessToken
                     )
                 }
 
@@ -1296,7 +1125,7 @@ User: $args"
             } catch (e: Exception) {
                 Timber.e(e, "JumpToDate failed")
                 _viewEvents.post(MessageComposerViewEvents.ShowMessage(
-                    stringProvider.getString(CommonStrings.unknown_error)
+                    stringProvider.getString(CommonStrings.error_unknown)
                 ))
             }
         }

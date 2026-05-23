@@ -1,7 +1,7 @@
 /*
- * Copyright 2019-2024 Progressive Chat
+ * Copyright 2019-2024 New Vector Ltd.
  *
- * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
 
@@ -10,7 +10,7 @@ package chat.progressive.app.features.command
 import chat.progressive.app.core.extensions.isMsisdn
 import chat.progressive.app.core.extensions.orEmpty
 import chat.progressive.app.features.home.room.detail.ChatEffect
-import chat.progressive.app.features.settings.ProgressiveBasePreferences
+import chat.progressive.app.features.settings.VectorPreferences
 import org.matrix.android.sdk.api.MatrixPatterns
 import org.matrix.android.sdk.api.MatrixUrls.isMxcUrl
 import org.matrix.android.sdk.api.extensions.isEmail
@@ -19,7 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class CommandParser @Inject constructor(
-        private val progressivePreferences: ProgressiveBasePreferences
+        private val vectorPreferences: VectorPreferences
 ) {
 
     /**
@@ -399,10 +399,9 @@ class CommandParser @Inject constructor(
                     }
                 }
                 Command.JUMP_TO_DATE.matches(slashCommand) -> {
-                    if (!progressivePreferences.isJumpToDateEnabled()) {
-                        ParsedCommand.ErrorUnknownSlashCommand(slashCommand)
-                    } else if (messageParts.size == 2) {
+                    if (messageParts.size == 2) {
                         val dateString = messageParts[1]
+                        // Basic format check — C++ validates thoroughly
                         if (dateString.matches(Regex("^\\d{4}-\\d{2}-\\d{2}$"))) {
                             ParsedCommand.JumpToDate(dateString)
                         } else {
@@ -412,16 +411,8 @@ class CommandParser @Inject constructor(
                         ParsedCommand.ErrorSyntax(Command.JUMP_TO_DATE)
                     }
                 }
-                Command.CRASH_APP.matches(slashCommand) && progressivePreferences.developerMode() -> {
+                Command.CRASH_APP.matches(slashCommand) && vectorPreferences.developerMode() -> {
                     throw RuntimeException("Application crashed from user demand")
-                }
-                // Progressive Chat commands (delegated to native C++ layer)
-                Command.LLM.matches(slashCommand) || Command.LLMP.matches(slashCommand) ||
-                        Command.AGENT.matches(slashCommand) || Command.WEB.matches(slashCommand) ||
-                        Command.HIDE_EMOJI.matches(slashCommand) || Command.SMSAGENT.matches(slashCommand) || Command.SCHEDULE.matches(slashCommand) || Command.TRANSLATE.matches(slashCommand) || Command.WEATHER.matches(slashCommand) || Command.REMIND.matches(slashCommand) || Command.STATS.matches(slashCommand) -> {
-                    val cmd = listOf(Command.LLM, Command.LLMP, Command.AGENT, Command.WEB, Command.HIDE_EMOJI, Command.SMSAGENT, Command.SCHEDULE, Command.TRANSLATE, Command.WEATHER, Command.REMIND, Command.STATS)
-                            .firstOrNull { it.matches(slashCommand) }
-                    ParsedCommand.ProgressiveChatCommand(cmd ?: Command.LLM, message)
                 }
                 else -> {
                     // Unknown command
