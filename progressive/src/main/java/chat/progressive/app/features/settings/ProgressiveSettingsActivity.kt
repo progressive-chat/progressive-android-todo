@@ -68,11 +68,11 @@ class ProgressiveSettingsActivity : ProgressiveActivity<ActivityProgressiveSetti
 
             when (val payload = readPayload<SettingsActivityPayload>(SettingsActivityPayload.Root)) {
                 SettingsActivityPayload.General ->
-                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsGeneral::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, ProgressiveSettingsGeneral::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.AdvancedSettings ->
-                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsAdvancedSettingsFragment::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, ProgressiveSettingsAdvancedSettingsFragment::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.SecurityPrivacy ->
-                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsSecurity::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, ProgressiveSettingsSecurity::class.java, null, FRAGMENT_TAG)
                 SettingsActivityPayload.SecurityPrivacyManageSessions -> {
                     val fragmentClass = if (progressivePreferences.isNewSessionManagerEnabled()) {
                         chat.progressive.app.features.settings.devices.v2.ProgressiveSettingsDevices::class.java
@@ -80,7 +80,7 @@ class ProgressiveSettingsActivity : ProgressiveActivity<ActivityProgressiveSetti
                         ProgressiveSettingsDevices::class.java
                     }
                     replaceFragment(
-                            views.vectorSettingsPage,
+                            views.progressiveSettingsPage,
                             fragmentClass,
                             null,
                             FRAGMENT_TAG
@@ -88,13 +88,13 @@ class ProgressiveSettingsActivity : ProgressiveActivity<ActivityProgressiveSetti
                 }
                 SettingsActivityPayload.Notifications -> {
                     requestHighlightPreferenceKeyOnResume(ProgressiveBasePreferences.SETTINGS_ENABLE_THIS_DEVICE_PREFERENCE_KEY)
-                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsNotifications::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, ProgressiveSettingsNotifications::class.java, null, FRAGMENT_TAG)
                 }
                 is SettingsActivityPayload.DiscoverySettings -> {
-                    replaceFragment(views.vectorSettingsPage, DiscoverySettingsFragment::class.java, payload, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, DiscoverySettingsFragment::class.java, payload, FRAGMENT_TAG)
                 }
                 else ->
-                    replaceFragment(views.vectorSettingsPage, ProgressiveSettingsRootFragment::class.java, null, FRAGMENT_TAG)
+                    replaceFragment(views.progressiveSettingsPage, ProgressiveSettingsRootFragment::class.java, null, FRAGMENT_TAG)
             }
         }
 
@@ -129,7 +129,7 @@ class ProgressiveSettingsActivity : ProgressiveActivity<ActivityProgressiveSetti
             // Replace the existing Fragment with the new Fragment
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.right_in, R.anim.fade_out, R.anim.fade_in, R.anim.right_out)
-                    .replace(views.vectorSettingsPage.id, oFragment, pref.title.toString())
+                    .replace(views.progressiveSettingsPage.id, oFragment, pref.title.toString())
                     .addToBackStack(null)
                     .commit()
             return true
@@ -160,7 +160,7 @@ class ProgressiveSettingsActivity : ProgressiveActivity<ActivityProgressiveSetti
     fun <T : Fragment> navigateTo(fragmentClass: Class<T>, arguments: Bundle? = null) {
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.right_in, R.anim.fade_out, R.anim.fade_in, R.anim.right_out)
-                .replace(views.vectorSettingsPage.id, fragmentClass, arguments)
+                .replace(views.progressiveSettingsPage.id, fragmentClass, arguments)
                 .addToBackStack(null)
                 .commit()
     }
