@@ -671,9 +671,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                                              Command.LLMP -> systemPrompt = "Answer briefly in plain text."
                                              else -> {}
                                          }
-                                         val prompt = if (systemPrompt.isEmpty()) args else "$systemPrompt
-
-User: $args"
+                                         val prompt = if (systemPrompt.isEmpty()) args else "$systemPrompt\n\nUser: $args"
                                          
                                          viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
                                              try {
@@ -692,8 +690,7 @@ User: $args"
                                                      .url(endpoint)
                                                      .post(okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), requestBody))
                                                      .apply {
-                                                         for (line in headers.split("
-")) {
+                                                         for (line in headers.split("\n")) {
                                                              val colon = line.indexOf(": ")
                                                              if (colon > 0) addHeader(line.substring(0, colon), line.substring(colon + 2))
                                                          }
