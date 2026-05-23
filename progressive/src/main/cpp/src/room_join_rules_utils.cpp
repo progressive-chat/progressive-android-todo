@@ -53,4 +53,3 @@ std::string buildJoinRulesEvent(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

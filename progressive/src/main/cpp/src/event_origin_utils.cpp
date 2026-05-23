@@ -53,4 +53,3 @@ std::string validateOrigin(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

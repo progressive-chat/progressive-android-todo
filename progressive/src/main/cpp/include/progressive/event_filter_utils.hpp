@@ -1,15 +1,18 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-// Build event filter JSON for /sync requests
-std::string buildEventFilter(const std::vector<std::string>& types, const std::vector<std::string>& notTypes,
-                               const std::vector<std::string>& senders, const std::vector<std::string>& notSenders,
-                               int limit = 20);
-
-// Build room-specific filter
-std::string buildRoomFilter(const std::vector<std::string>& rooms, const std::string& eventFilter);
-
-} // namespace progressive
+std::string buildEventFilter(const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& types, const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& notTypes,(const std::string& json);
+std::string const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& senders, const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& notSenders,(const std::string& json);
+std::string buildRoomFilter(const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& rooms, const std(const std::string& json);
+std::string string& eventFilter);(const std::string& json);

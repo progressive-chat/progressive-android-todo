@@ -1,29 +1,23 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct InviteResult {
-    std::string roomId;
-    bool success = false;
-    std::string error;
-};
-
-// Build invite request body
-std::string buildInviteRequest(const std::string& userId, const std::string& reason = "");
-
-// Parse invite response
-InviteResult parseInviteResponse(const std::string& json, const std::string& roomId);
-
-// Build 3PID invite request (email/phone)
-std::string build3pidInviteRequest(const std::string& address, const std::string& medium,
-                                      const std::string& idServer, const std::string& idAccessToken);
-
-// Validate invite input
-bool isValidInviteTarget(const std::string& input);  // MXID or email
-
-// Format invite notice text
-std::string formatInviteNotice(const std::string& inviterName, const std::string& roomName);
-
-} // namespace progressive
+std::string roomId;(const std::string& json);
+std::string error;(const std::string& json);
+std::string buildInviteRequest(const std(const std::string& json);
+std::string string& userId, const std(const std::string& json);
+std::string string& reason = "");(const std::string& json);
+std::string InviteResult parseInviteResponse(const std(const std::string& json);
+std::string string& json, const std(const std::string& json);
+std::string string& roomId);(const std::string& json);
+std::string build3pidInviteRequest(const std(const std::string& json);
+std::string string& address, const std(const std::string& json);
+std::string string& medium,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& idServer, const std(const std::string& json);
+std::string string& idAccessToken);(const std::string& json);
+std::string bool isValidInviteTarget(const std(const std::string& json);
+std::string string& input);  // MXID or email(const std::string& json);
+std::string formatInviteNotice(const std(const std::string& json);
+std::string string& inviterName, const std(const std::string& json);
+std::string string& roomName);(const std::string& json);

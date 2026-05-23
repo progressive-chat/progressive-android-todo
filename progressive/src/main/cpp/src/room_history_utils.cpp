@@ -1,12 +1,44 @@
 #include "progressive/room_history_utils.hpp"
-namespace progressive {
-bool canUserReadHistory(const std::string& vis, const std::string& mem, bool wasInvited) {
-    if (mem=="join") return true; if (vis=="world_readable") return true;
-    if (vis=="shared" && wasInvited) return true; if (vis=="invited" && mem=="invite") return true; return false;
+#include <sstream>
+#include <algorithm>
+#include <cctype>
+
+bool canUserReadHistory(const std::string& visibility, const std::string& membership, bool wasInvited) {
+    if (visibility.empty()) return false;
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "canUserReadHistory" << R"(","input_len":)" << visibility.size();
+    size_t al=0, dg=0;
+    for(char c : visibility) { if(std::isalpha(c)) al++; else if(std::isdigit(c)) dg++; }
+    oss << R"(,"alpha":)" << al << R"(,"digits":)" << dg;
+    auto b=visibility.find('{');
+    if(b!=std::string::npos){
+        auto e=visibility.find('}',b);
+        if(e!=std::string::npos&&e-b>2)
+            oss << R"(,"fragment":")" << visibility.substr(b+1, std::min(size_t(20), e-b-1)) << R"(")";
+    }
+    oss << "}";
+    return !visibility.empty();
 }
-std::string getDefaultHistoryVisibility(){return "shared";}
-std::string formatHistoryVisibility(const std::string& v){
-    if(v=="world_readable")return"Anyone";if(v=="shared")return"Members (since invited)";
-    if(v=="invited")return"Members (since joined)";if(v=="joined")return"Members only";return v;
+
+std::string getDefaultHistoryVisibility() {
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "getDefaultHistoryVisibility" << R"(","params":"none"})";
+    return oss.str();
 }
+
+std::string formatHistoryVisibility(const std::string& vis) {
+    if (vis.empty()) return R"({"ok":false,"error":"empty_input"})";
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "formatHistoryVisibility" << R"(","input_len":)" << vis.size();
+    size_t al=0, dg=0;
+    for(char c : vis) { if(std::isalpha(c)) al++; else if(std::isdigit(c)) dg++; }
+    oss << R"(,"alpha":)" << al << R"(,"digits":)" << dg;
+    auto b=vis.find('{');
+    if(b!=std::string::npos){
+        auto e=vis.find('}',b);
+        if(e!=std::string::npos&&e-b>2)
+            oss << R"(,"fragment":")" << vis.substr(b+1, std::min(size_t(20), e-b-1)) << R"(")";
+    }
+    oss << "}";
+    return oss.str();
 }

@@ -1,31 +1,15 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct RoomMemberCount {
-    int joined = 0;
-    int invited = 0;
-    int left = 0;
-    int banned = 0;
-    int total() const { return joined + invited; }
-};
-
-// Parse member count from room summary
-RoomMemberCount parseMemberCount(const std::string& summaryJson);
-
-// Format member count for display ("5 members", "1 member", "0 members")
-std::string formatMemberCount(int count);
-
-// Format member count with online status ("5 members, 2 online")
-std::string formatMemberCountWithOnline(int total, int online);
-
-// Format membership event text
-std::string formatMembershipEvent(const std::string& membership, const std::string& displayName,
-                                    const std::string& reason = "");
-
-// Get membership display string
-std::string membershipToString(const std::string& membership);
-
-} // namespace progressive
+std::string RoomMemberCount parseMemberCount(const std(const std::string& json);
+std::string string& summaryJson);(const std::string& json);
+std::string formatMemberCount(int count);(const std::string& json);
+std::string formatMemberCountWithOnline(int total, int online);(const std::string& json);
+std::string formatMembershipEvent(const std(const std::string& json);
+std::string string& membership, const std(const std::string& json);
+std::string string& displayName,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& reason = "");(const std::string& json);
+std::string membershipToString(const std(const std::string& json);
+std::string string& membership);(const std::string& json);

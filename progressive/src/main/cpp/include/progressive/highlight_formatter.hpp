@@ -1,32 +1,22 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct HighlightRule {
-    std::string keyword;        // word to highlight
-    std::string color;          // hex color or name
-    bool wholeWord = false;
-    bool caseSensitive = false;
-    bool enabled = true;
-};
-
-// Check if text contains any highlight keywords
-bool hasHighlight(const std::string& text, const std::vector<HighlightRule>& rules);
-
-// Format text with HTML highlight spans around matching keywords
-std::string applyHighlights(const std::string& text, const std::vector<HighlightRule>& rules);
-
-// Build highlight push rule from keywords (for Matrix push rules)
-std::string buildHighlightPushRule(const std::vector<HighlightRule>& rules, const std::string& ruleId);
-
-// Parse keywords from push rule JSON
-std::vector<HighlightRule> parseHighlightRules(const std::string& pushRuleJson);
-
-// Format notification body with highlighted sender name
-std::string formatHighlightedNotification(const std::string& senderName,
-                                            const std::string& body,
-                                            bool isHighlight);
-
-} // namespace progressive
+std::string keyword;        // word to highlight(const std::string& json);
+std::string color;          // hex color or name(const std::string& json);
+std::string bool hasHighlight(const std(const std::string& json);
+std::string string& text, const std(const std::string& json);
+std::string vector<HighlightRule>& rules);(const std::string& json);
+std::string applyHighlights(const std(const std::string& json);
+std::string string& text, const std(const std::string& json);
+std::string vector<HighlightRule>& rules);(const std::string& json);
+std::string buildHighlightPushRule(const std(const std::string& json);
+std::string vector<HighlightRule>& rules, const std(const std::string& json);
+std::string string& ruleId);(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<HighlightRule> parseHighlightRules(const std(const std::string& json);
+std::string string& pushRuleJson);(const std::string& json);
+std::string formatHighlightedNotification(const std(const std::string& json);
+std::string string& senderName,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& body,(const std::string& json);

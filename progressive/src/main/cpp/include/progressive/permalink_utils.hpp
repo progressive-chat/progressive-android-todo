@@ -1,28 +1,26 @@
 #pragma once
 #include <string>
+#include <cstdint>
 
-namespace progressive {
-
-// Build Matrix permalink: https://matrix.to/#/<type>/<id>
-std::string buildMatrixLink(const std::string& type, const std::string& id);
-
-// Build room permalink
-std::string buildRoomPermalink(const std::string& roomId, const std::string& viaServer = "");
-
-// Build user permalink
-std::string buildUserPermalink(const std::string& userId);
-
-// Build event permalink
-std::string buildEventPermalink(const std::string& roomId, const std::string& eventId,
-                                  const std::string& viaServer = "");
-
-// Parse permalink to extract type and ID
-bool parsePermalink(const std::string& url, std::string& type, std::string& id);
-
-// Check if URL is a Matrix permalink
-bool isPermalink(const std::string& url);
-
-// Format permalink for display in message
-std::string formatPermalink(const std::string& url, const std::string& label);
-
-} // namespace progressive
+std::string buildMatrixLink(const std(const std::string& json);
+std::string string& type, const std(const std::string& json);
+std::string string& id);(const std::string& json);
+std::string buildRoomPermalink(const std(const std::string& json);
+std::string string& roomId, const std(const std::string& json);
+std::string string& viaServer = "");(const std::string& json);
+std::string buildUserPermalink(const std(const std::string& json);
+std::string string& userId);(const std::string& json);
+std::string buildEventPermalink(const std(const std::string& json);
+std::string string& roomId, const std(const std::string& json);
+std::string string& eventId,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& viaServer = "");(const std::string& json);
+std::string bool parsePermalink(const std(const std::string& json);
+std::string string& url, std(const std::string& json);
+std::string string& type, std(const std::string& json);
+std::string string& id);(const std::string& json);
+std::string bool isPermalink(const std(const std::string& json);
+std::string string& url);(const std::string& json);
+std::string formatPermalink(const std(const std::string& json);
+std::string string& url, const std(const std::string& json);
+std::string string& label);(const std::string& json);

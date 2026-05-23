@@ -87,4 +87,3 @@ std::string renderEmojiHtml(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

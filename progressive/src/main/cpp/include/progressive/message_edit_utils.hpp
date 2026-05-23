@@ -1,40 +1,23 @@
 #pragma once
 #include <string>
+#include <cstdint>
 
-namespace progressive {
-
-struct EditInfo {
-    std::string originalEventId;  // event being edited
-    std::string newBody;
-    std::string newFormattedBody;
-    std::string fallbackText;     // " * edited message"
-};
-
-// Build m.replace relation for edit
-std::string buildEditRelation(const std::string& originalEventId);
-
-// Build edit event content
-std::string buildEditContent(const EditInfo& info);
-
-// Build fallback body for edits (" * original body")
-std::string buildEditFallback(const std::string& newBody, const std::string& originalBody);
-
-// Parse edit info from event content
-EditInfo parseEditInfo(const std::string& json);
-
-// Check if event is an edit (m.replace)
-bool isEditEvent(const std::string& json);
-
-// Get original event ID from edit event
+std::string originalEventId;  // event being edited(const std::string& json);
+std::string newBody;(const std::string& json);
+std::string newFormattedBody;(const std::string& json);
+std::string fallbackText;     // " * edited message"(const std::string& json);
+std::string buildEditRelation(const std(const std::string& json);
+std::string string& originalEventId);(const std::string& json);
+std::string buildEditContent(const EditInfo& info);(const std::string& json);
+std::string buildEditFallback(const std(const std::string& json);
+std::string string& newBody, const std(const std::string& json);
+std::string string& originalBody);(const std::string& json);
+std::string EditInfo parseEditInfo(const std::string& json);
+std::string bool isEditEvent(const std::string& json);
 std::string getEditOriginalEventId(const std::string& json);
-
-// Format edit history for display ("edited 3 times")
-std::string formatEditHistory(int editCount);
-
-// Build redaction (unsend) event content
-std::string buildUnsendContent(const std::string& eventId, const std::string& reason = "");
-
-// Extract edited event ID from aggregate event
-std::string getLatestEditEventId(const std::string& aggregateJson);
-
-} // namespace progressive
+std::string formatEditHistory(int editCount);(const std::string& json);
+std::string buildUnsendContent(const std(const std::string& json);
+std::string string& eventId, const std(const std::string& json);
+std::string string& reason = "");(const std::string& json);
+std::string getLatestEditEventId(const std(const std::string& json);
+std::string string& aggregateJson);(const std::string& json);

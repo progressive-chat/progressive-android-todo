@@ -53,4 +53,3 @@ std::string matchesFilter(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

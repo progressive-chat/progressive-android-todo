@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <cstdint>
-#include <sstream>
-std::string parseMarkdownToHtml:parseHtmlToPlain:stripMarkdownSyntax:extractLinksFromMarkdown(const std::string& json);
+
+std::string parseMarkdownToHtml(const std::string& json);
+std::string parseHtmlToPlain(const std::string& json);
+std::string stripMarkdownSyntax(const std::string& json);
+std::string extractLinksFromMarkdown(const std::string& json);

@@ -53,4 +53,3 @@ std::string buildParentEvent(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

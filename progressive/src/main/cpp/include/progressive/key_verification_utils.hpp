@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <cstdint>
-#include <sstream>
-std::string parseVerificationStart:buildVerificationAccept:parseKeyVerificationMac:validateSasEmoji(const std::string& json);
+
+std::string parseVerificationStart(const std::string& json);
+std::string buildVerificationAccept(const std::string& json);
+std::string parseKeyVerificationMac(const std::string& json);
+std::string validateSasEmoji(const std::string& json);

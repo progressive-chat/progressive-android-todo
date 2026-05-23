@@ -53,4 +53,3 @@ std::string computeSha256(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

@@ -1,42 +1,16 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <cstdint>
 
-namespace progressive {
-
-enum class DeviceTrustLevel {
-    UNKNOWN = -1,
-    UNVERIFIED = 0,
-    VERIFIED = 1,
-    BLOCKED = 2
-};
-
-struct DeviceTrustInfo {
-    std::string deviceId;
-    std::string userId;
-    DeviceTrustLevel level = DeviceTrustLevel::UNKNOWN;
-    bool isCrossSigningVerified = false;
-    bool isLocallyVerified = false;
-    std::string lastVerifiedDate;
-};
-
-// Compute trust level from verification flags
-DeviceTrustLevel computeTrustLevel(bool crossSigningVerified, bool locallyVerified);
-
-// Convert trust level to display string
-std::string trustLevelToString(DeviceTrustLevel level);
-std::string trustLevelToEmoji(DeviceTrustLevel level);
-std::string trustLevelToColor(DeviceTrustLevel level);
-
-// Parse device trust from crypto device info JSON
-DeviceTrustInfo parseDeviceTrust(const std::string& deviceId, const std::string& userId,
-                                   const std::string& cryptoJson);
-
-// Check if device should show trust warning
-bool needsTrustWarning(DeviceTrustLevel level);
-
-// Format trust info for user display
-std::string formatDeviceTrust(const DeviceTrustInfo& info);
-
-} // namespace progressive
+std::string deviceId;(const std::string& json);
+std::string userId;(const std::string& json);
+std::string lastVerifiedDate;(const std::string& json);
+std::string trustLevelToString(DeviceTrustLevel level);(const std::string& json);
+std::string trustLevelToEmoji(DeviceTrustLevel level);(const std::string& json);
+std::string trustLevelToColor(DeviceTrustLevel level);(const std::string& json);
+std::string DeviceTrustInfo parseDeviceTrust(const std(const std::string& json);
+std::string string& deviceId, const std(const std::string& json);
+std::string string& userId,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& cryptoJson);(const std::string& json);
+std::string formatDeviceTrust(const DeviceTrustInfo& info);(const std::string& json);

@@ -1,17 +1,55 @@
 #include "progressive/room_notification_utils.hpp"
 #include <sstream>
-namespace progressive {
-std::string buildRoomNotifOverride(const std::string& rid, const std::string& lvl) {
-    std::ostringstream os; os << R"({"room_id":")" << rid << R"(","notification_level":")" << lvl << R"("})";
-    return os.str();
+#include <algorithm>
+#include <cctype>
+
+std::string buildRoomNotifOverride(const std::string& roomId, const std::string& level) {
+    if (roomId.empty()) return R"({"ok":false,"error":"empty_input"})";
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "buildRoomNotifOverride" << R"(","input_len":)" << roomId.size();
+    size_t al=0, dg=0;
+    for(char c : roomId) { if(std::isalpha(c)) al++; else if(std::isdigit(c)) dg++; }
+    oss << R"(,"alpha":)" << al << R"(,"digits":)" << dg;
+    auto b=roomId.find('{');
+    if(b!=std::string::npos){
+        auto e=roomId.find('}',b);
+        if(e!=std::string::npos&&e-b>2)
+            oss << R"(,"fragment":")" << roomId.substr(b+1, std::min(size_t(20), e-b-1)) << R"(")";
+    }
+    oss << "}";
+    return oss.str();
 }
-std::string buildRoomNotifRemove(const std::string& rid) {
-    return R"({"room_id":")" + rid + R"("})";
+
+std::string buildRoomNotifRemove(const std::string& roomId) {
+    if (roomId.empty()) return R"({"ok":false,"error":"empty_input"})";
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "buildRoomNotifRemove" << R"(","input_len":)" << roomId.size();
+    size_t al=0, dg=0;
+    for(char c : roomId) { if(std::isalpha(c)) al++; else if(std::isdigit(c)) dg++; }
+    oss << R"(,"alpha":)" << al << R"(,"digits":)" << dg;
+    auto b=roomId.find('{');
+    if(b!=std::string::npos){
+        auto e=roomId.find('}',b);
+        if(e!=std::string::npos&&e-b>2)
+            oss << R"(,"fragment":")" << roomId.substr(b+1, std::min(size_t(20), e-b-1)) << R"(")";
+    }
+    oss << "}";
+    return oss.str();
 }
-std::string formatNotifLevel(const std::string& lvl) {
-    if (lvl == "all_messages") return "All messages";
-    if (lvl == "mentions_only") return "Mentions only";
-    if (lvl == "mute") return "Muted";
-    return lvl;
-}
+
+std::string formatNotifLevel(const std::string& level) {
+    if (level.empty()) return R"({"ok":false,"error":"empty_input"})";
+    std::ostringstream oss;
+    oss << R"({"ok":true,"method":")" << "formatNotifLevel" << R"(","input_len":)" << level.size();
+    size_t al=0, dg=0;
+    for(char c : level) { if(std::isalpha(c)) al++; else if(std::isdigit(c)) dg++; }
+    oss << R"(,"alpha":)" << al << R"(,"digits":)" << dg;
+    auto b=level.find('{');
+    if(b!=std::string::npos){
+        auto e=level.find('}',b);
+        if(e!=std::string::npos&&e-b>2)
+            oss << R"(,"fragment":")" << level.substr(b+1, std::min(size_t(20), e-b-1)) << R"(")";
+    }
+    oss << "}";
+    return oss.str();
 }

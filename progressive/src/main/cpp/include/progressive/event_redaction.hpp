@@ -2,30 +2,16 @@
 #include <string>
 #include <cstdint>
 
-namespace progressive {
-
-struct RedactionInfo {
-    std::string redactsEventId;    // event being redacted
-    std::string reason;            // optional reason
-    bool isValid = false;
-};
-
-// Parse m.room.redaction event content
-RedactionInfo parseRedaction(const std::string& json);
-
-// Check if an event is a redaction
-bool isRedactionEvent(const std::string& json);
-
-// Build redaction event content
-std::string buildRedactionContent(const std::string& eventIdToRedact, const std::string& reason = "");
-
-// Apply redaction to event content (strips redacted fields)
-std::string applyRedaction(const std::string& eventContent);
-
-// Check if event content has been redacted
-bool isRedactedEvent(const std::string& eventJson);
-
-// Format redaction notice for timeline
-std::string formatRedactionNotice(const RedactionInfo& info, const std::string& originalSender);
-
-} // namespace progressive
+std::string redactsEventId;    // event being redacted(const std::string& json);
+std::string reason;            // optional reason(const std::string& json);
+std::string RedactionInfo parseRedaction(const std::string& json);
+std::string bool isRedactionEvent(const std::string& json);
+std::string buildRedactionContent(const std(const std::string& json);
+std::string string& eventIdToRedact, const std(const std::string& json);
+std::string string& reason = "");(const std::string& json);
+std::string applyRedaction(const std(const std::string& json);
+std::string string& eventContent);(const std::string& json);
+std::string bool isRedactedEvent(const std(const std::string& json);
+std::string string& eventJson);(const std::string& json);
+std::string formatRedactionNotice(const RedactionInfo& info, const std(const std::string& json);
+std::string string& originalSender);(const std::string& json);

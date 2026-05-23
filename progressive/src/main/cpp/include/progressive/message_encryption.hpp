@@ -2,32 +2,18 @@
 #include <string>
 #include <cstdint>
 
-namespace progressive {
-
-struct EncryptionInfo {
-    std::string algorithm;      // "m.megolm.v1.aes-sha2"
-    std::string senderKey;      // curve25519 key
-    std::string sessionId;      // megolm session ID
-    std::string ciphertext;     // encrypted payload
-    std::string deviceId;       // sender's device
-    int messageIndex = 0;
-    bool isValid = false;
-};
-
-// Parse m.room.encrypted event content
-EncryptionInfo parseEncryptedEvent(const std::string& json);
-
-// Check if an event is encrypted
-bool isEncryptedEvent(const std::string& json);
-
-// Build encrypted event content (for sending, placeholder)
-std::string buildEncryptedContent(const std::string& ciphertext, const std::string& senderKey,
-                                    const std::string& sessionId, const std::string& deviceId);
-
-// Format encryption info for UI display
-std::string formatEncryptionInfo(const EncryptionInfo& info);
-
-// Check if encryption matches expected algorithm
-bool isMegolmEncrypted(const std::string& json);
-
-} // namespace progressive
+std::string algorithm;      // "m.megolm.v1.aes-sha2"(const std::string& json);
+std::string senderKey;      // curve25519 key(const std::string& json);
+std::string sessionId;      // megolm session ID(const std::string& json);
+std::string ciphertext;     // encrypted payload(const std::string& json);
+std::string deviceId;       // sender's device(const std::string& json);
+std::string EncryptionInfo parseEncryptedEvent(const std::string& json);
+std::string bool isEncryptedEvent(const std::string& json);
+std::string buildEncryptedContent(const std(const std::string& json);
+std::string string& ciphertext, const std(const std::string& json);
+std::string string& senderKey,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& sessionId, const std(const std::string& json);
+std::string string& deviceId);(const std::string& json);
+std::string formatEncryptionInfo(const EncryptionInfo& info);(const std::string& json);
+std::string bool isMegolmEncrypted(const std::string& json);

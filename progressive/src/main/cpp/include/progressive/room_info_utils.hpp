@@ -2,28 +2,19 @@
 #include <string>
 #include <cstdint>
 
-namespace progressive {
-
-struct RoomInfo {
-    std::string roomId;
-    std::string name;
-    std::string topic;
-    std::string avatarUrl;
-    std::string joinRule;
-    int memberCount = 0;
-    bool isEncrypted = false;
-    bool isDirect = false;
-    int roomVersion = 1;
-};
-
-// Parse room info from /state or /summary
-RoomInfo parseRoomInfo(const std::string& json, const std::string& roomId);
-
-// Format room info for display header
-std::string formatRoomHeader(const RoomInfo& info);
-
-// Parse room display name from state events
-std::string parseRoomDisplayName(const std::string& nameEvent, const std::string& canonicalAlias,
-                                   const std::string& roomId, const std::vector<std::string>& memberNames);
-
-} // namespace progressive
+std::string roomId;(const std::string& json);
+std::string name;(const std::string& json);
+std::string topic;(const std::string& json);
+std::string avatarUrl;(const std::string& json);
+std::string joinRule;(const std::string& json);
+std::string RoomInfo parseRoomInfo(const std(const std::string& json);
+std::string string& json, const std(const std::string& json);
+std::string string& roomId);(const std::string& json);
+std::string formatRoomHeader(const RoomInfo& info);(const std::string& json);
+std::string parseRoomDisplayName(const std(const std::string& json);
+std::string string& nameEvent, const std(const std::string& json);
+std::string string& canonicalAlias,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& roomId, const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& memberNames);(const std::string& json);

@@ -53,4 +53,3 @@ std::string sanitizeHtml(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

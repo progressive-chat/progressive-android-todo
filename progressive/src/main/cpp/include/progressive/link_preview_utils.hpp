@@ -1,43 +1,23 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct LinkPreviewData {
-    std::string url;
-    std::string title;
-    std::string description;
-    std::string imageUrl;
-    std::string siteName;
-    int imageWidth = 0;
-    int imageHeight = 0;
-    bool hasPreview = false;
-};
-
-struct ExtractedLink {
-    std::string url;
-    int startIndex = 0;
-    int endIndex = 0;
-};
-
-// Extract all URLs from text
-std::vector<ExtractedLink> extractUrls(const std::string& text);
-
-// Parse OpenGraph HTML meta tags
-LinkPreviewData parseOpenGraph(const std::string& html);
-
-// Parse oEmbed JSON response
-LinkPreviewData parseOEmbed(const std::string& json);
-
-// Format link preview for display in timeline
-std::string formatLinkPreview(const LinkPreviewData& data);
-
-// Build Matrix URL preview event content
-std::string buildUrlPreviewContent(const std::string& url, const LinkPreviewData& data);
-
-// Check if URL is an image (for inline image preview)
-bool isImageUrl(const std::string& url);
-std::string getDomainFromUrl(const std::string& url);
-
-} // namespace progressive
+std::string url;(const std::string& json);
+std::string title;(const std::string& json);
+std::string description;(const std::string& json);
+std::string imageUrl;(const std::string& json);
+std::string siteName;(const std::string& json);
+std::string url;(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<ExtractedLink> extractUrls(const std(const std::string& json);
+std::string string& text);(const std::string& json);
+std::string LinkPreviewData parseOpenGraph(const std(const std::string& json);
+std::string string& html);(const std::string& json);
+std::string LinkPreviewData parseOEmbed(const std::string& json);
+std::string formatLinkPreview(const LinkPreviewData& data);(const std::string& json);
+std::string buildUrlPreviewContent(const std(const std::string& json);
+std::string string& url, const LinkPreviewData& data);(const std::string& json);
+std::string bool isImageUrl(const std(const std::string& json);
+std::string string& url);(const std::string& json);
+std::string getDomainFromUrl(const std(const std::string& json);
+std::string string& url);(const std::string& json);

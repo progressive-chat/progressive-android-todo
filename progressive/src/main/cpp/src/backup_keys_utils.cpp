@@ -53,4 +53,3 @@ std::string encryptBackupData(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

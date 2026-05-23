@@ -53,4 +53,3 @@ std::string buildPushRuleEvent(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

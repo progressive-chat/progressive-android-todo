@@ -2,23 +2,15 @@
 #include <string>
 #include <cstdint>
 
-namespace progressive {
-
-// Build fully read marker event content
-std::string buildFullyReadMarker(const std::string& eventId);
-std::string buildReadReceipt(const std::string& eventId);
-
-// Parse read marker event
+std::string buildFullyReadMarker(const std(const std::string& json);
+std::string string& eventId);(const std::string& json);
+std::string buildReadReceipt(const std(const std::string& json);
+std::string string& eventId);(const std::string& json);
 std::string parseReadMarkerEventId(const std::string& json);
-
-// Check if event should show read marker indicator
-bool shouldShowReadMarker(const std::string& lastReadEventId, const std::string& currentEventId,
-                           int lastReadIndex, int currentIndex);
-
-// Format read marker text for accessibility
-std::string formatReadMarkerAccessibility(int unreadCount);
-
-// Compare event IDs for ordering (lexicographic)
-int compareEventIds(const std::string& a, const std::string& b);
-
-} // namespace progressive
+std::string bool shouldShowReadMarker(const std(const std::string& json);
+std::string string& lastReadEventId, const std(const std::string& json);
+std::string string& currentEventId,(const std::string& json);
+std::string formatReadMarkerAccessibility(int unreadCount);(const std::string& json);
+std::string int compareEventIds(const std(const std::string& json);
+std::string string& a, const std(const std::string& json);
+std::string string& b);(const std::string& json);

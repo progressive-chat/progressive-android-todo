@@ -1,30 +1,18 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct ReactionCategory {
-    std::string name;           // "Smileys", "Gestures", etc.
-    std::vector<std::string> emojis;
-};
-
-// Get common emoji reactions
-std::vector<std::string> getQuickReactions();
-
-// Get emoji by category
-std::vector<ReactionCategory> getEmojiCategories();
-
-// Build m.reaction event content
-std::string buildReactionContent(const std::string& eventId, const std::string& emoji);
-
-// Parse reaction key (the emoji) from event
+std::string name;           // "Smileys", "Gestures", etc.(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string> emojis;(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string> getQuickReactions();(const std::string& json);
+std::string buildReactionContent(const std(const std::string& json);
+std::string string& eventId, const std(const std::string& json);
+std::string string& emoji);(const std::string& json);
 std::string parseReactionKey(const std::string& json);
-
-// Check if event is a reaction
-bool isReactionEvent(const std::string& json);
-
-// Get emoji description for accessibility
-std::string getEmojiDescription(const std::string& emoji);
-
-} // namespace progressive
+std::string bool isReactionEvent(const std::string& json);
+std::string getEmojiDescription(const std(const std::string& json);
+std::string string& emoji);(const std::string& json);

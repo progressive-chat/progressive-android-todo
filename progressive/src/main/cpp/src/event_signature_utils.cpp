@@ -53,4 +53,3 @@ std::string parseSignatures(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

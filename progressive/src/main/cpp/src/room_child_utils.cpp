@@ -53,4 +53,3 @@ std::string buildChildEvent(const std::string& json) {
     oss << "}";
     return oss.str();
 }
-

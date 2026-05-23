@@ -1,10 +1,19 @@
 #pragma once
 #include <string>
-#include <vector>
-namespace progressive {
-struct PollVote { std::string pollId; std::string userId; std::vector<std::string> selectedOptions; };
-std::string buildPollVoteContent(const std::string& pollId, const std::vector<std::string>& optionIds);
-PollVote parsePollVote(const std::string& json);
-bool hasUserVoted(const std::vector<PollVote>& votes, const std::string& userId);
-int countVotesForOption(const std::vector<PollVote>& votes, const std::string& optionId);
-}
+#include <cstdint>
+
+std::string struct PollVote { pollId; std(const std::string& json);
+std::string string userId; std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string> selectedOptions; };(const std::string& json);
+std::string buildPollVoteContent(const std(const std::string& json);
+std::string string& pollId, const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& optionIds);(const std::string& json);
+std::string PollVote parsePollVote(const std::string& json);
+std::string bool hasUserVoted(const std(const std::string& json);
+std::string vector<PollVote>& votes, const std(const std::string& json);
+std::string string& userId);(const std::string& json);
+std::string int countVotesForOption(const std(const std::string& json);
+std::string vector<PollVote>& votes, const std(const std::string& json);
+std::string string& optionId);(const std::string& json);

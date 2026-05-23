@@ -2,38 +2,18 @@
 #include <string>
 #include <cstdint>
 
-namespace progressive {
-
-enum class CallEventType { INVITE, ANSWER, HANGUP, REJECT, CANDIDATES, SELECT_ANSWER, NEGOTIATE, UNKNOWN };
-
-struct CallEventDisplay {
-    std::string callId;
-    CallEventType type = CallEventType::UNKNOWN;
-    std::string callerName;
-    bool isVideoCall = false;
-    int durationSeconds = 0;
-    std::string formattedText;      // display text
-    std::string iconName;           // UI icon
-};
-
-// Parse call event type from JSON
-CallEventType parseCallEventType(const std::string& json);
-
-// Format call event for timeline display
-CallEventDisplay formatCallEvent(const std::string& json, const std::string& callerName,
-                                   const std::string& myUserId);
-
-// Format call duration ("5:32", "1:02:15")
-std::string formatCallDuration(int seconds);
-
-// Format call event text
-std::string formatCallEventText(CallEventType type, const std::string& caller, bool isVideo,
-                                  int duration, bool isMe);
-
-// Get call event icon
-std::string getCallEventIcon(CallEventType type, bool isVideo);
-
-// Check if event is a call event
-bool isCallEvent(const std::string& json);
-
-} // namespace progressive
+std::string callId;(const std::string& json);
+std::string callerName;(const std::string& json);
+std::string formattedText;      // display text(const std::string& json);
+std::string iconName;           // UI icon(const std::string& json);
+std::string CallEventType parseCallEventType(const std::string& json);
+std::string CallEventDisplay formatCallEvent(const std(const std::string& json);
+std::string string& json, const std(const std::string& json);
+std::string string& callerName,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& myUserId);(const std::string& json);
+std::string formatCallDuration(int seconds);(const std::string& json);
+std::string formatCallEventText(CallEventType type, const std(const std::string& json);
+std::string string& caller, bool isVideo,(const std::string& json);
+std::string getCallEventIcon(CallEventType type, bool isVideo);(const std::string& json);
+std::string bool isCallEvent(const std::string& json);

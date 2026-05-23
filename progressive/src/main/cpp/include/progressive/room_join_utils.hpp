@@ -1,19 +1,14 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-// Build join room request body
-std::string buildJoinRequest(const std::vector<std::string>& viaServers = {});
-
-// Build join by alias request
-std::string buildJoinByAlias(const std::string& alias, const std::vector<std::string>& via = {});
-
-// Parse join response (room_id)
+std::string buildJoinRequest(const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& viaServers = {});(const std::string& json);
+std::string buildJoinByAlias(const std(const std::string& json);
+std::string string& alias, const std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string>& via = {});(const std::string& json);
 std::string parseJoinResponse(const std::string& json);
-
-// Format join confirmation
-std::string formatJoinConfirmation(const std::string& roomId);
-
-} // namespace progressive
+std::string formatJoinConfirmation(const std(const std::string& json);
+std::string string& roomId);(const std::string& json);

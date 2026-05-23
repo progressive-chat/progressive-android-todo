@@ -1,32 +1,20 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <cstdint>
 
-namespace progressive {
-
-struct ReadReceipt {
-    std::string userId;
-    std::string eventId;
-    int64_t timestampMs = 0;
-};
-
-struct ReceiptDisplayInfo {
-    int totalReaders = 0;
-    std::string formattedText;     // "Read by Alice, Bob and 3 others"
-    std::vector<std::string> readerNames;
-    std::vector<std::string> readerAvatars;
-    int64_t lastReadTimestampMs = 0;
-};
-
-// Parse m.read receipt from m.receipt event
-std::vector<ReadReceipt> parseReadReceipts(const std::string& eventJson, const std::string& eventId);
-
-// Format read receipts for display
-ReceiptDisplayInfo formatReadReceipts(const std::vector<ReadReceipt>& receipts,
-                                       int maxVisible = 5);
-
-// Check if an event has been read by a specific user
-bool isReadByUser(const std::vector<ReadReceipt>& receipts, const std::string& userId);
-
-} // namespace progressive
+std::string userId;(const std::string& json);
+std::string eventId;(const std::string& json);
+std::string formattedText;     // "Read by Alice, Bob and 3 others"(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string> readerNames;(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<std(const std::string& json);
+std::string string> readerAvatars;(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<ReadReceipt> parseReadReceipts(const std(const std::string& json);
+std::string string& eventJson, const std(const std::string& json);
+std::string string& eventId);(const std::string& json);
+std::string bool isReadByUser(const std(const std::string& json);
+std::string vector<ReadReceipt>& receipts, const std(const std::string& json);
+std::string string& userId);(const std::string& json);

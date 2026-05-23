@@ -1,31 +1,17 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <cstdint>
 
-namespace progressive {
-
-struct RoomDirectoryEntry {
-    std::string roomId;
-    std::string name;
-    std::string topic;
-    std::string alias;
-    std::string avatarUrl;
-    int memberCount = 0;
-    bool isPublic = true;
-    bool isJoined = false;
-};
-
-// Parse directory entry from /publicRooms response
-RoomDirectoryEntry parseDirectoryEntry(const std::string& json);
-
-// Build room directory filter
-std::string buildDirectoryFilter(const std::string& searchTerm, int limit = 20,
-                                   const std::string& server = "");
-
-// Parse directory list response
-std::vector<RoomDirectoryEntry> parseDirectoryList(const std::string& json);
-
-// Format directory entry for display
-std::string formatDirectoryEntry(const RoomDirectoryEntry& entry);
-
-} // namespace progressive
+std::string roomId;(const std::string& json);
+std::string name;(const std::string& json);
+std::string topic;(const std::string& json);
+std::string alias;(const std::string& json);
+std::string avatarUrl;(const std::string& json);
+std::string RoomDirectoryEntry parseDirectoryEntry(const std::string& json);
+std::string buildDirectoryFilter(const std(const std::string& json);
+std::string string& searchTerm, int limit = 20,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& server = "");(const std::string& json);
+std::string std(const std::string& json);
+std::string vector<RoomDirectoryEntry> parseDirectoryList(const std::string& json);
+std::string formatDirectoryEntry(const RoomDirectoryEntry& entry);(const std::string& json);

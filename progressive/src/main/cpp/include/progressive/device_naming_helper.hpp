@@ -1,23 +1,21 @@
 #pragma once
 #include <string>
+#include <cstdint>
 
-namespace progressive {
-
-// Generate default device name from device model + OS
-std::string generateDeviceName(const std::string& manufacturer, const std::string& model,
-                                 const std::string& osName, const std::string& osVersion);
-
-// Parse device name from user agent
-std::string parseDeviceNameFromUserAgent(const std::string& userAgent);
-
-// Format device display name with OS info
-std::string formatDeviceDisplayName(const std::string& deviceName, const std::string& osInfo,
-                                      const std::string& appVersion);
-
-// Check if device name is a default (auto-generated vs custom)
-bool isDefaultDeviceName(const std::string& name);
-
-// Truncate device name to max length
-std::string truncateDeviceName(const std::string& name, int maxLen = 50);
-
-} // namespace progressive
+std::string generateDeviceName(const std(const std::string& json);
+std::string string& manufacturer, const std(const std::string& json);
+std::string string& model,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& osName, const std(const std::string& json);
+std::string string& osVersion);(const std::string& json);
+std::string parseDeviceNameFromUserAgent(const std(const std::string& json);
+std::string string& userAgent);(const std::string& json);
+std::string formatDeviceDisplayName(const std(const std::string& json);
+std::string string& deviceName, const std(const std::string& json);
+std::string string& osInfo,(const std::string& json);
+std::string const std(const std::string& json);
+std::string string& appVersion);(const std::string& json);
+std::string bool isDefaultDeviceName(const std(const std::string& json);
+std::string string& name);(const std::string& json);
+std::string truncateDeviceName(const std(const std::string& json);
+std::string string& name, int maxLen = 50);(const std::string& json);
