@@ -227,7 +227,10 @@ class MessageComposerViewModel @AssistedInject constructor(
                 .unwrap()
                 .setOnEach { summary ->
                     val keyword = vectorPreferences.getTodoKeyword().lowercase()
-                    copy(isVoiceAgentEnabled = summary.topic.lowercase().contains(keyword))
+                    copy(
+                            isVoiceAgentEnabled = summary.topic.lowercase().contains(keyword),
+                            voiceButtonPreset = vectorPreferences.getTodoVoiceButtonPreset()
+                    )
                 }
     }
 

@@ -37,6 +37,10 @@ class VoiceMessageViews(
         private val dimensionConverter: DimensionConverter,
 ) {
     var isVoiceAgentEnabled: Boolean = false
+    var voiceButtonPreset: String = "vertical_split"
+
+    // Tracks which mic button was used to start recording (null = room, non-null = agent)
+    private var isAgentRecording: Boolean = false
 
     private val distanceToLock = dimensionConverter.dpToPx(48).toFloat()
     private val distanceToCancel = dimensionConverter.dpToPx(120).toFloat()
@@ -78,17 +82,78 @@ class VoiceMessageViews(
         views.voicePlaybackControlButton.setOnClickListener {
             actions.onVoicePlaybackButtonClicked()
         }
-        observeMicButton(actions)
+        observeMicButtons(actions)
+        applyPresetLayout()
+    }
+
+    private fun applyPresetLayout() {
+        if (!isVoiceAgentEnabled) {
+            views.voiceMessageMicAgentButton.isVisible = false
+            // Reset room mic to default position
+            views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(16))
+            }
+            return
+        }
+
+        views.voiceMessageMicAgentButton.isVisible = true
+
+        when (voiceButtonPreset) {
+            "vertical_split" -> {
+                // Room mic (bottom), Agent mic (top) — stacked vertically
+                views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(6))
+                }
+                views.voiceMessageMicAgentButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(56))
+                }
+                // Make the agent button larger (top portion of split)
+                views.voiceMessageMicAgentButton.scaleX = 1.3f
+                views.voiceMessageMicAgentButton.scaleY = 1.3f
+                views.voiceMessageMicButton.scaleX = 0.8f
+                views.voiceMessageMicButton.scaleY = 0.8f
+            }
+            "horizontal_side" -> {
+                // Room mic (left), Agent mic (right) — side by side
+                views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(52), dimensionConverter.dpToPx(16))
+                }
+                views.voiceMessageMicAgentButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(16))
+                }
+                views.voiceMessageMicAgentButton.scaleX = 1.0f
+                views.voiceMessageMicAgentButton.scaleY = 1.0f
+                views.voiceMessageMicButton.scaleX = 1.0f
+                views.voiceMessageMicButton.scaleY = 1.0f
+            }
+            "floating" -> {
+                // Room mic stays in default position
+                views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(16))
+                }
+                // Agent mic floats above (higher up)
+                views.voiceMessageMicAgentButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(120))
+                }
+                views.voiceMessageMicAgentButton.scaleX = 1.0f
+                views.voiceMessageMicAgentButton.scaleY = 1.0f
+                views.voiceMessageMicButton.scaleX = 1.0f
+                views.voiceMessageMicButton.scaleY = 1.0f
+            }
+        }
     }
 
     private fun getTouchedPositionPercentage(motionEvent: MotionEvent, view: View) = (motionEvent.x / view.width).coerceIn(0f, 1f)
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun observeMicButton(actions: Actions) {
+    private fun observeMicButtons(actions: Actions) {
         val draggableStateProcessor = DraggableStateProcessor(resources, dimensionConverter)
+
+        // Room mic button
         views.voiceMessageMicButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    isAgentRecording = false
                     draggableStateProcessor.initialize(event)
                     actions.onRequestRecording()
                     true
@@ -104,6 +169,34 @@ class VoiceMessageViews(
                 else -> false
             }
         }
+
+        // AI agent mic button — only active when voice agent is enabled
+        views.voiceMessageMicAgentButton.setOnTouchListener { _, event ->
+            if (!isVoiceAgentEnabled) return@setOnTouchListener false
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    isAgentRecording = true
+                    draggableStateProcessor.initialize(event)
+                    actions.onRequestRecording()
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    actions.onMicButtonReleased()
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    actions.onMicButtonDrag { currentState -> draggableStateProcessor.process(event, currentState) }
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    fun isAgentRecording(): Boolean = isAgentRecording
+
+    fun resetRecordingTarget() {
+        isAgentRecording = false
     }
 
     fun renderStarted(distanceX: Float) {
@@ -146,12 +239,21 @@ class VoiceMessageViews(
 
     fun showRecordingViews() {
         views.voiceMessageBackgroundView.isVisible = true
-        views.voiceMessageMicButton.setImageResource(R.drawable.ic_composer_rich_mic_pressed)
-        views.voiceMessageMicButton.setAttributeTintedBackground(R.drawable.circle_with_halo, com.google.android.material.R.attr.colorPrimary)
-        views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-            setMargins(0, 0, 0, 0)
+        // Highlight the active mic button
+        if (isAgentRecording) {
+            views.voiceMessageMicAgentButton.setImageResource(R.drawable.ic_composer_rich_mic_pressed)
+            views.voiceMessageMicAgentButton.setAttributeTintedBackground(R.drawable.circle_with_halo, com.google.android.material.R.attr.colorPrimary)
+            views.voiceMessageMicAgentButton.animate().scaleX(1.8f).scaleY(1.8f).setDuration(300).start()
+            views.voiceMessageMicButton.isVisible = false
+        } else {
+            views.voiceMessageMicButton.setImageResource(R.drawable.ic_composer_rich_mic_pressed)
+            views.voiceMessageMicButton.setAttributeTintedBackground(R.drawable.circle_with_halo, com.google.android.material.R.attr.colorPrimary)
+            views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                setMargins(0, 0, 0, 0)
+            }
+            views.voiceMessageMicButton.animate().scaleX(1.5f).scaleY(1.5f).setDuration(300).start()
+            views.voiceMessageMicAgentButton.isVisible = false
         }
-        views.voiceMessageMicButton.animate().scaleX(1.5f).scaleY(1.5f).setDuration(300).start()
 
         views.voiceMessageLockBackground.isVisible = true
         views.voiceMessageLockBackground.animate().setDuration(300).translationY(-dimensionConverter.dpToPx(180).toFloat()).start()
@@ -170,7 +272,6 @@ class VoiceMessageViews(
     }
 
     fun hideRecordingViews(recordingState: RecordingUiState) {
-        // We need to animate the lock image first
         views.voiceMessageBackgroundView.isVisible = false
         if (recordingState !is RecordingUiState.Locked) {
             views.voiceMessageLockImage.isVisible = false
@@ -188,6 +289,7 @@ class VoiceMessageViews(
         views.voiceMessagePlaybackLayout.isVisible = false
         views.voiceMessageTimerIndicator.isVisible = false
         views.voiceMessageTimer.isVisible = false
+        views.voiceMessageMicAgentButton.isVisible = false
 
         if (recordingState !is RecordingUiState.Locked) {
             views.voiceMessageMicButton
@@ -212,7 +314,6 @@ class VoiceMessageViews(
             }
         }
 
-        // Hide toasts if user cancelled recording before the timeout of the toast.
         if (recordingState == RecordingUiState.Idle) {
             hideToast()
         }
@@ -264,12 +365,16 @@ class VoiceMessageViews(
         views.voiceMessageMicButton.setAttributeBackground(android.R.attr.selectableItemBackgroundBorderless)
         views.voiceMessageMicButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
             if (rtlXMultiplier == -1) {
-                // RTL
                 setMargins(dimensionConverter.dpToPx(12), 0, 0, dimensionConverter.dpToPx(12))
             } else {
                 setMargins(0, 0, dimensionConverter.dpToPx(12), dimensionConverter.dpToPx(12))
             }
         }
+        // Restore agent button
+        if (isVoiceAgentEnabled) {
+            applyPresetLayout()
+        }
+        resetRecordingTarget()
     }
 
     fun hideToast() {
@@ -280,6 +385,7 @@ class VoiceMessageViews(
         hideRecordingViews(RecordingUiState.Idle)
         views.voiceMessageBackgroundView.isVisible = true
         views.voiceMessageMicButton.isVisible = false
+        views.voiceMessageMicAgentButton.isVisible = false
         views.voiceMessageSendButton.isVisible = true
         views.voiceMessageSendToAgentButton.isVisible = isVoiceAgentEnabled
         views.voiceMessagePlaybackLayout.isVisible = true

@@ -77,6 +77,10 @@ class VoiceRecorderFragment : VectorBaseFragment<FragmentVoiceRecorderBinding>()
         messageComposerViewModel.onEach(MessageComposerViewState::isVoiceAgentEnabled) { enabled ->
             views.voiceMessageRecorderView.setVoiceAgentEnabled(enabled)
         }
+
+        messageComposerViewModel.onEach(MessageComposerViewState::voiceButtonPreset) { preset ->
+            views.voiceMessageRecorderView.setVoiceButtonPreset(preset)
+        }
     }
 
     override fun onResume() {

@@ -82,7 +82,14 @@ class VoiceMessageRecorderView @JvmOverloads constructor(
                         // onSendVoiceMessage, onDeleteVoiceMessage or onRecordingLimitReached will be triggered instead
                     }
                     DraggingState.Cancel -> callback.onVoiceRecordingCancelled()
-                    else -> callback.onVoiceRecordingEnded()
+                    else -> {
+                        // Route to agent or room based on which mic button was used
+                        if (voiceMessageViews.isAgentRecording()) {
+                            callback.onSendVoiceToAgent()
+                        } else {
+                            callback.onSendVoiceMessage()
+                        }
+                    }
                 }
             }
 
@@ -155,6 +162,10 @@ class VoiceMessageRecorderView @JvmOverloads constructor(
 
     fun setVoiceAgentEnabled(enabled: Boolean) {
         voiceMessageViews.isVoiceAgentEnabled = enabled
+    }
+
+    fun setVoiceButtonPreset(preset: String) {
+        voiceMessageViews.voiceButtonPreset = preset
     }
 
     private fun reset() {

@@ -44,6 +44,24 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
+        android:id="@+id/voiceMessageMicAgentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="32dp"
+        android:minHeight="32dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/palette_vermilion"
+        android:contentDescription="Start voice recording for AI agent"
+        android:src="@drawable/ic_microphone"
+        android:visibility="gone"
+        app:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
+
+    <ImageButton
         android:id="@+id/voiceMessageSendButton"
         android:layout_width="56dp"
         android:layout_height="@dimen/composer_min_height"
