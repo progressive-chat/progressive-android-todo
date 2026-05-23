@@ -183,7 +183,7 @@ class RoomSummaryItemFactory @Inject constructor(
             .hasUnreadMessage(roomSummary.hasUnreadMessages)
             .hasDraft(roomSummary.userDrafts.isNotEmpty())
             .useSingleLineForLastEvent(singleLineLastEvent)
-            .isTodoRoom(isTodoRoom(roomSummary))
+            .todoRoom(isTodoRoom(roomSummary))
             .itemLongClickListener { _ -> onLongClick?.invoke(roomSummary) ?: false }
             .itemClickListener { onClick?.invoke(roomSummary) }
 
