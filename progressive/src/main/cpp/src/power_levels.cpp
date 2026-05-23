@@ -224,14 +224,4 @@ std::string permissionsToJson(const UserPermissions& perms) {
 }
 
 
-// ---- Permission helpers (convenience) ----
-bool canSendStateEvent(const PowerLevels& pl, const std::string& userId, const std::string& eventType) {
-    return getUserPowerLevel(pl, userId) >= getEventPowerLevel(pl, eventType);
-}
-bool canSendMessage(const PowerLevels& pl, const std::string& userId) {
-    return getUserPowerLevel(pl, userId) >= pl.eventsDefault;
-}
-bool canChangePowerLevels(const PowerLevels& pl, const std::string& userId) {
-    return getUserPowerLevel(pl, userId) >= pl.stateDefault;
-}
 } // namespace progressive
