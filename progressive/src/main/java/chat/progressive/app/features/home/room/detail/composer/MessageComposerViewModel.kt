@@ -1,7 +1,7 @@
 /*
- * Copyright 2021-2024 New Vector Ltd.
+ * Copyright 2021-2024 Progressive Chat
  *
- * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive-Commercial
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Progressive
  * Please see LICENSE files in the repository root for full details.
  */
 
@@ -16,23 +16,24 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
-import chat.progressive.app.core.extensions.getProgressiveLastMessageContent
+import chat.progressive.app.core.extensions.getVectorLastMessageContent
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsComposer
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import im.vector.app.features.analytics.plan.JoinedRoom
+import chat.progressive.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.attachments.toContentAttachmentData
+import chat.progressive.app.features.command.Command
 import chat.progressive.app.features.command.CommandParser
+import okhttp3.MediaType
 import chat.progressive.app.features.command.ParsedCommand
 import chat.progressive.app.features.home.room.detail.ChatEffect
 import chat.progressive.app.features.home.room.detail.composer.rainbow.RainbowGenerator
 import chat.progressive.app.features.home.room.detail.composer.voice.VoiceMessageRecorderView
 import chat.progressive.app.features.home.room.detail.toMessageType
-import chat.progressive.app.features.jumptodate.ProgressiveNative
 import chat.progressive.app.features.session.coroutineScope
-import chat.progressive.app.features.settings.ProgressivePreferences
+import chat.progressive.app.features.settings.ProgressiveBasePreferences
 import chat.progressive.app.features.voice.VoiceFailure
 import chat.progressive.app.features.voicebroadcast.VoiceBroadcastConstants
 import chat.progressive.app.features.voicebroadcast.VoiceBroadcastHelper
@@ -44,13 +45,13 @@ import chat.progressive.app.features.voicebroadcast.voiceBroadcastId
 import chat.progressive.lib.core.utils.timer.Clock
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
-import okhttp3.OkHttpClient
-import org.json.JSONObject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import org.json.JSONObject
 import org.matrix.android.sdk.api.query.QueryStringValue
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.content.ContentAttachmentData
@@ -84,7 +85,7 @@ class MessageComposerViewModel @AssistedInject constructor(
         @Assisted initialState: MessageComposerViewState,
         private val session: Session,
         private val stringProvider: StringProvider,
-        private val vectorPreferences: ProgressivePreferences,
+        private val progressivePreferences: ProgressiveBasePreferences,
         private val commandParser: CommandParser,
         private val rainbowGenerator: RainbowGenerator,
         private val audioMessageHelper: AudioMessageHelper,
@@ -169,7 +170,7 @@ class MessageComposerViewModel @AssistedInject constructor(
 
     private fun handleEnterEditMode(room: Room, action: MessageComposerAction.EnterEditMode) {
         room.getTimelineEvent(action.eventId)?.let { timelineEvent ->
-            val formatted = vectorPreferences.isRichTextEditorEnabled()
+            val formatted = progressivePreferences.isRichTextEditorEnabled()
             val editableContent = timelineEvent.getTextEditableContent(formatted)
             setState { copy(sendMode = SendMode.Edit(timelineEvent, editableContent)) }
         }
@@ -326,7 +327,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandNotImplemented)
                         }
                         is ParsedCommand.SetMarkdown -> {
-                            vectorPreferences.setMarkdownEnabled(parsedCommand.enable)
+                            progressivePreferences.setMarkdownEnabled(parsedCommand.enable)
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                             popDraft(room)
                         }
@@ -549,11 +550,9 @@ class MessageComposerViewModel @AssistedInject constructor(
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                             popDraft(room)
                         }
-                        is ParsedCommand.JumpToDate -> {
-                            handleJumpToDate(parsedCommand)
-                            _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                            popDraft(room)
-                        }
+                             _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                             popDraft(room)
+                         }
                     }
                 }
                 is SendMode.Edit -> {
@@ -579,7 +578,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                             room.relationService().editReply(state.sendMode.timelineEvent, it, action.text, action.formattedText)
                         }
                     } else {
-                        val messageContent = state.sendMode.timelineEvent.getProgressiveLastMessageContent()
+                        val messageContent = state.sendMode.timelineEvent.getVectorLastMessageContent()
                         val existingBody: String
                         val needsEdit = if (messageContent is MessageContentWithFormattedBody) {
                             existingBody = messageContent.formattedBody ?: ""
@@ -689,7 +688,7 @@ class MessageComposerViewModel @AssistedInject constructor(
     }
 
     private fun handleUserIsTyping(room: Room, action: MessageComposerAction.UserIsTyping) {
-        if (vectorPreferences.sendTypingNotifs()) {
+        if (progressivePreferences.sendTypingNotifs()) {
             if (action.isTyping) {
                 room.typingService().userIsTyping()
             } else {
@@ -1047,43 +1046,34 @@ class MessageComposerViewModel @AssistedInject constructor(
         }
     }
 
-    private fun handleJumpToDate(command: ParsedCommand.JumpToDate) {
         val room = this.room ?: return
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _viewEvents.post(MessageComposerViewEvents.SlashCommandLoading)
 
-                ProgressiveNative.ensureLoaded()
 
                 val sessionParams = session.sessionParams
                 val serverUrl = sessionParams.homeServerUrlBase
-                        ?: sessionParams.homeServerConnectionConfig?.homeServerUri?.toString()
-                    ?: run {
-                        _viewEvents.post(MessageComposerViewEvents.ShowMessage(
-                            stringProvider.getString(CommonStrings.error_unknown)
-                        ))
-                        return@launch
-                    }
 
                 val accessToken = sessionParams.credentials.accessToken
 
                 // Native C++ validation + URL construction, with Kotlin fallback
                 val resultJson = try {
-                    val raw = ProgressiveNative.nativeValidateAndBuild(
                         room.roomId,
                         command.dateString,
                         serverUrl,
-                        accessToken
+                        accessToken,
+                        isEnabled
                     )
                     JSONObject(raw)
                 } catch (e: UnsatisfiedLinkError) {
                     Timber.w(e, "progressive_native not loaded, using Kotlin fallback")
-                    ProgressiveNative.validateAndBuildFallback(
                         room.roomId,
                         command.dateString,
                         serverUrl,
-                        accessToken
+                        accessToken,
+                        isEnabled
                     )
                 }
 
@@ -1109,10 +1099,8 @@ class MessageComposerViewModel @AssistedInject constructor(
 
                 // Native C++ response parsing, with Kotlin fallback
                 val parsedResult = try {
-                    val raw = ProgressiveNative.nativeParseResponse(responseBody, response.code)
                     JSONObject(raw)
                 } catch (e: UnsatisfiedLinkError) {
-                    ProgressiveNative.parseResponseFallback(responseBody, response.code)
                 }
 
                 if (parsedResult.has("eventId")) {
@@ -1123,9 +1111,8 @@ class MessageComposerViewModel @AssistedInject constructor(
                     _viewEvents.post(MessageComposerViewEvents.ShowMessage(error))
                 }
             } catch (e: Exception) {
-                Timber.e(e, "JumpToDate failed")
                 _viewEvents.post(MessageComposerViewEvents.ShowMessage(
-                    stringProvider.getString(CommonStrings.error_unknown)
+                    stringProvider.getString(CommonStrings.unknown_error)
                 ))
             }
         }

@@ -11,8 +11,8 @@ import com.posthog.PostHogInterface
 import chat.progressive.app.core.di.NamedGlobalScope
 import chat.progressive.app.features.analytics.AnalyticsConfig
 import chat.progressive.app.features.analytics.ProgressiveAnalytics
-import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsEvent
-import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsScreen
+import im.vector.app.features.analytics.itf.VectorAnalyticsEvent
+import im.vector.app.features.analytics.itf.VectorAnalyticsScreen
 import chat.progressive.app.features.analytics.log.analyticsTag
 import im.vector.app.features.analytics.plan.SuperProperties
 import im.vector.app.features.analytics.plan.UserProperties
@@ -160,16 +160,16 @@ class DefaultProgressiveAnalytics @Inject constructor(
         }
     }
 
-    override fun capture(event: ProgressiveAnalyticsEvent) {
+    override fun capture(event: VectorAnalyticsEvent) {
         Timber.tag(analyticsTag.value).d("capture($event)")
         posthog?.takeIf { userConsent == true }?.capture(
                         event.getName(), analyticsId, event.getProperties()?.toPostHogProperties().orEmpty().withSuperProperties()
                 )
     }
 
-    override fun screen(screen: ProgressiveAnalyticsScreen) {
+    override fun screen(screen: VectorAnalyticsScreen) {
         Timber.tag(analyticsTag.value).d("screen($screen)")
-        posthog?.takeIf { userConsent == true }?.screen(screen.getName(), screen.getProperties()?.toPostHogProperties().orEmpty().withSuperProperties())
+        posthog?.takeIf { userConsent == true }?.screen(screen.getName())
     }
 
     override fun updateUserProperties(userProperties: UserProperties) {
