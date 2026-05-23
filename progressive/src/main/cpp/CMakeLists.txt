@@ -121,9 +121,7 @@ add_library(
     src/server_acronym_utils.cpp
     src/user_status_message_utils.cpp
     src/room_topic_utils.cpp
-    src/room_encryption_check.cpp
     src/sync_state_utils.cpp
-    src/matrix_id_utils.cpp
     src/message_link_utils.cpp
     src/custom_emoji_utils.cpp
     src/event_sender_utils.cpp
