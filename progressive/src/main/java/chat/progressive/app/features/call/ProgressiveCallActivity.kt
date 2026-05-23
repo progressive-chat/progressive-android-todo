@@ -109,7 +109,7 @@ class ProgressiveCallActivity :
 
     private val dialPadCallback = object : DialPadFragment.Callback {
         override fun onDigitAppended(digit: String) {
-            callViewModel.handle(VectorCallViewActions.SendDtmfDigit(digit))
+            callViewModel.handle(ProgressiveCallViewActions.SendDtmfDigit(digit))
         }
     }
 
@@ -180,7 +180,7 @@ class ProgressiveCallActivity :
         intent.takeIf { it.hasExtra(Mavericks.KEY_ARG) }
                 ?.let { intent.getParcelableExtraCompat<CallArgs>(Mavericks.KEY_ARG) }
                 ?.let {
-                    callViewModel.handle(VectorCallViewActions.SwitchCall(it))
+                    callViewModel.handle(ProgressiveCallViewActions.SwitchCall(it))
                 }
         this.intent = intent
     }
@@ -366,7 +366,7 @@ class ProgressiveCallActivity :
                         if (state.isRemoteOnHold) {
                             views.callActionText.setText(CommonStrings.call_resume_action)
                             views.callActionText.isVisible = true
-                            views.callActionText.setOnClickListener { callViewModel.handle(VectorCallViewActions.ToggleHoldResume) }
+                            views.callActionText.setOnClickListener { callViewModel.handle(ProgressiveCallViewActions.ToggleHoldResume) }
                             toolbar?.setSubtitle(CommonStrings.call_held_by_you)
                         } else {
                             views.callActionText.isInvisible = true
@@ -382,7 +382,7 @@ class ProgressiveCallActivity :
                         }
                         views.callActionText.text = getString(CommonStrings.call_transfer_transfer_to_title, transfereeName)
                         views.callActionText.isVisible = true
-                        views.callActionText.setOnClickListener { callViewModel.handle(VectorCallViewActions.TransferCall) }
+                        views.callActionText.setOnClickListener { callViewModel.handle(ProgressiveCallViewActions.TransferCall) }
                         configureCallInfo(state)
                     } else {
                         configureCallInfo(state)
@@ -541,11 +541,11 @@ class ProgressiveCallActivity :
                         isIncomingCall = !otherCall.mxCall.isOutgoing,
                         isVideoCall = otherCall.mxCall.isVideoCall
                 )
-                callViewModel.handle(VectorCallViewActions.SwitchCall(callArgs))
+                callViewModel.handle(ProgressiveCallViewActions.SwitchCall(callArgs))
             }
         }
         views.pipRendererWrapper.setOnClickListener {
-            callViewModel.handle(VectorCallViewActions.ToggleCamera)
+            callViewModel.handle(ProgressiveCallViewActions.ToggleCamera)
         }
         pipDraggrableView = views.pipRendererWrapper.setupDraggable()
                 .setStickyMode(DraggableView.Mode.STICKY_XY)
@@ -617,11 +617,11 @@ class ProgressiveCallActivity :
     private val callTransferActivityResultLauncher = registerStartForActivityResult { activityResult ->
         when (activityResult.resultCode) {
             Activity.RESULT_CANCELED -> {
-                callViewModel.handle(VectorCallViewActions.CallTransferSelectionCancelled)
+                callViewModel.handle(ProgressiveCallViewActions.CallTransferSelectionCancelled)
             }
             Activity.RESULT_OK -> {
                 CallTransferActivity.getCallTransferResult(activityResult.data)
-                        ?.let { callViewModel.handle(VectorCallViewActions.CallTransferSelectionResult(it)) }
+                        ?.let { callViewModel.handle(ProgressiveCallViewActions.CallTransferSelectionResult(it)) }
             }
         }
     }
@@ -633,7 +633,7 @@ class ProgressiveCallActivity :
                 .setTitle(CommonStrings.call_failed_no_connection)
                 .setMessage(CommonStrings.call_failed_no_connection_description)
                 .setNegativeButton(CommonStrings.ok) { _, _ ->
-                    callViewModel.handle(VectorCallViewActions.EndCall)
+                    callViewModel.handle(ProgressiveCallViewActions.EndCall)
                 }
                 .show()
     }
@@ -643,23 +643,23 @@ class ProgressiveCallActivity :
     }
 
     override fun didAcceptIncomingCall() {
-        callViewModel.handle(VectorCallViewActions.AcceptCall)
+        callViewModel.handle(ProgressiveCallViewActions.AcceptCall)
     }
 
     override fun didDeclineIncomingCall() {
-        callViewModel.handle(VectorCallViewActions.DeclineCall)
+        callViewModel.handle(ProgressiveCallViewActions.DeclineCall)
     }
 
     override fun didEndCall() {
-        callViewModel.handle(VectorCallViewActions.EndCall)
+        callViewModel.handle(ProgressiveCallViewActions.EndCall)
     }
 
     override fun didTapToggleMute() {
-        callViewModel.handle(VectorCallViewActions.ToggleMute)
+        callViewModel.handle(ProgressiveCallViewActions.ToggleMute)
     }
 
     override fun didTapToggleVideo() {
-        callViewModel.handle(VectorCallViewActions.ToggleVideo)
+        callViewModel.handle(ProgressiveCallViewActions.ToggleVideo)
     }
 
     private fun returnToChat() {
@@ -730,7 +730,7 @@ class ProgressiveCallActivity :
                 Timber.i("User revoked the screen capturing permission")
             }
         })
-        callViewModel.handle(VectorCallViewActions.StartScreenSharing(videoCapturer))
+        callViewModel.handle(ProgressiveCallViewActions.StartScreenSharing(videoCapturer))
     }
 
     private fun startScreenSharingService(activityResult: ActivityResult) {

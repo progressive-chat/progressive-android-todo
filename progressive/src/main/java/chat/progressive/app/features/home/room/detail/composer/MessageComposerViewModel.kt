@@ -41,8 +41,8 @@ import chat.progressive.app.features.voicebroadcast.model.VoiceBroadcastState
 import chat.progressive.app.features.voicebroadcast.model.asVoiceBroadcastEvent
 import chat.progressive.app.features.voicebroadcast.usecase.GetVoiceBroadcastStateEventLiveUseCase
 import chat.progressive.app.features.voicebroadcast.voiceBroadcastId
-import im.vector.lib.core.utils.timer.Clock
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.lib.core.utils.timer.Clock
+import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import org.json.JSONObject

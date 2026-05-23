@@ -40,7 +40,7 @@ class CallSoundDeviceChooserBottomSheet : ProgressiveBottomSheet<BottomSheetGene
                 }
             }
         }
-        callViewModel.handle(VectorCallViewActions.SwitchSoundDevice)
+        callViewModel.handle(ProgressiveCallViewActions.SwitchSoundDevice)
     }
 
     private fun render(available: Set<CallAudioManager.Device>, current: CallAudioManager.Device) {
@@ -55,7 +55,7 @@ class CallSoundDeviceChooserBottomSheet : ProgressiveBottomSheet<BottomSheetGene
                 iconRes(device.drawableRes)
                 selected(current == device)
                 listener {
-                    callViewModel.handle(VectorCallViewActions.ChangeAudioDevice(device))
+                    callViewModel.handle(ProgressiveCallViewActions.ChangeAudioDevice(device))
                     dismiss()
                 }
             }

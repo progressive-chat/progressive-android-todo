@@ -40,32 +40,32 @@ class CallControlsBottomSheet : ProgressiveBottomSheet<BottomSheetCallControlsBi
         }
 
         views.callControlsSwitchCamera.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.ToggleCamera)
+            callViewModel.handle(ProgressiveCallViewActions.ToggleCamera)
             dismiss()
         }
 
         views.callControlsToggleSDHD.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.ToggleHDSD)
+            callViewModel.handle(ProgressiveCallViewActions.ToggleHDSD)
             dismiss()
         }
 
         views.callControlsToggleHoldResume.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.ToggleHoldResume)
+            callViewModel.handle(ProgressiveCallViewActions.ToggleHoldResume)
             dismiss()
         }
 
         views.callControlsOpenDialPad.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.OpenDialPad)
+            callViewModel.handle(ProgressiveCallViewActions.OpenDialPad)
         }
 
         views.callControlsTransfer.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.InitiateCallTransfer)
+            callViewModel.handle(ProgressiveCallViewActions.InitiateCallTransfer)
             dismiss()
         }
 
         views.callControlsShareScreen.isVisible = vectorFeatures.isScreenSharingEnabled()
         views.callControlsShareScreen.views.bottomSheetActionClickableZone.debouncedClicks {
-            callViewModel.handle(VectorCallViewActions.ToggleScreenSharing)
+            callViewModel.handle(ProgressiveCallViewActions.ToggleScreenSharing)
             dismiss()
         }
     }

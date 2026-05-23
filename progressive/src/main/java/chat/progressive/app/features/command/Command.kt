@@ -8,7 +8,7 @@
 package chat.progressive.app.features.command
 
 import androidx.annotation.StringRes
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.lib.strings.CommonStrings
 
 /**
  * Defines the command line operations.

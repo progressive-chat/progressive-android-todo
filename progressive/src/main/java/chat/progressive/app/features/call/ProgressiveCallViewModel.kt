@@ -44,7 +44,7 @@ class ProgressiveCallViewModel @AssistedInject constructor(
         val proximityManager: CallProximityManager,
         private val dialPadLookup: DialPadLookup,
         private val directRoomHelper: DirectRoomHelper,
-) : ProgressiveViewModel<ProgressiveCallViewState, VectorCallViewActions, ProgressiveCallViewEvents>(initialState) {
+) : ProgressiveViewModel<ProgressiveCallViewState, ProgressiveCallViewActions, ProgressiveCallViewEvents>(initialState) {
 
     private var call: WebRtcCall? = null
 
@@ -253,32 +253,32 @@ class ProgressiveCallViewModel @AssistedInject constructor(
         super.onCleared()
     }
 
-    override fun handle(action: VectorCallViewActions) = withState { state ->
+    override fun handle(action: ProgressiveCallViewActions) = withState { state ->
         when (action) {
-            VectorCallViewActions.EndCall -> {
+            ProgressiveCallViewActions.EndCall -> {
                 call?.endCall()
                 _viewEvents.post(ProgressiveCallViewEvents.StopScreenSharingService)
             }
-            VectorCallViewActions.AcceptCall -> {
+            ProgressiveCallViewActions.AcceptCall -> {
                 setState {
                     copy(callState = Loading())
                 }
                 call?.acceptIncomingCall()
             }
-            VectorCallViewActions.DeclineCall -> {
+            ProgressiveCallViewActions.DeclineCall -> {
                 setState {
                     copy(callState = Loading())
                 }
                 call?.endCall()
             }
-            VectorCallViewActions.ToggleMute -> {
+            ProgressiveCallViewActions.ToggleMute -> {
                 val muted = state.isAudioMuted
                 call?.muteCall(!muted)
                 setState {
                     copy(isAudioMuted = !muted)
                 }
             }
-            VectorCallViewActions.ToggleVideo -> {
+            ProgressiveCallViewActions.ToggleVideo -> {
                 if (state.isVideoCall) {
                     val videoEnabled = state.isVideoEnabled
                     call?.enableVideo(!videoEnabled)
@@ -288,19 +288,19 @@ class ProgressiveCallViewModel @AssistedInject constructor(
                 }
                 Unit
             }
-            VectorCallViewActions.ToggleHoldResume -> {
+            ProgressiveCallViewActions.ToggleHoldResume -> {
                 val isRemoteOnHold = state.isRemoteOnHold
                 call?.updateRemoteOnHold(!isRemoteOnHold)
             }
-            is VectorCallViewActions.ChangeAudioDevice -> {
+            is ProgressiveCallViewActions.ChangeAudioDevice -> {
                 callManager.audioManager.setAudioDevice(action.device)
             }
-            VectorCallViewActions.SwitchSoundDevice -> {
+            ProgressiveCallViewActions.SwitchSoundDevice -> {
                 _viewEvents.post(
                         ProgressiveCallViewEvents.ShowSoundDeviceChooser(state.availableDevices, state.device)
                 )
             }
-            VectorCallViewActions.HeadSetButtonPressed -> {
+            ProgressiveCallViewActions.HeadSetButtonPressed -> {
                 if (state.callState.invoke() is CallState.LocalRinging) {
                     // accept call
                     call?.acceptIncomingCall()
@@ -311,42 +311,42 @@ class ProgressiveCallViewModel @AssistedInject constructor(
                 }
                 Unit
             }
-            VectorCallViewActions.ToggleCamera -> {
+            ProgressiveCallViewActions.ToggleCamera -> {
                 call?.switchCamera()
             }
-            VectorCallViewActions.ToggleHDSD -> {
+            ProgressiveCallViewActions.ToggleHDSD -> {
                 if (!state.isVideoCall) return@withState
                 call?.setCaptureFormat(if (state.isHD) CaptureFormat.SD else CaptureFormat.HD)
             }
-            VectorCallViewActions.OpenDialPad -> {
+            ProgressiveCallViewActions.OpenDialPad -> {
                 _viewEvents.post(ProgressiveCallViewEvents.ShowDialPad)
             }
-            is VectorCallViewActions.SendDtmfDigit -> {
+            is ProgressiveCallViewActions.SendDtmfDigit -> {
                 call?.sendDtmfDigit(action.digit)
             }
-            VectorCallViewActions.InitiateCallTransfer -> {
+            ProgressiveCallViewActions.InitiateCallTransfer -> {
                 call?.updateRemoteOnHold(true)
                 _viewEvents.post(
                         ProgressiveCallViewEvents.ShowCallTransferScreen
                 )
             }
-            VectorCallViewActions.CallTransferSelectionCancelled -> {
+            ProgressiveCallViewActions.CallTransferSelectionCancelled -> {
                 call?.updateRemoteOnHold(false)
             }
-            is VectorCallViewActions.CallTransferSelectionResult -> {
+            is ProgressiveCallViewActions.CallTransferSelectionResult -> {
                 handleCallTransferSelectionResult(action.callTransferResult)
             }
-            VectorCallViewActions.TransferCall -> {
+            ProgressiveCallViewActions.TransferCall -> {
                 handleCallTransfer()
             }
-            is VectorCallViewActions.SwitchCall -> {
+            is ProgressiveCallViewActions.SwitchCall -> {
                 setState { ProgressiveCallViewState(action.callArgs) }
                 setupCallWithCurrentState()
             }
-            is VectorCallViewActions.ToggleScreenSharing -> {
+            is ProgressiveCallViewActions.ToggleScreenSharing -> {
                 handleToggleScreenSharing(state.isSharingScreen)
             }
-            is VectorCallViewActions.StartScreenSharing -> {
+            is ProgressiveCallViewActions.StartScreenSharing -> {
                 call?.startSharingScreen(action.videoCapturer)
                 proximityManager.stop()
                 setState {

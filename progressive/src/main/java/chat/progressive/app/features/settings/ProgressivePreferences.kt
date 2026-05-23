@@ -21,8 +21,8 @@ import chat.progressive.app.features.ProgressiveFeatures
 import chat.progressive.app.features.home.ShortcutsHandler
 import chat.progressive.app.features.homeserver.ServerUrlsRepository
 import chat.progressive.app.features.themes.ThemeUtils
-import im.vector.lib.core.utils.timer.Clock
-import im.vector.lib.strings.CommonStrings
+import chat.progressive.lib.core.utils.timer.Clock
+import chat.progressive.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.extensions.tryOrNull
 import timber.log.Timber
 import javax.inject.Inject
