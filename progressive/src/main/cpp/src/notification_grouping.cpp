@@ -1,4 +1,5 @@
 #include "progressive/notification_grouping.hpp"
+#include <unordered_map>
 #include <sstream>
 #include <algorithm>
 #include <set>
