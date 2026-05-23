@@ -226,7 +226,7 @@ std::string permissionsToJson(const UserPermissions& perms) {
 
 // ---- Permission helpers (convenience) ----
 bool canSendStateEvent(const PowerLevels& pl, const std::string& userId, const std::string& eventType) {
-    int required = pl.events.count(eventType) ? pl.events.at(eventType) : pl.stateDefault;
+    int required = pl.stateDefault; // per-event levels not tracked — use state default
     return getUserPowerLevel(pl, userId) >= required;
 }
 bool canSendMessage(const PowerLevels& pl, const std::string& userId) {
