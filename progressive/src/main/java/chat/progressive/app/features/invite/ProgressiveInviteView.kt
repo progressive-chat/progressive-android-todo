@@ -42,7 +42,7 @@ class ProgressiveInviteView @JvmOverloads constructor(context: Context, attrs: A
     var callback: Callback? = null
 
     init {
-        inflate(context, R.layout.vector_invite_view, this)
+        inflate(context, R.layout.progressive_invite_view, this)
         views = ProgressiveInviteViewBinding.bind(this)
         views.inviteAcceptView.commonClicked = { callback?.onAcceptInvite() }
         views.inviteRejectView.commonClicked = { callback?.onRejectInvite() }
