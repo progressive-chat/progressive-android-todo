@@ -481,6 +481,13 @@
                 <action android:name="org.unifiedpush.android.distributor.REGISTER" />
             </intent-filter>
         </receiver>
+
+        <!-- Lemmy -->
+        <activity
+            android:name="chat.progressive.app.features.lemmy.LemmyAuthActivity"
+            android:exported="false"
+            android:label="Lemmy" />
+
     </application>
 
 </manifest>
