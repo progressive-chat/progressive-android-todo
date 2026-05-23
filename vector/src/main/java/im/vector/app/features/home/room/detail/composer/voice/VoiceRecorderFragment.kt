@@ -73,6 +73,10 @@ class VoiceRecorderFragment : VectorBaseFragment<FragmentVoiceRecorderBinding>()
                 views.voiceMessageRecorderView.isVisible = true
             }
         }
+
+        messageComposerViewModel.onEach(MessageComposerViewState::isVoiceAgentEnabled) { enabled ->
+            views.voiceMessageRecorderView.setVoiceAgentEnabled(enabled)
+        }
     }
 
     override fun onResume() {
@@ -142,6 +146,13 @@ class VoiceRecorderFragment : VectorBaseFragment<FragmentVoiceRecorderBinding>()
             override fun onSendVoiceMessage() {
                 messageComposerViewModel.handle(
                         MessageComposerAction.EndRecordingVoiceMessage(isCancelled = false, rootThreadEventId = getRootThreadEventId())
+                )
+                updateRecordingUiState(VoiceMessageRecorderView.RecordingUiState.Idle)
+            }
+
+            override fun onSendVoiceToAgent() {
+                messageComposerViewModel.handle(
+                        MessageComposerAction.SendVoiceToAgent(rootThreadEventId = getRootThreadEventId())
                 )
                 updateRecordingUiState(VoiceMessageRecorderView.RecordingUiState.Idle)
             }

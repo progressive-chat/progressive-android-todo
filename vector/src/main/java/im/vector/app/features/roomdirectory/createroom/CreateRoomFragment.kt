@@ -197,6 +197,10 @@ class CreateRoomFragment :
         viewModel.handle(CreateRoomAction.DisableFederation(disableFederation))
     }
 
+    override fun onIsTodoRoomChange(isTodoRoom: Boolean) {
+        viewModel.handle(CreateRoomAction.SetIsTodoRoom(isTodoRoom))
+    }
+
     override fun submit() {
         viewModel.handle(CreateRoomAction.Create)
     }

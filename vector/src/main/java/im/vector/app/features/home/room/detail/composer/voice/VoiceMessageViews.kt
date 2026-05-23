@@ -36,6 +36,7 @@ class VoiceMessageViews(
         private val views: ViewVoiceMessageRecorderBinding,
         private val dimensionConverter: DimensionConverter,
 ) {
+    var isVoiceAgentEnabled: Boolean = false
 
     private val distanceToLock = dimensionConverter.dpToPx(48).toFloat()
     private val distanceToCancel = dimensionConverter.dpToPx(120).toFloat()
@@ -45,6 +46,11 @@ class VoiceMessageViews(
         views.voiceMessageSendButton.setOnClickListener {
             views.voiceMessageSendButton.isVisible = false
             actions.onSendVoiceMessage()
+        }
+
+        views.voiceMessageSendToAgentButton.setOnClickListener {
+            views.voiceMessageSendToAgentButton.isVisible = false
+            actions.onSendVoiceToAgent()
         }
 
         views.voiceMessageDeletePlayback.setOnClickListener {
@@ -275,6 +281,7 @@ class VoiceMessageViews(
         views.voiceMessageBackgroundView.isVisible = true
         views.voiceMessageMicButton.isVisible = false
         views.voiceMessageSendButton.isVisible = true
+        views.voiceMessageSendToAgentButton.isVisible = isVoiceAgentEnabled
         views.voiceMessagePlaybackLayout.isVisible = true
         views.voiceMessagePlaybackTimerIndicator.isVisible = false
         views.voicePlaybackControlButton.isVisible = true
@@ -288,6 +295,7 @@ class VoiceMessageViews(
         views.voiceMessagePlaybackTimerIndicator.isVisible = true
         views.voicePlaybackControlButton.isVisible = false
         views.voiceMessageSendButton.isVisible = true
+        views.voiceMessageSendToAgentButton.isVisible = isVoiceAgentEnabled
         views.voicePlaybackWaveform.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
         renderToast(resources.getString(CommonStrings.voice_message_tap_to_stop_toast))
     }
@@ -363,6 +371,7 @@ class VoiceMessageViews(
         fun onMicButtonReleased()
         fun onMicButtonDrag(nextDragStateCreator: (DraggingState) -> DraggingState)
         fun onSendVoiceMessage()
+        fun onSendVoiceToAgent()
         fun onDeleteVoiceMessage()
         fun onWaveformClicked()
         fun onVoicePlaybackButtonClicked()

@@ -338,6 +338,7 @@ class TimelineFragment :
         setupJumpToBottomView()
         setupRemoveJitsiWidgetView()
         setupLiveLocationIndicator()
+        setupTodoListPanel()
         setupBackPressHandling()
 
         views.includeRoomToolbar.roomToolbarContentView.debouncedClicks {
@@ -678,6 +679,11 @@ class TimelineFragment :
         views.liveLocationStatusIndicator.debouncedClicks {
             navigateToLiveLocationMap()
         }
+    }
+
+    private fun setupTodoListPanel() {
+        val inflater = LayoutInflater.from(requireContext())
+        inflater.inflate(R.layout.view_todo_list_panel, views.todoListPanelContainer, true)
     }
 
     private fun joinJitsiRoom(jitsiWidget: Widget, enableVideo: Boolean) {
@@ -1214,6 +1220,7 @@ class TimelineFragment :
         val summary = mainState.asyncRoomSummary()
         renderToolbar(summary)
         views.removeJitsiWidgetView.render(mainState)
+        views.todoListPanelContainer.isVisible = mainState.isTodoRoom
         if (mainState.hasFailedSending) {
             lazyLoadedViews.failedMessagesWarningView(inflateIfNeeded = true, createFailedMessagesWarningCallback())?.isVisible = true
         } else {

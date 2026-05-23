@@ -31,7 +31,9 @@ data class CreateRoomViewState(
         val supportsRestricted: Boolean = false,
         val aliasLocalPart: String? = null,
         val isSubSpace: Boolean = false,
-        val openAfterCreate: Boolean = true
+        val openAfterCreate: Boolean = true,
+        val isTodoRoom: Boolean = false,
+        val todoButtonPlacement: String = "advanced"
 ) : MavericksState {
 
     constructor(args: CreateRoomArgs) : this(

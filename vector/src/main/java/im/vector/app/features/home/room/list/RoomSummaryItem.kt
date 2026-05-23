@@ -97,6 +97,9 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>(R.layo
     @EpoxyAttribute
     var useSingleLineForLastEvent: Boolean = false
 
+    @EpoxyAttribute
+    var isTodoRoom: Boolean = false
+
     override fun bind(holder: Holder) {
         super.bind(holder)
 
@@ -116,6 +119,7 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>(R.layo
         holder.roomAvatarFailSendingImageView.isVisible = hasFailedSending
         renderSelection(holder, showSelected)
         holder.roomAvatarPresenceImageView.render(showPresence, userPresence)
+        holder.roomTodoBadge.isVisible = isTodoRoom
 
         if (useSingleLineForLastEvent) {
             holder.subtitleView.setLines(1)
@@ -173,6 +177,7 @@ abstract class RoomSummaryItem : VectorEpoxyModel<RoomSummaryItem.Holder>(R.layo
         val roomAvatarPublicDecorationImageView by bind<ImageView>(R.id.roomAvatarPublicDecorationImageView)
         val roomAvatarFailSendingImageView by bind<ImageView>(R.id.roomAvatarFailSendingImageView)
         val roomAvatarPresenceImageView by bind<PresenceStateImageView>(R.id.roomAvatarPresenceImageView)
+        val roomTodoBadge by bind<TextView>(R.id.roomTodoBadge)
         val rootView by bind<ConstraintLayout>(R.id.itemRoomLayout)
     }
 }

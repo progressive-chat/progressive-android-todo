@@ -105,6 +105,7 @@ class MessageComposerViewModel @AssistedInject constructor(
             loadDraftIfAny(room)
             observePowerLevelAndEncryption(room)
             observeVoiceBroadcast(room)
+            observeTodoVoiceAgent(room)
             subscribeToStateInternal()
         } else {
             onRoomError()
@@ -135,6 +136,7 @@ class MessageComposerViewModel @AssistedInject constructor(
             is MessageComposerAction.SlashCommandConfirmed -> handleSlashCommandConfirmed(room, action)
             is MessageComposerAction.InsertUserDisplayName -> handleInsertUserDisplayName(action)
             is MessageComposerAction.SetFullScreen -> handleSetFullScreen(action)
+            is MessageComposerAction.SendVoiceToAgent -> handleSendVoiceToAgent(room, action.rootThreadEventId)
         }
     }
 
@@ -216,6 +218,16 @@ class MessageComposerViewModel @AssistedInject constructor(
                 .map { it.getOrNull()?.content?.voiceBroadcastState }
                 .setOnEach {
                     copy(voiceBroadcastState = it)
+                }
+    }
+
+    private fun observeTodoVoiceAgent(room: Room) {
+        if (!vectorPreferences.isTodoRoomsEnabled() || !vectorPreferences.isTodoVoiceAgentEnabled()) return
+        room.flow().liveRoomSummary()
+                .unwrap()
+                .setOnEach { summary ->
+                    val keyword = vectorPreferences.getTodoKeyword().lowercase()
+                    copy(isVoiceAgentEnabled = summary.topic.lowercase().contains(keyword))
                 }
     }
 
@@ -987,6 +999,26 @@ class MessageComposerViewModel @AssistedInject constructor(
                 }
             }
         }
+        handleEnterRegularMode(MessageComposerAction.EnterRegularMode(fromSharing = false))
+    }
+
+    private fun handleSendVoiceToAgent(room: Room, rootThreadEventId: String? = null) {
+        val command = vectorPreferences.getTodoVoiceAgentCommand()
+        audioMessageHelper.stopPlayback()
+        audioMessageHelper.stopRecording()?.let { audioType ->
+            if (audioType.duration > 1000) {
+                room.sendService().sendMedia(
+                        attachment = audioType.toContentAttachmentData(isVoiceMessage = true),
+                        compressBeforeSending = false,
+                        roomIds = emptySet(),
+                        rootThreadEventId = rootThreadEventId
+                )
+                // Send the command text after the voice message
+                room.sendService().sendTextMessage(command)
+            } else {
+                audioMessageHelper.deleteRecording()
+            }
+        } ?: audioMessageHelper.deleteRecording()
         handleEnterRegularMode(MessageComposerAction.EnterRegularMode(fromSharing = false))
     }
 

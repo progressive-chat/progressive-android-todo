@@ -188,12 +188,30 @@ class CreateRoomController @Inject constructor(
                 switchChecked(viewState.disableFederation)
                 listener { value -> host.listener?.setDisableFederation(value) }
             }
+            if (viewState.todoButtonPlacement == "advanced") {
+                buildTodoRoomCheckBox(viewState, enableFormElement)
+            }
+        }
+        if (viewState.todoButtonPlacement == "beside") {
+            buildTodoRoomCheckBox(viewState, enableFormElement)
         }
         formSubmitButtonItem {
             id("submit")
             enabled(enableFormElement)
             buttonTitleId(CommonStrings.create_room_action_create)
             buttonClickListener { host.listener?.submit() }
+        }
+    }
+
+    private fun buildTodoRoomCheckBox(viewState: CreateRoomViewState, enableFormElement: Boolean) {
+        val host = this
+        formSwitchItem {
+            id("todoRoom")
+            enabled(enableFormElement)
+            title("Create as Todo List room")
+            summary("Room topic will start with the todo keyword so the client recognizes it as a todo list")
+            switchChecked(viewState.isTodoRoom)
+            listener { value -> host.listener?.onIsTodoRoomChange(value) }
         }
     }
 
@@ -207,6 +225,7 @@ class CreateRoomController @Inject constructor(
         fun setIsEncrypted(isEncrypted: Boolean)
         fun toggleShowAdvanced()
         fun setDisableFederation(disableFederation: Boolean)
+        fun onIsTodoRoomChange(isTodoRoom: Boolean)
         fun submit()
     }
 }

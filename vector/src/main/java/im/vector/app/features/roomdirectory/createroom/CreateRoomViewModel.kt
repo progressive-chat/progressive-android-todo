@@ -24,6 +24,7 @@ import im.vector.app.features.analytics.AnalyticsTracker
 import im.vector.app.features.analytics.plan.CreatedRoom
 import im.vector.app.features.raw.wellknown.getElementWellknown
 import im.vector.app.features.raw.wellknown.isE2EByDefault
+import im.vector.app.features.settings.VectorPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.matrix.android.sdk.api.MatrixPatterns.getServerName
@@ -50,7 +51,8 @@ class CreateRoomViewModel @AssistedInject constructor(
         private val session: Session,
         private val rawService: RawService,
         spaceStateHandler: SpaceStateHandler,
-        private val analyticsTracker: AnalyticsTracker
+        private val analyticsTracker: AnalyticsTracker,
+        private val vectorPreferences: VectorPreferences
 ) : VectorViewModel<CreateRoomViewState, CreateRoomAction, CreateRoomViewEvents>(initialState) {
 
     @AssistedFactory
@@ -63,6 +65,7 @@ class CreateRoomViewModel @AssistedInject constructor(
     init {
         initHomeServerName()
         initAdminE2eByDefault()
+        initTodoSettings()
 
         val parentSpaceId = initialState.parentSpaceId ?: spaceStateHandler.getSafeActiveSpaceId()
 
@@ -118,6 +121,16 @@ class CreateRoomViewModel @AssistedInject constructor(
         }
     }
 
+    private fun initTodoSettings() {
+        if (vectorPreferences.isTodoRoomsEnabled()) {
+            setState {
+                copy(
+                        todoButtonPlacement = vectorPreferences.getTodoButtonPlacement()
+                )
+            }
+        }
+    }
+
     override fun handle(action: CreateRoomAction) {
         when (action) {
             is CreateRoomAction.SetAvatar -> setAvatar(action)
@@ -130,6 +143,7 @@ class CreateRoomViewModel @AssistedInject constructor(
             CreateRoomAction.Reset -> doReset()
             CreateRoomAction.ToggleShowAdvanced -> toggleShowAdvanced()
             is CreateRoomAction.DisableFederation -> disableFederation(action)
+            is CreateRoomAction.SetIsTodoRoom -> setIsTodoRoom(action)
         }
     }
 
@@ -213,6 +227,8 @@ class CreateRoomViewModel @AssistedInject constructor(
 
     private fun setIsEncrypted(action: CreateRoomAction.SetIsEncrypted) = setState { copy(isEncrypted = action.isEncrypted) }
 
+    private fun setIsTodoRoom(action: CreateRoomAction.SetIsTodoRoom) = setState { copy(isTodoRoom = action.isTodoRoom) }
+
     private fun doCreateRoom() = withState { state ->
         if (state.asyncCreateRoomRequest is Loading || state.asyncCreateRoomRequest is Success) {
             return@withState
@@ -233,7 +249,19 @@ class CreateRoomViewModel @AssistedInject constructor(
         val createRoomParams = CreateRoomParams()
                 .apply {
                     name = state.roomName.takeIf { it.isNotBlank() }
-                    topic = state.roomTopic.takeIf { it.isNotBlank() }
+
+                    // Build topic with optional todo keyword prefix
+                    val baseTopic = state.roomTopic.takeIf { it.isNotBlank() }
+                    val todoKeyword = if (state.isTodoRoom && vectorPreferences.isTodoRoomsEnabled()) {
+                        vectorPreferences.getTodoKeyword()
+                    } else null
+                    topic = when {
+                        todoKeyword != null && baseTopic != null -> "$todoKeyword: $baseTopic"
+                        todoKeyword != null -> todoKeyword
+                        baseTopic != null -> baseTopic
+                        else -> null
+                    }
+
                     avatarUri = state.avatarUri
 
                     if (state.isSubSpace) {

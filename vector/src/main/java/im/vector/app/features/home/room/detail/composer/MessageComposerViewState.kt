@@ -63,6 +63,7 @@ data class MessageComposerViewState(
         val voiceBroadcastState: VoiceBroadcastState? = null,
         val text: CharSequence? = null,
         val isFullScreen: Boolean = false,
+        val isVoiceAgentEnabled: Boolean = false
 ) : MavericksState {
 
     val isVoiceRecording = when (voiceRecordingUiState) {

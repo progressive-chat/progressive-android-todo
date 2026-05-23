@@ -795,4 +795,49 @@
         android:summary="Restore cursor position when undoing"
         android:title="Restore cursor on undo" />
 
+    <!-- === Todo List Rooms === -->
+
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:key="SETTINGS_LABS_TODO_ROOMS_KEY"
+        android:summary="Recognize rooms with a special keyword in topic as todo lists. Todo rooms get a badge in the room list and a dedicated list-manager UI."
+        android:title="Todo List Rooms (experimental)" />
+
+    <im.vector.app.core.preference.VectorEditTextPreference
+        android:defaultValue="todolist"
+        android:dependency="SETTINGS_LABS_TODO_ROOMS_KEY"
+        android:key="SETTINGS_TODO_KEYWORD"
+        android:title="Todo keyword in topic" />
+
+    <im.vector.app.core.preference.VectorListPreference
+        android:defaultValue="advanced"
+        android:dependency="SETTINGS_LABS_TODO_ROOMS_KEY"
+        android:entries="@array/todo_button_placement_entries"
+        android:entryValues="@array/todo_button_placement_values"
+        android:key="SETTINGS_TODO_BUTTON_PLACEMENT"
+        android:summary="Where to show the todo-list checkbox when creating a room"
+        android:title="Create Todo button placement" />
+
+    <im.vector.app.core.preference.VectorSwitchPreference
+        android:defaultValue="false"
+        android:dependency="SETTINGS_LABS_TODO_ROOMS_KEY"
+        android:key="SETTINGS_LABS_TODO_VOICE_AGENT_KEY"
+        android:summary="Show a second voice-message button that sends the recording to an AI agent (via a slash command) inside todo-list rooms."
+        android:title="Voice AI agent in Todo rooms" />
+
+    <im.vector.app.core.preference.VectorEditTextPreference
+        android:defaultValue="/voiceagenttodo"
+        android:dependency="SETTINGS_LABS_TODO_VOICE_AGENT_KEY"
+        android:key="SETTINGS_TODO_VOICE_AGENT_COMMAND"
+        android:title="Voice agent command" />
+
+    <im.vector.app.core.preference.VectorListPreference
+        android:defaultValue="vertical_split"
+        android:dependency="SETTINGS_LABS_TODO_VOICE_AGENT_KEY"
+        android:entries="@array/todo_voice_button_preset_entries"
+        android:entryValues="@array/todo_voice_button_preset_values"
+        android:key="SETTINGS_TODO_VOICE_BUTTON_PRESET"
+        android:summary="Layout preset for the voice button(s) in todo rooms"
+        android:title="Voice button preset" />
+
 </androidx.preference.PreferenceScreen>

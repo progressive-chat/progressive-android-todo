@@ -37,4 +37,7 @@ sealed class MessageComposerAction : VectorViewModelAction {
     data class VoiceWaveformTouchedUp(val eventId: String, val duration: Int, val percentage: Float) : MessageComposerAction()
     data class VoiceWaveformMovedTo(val eventId: String, val duration: Int, val percentage: Float) : MessageComposerAction()
     data class AudioSeekBarMovedTo(val eventId: String, val duration: Int, val percentage: Float) : MessageComposerAction()
+
+    // Voice Agent (AI assistant in todo rooms)
+    data class SendVoiceToAgent(val rootThreadEventId: String?) : MessageComposerAction()
 }

@@ -71,6 +71,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/liveLocationStatusIndicator" />
 
+        <FrameLayout
+            android:id="@+id/todoListPanelContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/removeJitsiWidgetView"
+            tools:visibility="visible" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timelineRecyclerView"
             android:layout_width="0dp"
@@ -79,7 +89,7 @@
             app:layout_constraintBottom_toTopOf="@id/failedMessagesWarningStub"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/removeJitsiWidgetView"
+            app:layout_constraintTop_toBottomOf="@id/todoListPanelContainer"
             tools:listitem="@layout/item_timeline_event_base" />
 
         <com.google.android.material.chip.Chip
@@ -96,7 +106,7 @@
             app:closeIcon="@drawable/ic_close_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/removeJitsiWidgetView"
+            app:layout_constraintTop_toBottomOf="@id/todoListPanelContainer"
             tools:visibility="visible" />
 
         <ViewStub

@@ -172,6 +172,12 @@ class VectorPreferences @Inject constructor(
         const val SETTINGS_LABS_WEB_SEARCH_KEY = "SETTINGS_LABS_WEB_SEARCH_KEY"
         const val SETTINGS_LABS_AGENT_WEB_ACCESS_KEY = "SETTINGS_LABS_AGENT_WEB_ACCESS_KEY"
         const val SETTINGS_NOTIFICATION_ICON_STYLE = "SETTINGS_NOTIFICATION_ICON_STYLE"
+        const val SETTINGS_LABS_TODO_ROOMS_KEY = "SETTINGS_LABS_TODO_ROOMS_KEY"
+        const val SETTINGS_TODO_KEYWORD = "SETTINGS_TODO_KEYWORD"
+        const val SETTINGS_TODO_BUTTON_PLACEMENT = "SETTINGS_TODO_BUTTON_PLACEMENT"
+        const val SETTINGS_LABS_TODO_VOICE_AGENT_KEY = "SETTINGS_LABS_TODO_VOICE_AGENT_KEY"
+        const val SETTINGS_TODO_VOICE_AGENT_COMMAND = "SETTINGS_TODO_VOICE_AGENT_COMMAND"
+        const val SETTINGS_TODO_VOICE_BUTTON_PRESET = "SETTINGS_TODO_VOICE_BUTTON_PRESET"
         const val SETTINGS_NOTIFICATION_SHOW_COUNT = "SETTINGS_NOTIFICATION_SHOW_COUNT"
         const val SETTINGS_LABS_LIVE_DRAFT_KEY = "SETTINGS_LABS_LIVE_DRAFT_KEY"
         const val SETTINGS_LIVE_DRAFT_CHAR_THRESHOLD = "SETTINGS_LIVE_DRAFT_CHAR_THRESHOLD"
@@ -1900,5 +1906,31 @@ class VectorPreferences @Inject constructor(
 
     fun didAskOptimizedInitSync() {
         defaultPrefs.edit().putBoolean("DID_ASK_OPTIMIZED_INIT_SYNC", true).apply()
+    }
+
+    // --- Todo List Rooms ---
+
+    fun isTodoRoomsEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_TODO_ROOMS_KEY, false)
+    }
+
+    fun getTodoKeyword(): String {
+        return defaultPrefs.getString(SETTINGS_TODO_KEYWORD, "todolist") ?: "todolist"
+    }
+
+    fun getTodoButtonPlacement(): String {
+        return defaultPrefs.getString(SETTINGS_TODO_BUTTON_PLACEMENT, "advanced") ?: "advanced"
+    }
+
+    fun isTodoVoiceAgentEnabled(): Boolean {
+        return defaultPrefs.getBoolean(SETTINGS_LABS_TODO_VOICE_AGENT_KEY, false)
+    }
+
+    fun getTodoVoiceAgentCommand(): String {
+        return defaultPrefs.getString(SETTINGS_TODO_VOICE_AGENT_COMMAND, "/voiceagenttodo") ?: "/voiceagenttodo"
+    }
+
+    fun getTodoVoiceButtonPreset(): String {
+        return defaultPrefs.getString(SETTINGS_TODO_VOICE_BUTTON_PRESET, "vertical_split") ?: "vertical_split"
     }
 }

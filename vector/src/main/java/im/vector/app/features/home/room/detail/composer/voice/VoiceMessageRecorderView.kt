@@ -40,6 +40,7 @@ class VoiceMessageRecorderView @JvmOverloads constructor(
         fun onVoiceRecordingCancelled()
         fun onVoiceRecordingLocked()
         fun onSendVoiceMessage()
+        fun onSendVoiceToAgent()
         fun onDeleteVoiceMessage()
         fun onRecordingLimitReached()
         fun onRecordingWaveformClicked()
@@ -86,6 +87,7 @@ class VoiceMessageRecorderView @JvmOverloads constructor(
             }
 
             override fun onSendVoiceMessage() = callback.onSendVoiceMessage()
+            override fun onSendVoiceToAgent() = callback.onSendVoiceToAgent()
             override fun onDeleteVoiceMessage() = callback.onDeleteVoiceMessage()
             override fun onWaveformClicked() {
                 when (lastKnownState) {
@@ -149,6 +151,10 @@ class VoiceMessageRecorderView @JvmOverloads constructor(
             }
         }
         lastKnownState = recordingState
+    }
+
+    fun setVoiceAgentEnabled(enabled: Boolean) {
+        voiceMessageViews.isVoiceAgentEnabled = enabled
     }
 
     private fun reset() {

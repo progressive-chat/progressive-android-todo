@@ -1414,12 +1414,14 @@ class TimelineViewModel @AssistedInject constructor(
     private fun observeSummaryState() {
         if (room == null) return
         onAsync(RoomDetailViewState::asyncRoomSummary) { summary ->
+            val todoKeyword = vectorPreferences.getTodoKeyword().lowercase()
             setState {
                 val typingMessage = typingHelper.getTypingMessage(summary.typingUsers)
                 copy(
                         typingUsers = summary.typingUsers,
                         formattedTypingUsers = typingMessage,
-                        hasFailedSending = summary.hasFailedSending
+                        hasFailedSending = summary.hasFailedSending,
+                        isTodoRoom = vectorPreferences.isTodoRoomsEnabled() && summary.topic.lowercase().contains(todoKeyword)
                 )
             }
             if (summary.membership == Membership.INVITE) {

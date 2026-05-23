@@ -20,6 +20,7 @@ import im.vector.app.features.home.RoomListDisplayMode
 import im.vector.app.features.home.room.detail.timeline.format.DisplayableEventFormatter
 import im.vector.app.features.home.room.list.usecase.GetLatestPreviewableEventUseCase
 import im.vector.app.features.home.room.typing.TypingHelper
+import im.vector.app.features.settings.VectorPreferences
 import im.vector.app.features.voicebroadcast.isLive
 import im.vector.app.features.voicebroadcast.model.asVoiceBroadcastEvent
 import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
@@ -41,6 +42,7 @@ class RoomSummaryItemFactory @Inject constructor(
         private val avatarRenderer: AvatarRenderer,
         private val errorFormatter: ErrorFormatter,
         private val getLatestPreviewableEventUseCase: GetLatestPreviewableEventUseCase,
+        private val vectorPreferences: VectorPreferences
 ) {
 
     fun create(
@@ -181,6 +183,7 @@ class RoomSummaryItemFactory @Inject constructor(
             .hasUnreadMessage(roomSummary.hasUnreadMessages)
             .hasDraft(roomSummary.userDrafts.isNotEmpty())
             .useSingleLineForLastEvent(singleLineLastEvent)
+            .isTodoRoom(isTodoRoom(roomSummary))
             .itemLongClickListener { _ -> onLongClick?.invoke(roomSummary) ?: false }
             .itemClickListener { onClick?.invoke(roomSummary) }
 
@@ -224,5 +227,11 @@ class RoomSummaryItemFactory @Inject constructor(
             2 -> stringProvider.getString(CommonStrings.search_space_two_parents, directParentNames[0], directParentNames[1])
             else -> stringProvider.getQuantityString(CommonPlurals.search_space_multiple_parents, size - 1, directParentNames[0], size - 1)
         }
+    }
+
+    private fun isTodoRoom(roomSummary: RoomSummary): Boolean {
+        if (!vectorPreferences.isTodoRoomsEnabled()) return false
+        val keyword = vectorPreferences.getTodoKeyword().lowercase()
+        return roomSummary.topic.lowercase().contains(keyword)
     }
 }
