@@ -43,8 +43,8 @@ import chat.progressive.app.databinding.ActivityHomeBinding
 import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.MainActivityArgs
 import chat.progressive.app.features.analytics.accountdata.AnalyticsAccountDataViewModel
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.crypto.recover.SetupMode
 import chat.progressive.app.features.home.room.list.actions.RoomListSharedAction
 import chat.progressive.app.features.home.room.list.actions.RoomListSharedActionViewModel

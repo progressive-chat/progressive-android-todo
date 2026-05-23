@@ -31,7 +31,7 @@ import com.android.dialer.dialpadview.DigitsEditText
 import com.android.dialer.dialpadview.R
 import chat.progressive.app.core.extensions.singletonEntryPoint
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.themes.ThemeUtils
 
 class DialPadFragment : Fragment(), TextWatcher {

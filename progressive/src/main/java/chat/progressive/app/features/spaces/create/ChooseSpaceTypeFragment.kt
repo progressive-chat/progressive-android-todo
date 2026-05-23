@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.epoxy.onClick
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentSpaceCreateChooseTypeBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 
 @AndroidEntryPoint
 class ChooseSpaceTypeFragment :

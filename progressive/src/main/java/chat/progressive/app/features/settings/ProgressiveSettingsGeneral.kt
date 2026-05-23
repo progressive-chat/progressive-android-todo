@@ -45,7 +45,7 @@ import chat.progressive.app.core.utils.toast
 import chat.progressive.app.databinding.DialogChangePasswordBinding
 import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.MainActivityArgs
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.discovery.DiscoverySettingsFragment
 import chat.progressive.app.features.navigation.SettingsActivityPayload
 import chat.progressive.app.features.workers.signout.SignOutUiWorker

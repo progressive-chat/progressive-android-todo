@@ -34,8 +34,8 @@ import chat.progressive.app.core.platform.StateView
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.core.resources.UserPreferencesProvider
 import chat.progressive.app.databinding.FragmentRoomListBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.RoomListDisplayMode
 import chat.progressive.app.features.home.room.filtered.FilteredRoomFooterItem
 import chat.progressive.app.features.home.room.list.actions.RoomListQuickActionsBottomSheet

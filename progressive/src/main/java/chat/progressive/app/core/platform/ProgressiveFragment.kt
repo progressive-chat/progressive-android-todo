@@ -40,7 +40,7 @@ import chat.progressive.app.core.extensions.singletonEntryPoint
 import chat.progressive.app.core.extensions.toMvRxBundle
 import chat.progressive.app.core.utils.ToolbarConfig
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.navigation.Navigator
 import chat.progressive.lib.strings.CommonStrings
 import chat.progressive.lib.ui.styles.dialogs.MaterialProgressDialog

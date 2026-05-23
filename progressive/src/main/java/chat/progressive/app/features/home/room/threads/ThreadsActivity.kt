@@ -19,7 +19,7 @@ import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivityThreadsBinding
 import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.analytics.extensions.toAnalyticsInteraction
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.app.features.home.room.detail.TimelineFragment
 import chat.progressive.app.features.home.room.detail.arguments.TimelineArgs

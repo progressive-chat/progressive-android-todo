@@ -26,7 +26,7 @@ import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.core.resources.UserPreferencesProvider
 import chat.progressive.app.core.utils.FirstItemUpdatedObserver
 import chat.progressive.app.databinding.FragmentRoomListBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.room.list.RoomListAnimator
 import chat.progressive.app.features.home.room.list.RoomListListener
 import chat.progressive.app.features.home.room.list.actions.RoomListQuickActionsBottomSheet

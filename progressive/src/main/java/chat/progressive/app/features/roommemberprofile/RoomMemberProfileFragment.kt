@@ -39,7 +39,7 @@ import chat.progressive.app.databinding.DialogBaseEditTextBinding
 import chat.progressive.app.databinding.DialogShareQrCodeBinding
 import chat.progressive.app.databinding.FragmentMatrixProfileBinding
 import chat.progressive.app.databinding.ViewStubRoomMemberProfileHeaderBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.crypto.verification.user.UserVerificationBottomSheet
 import chat.progressive.app.features.displayname.getBestName
 import chat.progressive.app.features.home.AvatarRenderer

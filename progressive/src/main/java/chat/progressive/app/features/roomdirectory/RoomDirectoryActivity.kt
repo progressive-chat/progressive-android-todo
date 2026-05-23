@@ -20,8 +20,8 @@ import chat.progressive.app.core.extensions.addFragmentToBackstack
 import chat.progressive.app.core.extensions.popBackstack
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivitySimpleBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.matrixto.MatrixToBottomSheet
 import chat.progressive.app.features.navigation.Navigator
 import chat.progressive.app.features.roomdirectory.createroom.CreateRoomArgs

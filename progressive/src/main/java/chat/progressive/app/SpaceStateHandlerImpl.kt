@@ -11,8 +11,8 @@ import androidx.lifecycle.LifecycleOwner
 import chat.progressive.app.core.di.ActiveSessionHolder
 import chat.progressive.app.core.utils.BehaviorDataSource
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.UserProperties
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.session.coroutineScope
 import chat.progressive.app.features.settings.ProgressiveBasePreferences
 import chat.progressive.app.features.ui.UiStateRepository

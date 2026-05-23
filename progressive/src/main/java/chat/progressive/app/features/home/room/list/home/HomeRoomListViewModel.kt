@@ -23,7 +23,7 @@ import chat.progressive.app.core.resources.DrawableProvider
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toTrackingValue
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.UserProperties
 import chat.progressive.app.features.displayname.getBestName
 import chat.progressive.app.features.home.room.list.home.header.HomeRoomFilter
 import chat.progressive.app.features.room.LeaveRoomPrompt

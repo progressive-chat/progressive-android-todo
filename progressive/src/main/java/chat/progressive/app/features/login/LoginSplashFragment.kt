@@ -17,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.resources.BuildMeta
 import chat.progressive.app.databinding.FragmentLoginSplashBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.settings.ProgressiveBasePreferences
 import chat.progressive.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.failure.Failure

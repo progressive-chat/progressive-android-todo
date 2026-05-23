@@ -23,7 +23,7 @@ import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import chat.progressive.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.displayname.getBestName
 import chat.progressive.app.features.invite.AutoAcceptInvites
 import chat.progressive.app.features.room.LeaveRoomPrompt

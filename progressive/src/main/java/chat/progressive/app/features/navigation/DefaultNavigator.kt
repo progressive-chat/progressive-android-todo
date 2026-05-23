@@ -32,7 +32,7 @@ import chat.progressive.app.core.extensions.commitTransaction
 import chat.progressive.app.features.ProgressiveFeatures
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsViewRoom
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.analytics.ui.consent.AnalyticsOptInActivity
 import chat.progressive.app.features.call.conference.JitsiCallViewModel
 import chat.progressive.app.features.call.conference.ProgressiveJitsiActivity

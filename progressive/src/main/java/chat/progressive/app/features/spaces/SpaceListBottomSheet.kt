@@ -16,7 +16,7 @@ import chat.progressive.app.R
 import chat.progressive.app.core.extensions.replaceChildFragment
 import chat.progressive.app.core.platform.ProgressiveBottomSheet
 import chat.progressive.app.databinding.FragmentSpacesBottomSheetBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 
 class SpaceListBottomSheet : ProgressiveBottomSheet<FragmentSpacesBottomSheetBinding>() {
 

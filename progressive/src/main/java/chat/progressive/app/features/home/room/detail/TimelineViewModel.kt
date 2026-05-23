@@ -33,8 +33,8 @@ import chat.progressive.app.core.utils.BehaviorDataSource
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.DecryptionFailureTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import chat.progressive.app.features.analytics.plan.CreatedRoom
-import chat.progressive.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.CreatedRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.call.conference.ConferenceEvent
 import chat.progressive.app.features.call.conference.JitsiActiveConferenceHolder
 import chat.progressive.app.features.call.conference.JitsiService

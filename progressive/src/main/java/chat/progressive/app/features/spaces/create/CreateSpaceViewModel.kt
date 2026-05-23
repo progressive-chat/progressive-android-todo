@@ -22,7 +22,7 @@ import chat.progressive.app.core.error.ErrorFormatter
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -24,7 +24,7 @@ import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.core.resources.BuildMeta
 import chat.progressive.app.core.utils.startSharePlainTextIntent
 import chat.progressive.app.databinding.FragmentHomeDrawerBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.permalink.PermalinkFactory
 import chat.progressive.app.features.settings.ProgressiveBasePreferences
 import chat.progressive.app.features.settings.ProgressiveSettingsActivity

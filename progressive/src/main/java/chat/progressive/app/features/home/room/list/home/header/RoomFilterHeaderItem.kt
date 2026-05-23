@@ -14,7 +14,7 @@ import chat.progressive.app.R
 import chat.progressive.app.core.epoxy.ProgressiveEpoxyHolder
 import chat.progressive.app.core.epoxy.ProgressiveEpoxyModel
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 
 @EpoxyModelClass
 abstract class RoomFilterHeaderItem : ProgressiveEpoxyModel<RoomFilterHeaderItem.Holder>(R.layout.item_home_filter_tabs) {

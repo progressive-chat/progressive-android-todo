@@ -15,7 +15,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.util.Pair
 import androidx.fragment.app.FragmentActivity
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.crypto.recover.SetupMode
 import chat.progressive.app.features.displayname.getBestName
 import chat.progressive.app.features.home.room.threads.arguments.ThreadTimelineArgs

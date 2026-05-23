@@ -14,8 +14,8 @@ import chat.progressive.app.ActiveSessionDataSource
 import chat.progressive.app.core.pushers.UnifiedPushHelper
 import chat.progressive.app.core.services.CallAndroidService
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.CallEnded
-import chat.progressive.app.features.analytics.plan.CallStarted
+import im.vector.app.features.analytics.plan.CallEnded
+import im.vector.app.features.analytics.plan.CallStarted
 import chat.progressive.app.features.call.ProgressiveCallActivity
 import chat.progressive.app.features.call.audio.CallAudioManager
 import chat.progressive.app.features.call.lookup.CallProtocolsChecker

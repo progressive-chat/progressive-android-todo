@@ -30,7 +30,7 @@ import chat.progressive.app.core.extensions.validateBackPressed
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.core.utils.openUrlInChromeCustomTab
 import chat.progressive.app.databinding.ActivityLoginBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.HomeActivity
 import chat.progressive.app.features.login.terms.LoginTermsFragment
 import chat.progressive.app.features.login.terms.LoginTermsFragmentArgument

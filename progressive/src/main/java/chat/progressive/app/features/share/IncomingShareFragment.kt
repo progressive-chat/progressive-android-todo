@@ -26,7 +26,7 @@ import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.extensions.registerStartForActivityResult
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentIncomingShareBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.attachments.ShareIntentHandler
 import chat.progressive.app.features.attachments.preview.AttachmentsPreviewActivity
 import chat.progressive.app.features.attachments.preview.AttachmentsPreviewArgs

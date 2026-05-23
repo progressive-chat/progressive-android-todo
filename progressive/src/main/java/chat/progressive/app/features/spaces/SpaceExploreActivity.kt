@@ -21,7 +21,7 @@ import chat.progressive.app.core.extensions.registerStartForActivityResult
 import chat.progressive.app.core.extensions.replaceFragment
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivitySimpleBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.matrixto.MatrixToBottomSheet
 import chat.progressive.app.features.matrixto.OriginOfMatrixTo
 import chat.progressive.app.features.navigation.Navigator

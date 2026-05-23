@@ -18,7 +18,7 @@ import chat.progressive.app.core.utils.FirstThrottler
 import chat.progressive.app.core.utils.copyToClipboard
 import chat.progressive.app.core.utils.openAppSettingsPage
 import chat.progressive.app.core.utils.openUrlInChromeCustomTab
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.version.VersionProvider
 import chat.progressive.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.Matrix

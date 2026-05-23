@@ -7,7 +7,7 @@
 
 package chat.progressive.app.features.analytics.extensions
 
-import chat.progressive.app.features.analytics.plan.Signup
+import im.vector.app.features.analytics.plan.Signup
 import chat.progressive.app.features.onboarding.AuthenticationDescription
 
 fun AuthenticationDescription.AuthenticationType.toAnalyticsType() = when (this) {

@@ -20,7 +20,7 @@ import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.platform.OnBackPressed
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentRoomDirectoryPickerBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.roomdirectory.RoomDirectoryAction
 import chat.progressive.app.features.roomdirectory.RoomDirectoryData
 import chat.progressive.app.features.roomdirectory.RoomDirectoryServer

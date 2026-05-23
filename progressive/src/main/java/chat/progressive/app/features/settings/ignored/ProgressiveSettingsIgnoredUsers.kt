@@ -21,7 +21,7 @@ import chat.progressive.app.core.extensions.cleanup
 import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentGenericRecyclerBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.lib.strings.CommonStrings
 import javax.inject.Inject
 

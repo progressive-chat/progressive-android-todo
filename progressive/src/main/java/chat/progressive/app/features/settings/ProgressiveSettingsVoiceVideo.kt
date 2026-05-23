@@ -19,7 +19,7 @@ import chat.progressive.app.R
 import chat.progressive.app.core.extensions.registerStartForActivityResult
 import chat.progressive.app.core.preference.ProgressiveBasePreference
 import chat.progressive.app.core.utils.RingtoneUtils
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.lib.core.utils.compat.getParcelableExtraCompat
 import chat.progressive.lib.strings.CommonStrings
 import javax.inject.Inject

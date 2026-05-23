@@ -36,7 +36,7 @@ import chat.progressive.app.core.utils.colorizeMatchingText
 import chat.progressive.app.core.utils.isValidUrl
 import chat.progressive.app.core.utils.openUrlInExternalBrowser
 import chat.progressive.app.databinding.FragmentSpaceDirectoryBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.room.detail.timeline.TimelineEventController
 import chat.progressive.app.features.permalink.PermalinkHandler
 import chat.progressive.app.features.spaces.manage.ManageType

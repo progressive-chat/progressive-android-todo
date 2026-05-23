@@ -20,7 +20,7 @@ import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import chat.progressive.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map

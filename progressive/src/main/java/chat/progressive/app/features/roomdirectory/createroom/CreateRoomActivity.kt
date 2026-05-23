@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.extensions.addFragment
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivitySimpleBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.roomdirectory.RoomDirectorySharedAction
 import chat.progressive.app.features.roomdirectory.RoomDirectorySharedActionViewModel
 import chat.progressive.lib.core.utils.compat.getParcelableCompat

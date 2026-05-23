@@ -7,7 +7,7 @@
 
 package chat.progressive.app.features.analytics
 
-import chat.progressive.app.features.analytics.plan.Error
+import im.vector.app.features.analytics.plan.Error
 import org.matrix.android.sdk.api.session.crypto.MXCryptoError
 
 data class DecryptionFailure(

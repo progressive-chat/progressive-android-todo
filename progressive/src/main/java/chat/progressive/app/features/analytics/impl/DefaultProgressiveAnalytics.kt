@@ -14,8 +14,8 @@ import chat.progressive.app.features.analytics.ProgressiveAnalytics
 import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsEvent
 import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsScreen
 import chat.progressive.app.features.analytics.log.analyticsTag
-import chat.progressive.app.features.analytics.plan.SuperProperties
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.SuperProperties
+import im.vector.app.features.analytics.plan.UserProperties
 import chat.progressive.app.features.analytics.store.AnalyticsStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

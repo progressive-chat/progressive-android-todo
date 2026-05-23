@@ -29,7 +29,7 @@ import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.platform.OnBackPressed
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentCreateRoomBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.navigation.Navigator
 import chat.progressive.app.features.roomdirectory.RoomDirectorySharedAction
 import chat.progressive.app.features.roomdirectory.RoomDirectorySharedActionViewModel

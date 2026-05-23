@@ -21,7 +21,7 @@ import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentDeactivateAccountBinding
 import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.MainActivityArgs
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.auth.ReAuthActivity
 import chat.progressive.app.features.settings.ProgressiveSettingsActivity
 import chat.progressive.lib.strings.CommonStrings

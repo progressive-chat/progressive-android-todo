@@ -7,7 +7,7 @@
 
 package chat.progressive.app.features.analytics.extensions
 
-import chat.progressive.app.features.analytics.plan.Composer
+import im.vector.app.features.analytics.plan.Composer
 import chat.progressive.app.features.home.room.detail.composer.MessageComposerViewState
 import chat.progressive.app.features.home.room.detail.composer.SendMode
 

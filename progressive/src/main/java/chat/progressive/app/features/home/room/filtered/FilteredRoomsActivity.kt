@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.extensions.replaceFragment
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivityFilteredRoomsBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.RoomListDisplayMode
 import chat.progressive.app.features.home.room.list.RoomListFragment
 import chat.progressive.app.features.home.room.list.RoomListParams

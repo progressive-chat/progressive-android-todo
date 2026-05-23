@@ -9,7 +9,7 @@ package chat.progressive.app.features.crypto.verification
 import android.content.Context
 import chat.progressive.app.R
 import chat.progressive.app.core.platform.ProgressiveActivity
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.displayname.getBestName
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.app.features.home.room.detail.RoomDetailActivity

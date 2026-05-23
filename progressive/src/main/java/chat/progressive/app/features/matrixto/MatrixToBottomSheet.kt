@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.extensions.commitTransaction
 import chat.progressive.app.core.platform.ProgressiveBottomSheet
 import chat.progressive.app.databinding.BottomSheetMatrixToCardBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.parcelize.Parcelize

@@ -26,7 +26,7 @@ import chat.progressive.app.core.platform.ProgressiveMenuProvider
 import chat.progressive.app.core.platform.showOptimizedSnackbar
 import chat.progressive.app.core.utils.toast
 import chat.progressive.app.databinding.FragmentPublicRoomsBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.permalink.NavigationInterceptor
 import chat.progressive.app.features.permalink.PermalinkFactory
 import chat.progressive.app.features.permalink.PermalinkHandler

@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.di.ActiveSessionHolder
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import chat.progressive.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.session.coroutineScope
 import chat.progressive.lib.core.utils.timer.Clock
 import chat.progressive.lib.strings.CommonStrings

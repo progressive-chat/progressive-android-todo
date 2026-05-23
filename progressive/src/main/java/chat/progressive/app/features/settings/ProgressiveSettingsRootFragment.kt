@@ -11,7 +11,7 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.R
 import chat.progressive.app.core.preference.ProgressiveBasePreference
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.lib.strings.CommonStrings
 
 @AndroidEntryPoint

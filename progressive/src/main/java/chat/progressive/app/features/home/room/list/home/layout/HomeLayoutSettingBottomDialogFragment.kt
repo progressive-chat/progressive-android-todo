@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.R
 import chat.progressive.app.core.platform.ProgressiveBottomSheet
 import chat.progressive.app.databinding.BottomSheetHomeLayoutSettingsBinding
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.app.features.home.room.list.home.HomeLayoutPreferencesStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch

@@ -41,7 +41,7 @@ import chat.progressive.app.core.utils.registerForPermissionsResult
 import chat.progressive.app.core.utils.requestDisablingBatteryOptimization
 import chat.progressive.app.core.utils.startNotificationSettingsIntent
 import chat.progressive.app.features.ProgressiveFeatures
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.NotificationPermissionManager
 import chat.progressive.app.features.notifications.NotificationUtils
 import chat.progressive.app.features.settings.BackgroundSyncMode

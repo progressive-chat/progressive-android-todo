@@ -20,7 +20,7 @@ import chat.progressive.app.core.extensions.hideKeyboard
 import chat.progressive.app.core.extensions.hidePassword
 import chat.progressive.app.core.extensions.toReducedUrl
 import chat.progressive.app.databinding.FragmentLoginResetPasswordBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn

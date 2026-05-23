@@ -22,7 +22,7 @@ import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsComposer
 import chat.progressive.app.features.analytics.extensions.toAnalyticsJoinedRoom
-import chat.progressive.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
 import chat.progressive.app.features.attachments.toContentAttachmentData
 import chat.progressive.app.features.command.CommandParser
 import chat.progressive.app.features.command.ParsedCommand

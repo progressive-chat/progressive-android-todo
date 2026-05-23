@@ -21,7 +21,7 @@ import chat.progressive.app.core.utils.FirstThrottler
 import chat.progressive.app.core.utils.displayInWebView
 import chat.progressive.app.core.utils.openUrlInChromeCustomTab
 import chat.progressive.app.databinding.FragmentGenericRecyclerBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.discovery.ServerPolicy
 import chat.progressive.app.features.settings.ProgressiveSettingsUrls
 import chat.progressive.lib.strings.CommonStrings

@@ -16,7 +16,7 @@ import chat.progressive.app.core.preference.KeywordPreference
 import chat.progressive.app.core.preference.ProgressiveCheckboxPreference
 import chat.progressive.app.core.preference.ProgressiveBasePreference
 import chat.progressive.app.core.preference.ProgressivePreferenceCategory
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.settings.notifications.NotificationIndex
 import chat.progressive.app.features.settings.notifications.StandardActions
 import chat.progressive.app.features.settings.notifications.ProgressiveSettingsPushRule

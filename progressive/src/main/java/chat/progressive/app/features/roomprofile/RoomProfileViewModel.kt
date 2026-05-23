@@ -17,7 +17,7 @@ import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.resources.StringProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.app.features.home.ShortcutCreator
 import chat.progressive.app.features.powerlevel.isLastAdminFlow
 import chat.progressive.app.features.session.coroutineScope

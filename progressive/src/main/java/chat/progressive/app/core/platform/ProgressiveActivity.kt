@@ -67,7 +67,7 @@ import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.MainActivityArgs
 import chat.progressive.app.features.ProgressiveFeatures
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.configuration.ProgressiveConfiguration
 import chat.progressive.app.features.consent.ConsentNotGivenHelper
 import chat.progressive.app.features.mdm.MdmService

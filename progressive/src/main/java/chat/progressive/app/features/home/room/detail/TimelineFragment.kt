@@ -106,8 +106,8 @@ import chat.progressive.app.databinding.DialogReportContentBinding
 import chat.progressive.app.databinding.FragmentTimelineBinding
 import chat.progressive.app.features.ProgressiveFeatures
 import chat.progressive.app.features.analytics.extensions.toAnalyticsInteraction
-import chat.progressive.app.features.analytics.plan.Interaction
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.attachments.ShareIntentHandler
 import chat.progressive.app.features.call.SharedKnownCallsViewModel
 import chat.progressive.app.features.call.ProgressiveCallActivity

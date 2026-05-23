@@ -11,7 +11,7 @@ import android.content.Context
 import chat.progressive.app.ActiveSessionDataSource
 import chat.progressive.app.core.extensions.vectorStore
 import chat.progressive.app.features.analytics.extensions.toTrackingValue
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.UserProperties
 import javax.inject.Inject
 
 class LateInitUserPropertiesFactory @Inject constructor(

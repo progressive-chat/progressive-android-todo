@@ -19,7 +19,7 @@ import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.app.features.session.coroutineScope
 import chat.progressive.app.features.settings.ProgressiveBasePreferences
 import chat.progressive.app.features.spaces.notification.GetNotificationCountForSpacesUseCase

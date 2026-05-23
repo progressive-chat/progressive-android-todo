@@ -26,7 +26,7 @@ import chat.progressive.app.core.session.EnsureSessionSyncingUseCase
 import chat.progressive.app.features.analytics.AnalyticsConfig
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsType
-import chat.progressive.app.features.analytics.plan.Signup
+import im.vector.app.features.analytics.plan.Signup
 import chat.progressive.app.features.analytics.store.AnalyticsStore
 import chat.progressive.app.features.home.room.list.home.release.ReleaseNotesPreferencesStore
 import chat.progressive.app.features.login.ReAuthHelper

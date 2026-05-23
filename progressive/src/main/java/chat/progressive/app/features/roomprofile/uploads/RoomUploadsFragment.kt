@@ -24,7 +24,7 @@ import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.core.utils.saveMedia
 import chat.progressive.app.core.utils.shareMedia
 import chat.progressive.app.databinding.FragmentRoomUploadsBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.app.features.notifications.NotificationUtils
 import chat.progressive.app.features.roomprofile.RoomProfileArgs

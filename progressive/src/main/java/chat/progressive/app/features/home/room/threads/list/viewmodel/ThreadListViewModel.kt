@@ -21,7 +21,7 @@ import dagger.assisted.AssistedInject
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toAnalyticsInteraction
-import chat.progressive.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.Interaction
 import chat.progressive.app.features.home.room.threads.list.views.ThreadListFragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flowOn

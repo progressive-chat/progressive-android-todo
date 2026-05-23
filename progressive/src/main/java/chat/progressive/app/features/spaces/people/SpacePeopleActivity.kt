@@ -21,7 +21,7 @@ import chat.progressive.app.core.extensions.replaceFragment
 import chat.progressive.app.core.platform.GenericIdArgs
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivitySimpleLoadingBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.spaces.share.ShareSpaceBottomSheet
 import chat.progressive.lib.core.utils.compat.getParcelableExtraCompat
 import chat.progressive.lib.strings.CommonStrings

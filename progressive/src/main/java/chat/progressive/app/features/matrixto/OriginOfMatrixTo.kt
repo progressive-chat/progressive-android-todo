@@ -7,8 +7,8 @@
 
 package chat.progressive.app.features.matrixto
 
-import chat.progressive.app.features.analytics.plan.JoinedRoom
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.JoinedRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 
 enum class OriginOfMatrixTo {
     LINK,

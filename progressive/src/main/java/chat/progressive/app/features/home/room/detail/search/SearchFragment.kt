@@ -29,7 +29,7 @@ import chat.progressive.app.core.extensions.trackItemsVisibilityChange
 import chat.progressive.app.core.platform.StateView
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentSearchBinding
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.room.threads.arguments.ThreadTimelineArgs
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.parcelize.Parcelize

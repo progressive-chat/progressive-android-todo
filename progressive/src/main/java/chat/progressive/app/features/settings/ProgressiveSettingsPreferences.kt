@@ -23,7 +23,7 @@ import chat.progressive.app.core.preference.ProgressiveSwitchPreference
 import chat.progressive.app.features.MainActivity
 import chat.progressive.app.features.MainActivityArgs
 import chat.progressive.app.features.ProgressiveFeatures
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.settings.font.FontScaleSettingActivity
 import chat.progressive.app.features.themes.ThemeUtils
 import chat.progressive.lib.strings.CommonStrings

@@ -27,7 +27,7 @@ import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.core.utils.deleteAllFiles
 import chat.progressive.app.databinding.ActivityMainBinding
 import chat.progressive.app.features.analytics.ProgressiveAnalytics
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.HomeActivity
 import chat.progressive.app.features.home.ShortcutsHandler
 import chat.progressive.app.features.home.room.detail.RoomDetailActivity

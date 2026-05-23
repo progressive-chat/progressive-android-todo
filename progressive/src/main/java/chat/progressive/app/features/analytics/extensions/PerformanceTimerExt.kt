@@ -7,7 +7,7 @@
 
 package chat.progressive.app.features.analytics.extensions
 
-import chat.progressive.app.features.analytics.plan.PerformanceTimer
+import im.vector.app.features.analytics.plan.PerformanceTimer
 import org.matrix.android.sdk.api.session.statistics.StatisticEvent
 
 fun StatisticEvent.toListOfPerformanceTimer(): List<PerformanceTimer> {

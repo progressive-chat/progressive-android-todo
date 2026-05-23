@@ -36,8 +36,8 @@ import chat.progressive.app.core.utils.startSharePlainTextIntent
 import chat.progressive.app.databinding.DialogReportContentBinding
 import chat.progressive.app.databinding.FragmentMatrixProfileBinding
 import chat.progressive.app.databinding.ViewStubRoomProfileHeaderBinding
-import chat.progressive.app.features.analytics.plan.Interaction
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.Interaction
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.app.features.home.room.detail.RoomDetailPendingAction
 import chat.progressive.app.features.home.room.detail.RoomDetailPendingActionStore

@@ -21,7 +21,7 @@ import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.core.utils.toast
 import chat.progressive.app.databinding.FragmentRoomSettingGenericBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.AvatarRenderer
 import chat.progressive.app.features.roommemberprofile.powerlevel.EditPowerLevelDialogs
 import chat.progressive.app.features.roomprofile.RoomProfileArgs

@@ -45,7 +45,7 @@ import chat.progressive.app.core.utils.openFileSelection
 import chat.progressive.app.core.utils.toast
 import chat.progressive.app.databinding.DialogImportE2eKeysBinding
 import chat.progressive.app.features.analytics.AnalyticsConfig
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.analytics.ui.consent.AnalyticsConsentViewActions
 import chat.progressive.app.features.analytics.ui.consent.AnalyticsConsentViewModel
 import chat.progressive.app.features.analytics.ui.consent.AnalyticsConsentViewState

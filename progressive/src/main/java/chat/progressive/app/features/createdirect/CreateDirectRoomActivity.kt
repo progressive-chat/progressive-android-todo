@@ -30,8 +30,8 @@ import chat.progressive.app.core.utils.PERMISSIONS_FOR_TAKING_PHOTO
 import chat.progressive.app.core.utils.checkPermissions
 import chat.progressive.app.core.utils.onPermissionDeniedSnackbar
 import chat.progressive.app.core.utils.registerForPermissionsResult
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.contactsbook.ContactsBookFragment
 import chat.progressive.app.features.qrcode.QrCodeScannerEvents
 import chat.progressive.app.features.qrcode.QrCodeScannerFragment

@@ -28,8 +28,8 @@ import chat.progressive.app.core.extensions.replaceFragment
 import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.ActivityRoomDetailBinding
 import chat.progressive.app.features.MainActivity
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.room.breadcrumbs.BreadcrumbsFragment
 import chat.progressive.app.features.home.room.detail.arguments.TimelineArgs
 import chat.progressive.app.features.home.room.detail.timeline.helper.AudioMessagePlaybackTracker

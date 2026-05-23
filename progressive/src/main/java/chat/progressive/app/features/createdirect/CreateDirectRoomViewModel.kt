@@ -18,7 +18,7 @@ import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.mvrx.runCatchingToAsync
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.CreatedRoom
+import im.vector.app.features.analytics.plan.CreatedRoom
 import chat.progressive.app.features.raw.wellknown.getElementWellknown
 import chat.progressive.app.features.raw.wellknown.isE2EByDefault
 import chat.progressive.app.features.settings.ProgressiveBasePreferences

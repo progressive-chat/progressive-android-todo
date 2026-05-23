@@ -7,7 +7,7 @@
 
 package chat.progressive.app.features.analytics.extensions
 
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.UserProperties
 import chat.progressive.app.features.home.room.list.home.header.HomeRoomFilter
 import chat.progressive.app.features.onboarding.FtueUseCase
 

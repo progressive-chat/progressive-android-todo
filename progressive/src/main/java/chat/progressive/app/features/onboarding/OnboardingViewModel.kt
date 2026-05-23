@@ -31,7 +31,7 @@ import chat.progressive.app.features.ProgressiveFeatures
 import chat.progressive.app.features.ProgressiveOverrides
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.extensions.toTrackingValue
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.UserProperties
 import chat.progressive.app.features.login.HomeServerConnectionConfigFactory
 import chat.progressive.app.features.login.LoginConfig
 import chat.progressive.app.features.login.LoginMode

@@ -25,7 +25,7 @@ import chat.progressive.app.core.platform.ProgressiveViewEvents
 import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.core.utils.toast
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.lib.strings.CommonStrings
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

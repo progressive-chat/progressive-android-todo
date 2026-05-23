@@ -17,7 +17,7 @@ import chat.progressive.app.core.preference.ProgressiveBasePreference
 import chat.progressive.app.core.preference.ProgressivePreferenceCategory
 import chat.progressive.app.core.preference.ProgressiveSwitchPreference
 import chat.progressive.app.core.utils.copyToClipboard
-import chat.progressive.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.home.NightlyProxy
 import chat.progressive.app.features.rageshake.RageShake
 import chat.progressive.lib.strings.CommonStrings

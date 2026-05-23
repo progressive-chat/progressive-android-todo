@@ -9,8 +9,8 @@ package chat.progressive.app.features.analytics
 
 import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsEvent
 import chat.progressive.app.features.analytics.itf.ProgressiveAnalyticsScreen
-import chat.progressive.app.features.analytics.plan.SuperProperties
-import chat.progressive.app.features.analytics.plan.UserProperties
+import im.vector.app.features.analytics.plan.SuperProperties
+import im.vector.app.features.analytics.plan.UserProperties
 
 interface AnalyticsTracker {
     /**

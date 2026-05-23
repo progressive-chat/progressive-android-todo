@@ -18,8 +18,8 @@ import chat.progressive.app.core.extensions.configureWith
 import chat.progressive.app.core.platform.StateView
 import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.app.databinding.FragmentInvitesBinding
-import chat.progressive.app.features.analytics.plan.MobileScreen
-import chat.progressive.app.features.analytics.plan.ViewRoom
+import im.vector.app.features.analytics.plan.MobileScreen
+import im.vector.app.features.analytics.plan.ViewRoom
 import chat.progressive.app.features.home.room.list.RoomListListener
 import chat.progressive.app.features.notifications.NotificationDrawerManager
 import kotlinx.coroutines.flow.launchIn
