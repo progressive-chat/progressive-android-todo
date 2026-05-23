@@ -663,64 +663,8 @@ class MessageComposerViewModel @AssistedInject constructor(
                                      }
                                  }
                                  Command.LLM, Command.LLMP, Command.AGENT -> {
-                                     val args = parsedCommand.args.trim()
-                                     if (args.isNotBlank()) {
-                                         var systemPrompt = ""
-                                         when (parsedCommand.command) {
-                                             Command.AGENT -> systemPrompt = "You are a helpful assistant. Be concise."
-                                             Command.LLMP -> systemPrompt = "Answer briefly in plain text."
-                                             else -> {}
-                                         }
-                                         val prompt = if (systemPrompt.isEmpty()) args else "$systemPrompt\n\nUser: $args"
-                                         
-                                         viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-                                             try {
-                                                 ProgressiveNative.ensureLoaded()
-                                                 val provider = progressivePreferences.getLlmProvider()
-                                                 val endpoint = progressivePreferences.getLlmEndpoint()
-                                                 val token = progressivePreferences.getLlmToken()
-                                                 val model = progressivePreferences.getLlmModel()
-                                                 
-                                                 val requestBody = ProgressiveNative.nativeBuildLlmRequest(
-                                                     prompt, provider, endpoint, token, model, systemPrompt, 0.7f, 1024
-                                                 )
-                                                 val headers = ProgressiveNative.nativeBuildLlmHeaders(provider, token)
-                                                 
-                                                 val request = okhttp3.Request.Builder()
-                                                     .url(endpoint)
-                                                     .post(okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), requestBody))
-                                                     .apply {
-                                                         for (line in headers.split("\n")) {
-                                                             val colon = line.indexOf(": ")
-                                                             if (colon > 0) addHeader(line.substring(0, colon), line.substring(colon + 2))
-                                                         }
-                                                     }.build()
-                                                 
-                                                 val session = activeSessionHolder.getActiveSession()
-                                                 if (session != null) {
-                                                     val response = session.getOkHttpClient().newCall(request).execute()
-                                                     val body = response.body?.string() ?: ""
-                                                     val code = response.code
-                                                     val parsed = ProgressiveNative.nativeParseLlmResponse(body, code, provider)
-                                                     val json = org.json.JSONObject(parsed)
-                                                     val text = if (json.getBoolean("success")) json.getString("text") else json.getString("errorMessage")
-                                                     
-                                                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                         room.sendService().sendTextMessage(text, autoMarkdown = false)
-                                                     }
-                                                 }
-                                             } catch (e: Exception) {
-                                                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                                     room.sendService().sendTextMessage("Error: ${e.message}", autoMarkdown = false)
-                                                 }
-                                             }
-                                         }
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     } else {
-                                         _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
-                                     }
-                                 }
-                                 else -> {
+                                     _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
+                                 }                                 else -> {
                                      _viewEvents.post(MessageComposerViewEvents.SlashCommandResultOk(parsedCommand))
                                  }
                              }
