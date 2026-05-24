@@ -265,9 +265,10 @@ android {
             postprocessing {
                 // FIXME Set to true.
                 removeUnusedCode false
-                removeUnusedResources !project.hasProperty("minifyEnabled")
+                shrinkResources true
+            removeUnusedResources true
                 obfuscate false
-                optimizeCode !project.hasProperty("minifyEnabled")
+                optimizeCode true
                 proguardFiles 'proguard-rules.pro'
             }
             // signingConfig signingConfigs.release
@@ -282,7 +283,8 @@ android {
             postprocessing {
                 // FIXME Set to true.
                 removeUnusedCode false
-                removeUnusedResources true
+                shrinkResources true
+            removeUnusedResources true
                 // We do not activate obfuscation as it makes it hard then to read crash reports, and it's a bit useless on an open source project :)
                 obfuscate false
                 optimizeCode true
