@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"
-            android:resource="@xml/vector_app_restrictions" />
+            android:resource="@xml/progressive_app_restrictions" />
 
         <!-- Activity alias for the launcher Activity (must be declared after the Activity it targets) -->
         <!-- exported="true" is required to launch application -->
