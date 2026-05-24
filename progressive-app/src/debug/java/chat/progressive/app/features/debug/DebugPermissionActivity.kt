@@ -16,7 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.core.platform.ProgressiveBaseActivity
 import chat.progressive.app.core.utils.checkPermissions
 import chat.progressive.app.core.utils.onPermissionDeniedDialog
 import chat.progressive.app.core.utils.onPermissionDeniedSnackbar
@@ -27,7 +27,7 @@ import chat.progressive.lib.strings.CommonStrings
 import timber.log.Timber
 
 @AndroidEntryPoint
-class DebugPermissionActivity : VectorBaseActivity<ActivityDebugPermissionBinding>() {
+class DebugPermissionActivity : ProgressiveBaseActivity<ActivityDebugPermissionBinding>() {
 
     override fun getBinding() = ActivityDebugPermissionBinding.inflate(layoutInflater)
 

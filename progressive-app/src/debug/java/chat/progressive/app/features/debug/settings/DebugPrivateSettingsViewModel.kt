@@ -14,7 +14,7 @@ import dagger.assisted.AssistedInject
 import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.EmptyViewEvents
-import chat.progressive.app.core.platform.VectorViewModel
+import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.debug.features.DebugProgressiveOverrides
 import chat.progressive.app.features.debug.settings.DebugPrivateSettingsViewActions.SetAvatarCapabilityOverride
 import chat.progressive.app.features.debug.settings.DebugPrivateSettingsViewActions.SetDisplayNameCapabilityOverride
@@ -25,7 +25,7 @@ class DebugPrivateSettingsViewModel @AssistedInject constructor(
         @Assisted initialState: DebugPrivateSettingsViewState,
         private val debugVectorOverrides: DebugProgressiveOverrides,
         private val releaseNotesPreferencesStore: ReleaseNotesPreferencesStore,
-) : VectorViewModel<DebugPrivateSettingsViewState, DebugPrivateSettingsViewActions, EmptyViewEvents>(initialState) {
+) : ProgressiveViewModel<DebugPrivateSettingsViewState, DebugPrivateSettingsViewActions, EmptyViewEvents>(initialState) {
 
     @AssistedFactory
     interface Factory : MavericksAssistedViewModelFactory<DebugPrivateSettingsViewModel, DebugPrivateSettingsViewState> {

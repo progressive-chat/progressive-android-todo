@@ -12,15 +12,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
-import chat.progressive.app.core.epoxy.VectorEpoxyHolder
-import chat.progressive.app.core.epoxy.VectorEpoxyModel
+import chat.progressive.app.core.epoxy.ProgressiveEpoxyHolder
+import chat.progressive.app.core.epoxy.ProgressiveEpoxyModel
 import chat.progressive.application.R
 import me.gujun.android.span.image
 import me.gujun.android.span.span
 import org.matrix.android.sdk.api.session.crypto.verification.EmojiRepresentation
 
 @EpoxyModelClass
-abstract class SasEmojiItem : VectorEpoxyModel<SasEmojiItem.Holder>(R.layout.item_sas_emoji) {
+abstract class SasEmojiItem : ProgressiveEpoxyModel<SasEmojiItem.Holder>(R.layout.item_sas_emoji) {
 
     @EpoxyAttribute
     var index: Int = 0
@@ -42,7 +42,7 @@ abstract class SasEmojiItem : VectorEpoxyModel<SasEmojiItem.Holder>(R.layout.ite
         holder.idView.text = holder.idView.resources.getResourceEntryName(emojiRepresentation.nameResId)
     }
 
-    class Holder : VectorEpoxyHolder() {
+    class Holder : ProgressiveEpoxyHolder() {
         val indexView by bind<TextView>(R.id.sas_emoji_index)
         val emojiView by bind<TextView>(R.id.sas_emoji)
         val textView by bind<TextView>(R.id.sas_emoji_text)

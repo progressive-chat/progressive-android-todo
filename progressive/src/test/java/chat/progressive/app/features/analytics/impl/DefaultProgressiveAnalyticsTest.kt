@@ -37,7 +37,7 @@ class DefaultProgressiveAnalyticsTest {
     private val fakeLateInitUserPropertiesFactory = FakeLateInitUserPropertiesFactory()
     private val fakeSentryAnalytics = FakeSentryAnalytics()
 
-    private val defaultVectorAnalytics = DefaultVectorAnalytics(
+    private val defaultVectorAnalytics = DefaultProgressiveAnalytics(
             postHogFactory = FakePostHogFactory(fakePostHog.instance).instance,
             sentryAnalytics = fakeSentryAnalytics.instance,
             analyticsStore = fakeAnalyticsStore.instance,

@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import chat.progressive.app.core.extensions.singletonEntryPoint
 import chat.progressive.app.core.platform.PendingIntentCompat
-import chat.progressive.app.core.services.VectorSyncAndroidService
+import chat.progressive.app.core.services.ProgressiveSyncAndroidService
 import chat.progressive.lib.core.utils.timer.Clock
 import org.matrix.android.sdk.api.session.sync.job.SyncAndroidService
 import timber.log.Timber
@@ -36,7 +36,7 @@ class AlarmSyncBroadcastReceiver : BroadcastReceiver() {
         val clock = singletonEntryPoint.clock()
 
         val sessionId = intent.getStringExtra(SyncAndroidService.EXTRA_SESSION_ID) ?: return
-        VectorSyncAndroidService.newPeriodicIntent(
+        ProgressiveSyncAndroidService.newPeriodicIntent(
                 context = context,
                 sessionId = sessionId,
                 syncTimeoutSeconds = vectorPreferences.backgroundSyncTimeOut(),
@@ -94,7 +94,7 @@ class AlarmSyncBroadcastReceiver : BroadcastReceiver() {
             alarmMgr.cancel(pIntent)
 
             // Stop current service to restart
-            VectorSyncAndroidService.stopIntent(context).let {
+            ProgressiveSyncAndroidService.stopIntent(context).let {
                 try {
                     ContextCompat.startForegroundService(context, it)
                 } catch (ex: Throwable) {

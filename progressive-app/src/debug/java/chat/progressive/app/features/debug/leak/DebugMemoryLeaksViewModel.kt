@@ -15,7 +15,7 @@ import chat.progressive.app.core.debug.LeakDetector
 import chat.progressive.app.core.di.MavericksAssistedViewModelFactory
 import chat.progressive.app.core.di.hiltMavericksViewModelFactory
 import chat.progressive.app.core.platform.EmptyViewEvents
-import chat.progressive.app.core.platform.VectorViewModel
+import chat.progressive.app.core.platform.ProgressiveViewModel
 import chat.progressive.app.features.settings.ProgressivePreferences
 import kotlinx.coroutines.launch
 
@@ -23,7 +23,7 @@ class DebugMemoryLeaksViewModel @AssistedInject constructor(
         @Assisted initialState: DebugMemoryLeaksViewState,
         private val vectorPreferences: ProgressivePreferences,
         private val leakDetector: LeakDetector,
-) : VectorViewModel<DebugMemoryLeaksViewState, DebugMemoryLeaksViewActions, EmptyViewEvents>(initialState) {
+) : ProgressiveViewModel<DebugMemoryLeaksViewState, DebugMemoryLeaksViewActions, EmptyViewEvents>(initialState) {
 
     @AssistedFactory
     interface Factory : MavericksAssistedViewModelFactory<DebugMemoryLeaksViewModel, DebugMemoryLeaksViewState> {

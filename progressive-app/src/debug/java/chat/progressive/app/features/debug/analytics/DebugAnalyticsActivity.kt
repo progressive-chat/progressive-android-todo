@@ -10,11 +10,11 @@ package chat.progressive.app.features.debug.analytics
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.extensions.addFragment
-import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.core.platform.ProgressiveBaseActivity
 import chat.progressive.app.databinding.ActivitySimpleBinding
 
 @AndroidEntryPoint
-class DebugAnalyticsActivity : VectorBaseActivity<ActivitySimpleBinding>() {
+class DebugAnalyticsActivity : ProgressiveBaseActivity<ActivitySimpleBinding>() {
 
     override fun getBinding() = ActivitySimpleBinding.inflate(layoutInflater)
 

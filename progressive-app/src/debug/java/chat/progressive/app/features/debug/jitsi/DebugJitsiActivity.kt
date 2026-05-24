@@ -10,12 +10,12 @@ package chat.progressive.app.features.debug.jitsi
 import android.annotation.SuppressLint
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
-import chat.progressive.app.core.platform.VectorBaseActivity
+import chat.progressive.app.core.platform.ProgressiveBaseActivity
 import chat.progressive.application.databinding.ActivityDebugJitsiBinding
 import org.jitsi.meet.sdk.JitsiMeet
 
 @AndroidEntryPoint
-class DebugJitsiActivity : VectorBaseActivity<ActivityDebugJitsiBinding>() {
+class DebugJitsiActivity : ProgressiveBaseActivity<ActivityDebugJitsiBinding>() {
 
     override fun getBinding() = ActivityDebugJitsiBinding.inflate(layoutInflater)
 

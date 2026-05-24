@@ -14,7 +14,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import chat.progressive.app.features.HomeserverCapabilitiesOverride
-import chat.progressive.app.features.VectorOverrides
+import chat.progressive.app.features.ProgressiveOverrides
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import org.matrix.android.sdk.api.extensions.orFalse
@@ -25,7 +25,7 @@ private val keyForceLoginFallback = booleanPreferencesKey("force_login_fallback"
 private val forceCanChangeDisplayName = booleanPreferencesKey("force_can_change_display_name")
 private val forceCanChangeAvatar = booleanPreferencesKey("force_can_change_avatar")
 
-class DebugProgressiveOverrides(private val context: Context) : VectorOverrides {
+class DebugProgressiveOverrides(private val context: Context) : ProgressiveOverrides {
 
     override val forceDialPad = context.dataStore.data.map { preferences ->
         preferences[keyForceDialPadDisplay].orFalse()

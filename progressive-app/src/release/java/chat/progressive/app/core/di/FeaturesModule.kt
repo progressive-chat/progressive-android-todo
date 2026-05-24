@@ -14,7 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import chat.progressive.app.features.DefaultProgressiveFeatures
 import chat.progressive.app.features.DefaultVectorOverrides
 import chat.progressive.app.features.ProgressiveFeatures
-import chat.progressive.app.features.VectorOverrides
+import chat.progressive.app.features.ProgressiveOverrides
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -26,7 +26,7 @@ object FeaturesModule {
     }
 
     @Provides
-    fun providesOverrides(): VectorOverrides {
+    fun providesOverrides(): ProgressiveOverrides {
         return DefaultVectorOverrides()
     }
 }

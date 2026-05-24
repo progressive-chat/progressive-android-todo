@@ -15,11 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import chat.progressive.app.core.platform.VectorBaseFragment
+import chat.progressive.app.core.platform.ProgressiveBaseFragment
 import chat.progressive.app.features.home.room.list.home.release.ReleaseNotesActivity
 import chat.progressive.application.databinding.FragmentDebugPrivateSettingsBinding
 
-class DebugPrivateSettingsFragment : VectorBaseFragment<FragmentDebugPrivateSettingsBinding>() {
+class DebugPrivateSettingsFragment : ProgressiveBaseFragment<FragmentDebugPrivateSettingsBinding>() {
 
     private val viewModel: DebugPrivateSettingsViewModel by fragmentViewModel()
 

@@ -15,11 +15,11 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import chat.progressive.app.core.epoxy.onClick
 import chat.progressive.app.core.extensions.toOnOff
-import chat.progressive.app.core.platform.VectorBaseFragment
+import chat.progressive.app.core.platform.ProgressiveBaseFragment
 import chat.progressive.application.databinding.FragmentDebugAnalyticsBinding
 import me.gujun.android.span.span
 
-class DebugAnalyticsFragment : VectorBaseFragment<FragmentDebugAnalyticsBinding>() {
+class DebugAnalyticsFragment : ProgressiveBaseFragment<FragmentDebugAnalyticsBinding>() {
 
     private val viewModel: DebugAnalyticsViewModel by fragmentViewModel()
 

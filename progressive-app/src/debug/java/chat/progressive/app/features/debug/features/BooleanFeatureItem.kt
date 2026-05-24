@@ -14,12 +14,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
-import chat.progressive.app.core.epoxy.VectorEpoxyHolder
-import chat.progressive.app.core.epoxy.VectorEpoxyModel
+import chat.progressive.app.core.epoxy.ProgressiveEpoxyHolder
+import chat.progressive.app.core.epoxy.ProgressiveEpoxyModel
 import chat.progressive.application.R
 
 @EpoxyModelClass
-abstract class BooleanFeatureItem : VectorEpoxyModel<BooleanFeatureItem.Holder>(R.layout.item_feature) {
+abstract class BooleanFeatureItem : ProgressiveEpoxyModel<BooleanFeatureItem.Holder>(R.layout.item_feature) {
 
     @EpoxyAttribute
     lateinit var feature: Feature.BooleanFeature
@@ -60,7 +60,7 @@ abstract class BooleanFeatureItem : VectorEpoxyModel<BooleanFeatureItem.Holder>(
         }
     }
 
-    class Holder : VectorEpoxyHolder() {
+    class Holder : ProgressiveEpoxyHolder() {
         val label by bind<TextView>(R.id.feature_label)
         val optionsSpinner by bind<Spinner>(R.id.feature_options)
     }

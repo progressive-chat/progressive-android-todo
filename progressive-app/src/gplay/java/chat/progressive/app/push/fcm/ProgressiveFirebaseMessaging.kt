@@ -15,7 +15,7 @@ import chat.progressive.app.core.pushers.FcmHelper
 import chat.progressive.app.core.pushers.PushParser
 import chat.progressive.app.core.pushers.PushersManager
 import chat.progressive.app.core.pushers.UnifiedPushHelper
-import chat.progressive.app.core.pushers.VectorPushHandler
+import chat.progressive.app.core.pushers.ProgressivePushHandler
 import chat.progressive.app.features.mdm.MdmData
 import chat.progressive.app.features.mdm.MdmService
 import chat.progressive.app.features.settings.ProgressivePreferences
@@ -36,7 +36,7 @@ class ProgressiveFirebaseMessaging : FirebaseMessagingService() {
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
     @Inject lateinit var pushersManager: PushersManager
     @Inject lateinit var pushParser: PushParser
-    @Inject lateinit var vectorPushHandler: VectorPushHandler
+    @Inject lateinit var vectorPushHandler: ProgressivePushHandler
     @Inject lateinit var unifiedPushHelper: UnifiedPushHelper
     @Inject lateinit var mdmService: MdmService
 

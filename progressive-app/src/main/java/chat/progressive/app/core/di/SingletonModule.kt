@@ -35,9 +35,9 @@ import chat.progressive.app.core.utils.SystemSettingsProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
 import chat.progressive.app.features.analytics.ProgressiveAnalytics
 import chat.progressive.app.features.analytics.errors.ErrorTracker
-import chat.progressive.app.features.analytics.impl.DefaultVectorAnalytics
-import chat.progressive.app.features.analytics.metrics.VectorPlugins
-import chat.progressive.app.features.configuration.VectorCustomEventTypesProvider
+import chat.progressive.app.features.analytics.impl.DefaultProgressiveAnalytics
+import chat.progressive.app.features.analytics.metrics.ProgressivePlugins
+import chat.progressive.app.features.configuration.ProgressiveCustomEventTypesProvider
 import chat.progressive.app.features.invite.AutoAcceptInvites
 import chat.progressive.app.features.invite.CompileTimeAutoAcceptInvites
 import chat.progressive.app.features.mdm.DefaultMdmService
@@ -47,7 +47,7 @@ import chat.progressive.app.features.navigation.DefaultNavigator
 import chat.progressive.app.features.navigation.Navigator
 import chat.progressive.app.features.pin.PinCodeStore
 import chat.progressive.app.features.pin.SharedPrefPinCodeStore
-import chat.progressive.app.features.room.VectorRoomDisplayNameFallbackProvider
+import chat.progressive.app.features.room.ProgressiveRoomDisplayNameFallbackProvider
 import chat.progressive.app.features.settings.FontScalePreferences
 import chat.progressive.app.features.settings.FontScalePreferencesImpl
 import chat.progressive.app.features.settings.ProgressivePreferences
@@ -73,19 +73,19 @@ import org.matrix.android.sdk.api.session.sync.filter.SyncFilterParams
 import org.matrix.android.sdk.api.settings.LightweightSettingsStorage
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class) @Module abstract class VectorBindModule {
+@InstallIn(SingletonComponent::class) @Module abstract class ProgressiveBindModule {
 
     @Binds
     abstract fun bindNavigator(navigator: DefaultNavigator): Navigator
 
     @Binds
-    abstract fun bindVectorAnalytics(analytics: DefaultVectorAnalytics): ProgressiveAnalytics
+    abstract fun bindVectorAnalytics(analytics: DefaultProgressiveAnalytics): ProgressiveAnalytics
 
     @Binds
-    abstract fun bindErrorTracker(analytics: DefaultVectorAnalytics): ErrorTracker
+    abstract fun bindErrorTracker(analytics: DefaultProgressiveAnalytics): ErrorTracker
 
     @Binds
-    abstract fun bindAnalyticsTracker(analytics: DefaultVectorAnalytics): AnalyticsTracker
+    abstract fun bindAnalyticsTracker(analytics: DefaultProgressiveAnalytics): AnalyticsTracker
 
     @Binds
     abstract fun bindErrorFormatter(formatter: DefaultErrorFormatter): ErrorFormatter
@@ -118,7 +118,7 @@ import javax.inject.Singleton
     abstract fun bindGetDeviceInfoUseCase(getDeviceInfoUseCase: DefaultGetDeviceInfoUseCase): GetDeviceInfoUseCase
 }
 
-@InstallIn(SingletonComponent::class) @Module object VectorStaticModule {
+@InstallIn(SingletonComponent::class) @Module object ProgressiveStaticModule {
 
     @Provides
     fun providesContext(application: Application): Context {
@@ -138,9 +138,9 @@ import javax.inject.Singleton
     @Provides
     fun providesMatrixConfiguration(
             vectorPreferences: ProgressivePreferences,
-            vectorRoomDisplayNameFallbackProvider: VectorRoomDisplayNameFallbackProvider,
-            vectorPlugins: VectorPlugins,
-            vectorCustomEventTypesProvider: VectorCustomEventTypesProvider,
+            vectorRoomDisplayNameFallbackProvider: ProgressiveRoomDisplayNameFallbackProvider,
+            vectorPlugins: ProgressivePlugins,
+            vectorCustomEventTypesProvider: ProgressiveCustomEventTypesProvider,
             mdmService: MdmService,
     ): MatrixConfiguration {
         return MatrixConfiguration(

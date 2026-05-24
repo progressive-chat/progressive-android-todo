@@ -33,7 +33,7 @@ import com.adevinta.android.barista.interaction.BaristaClickInteractions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import chat.progressive.app.core.platform.VectorBaseBottomSheetDialogFragment
+import chat.progressive.app.core.platform.ProgressiveBaseBottomSheetDialogFragment
 import chat.progressive.app.espresso.tools.waitUntilViewVisible
 import chat.progressive.lib.core.utils.timer.DefaultClock
 import kotlinx.coroutines.runBlocking
@@ -56,7 +56,7 @@ object EspressoHelper {
         return currentActivity
     }
 
-    inline fun <reified T : VectorBaseBottomSheetDialogFragment<*>> getBottomSheetDialog(): BottomSheetDialogFragment? {
+    inline fun <reified T : ProgressiveBaseBottomSheetDialogFragment<*>> getBottomSheetDialog(): BottomSheetDialogFragment? {
         return (getCurrentActivity() as? FragmentActivity)
                 ?.supportFragmentManager
                 ?.fragments
@@ -264,7 +264,7 @@ fun clickOnSheet(id: Int) {
     Espresso.onView(ViewMatchers.withId(id)).inRoot(RootMatchers.isDialog()).perform(ViewActions.click())
 }
 
-inline fun <reified T : VectorBaseBottomSheetDialogFragment<*>> interactWithSheet(
+inline fun <reified T : ProgressiveBaseBottomSheetDialogFragment<*>> interactWithSheet(
         contentMatcher: Matcher<View>,
         @BottomSheetBehavior.State openState: Int = BottomSheetBehavior.STATE_EXPANDED,
         @BottomSheetBehavior.State exitState: Int = BottomSheetBehavior.STATE_HIDDEN,
