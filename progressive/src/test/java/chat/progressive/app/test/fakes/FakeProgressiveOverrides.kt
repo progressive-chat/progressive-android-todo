@@ -7,7 +7,7 @@
 
 package chat.progressive.app.test.fakes
 
-import chat.progressive.app.features.DefaultVectorOverrides
+import chat.progressive.app.features.DefaultProgressiveOverrides
 import chat.progressive.app.features.ProgressiveOverrides
 
-class FakeProgressiveOverrides : ProgressiveOverrides by DefaultVectorOverrides()
+class FakeProgressiveOverrides : ProgressiveOverrides by DefaultProgressiveOverrides()

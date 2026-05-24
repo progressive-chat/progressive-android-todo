@@ -7,6 +7,7 @@
 package chat.progressive.app.fdroid.service
 
 import android.content.Intent
+import android.os.IBinder
 import dagger.hilt.android.AndroidEntryPoint
 import android.app.Service
 import chat.progressive.app.features.notifications.NotificationUtils
@@ -29,5 +30,9 @@ class GuardAndroidService : Service() {
         val notification = notificationUtils.buildForegroundServiceNotification(notificationSubtitleRes, false)
         startForeground(NotificationUtils.NOTIFICATION_ID_FOREGROUND_SERVICE, notification)
         return START_STICKY
-    }
+    
+    override fun onBind(intent: Intent?): IBinder? = null
+}
+
+    override fun onBind(intent: Intent?): IBinder? = null
 }

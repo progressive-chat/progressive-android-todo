@@ -43,11 +43,11 @@ import chat.progressive.app.core.pushers.FcmHelper
 import chat.progressive.app.core.resources.BuildMeta
 import chat.progressive.app.features.analytics.DecryptionFailureTracker
 import chat.progressive.app.features.analytics.ProgressiveAnalytics
-import chat.progressive.app.features.analytics.plan.SuperProperties
+import im.vector.app.features.analytics.plan.SuperProperties
 import chat.progressive.app.features.call.webrtc.WebRtcCallManager
 import chat.progressive.app.features.configuration.ProgressiveConfiguration
 import chat.progressive.app.features.invite.InvitesAcceptor
-import chat.progressive.app.features.lifecycle.ProgressiveActivityLifecycleCallbacks
+import chat.progressive.app.features.lifecycle.android.app.Application.ActivityLifecycleCallbacks
 import chat.progressive.app.features.notifications.NotificationDrawerManager
 import chat.progressive.app.features.notifications.NotificationUtils
 import chat.progressive.app.features.pin.PinLocker
@@ -151,7 +151,7 @@ class ProgressiveApplication :
 
         configureEpoxy()
 
-        registerActivityLifecycleCallbacks(ProgressiveActivityLifecycleCallbacks(popupAlertManager))
+        registerActivityLifecycleCallbacks(android.app.Application.ActivityLifecycleCallbacks(popupAlertManager))
         val fontRequest = FontRequest(
                 "com.google.android.gms.fonts",
                 "com.google.android.gms",
