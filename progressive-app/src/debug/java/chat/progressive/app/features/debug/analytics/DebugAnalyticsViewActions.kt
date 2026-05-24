@@ -7,8 +7,8 @@
 
 package chat.progressive.app.features.debug.analytics
 
-import chat.progressive.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.ProgressiveViewModelAction
 
-sealed interface DebugAnalyticsViewActions : VectorViewModelAction {
+sealed interface DebugAnalyticsViewActions : ProgressiveViewModelAction {
     object ResetAnalyticsOptInDisplayed : DebugAnalyticsViewActions
 }

@@ -10,13 +10,13 @@ package chat.progressive.app.test
 import com.airbnb.mvrx.MavericksState
 import chat.progressive.app.core.platform.VectorViewEvents
 import chat.progressive.app.core.platform.VectorViewModel
-import chat.progressive.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.ProgressiveViewModelAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 fun String.trimIndentOneLine() = trimIndent().replace("\n", "")
 
-fun <S : MavericksState, VA : VectorViewModelAction, VE : VectorViewEvents> VectorViewModel<S, VA, VE>.test(): ViewModelTest<S, VE> {
+fun <S : MavericksState, VA : ProgressiveViewModelAction, VE : VectorViewEvents> VectorViewModel<S, VA, VE>.test(): ViewModelTest<S, VE> {
     val testResultCollectingScope = CoroutineScope(Dispatchers.Unconfined)
     val state = stateFlow.test(testResultCollectingScope)
     val viewEvents = viewEvents.stream("test").test(testResultCollectingScope)

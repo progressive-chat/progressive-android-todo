@@ -42,7 +42,7 @@ import chat.progressive.app.core.di.ActiveSessionHolder
 import chat.progressive.app.core.pushers.FcmHelper
 import chat.progressive.app.core.resources.BuildMeta
 import chat.progressive.app.features.analytics.DecryptionFailureTracker
-import chat.progressive.app.features.analytics.VectorAnalytics
+import chat.progressive.app.features.analytics.ProgressiveAnalytics
 import chat.progressive.app.features.analytics.plan.SuperProperties
 import chat.progressive.app.features.call.webrtc.WebRtcCallManager
 import chat.progressive.app.features.configuration.ProgressiveConfiguration
@@ -54,7 +54,7 @@ import chat.progressive.app.features.pin.PinLocker
 import chat.progressive.app.features.popup.PopupAlertManager
 import chat.progressive.app.features.rageshake.VectorFileLogger
 import chat.progressive.app.features.rageshake.ProgressiveUncaughtExceptionHandler
-import chat.progressive.app.features.settings.VectorLocale
+import chat.progressive.app.features.settings.ProgressiveLocale
 import chat.progressive.app.features.settings.ProgressivePreferences
 import chat.progressive.app.features.themes.ThemeUtils
 import chat.progressive.app.features.version.VersionProvider
@@ -95,12 +95,12 @@ class ProgressiveApplication :
     @Inject lateinit var autoRageShaker: AutoRageShaker
     @Inject lateinit var decryptionFailureTracker: DecryptionFailureTracker
     @Inject lateinit var vectorFileLogger: VectorFileLogger
-    @Inject lateinit var vectorAnalytics: VectorAnalytics
+    @Inject lateinit var vectorAnalytics: ProgressiveAnalytics
     @Inject lateinit var matrix: Matrix
     @Inject lateinit var fcmHelper: FcmHelper
     @Inject lateinit var buildMeta: BuildMeta
     @Inject lateinit var leakDetector: LeakDetector
-    @Inject lateinit var vectorLocale: VectorLocale
+    @Inject lateinit var vectorLocale: ProgressiveLocale
     @Inject lateinit var webRtcCallManager: WebRtcCallManager
 
     // font thread handler

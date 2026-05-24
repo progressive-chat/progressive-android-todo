@@ -7,9 +7,9 @@
 
 package chat.progressive.app.features.debug.settings
 
-import chat.progressive.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.ProgressiveViewModelAction
 
-sealed interface DebugPrivateSettingsViewActions : VectorViewModelAction {
+sealed interface DebugPrivateSettingsViewActions : ProgressiveViewModelAction {
     data class SetDialPadVisibility(val force: Boolean) : DebugPrivateSettingsViewActions
     data class SetForceLoginFallbackEnabled(val force: Boolean) : DebugPrivateSettingsViewActions
     data class SetDisplayNameCapabilityOverride(val option: BooleanHomeserverCapabilitiesOverride?) : DebugPrivateSettingsViewActions

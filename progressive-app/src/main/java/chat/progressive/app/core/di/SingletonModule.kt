@@ -33,7 +33,7 @@ import chat.progressive.app.core.resources.BuildMeta
 import chat.progressive.app.core.utils.AndroidSystemSettingsProvider
 import chat.progressive.app.core.utils.SystemSettingsProvider
 import chat.progressive.app.features.analytics.AnalyticsTracker
-import chat.progressive.app.features.analytics.VectorAnalytics
+import chat.progressive.app.features.analytics.ProgressiveAnalytics
 import chat.progressive.app.features.analytics.errors.ErrorTracker
 import chat.progressive.app.features.analytics.impl.DefaultVectorAnalytics
 import chat.progressive.app.features.analytics.metrics.VectorPlugins
@@ -79,7 +79,7 @@ import javax.inject.Singleton
     abstract fun bindNavigator(navigator: DefaultNavigator): Navigator
 
     @Binds
-    abstract fun bindVectorAnalytics(analytics: DefaultVectorAnalytics): VectorAnalytics
+    abstract fun bindVectorAnalytics(analytics: DefaultVectorAnalytics): ProgressiveAnalytics
 
     @Binds
     abstract fun bindErrorTracker(analytics: DefaultVectorAnalytics): ErrorTracker

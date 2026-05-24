@@ -7,8 +7,8 @@
 
 package chat.progressive.app.features.debug.leak
 
-import chat.progressive.app.core.platform.VectorViewModelAction
+import chat.progressive.app.core.platform.ProgressiveViewModelAction
 
-sealed interface DebugMemoryLeaksViewActions : VectorViewModelAction {
+sealed interface DebugMemoryLeaksViewActions : ProgressiveViewModelAction {
     data class EnableMemoryLeaksAnalysis(val isEnabled: Boolean) : DebugMemoryLeaksViewActions
 }
