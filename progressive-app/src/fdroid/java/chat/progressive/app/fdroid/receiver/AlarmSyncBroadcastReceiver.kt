@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import chat.progressive.app.core.extensions.singletonEntryPoint
 import chat.progressive.app.core.platform.PendingIntentCompat
-import chat.progressive.app.core.services.ProgressiveSyncAndroidService
+import chat.progressive.app.core.services.ProgressiveSyncService
 import chat.progressive.lib.core.utils.timer.Clock
 import org.matrix.android.sdk.api.session.sync.job.SyncAndroidService
 import timber.log.Timber
@@ -32,15 +32,15 @@ class AlarmSyncBroadcastReceiver : BroadcastReceiver() {
             Timber.v("No active session, so don't launch sync service.")
             return
         }
-        val vectorPreferences = singletonEntryPoint.vectorPreferences()
+        val progressivePreferences = singletonEntryPoint.progressivePreferences()
         val clock = singletonEntryPoint.clock()
 
         val sessionId = intent.getStringExtra(SyncAndroidService.EXTRA_SESSION_ID) ?: return
-        ProgressiveSyncAndroidService.newPeriodicIntent(
+        ProgressiveSyncService.newPeriodicIntent(
                 context = context,
                 sessionId = sessionId,
-                syncTimeoutSeconds = vectorPreferences.backgroundSyncTimeOut(),
-                syncDelaySeconds = vectorPreferences.backgroundSyncDelay(),
+                syncTimeoutSeconds = progressivePreferences.backgroundSyncTimeOut(),
+                syncDelaySeconds = progressivePreferences.backgroundSyncDelay(),
                 isNetworkBack = false
         )
                 .let {
@@ -48,7 +48,7 @@ class AlarmSyncBroadcastReceiver : BroadcastReceiver() {
                         ContextCompat.startForegroundService(context, it)
                     } catch (ex: Throwable) {
                         Timber.i("## Sync: Failed to start service, Alarm scheduled to restart service")
-                        scheduleAlarm(context, sessionId, vectorPreferences.backgroundSyncDelay(), clock)
+                        scheduleAlarm(context, sessionId, progressivePreferences.backgroundSyncDelay(), clock)
                         Timber.e(ex)
                     }
                 }
@@ -94,7 +94,7 @@ class AlarmSyncBroadcastReceiver : BroadcastReceiver() {
             alarmMgr.cancel(pIntent)
 
             // Stop current service to restart
-            ProgressiveSyncAndroidService.stopIntent(context).let {
+            ProgressiveSyncService.stopIntent(context).let {
                 try {
                     ContextCompat.startForegroundService(context, it)
                 } catch (ex: Throwable) {
