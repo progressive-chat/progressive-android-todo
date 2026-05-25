@@ -622,7 +622,7 @@ class HomeActivity :
                 ProgressiveNative.ensureLoaded()
                 val mode = ProgressiveNative.nativeNotifGetMode()
                 item.title = if (mode == 1) "☀️ Day mode" else "🌙 Night mode"
-            } catch (_: Exception) { }
+            } catch (_: Throwable) { }
         }
     }
 
@@ -636,7 +636,7 @@ class HomeActivity :
                         else "Night mode OFF — all notifications restored"
             invalidateOptionsMenu()
             showNightSnackbar(msg)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             showSnackbar("Night mode error: ${e.message}")
         }
     }
