@@ -167,22 +167,6 @@ bool isDisplayableEvent(const std::string& eventType) {
     return false;
 }
 
-    // These events have state_key and represent room configuration
-    if (eventType == EventType::ROOM_NAME) return true;
-    if (eventType == EventType::ROOM_TOPIC) return true;
-    if (eventType == EventType::ROOM_AVATAR) return true;
-    if (eventType == EventType::ROOM_CREATE) return true;
-    if (eventType == EventType::ROOM_JOIN_RULES) return true;
-    if (eventType == EventType::ROOM_POWER_LEVELS) return true;
-    if (eventType == EventType::ROOM_TOMBSTONE) return true;
-    if (eventType == EventType::ROOM_ENCRYPTION) return true;
-    if (eventType == EventType::ROOM_GUEST_ACCESS) return true;
-    if (eventType == EventType::ROOM_HISTORY_VISIBILITY) return true;
-    if (eventType == EventType::ROOM_CANONICAL_ALIAS) return true;
-    if (eventType == EventType::ROOM_MEMBER) return true;
-    return false;
-}
-
 std::string extractEventId(const std::string& json) {
     return jsonGet(json, "event_id");
 }
