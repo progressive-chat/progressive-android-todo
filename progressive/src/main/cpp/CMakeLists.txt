@@ -382,6 +382,7 @@ add_library(
     src/url_render_utils.cpp
     src/user_directory_formatter.cpp
     src/whois_utils.cpp
+    src/progressive_core.cpp
     src/jni_bridge.cpp
     src/eventdb.cpp
     src/sync_status_utils.cpp
