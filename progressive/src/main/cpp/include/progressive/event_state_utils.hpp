@@ -3,14 +3,15 @@
 #include <cstdint>
 
 std::string parseStateKey(const std::string& json);
-std::string bool isStateEvent(const std::string& json);
-std::string buildStateEvent(const std(const std::string& json);
-std::string string& type, const std(const std::string& json);
-std::string string& stateKey,(const std::string& json);
-std::string const std(const std::string& json);
-std::string string& content);(const std::string& json);
-std::string formatStateEvent(const std(const std::string& json);
-std::string string& type, const std(const std::string& json);
-std::string string& stateKey,(const std::string& json);
-std::string const std(const std::string& json);
-std::string string& senderName);(const std::string& json);
+std::string bool(const std::string& json);
+std::string buildStateEvent(const std::string& json);
+std::string string(const std::string& json);
+std::string string(const std::string& json);
+std::string const(const std::string& json);
+std::string string(const std::string& json);
+std::string formatStateEvent(const std::string& json);
+std::string string(const std::string& json);
+std::string string(const std::string& json);
+std::string const(const std::string& json);
+std::string string(const std::string& json);
+

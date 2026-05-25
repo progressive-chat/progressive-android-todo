@@ -2,19 +2,20 @@
 #include <string>
 #include <cstdint>
 
-std::string roomId;(const std::string& json);
-std::string joinRule;           // "public", "invite", "knock", "private", "restricted"(const std::string& json);
-std::string historyVisibility;  // "world_readable", "shared", "invited", "joined"(const std::string& json);
-std::string guestAccess;        // "can_join", "forbidden"(const std::string& json);
-std::string RoomPermissions parseRoomPermissions(const std(const std::string& json);
-std::string string& joinRuleJson,(const std::string& json);
-std::string const std(const std::string& json);
-std::string string& historyVisibilityJson,(const std::string& json);
-std::string const std(const std::string& json);
-std::string string& guestAccessJson);(const std::string& json);
-std::string bool canUserReadHistory(const RoomPermissions& perm, const std(const std::string& json);
-std::string string& membership,(const std::string& json);
-std::string formatJoinRule(const std(const std::string& json);
-std::string string& rule);(const std::string& json);
-std::string formatHistoryVisibility(const std(const std::string& json);
-std::string string& visibility);(const std::string& json);
+std::string roomId(const std::string& json);
+std::string joinRule(const std::string& json);
+std::string historyVisibility(const std::string& json);
+std::string guestAccess(const std::string& json);
+std::string RoomPermissions(const std::string& json);
+std::string string(const std::string& json);
+std::string const(const std::string& json);
+std::string string(const std::string& json);
+std::string const(const std::string& json);
+std::string string(const std::string& json);
+std::string bool(const std::string& json);
+std::string string(const std::string& json);
+std::string formatJoinRule(const std::string& json);
+std::string string(const std::string& json);
+std::string formatHistoryVisibility(const std::string& json);
+std::string string(const std::string& json);
+

@@ -223,8 +223,6 @@ add_library(
     src/olm.cpp
     src/openid_token.cpp
     src/message_preview_utils.cpp
-    src/room_settings_utils.cpp
-    src/room_version_utils.cpp
     src/account_deactivation_utils.cpp
     src/account_validator.cpp
     src/admin_utils.cpp
@@ -332,6 +330,58 @@ add_library(
     src/task_queue.cpp
     src/theme_manager.cpp
     src/thirdparty_invite.cpp
+    src/thread_summary.cpp
+    src/thread_utils.cpp
+    src/timeline_filter_utils.cpp
+    src/topic_parser.cpp
+    src/typing_indicator.cpp
+    src/user_badge_utils.cpp
+    src/user_block_manager.cpp
+    src/verification_request_utils.cpp
+    src/voice_broadcast_manager.cpp
+    src/voice_message_utils.cpp
+    src/widget_api_utils.cpp
+    src/widget_manager_ext.cpp
+    src/widget_url_check.cpp
+    src/event_content_utils.cpp
+    src/key_verification_utils.cpp
+    src/markdown_utils.cpp
+    src/pagination_utils.cpp
+    src/permission_checker.cpp
+    src/room_tag_utils.cpp
+    src/session_watchdog.cpp
+    src/thirdparty_utils.cpp
+    src/thumbnail_utils.cpp
+    src/user_report_utils.cpp
+    src/voice_broadcast_utils.cpp
+    src/backup_keys_utils.cpp
+    src/custom_emoji_utils.cpp
+    src/display_name_utils.cpp
+    src/event_hash_utils.cpp
+    src/event_highlight_display.cpp
+    src/event_origin_utils.cpp
+    src/message_format_utils.cpp
+    src/message_link_utils.cpp
+    src/notification_sound_utils.cpp
+    src/push_rule_utils.cpp
+    src/room_child_utils.cpp
+    src/room_notification_utils.cpp
+    src/room_parent_utils.cpp
+    src/room_role_utils.cpp
+    src/room_visibility_utils.cpp
+    src/toast_notification_utils.cpp
+    src/url_preview_utils.cpp
+    src/avatar_fallback_utils.cpp
+    src/avatar_url_utils.cpp
+    src/device_rename_utils.cpp
+    src/event_forward_utils.cpp
+    src/identity_server_utils.cpp
+    src/notification_action_utils.cpp
+    src/push_gateway_utils.cpp
+    src/session_info_utils.cpp
+    src/url_render_utils.cpp
+    src/user_directory_formatter.cpp
+    src/whois_utils.cpp
     src/jni_bridge.cpp
     src/eventdb.cpp
     src/sync_status_utils.cpp
