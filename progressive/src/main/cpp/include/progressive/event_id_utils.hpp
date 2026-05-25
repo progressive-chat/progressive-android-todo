@@ -1,8 +1,12 @@
 #pragma once
 #include <string>
-#include <cstdint>
 
-std::string validateEventId(const std::string& json);
-std::string parseEventId(const std::string& json);
-std::string buildEventId(const std::string& json);
-std::string compareEventIds(const std::string& json);
+namespace progressive {
+
+bool validateEventId(const std::string& eventId);
+std::string extractServerFromEventId(const std::string& eventId);
+int compareEventIds(const std::string& eid1, const std::string& eid2);
+std::string parseEventId(const std::string& input);
+std::string buildEventId(const std::string& serverName);
+
+} // namespace progressive

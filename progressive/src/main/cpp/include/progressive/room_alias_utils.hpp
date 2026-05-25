@@ -1,31 +1,25 @@
 #pragma once
 #include <string>
-#include <cstdint>
+#include <vector>
 
-std::string alias;          // "#room(const std::string& json);
-std::string server"(const std::string& json);
-std::string roomId;         // resolved room ID(const std::string& json);
-std::string std(const std::string& json);
-std::string vector<std(const std::string& json);
-std::string string> servers;  // via servers(const std::string& json);
-std::string buildAliasResolveRequest(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string RoomAliasInfo parseAliasResolve(const std(const std::string& json);
-std::string string& json, const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string bool isValidAlias(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string bool isAliasUrl(const std(const std::string& json);
-std::string string& url);(const std::string& json);
-std::string extractServerFromAlias(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string buildAliasCreateRequest(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string std(const std::string& json);
-std::string vector<std(const std::string& json);
-std::string string> parseRoomAliases(const std(const std::string& json);
-std::string string& stateJson);(const std::string& json);
-std::string formatAlias(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
-std::string buildAliasJoinUrl(const std(const std::string& json);
-std::string string& alias);(const std::string& json);
+namespace progressive {
+
+struct RoomAliasInfo {
+    std::string alias;
+    std::string server;
+    std::string roomId;
+    std::vector<std::string> servers;
+};
+
+bool isValidAlias(const std::string& alias);
+bool isAliasUrl(const std::string& url);
+std::string extractServerFromAlias(const std::string& alias);
+std::string normalizeAlias(const std::string& alias);
+std::string formatAlias(const std::string& alias);
+std::string buildAliasJoinUrl(const std::string& alias);
+std::vector<std::string> parseRoomAliases(const std::string& stateJson);
+std::string buildAliasResolveRequest(const std::string& alias);
+RoomAliasInfo parseAliasResolve(const std::string& json, const std::string& alias);
+std::string buildAliasCreateRequest(const std::string& alias);
+
+} // namespace progressive
