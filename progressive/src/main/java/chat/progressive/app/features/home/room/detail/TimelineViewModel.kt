@@ -202,22 +202,7 @@ class TimelineViewModel @AssistedInject constructor(
             timeline = null
         } else {
             timeline = timelineFactory.createTimeline(viewModelScope, room, eventId, initialState.rootThreadEventId)
-            if (isPublicRoom) {
-                // Defer heavy init for public rooms to prevent GC storm
-                viewModelScope.launch(Dispatchers.Default) {
-                    for (i in 1..3) {
-                        Runtime.getRuntime().gc()
-                        System.runFinalization()
-                        delay(1000L)
-                    }
-                    withContext(Dispatchers.Main) {
-                        initSafe(room, timeline)
-                        startFreezeWatchdog(initialState.roomId)
-                    }
-                }
-            } else {
-                initSafe(room, timeline)
-            }
+            initSafe(room, timeline)
         }
     }
 
