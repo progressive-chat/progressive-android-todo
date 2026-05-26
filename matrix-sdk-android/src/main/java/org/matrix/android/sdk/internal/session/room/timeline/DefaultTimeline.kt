@@ -147,7 +147,7 @@ internal class DefaultTimeline(
         // Defer member loading by 10s to let UI render first.
         // Prevents GC storms for large public rooms (thousands of members).
         timelineScope.launch {
-            delay(10_000L)
+            delay(30_000L)
             loadRoomMembersIfNeeded()
         }
         startTimelineJob = timelineScope.launch {
