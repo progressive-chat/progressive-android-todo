@@ -199,9 +199,13 @@ class TimelineViewModel @AssistedInject constructor(
             startFreezeWatchdog(initialState.roomId)
         }
 
-        // This method will take care of a null room to update the state.
-        observeRoomSummary()
-        observeLocalRoomSummary()
+        if (isPublicRoom) {
+            // Skip heavy room state for public rooms — only timeline
+            observeRoomSummary()
+        } else {
+            observeRoomSummary()
+            observeLocalRoomSummary()
+        }
         if (room == null) {
             timeline = null
         } else {
@@ -213,31 +217,7 @@ class TimelineViewModel @AssistedInject constructor(
     private fun initSafe(room: Room, timeline: Timeline) {
         timeline.start(initialState.rootThreadEventId)
         timeline.addListener(this)
-        val isPublic = room.roomSummary()?.isPublic == true && !room.roomSummary()?.isDirect
-        if (isPublic) {
-            // Defer heavy observations for public rooms — prevent GC storm
-            viewModelScope.launch(Dispatchers.Default) {
-                delay(3000L)
-                Runtime.getRuntime().gc()
-                System.runFinalization()
-                delay(2000L)
-                withContext(Dispatchers.Main) {
-                    observeMembershipChanges()
-                    observeSummaryState()
-                    getUnreadState()
-                    observeSyncState()
-                    observeDataStore()
-                    observeEventDisplayedActions()
-                    observeUnreadState()
-                    observeMyRoomMember()
-                    observeActiveRoomWidgets()
-                    observePowerLevel()
-                    initThreads()
-                    handleResolution()
-                    initVoiceBroadcast()
-                }
-            }
-        } else {
+        if (room.roomSummary()?.isPublic != true || room.roomSummary()?.isDirect == true) {
             observeMembershipChanges()
             observeSummaryState()
             getUnreadState()
