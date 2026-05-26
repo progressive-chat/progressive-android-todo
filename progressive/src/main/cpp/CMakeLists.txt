@@ -698,6 +698,39 @@ set_source_files_properties(
     src/big_45.cpp
     src/big_46.cpp
     src/big_47.cpp
+    src/big_5.cpp
+    src/big_50.cpp
+    src/big_51.cpp
+    src/big_52.cpp
+    src/big_53.cpp
+    src/big_54.cpp
+    src/big_55.cpp
+    src/big_56.cpp
+    src/big_57.cpp
+    src/big_58.cpp
+    src/big_59.cpp
+    src/big_6.cpp
+    src/big_60.cpp
+    src/big_61.cpp
+    src/big_62.cpp
+    src/big_63.cpp
+    src/big_64.cpp
+    src/big_65.cpp
+    src/big_66.cpp
+    src/big_67.cpp
+    src/big_68.cpp
+    src/big_69.cpp
+    src/big_7.cpp
+    src/big_70.cpp
+    src/big_71.cpp
+    src/big_72.cpp
+    src/big_73.cpp
+    src/big_74.cpp
+    src/big_75.cpp
+    src/big_76.cpp
+    src/big_77.cpp
+    src/big_78.cpp
+    src/big_79.cpp
     src/big_48.cpp
     src/big_49.cpp
     src/big_18.cpp
