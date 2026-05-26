@@ -213,25 +213,6 @@ class TimelineViewModel @AssistedInject constructor(
         }
     }
 
-    private fun startFreezeWatchdog(roomId: String) {
-        freezeWatchdog?.interrupt()
-        freezeWatchdog = Thread({
-            try {
-                Thread.sleep(30_000L)
-                Timber.e("FREEZE DETECTED: killing process for room $roomId")
-                Process.killProcess(Process.myPid())
-            } catch (_: InterruptedException) { }
-        }, "freeze-watchdog-$roomId").apply {
-            isDaemon = true
-            start()
-        }
-    }
-
-    override fun onCleared() {
-        freezeWatchdog?.interrupt()
-        super.onCleared()
-    }
-
     private fun initSafe(room: Room, timeline: Timeline) {
         timeline.start(initialState.rootThreadEventId)
         timeline.addListener(this)
@@ -312,6 +293,20 @@ class TimelineViewModel @AssistedInject constructor(
     private fun initThreads() {
         markThreadTimelineAsReadLocal()
         observeLocalThreadNotifications()
+    }
+
+    private fun startFreezeWatchdog(roomId: String) {
+        freezeWatchdog?.interrupt()
+        freezeWatchdog = Thread({
+            try {
+                Thread.sleep(30_000L)
+                Timber.e("FREEZE DETECTED: killing process for room $roomId")
+                Process.killProcess(Process.myPid())
+            } catch (_: InterruptedException) { }
+        }, "freeze-watchdog-$roomId").apply {
+            isDaemon = true
+            start()
+        }
     }
 
     private fun observeDataStore() {
@@ -1532,6 +1527,7 @@ class TimelineViewModel @AssistedInject constructor(
     }
 
     override fun onCleared() {
+        freezeWatchdog?.interrupt()
         timeline?.dispose()
         timeline?.removeAllListeners()
         if (progressivePreferences.sendTypingNotifs()) {
