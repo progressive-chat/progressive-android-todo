@@ -970,10 +970,12 @@ class TimelineViewModel @AssistedInject constructor(
 
     private fun handleLoadMore(action: RoomDetailAction.LoadMoreTimelineEvents) {
         if (timeline == null) return
-        val count = if (room?.roomSummary()?.isPublic == true && room?.roomSummary()?.isDirect == false) {
-            PAGINATION_COUNT_PUBLIC
-        } else {
-            PAGINATION_COUNT
+        val isPublic = room?.roomSummary()?.isPublic == true && room?.roomSummary()?.isDirect == false
+        val count = if (isPublic) PAGINATION_COUNT_PUBLIC else PAGINATION_COUNT
+        if (isPublic) {
+            // GC before pagination to free memory for new events
+            Runtime.getRuntime().gc()
+            System.runFinalization()
         }
         timeline.paginate(action.direction, count)
     }
