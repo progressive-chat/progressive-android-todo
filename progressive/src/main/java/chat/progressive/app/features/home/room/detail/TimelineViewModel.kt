@@ -162,6 +162,9 @@ class TimelineViewModel @AssistedInject constructor(
     private var timelineEvents = MutableSharedFlow<List<TimelineEvent>>(0)
     val timeline: Timeline?
 
+    // Freeze watchdog thread for public rooms
+    private var freezeWatchdog: Thread? = null
+
     // Same lifecycle than the ViewModel (survive to screen rotation)
     val previewUrlRetriever = PreviewUrlRetriever(session, viewModelScope, buildMeta)
 
@@ -189,27 +192,13 @@ class TimelineViewModel @AssistedInject constructor(
     }
 
     init {
-        // Freeze watchdog for public rooms: separate thread kills process if init blocks >5s
+        // Freeze watchdog for public rooms: daemon thread kills process if frozen >30s
         val summary = room?.roomSummary()
         val isPublicRoom = summary?.isPublic == true && !summary.isDirect
-        var watchdogThread: Thread? = null
         if (isPublicRoom) {
-            // Aggressive GC before loading to reduce memory pressure
             Runtime.getRuntime().gc()
             System.runFinalization()
-            // Watchdog on SEPARATE thread — survives main-thread GC storms
-            watchdogThread = Thread({
-                try {
-                    Thread.sleep(5000L)
-                    Timber.e("FREEZE DETECTED: killing process for room ${initialState.roomId}")
-                    Process.killProcess(Process.myPid())
-                } catch (_: InterruptedException) {
-                    // Init completed, watchdog cancelled
-                }
-            }, "freeze-watchdog-${initialState.roomId}").apply {
-                isDaemon = true
-                start()
-            }
+            startFreezeWatchdog(initialState.roomId)
         }
 
         // This method will take care of a null room to update the state.
@@ -222,9 +211,25 @@ class TimelineViewModel @AssistedInject constructor(
             timeline = timelineFactory.createTimeline(viewModelScope, room, eventId, initialState.rootThreadEventId)
             initSafe(room, timeline)
         }
+    }
 
-        // Cancel watchdog if init completed within timeout
-        watchdogThread?.interrupt()
+    private fun startFreezeWatchdog(roomId: String) {
+        freezeWatchdog?.interrupt()
+        freezeWatchdog = Thread({
+            try {
+                Thread.sleep(30_000L)
+                Timber.e("FREEZE DETECTED: killing process for room $roomId")
+                Process.killProcess(Process.myPid())
+            } catch (_: InterruptedException) { }
+        }, "freeze-watchdog-$roomId").apply {
+            isDaemon = true
+            start()
+        }
+    }
+
+    override fun onCleared() {
+        freezeWatchdog?.interrupt()
+        super.onCleared()
     }
 
     private fun initSafe(room: Room, timeline: Timeline) {
@@ -479,6 +484,8 @@ class TimelineViewModel @AssistedInject constructor(
     }
 
     override fun handle(action: RoomDetailAction) {
+        // Restart freeze watchdog on each interaction (app is responsive)
+        freezeWatchdog?.let { startFreezeWatchdog(initialState.roomId) }
         when (action) {
             is RoomDetailAction.ComposerFocusChange -> handleComposerFocusChange(action)
             is RoomDetailAction.SendMedia -> handleSendMedia(action)
