@@ -144,10 +144,8 @@ internal class DefaultTimeline(
     }
 
     override fun start(rootThreadEventId: String?) {
-        // Defer member loading by 10s to let UI render first.
-        // Prevents GC storms for large public rooms (thousands of members).
+        // Load members immediately — memory is fine now
         timelineScope.launch {
-            delay(30_000L)
             loadRoomMembersIfNeeded()
         }
         startTimelineJob = timelineScope.launch {
@@ -195,7 +193,7 @@ internal class DefaultTimeline(
     override fun paginate(direction: Timeline.Direction, count: Int) {
         timelineScope.launch {
             startTimelineJob?.join()
-            val postSnapshot = loadMore(count, direction, fetchOnServerIfNeeded = false)
+            val postSnapshot = loadMore(count, direction, fetchOnServerIfNeeded = true)
             if (postSnapshot) {
                 postSnapshot()
             }

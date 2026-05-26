@@ -13,10 +13,9 @@ import javax.inject.Inject
 
 class TimelineSettingsFactory @Inject constructor(private val userPreferencesProvider: UserPreferencesProvider) {
 
-    fun create(rootThreadEventId: String?, isPublicRoom: Boolean = false): TimelineSettings {
-        val initialSize = if (isPublicRoom) 10 else 30
+    fun create(rootThreadEventId: String?): TimelineSettings {
         return TimelineSettings(
-                initialSize = initialSize,
+                initialSize = 30,
                 buildReadReceipts = userPreferencesProvider.shouldShowReadReceipts(),
                 rootThreadEventId = rootThreadEventId,
                 useLiveSenderInfo = userPreferencesProvider.showLiveSenderInfo()
