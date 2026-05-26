@@ -228,7 +228,16 @@ internal class DefaultTimeline(
         val baseLogMessage = "loadMore(count: $count, direction: $direction, roomId: $roomId, fetchOnServer: $fetchOnServerIfNeeded)"
         Timber.v("$baseLogMessage started")
         if (!isStarted.get()) {
-            throw IllegalStateException("You should call start before using timeline")
+            Timber.w("$baseLogMessage : timeline not started yet, waiting...")
+            // Wait up to 5s for start to complete (race condition with sequencer)
+            val deadline = System.currentTimeMillis() + 5000L
+            while (!isStarted.get() && System.currentTimeMillis() < deadline) {
+                delay(50L)
+            }
+            if (!isStarted.get()) {
+                Timber.e("$baseLogMessage : timeline still not started, aborting")
+                return false
+            }
         }
         val currentState = getPaginationState(direction)
         if (!currentState.hasMoreToLoad) {
