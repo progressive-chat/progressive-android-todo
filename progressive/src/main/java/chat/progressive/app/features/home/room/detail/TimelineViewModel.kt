@@ -192,12 +192,8 @@ class TimelineViewModel @AssistedInject constructor(
     }
 
     init {
-        // Freeze watchdog for public rooms: daemon thread kills process if frozen >30s
         val summary = room?.roomSummary()
         val isPublicRoom = summary?.isPublic == true && !summary.isDirect
-        if (isPublicRoom) {
-            startFreezeWatchdog(initialState.roomId)
-        }
 
         // This method will take care of a null room to update the state.
         observeRoomSummary()
@@ -216,6 +212,7 @@ class TimelineViewModel @AssistedInject constructor(
                     }
                     withContext(Dispatchers.Main) {
                         initSafe(room, timeline)
+                        startFreezeWatchdog(initialState.roomId)
                     }
                 }
             } else {
