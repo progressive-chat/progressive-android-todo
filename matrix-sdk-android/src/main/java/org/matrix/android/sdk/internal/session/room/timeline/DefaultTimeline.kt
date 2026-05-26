@@ -144,9 +144,9 @@ internal class DefaultTimeline(
     }
 
     override fun start(rootThreadEventId: String?) {
-        timelineScope.launch {
-            loadRoomMembersIfNeeded()
-        }
+        // FIXME: loadRoomMembersIfNeeded() loads ALL members for public rooms
+        // causing GC storm + ANR on devices with limited RAM + 134MB native .so
+        // timelineScope.launch { loadRoomMembersIfNeeded() }
         startTimelineJob = timelineScope.launch {
             sequencer.post {
                 if (isStarted.compareAndSet(false, true)) {
