@@ -441,6 +441,35 @@ add_library(
     src/progressive_combined_7.cpp
     src/progressive_combined_8.cpp
     src/progressive_combined_9.cpp
+    src/auth_service_v4.cpp
+    src/cross_sign_v4.cpp
+    src/device_list_v4.cpp
+    src/e2ee_decor_v4.cpp
+    src/event_relations_v4.cpp
+    src/federation_v4.cpp
+    src/identity_v4.cpp
+    src/key_backup_v4.cpp
+    src/location_v4.cpp
+    src/media_upload_v4.cpp
+    src/megolm_v4.cpp
+    src/olm_crypto_v4.cpp
+    src/poll_engine_v4.cpp
+    src/presence_v4.cpp
+    src/push_rules_v4.cpp
+    src/read_receipt_v4.cpp
+    src/room_summary_v4.cpp
+    src/room_upgrade_v4.cpp
+    src/secret_store_v4.cpp
+    src/send_queue_v4.cpp
+    src/server_notice_v4.cpp
+    src/sliding_sync_v4.cpp
+    src/space_graph_v4.cpp
+    src/sync_handler_v4.cpp
+    src/thread_mgr_v4.cpp
+    src/timeline_chunk_v4.cpp
+    src/verification_v4.cpp
+    src/voice_broadcast_v4.cpp
+    src/widget_driver_v4.cpp
 )
 
 # --- Download SQLite3 amalgamation at configure time ---
