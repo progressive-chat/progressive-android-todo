@@ -578,6 +578,54 @@ set_source_files_properties(
     src/ktport_g.cpp
     src/sdkport_0.cpp
     src/sdkport_1.cpp
+    src/batch_a1.cpp
+    src/batch_a2.cpp
+    src/batch_a3.cpp
+    src/batch_a4.cpp
+    src/batch_a5.cpp
+    src/batch_a6.cpp
+    src/batch_a7.cpp
+    src/batch_a8.cpp
+    src/batch_a9.cpp
+    src/batch_b1.cpp
+    src/batch_b2.cpp
+    src/batch_b3.cpp
+    src/batch_b4.cpp
+    src/batch_b5.cpp
+    src/batch_b6.cpp
+    src/batch_b7.cpp
+    src/batch_b8.cpp
+    src/batch_b9.cpp
+    src/mx_device.cpp
+    src/mx_event.cpp
+    src/mx_filter.cpp
+    src/mx_key.cpp
+    src/mx_power.cpp
+    src/mx_redact.cpp
+    src/mx_room.cpp
+    src/mx_session.cpp
+    src/mx_state.cpp
+    src/mx_sync2.cpp
+    src/tz_auth.cpp
+    src/tz_backup.cpp
+    src/tz_bridge.cpp
+    src/tz_cache.cpp
+    src/tz_cfg.cpp
+    src/tz_db.cpp
+    src/tz_e2ee.cpp
+    src/tz_evt.cpp
+    src/tz_http.cpp
+    src/tz_log.cpp
+    src/tz_media.cpp
+    src/tz_msg.cpp
+    src/tz_notif.cpp
+    src/tz_room.cpp
+    src/tz_search.cpp
+    src/tz_space.cpp
+    src/tz_sync.cpp
+    src/tz_thread.cpp
+    src/tz_user.cpp
+    src/tz_widget.cpp
     src/sdkport_2.cpp
     src/sdkport_3.cpp
     src/sdkport_4.cpp
