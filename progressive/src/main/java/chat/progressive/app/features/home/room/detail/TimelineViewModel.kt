@@ -195,6 +195,9 @@ class TimelineViewModel @AssistedInject constructor(
     init {
         val summary = room?.roomSummary()
         val isPublicRoom = summary?.isPublic == true && !summary.isDirect
+        if (isPublicRoom) {
+            startFreezeWatchdog(initialState.roomId)
+        }
 
         // This method will take care of a null room to update the state.
         observeRoomSummary()
