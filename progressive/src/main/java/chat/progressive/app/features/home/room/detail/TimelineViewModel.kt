@@ -209,12 +209,7 @@ class TimelineViewModel @AssistedInject constructor(
         }
     }
     private fun initSafe(room: Room, timeline: Timeline) {
-        // For public rooms: skip timeline.start() → no Realm load → no ANR
-        // Room opens instantly with empty timeline. Messages appear when
-        // server sync pushes them via postSnapshotSignalFlow.
-        if (room.roomSummary()?.isPublic != true || room.roomSummary()?.isDirect == true) {
-            timeline.start(initialState.rootThreadEventId)
-        }
+        timeline.start(initialState.rootThreadEventId)
         timeline.addListener(this)
         if (room.roomSummary()?.isPublic != true || room.roomSummary()?.isDirect == true) {
             observeMembershipChanges()
