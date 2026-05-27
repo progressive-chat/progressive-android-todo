@@ -190,13 +190,9 @@ internal class DefaultTimeline(
     override fun paginate(direction: Timeline.Direction, count: Int) {
         timelineScope.launch {
             startTimelineJob?.join()
-            val postSnapshot = loadMore(count, direction, fetchOnServerIfNeeded = true)
-            // Only post snapshot if we successfully loaded events
-            if (postSnapshot) {
-                // Post snapshot with a 500ms delay to let GC/UI settle
-                delay(500L)
-                postSnapshot()
-            }
+            loadMore(count, direction, fetchOnServerIfNeeded = true)
+            // Don't post snapshot here — next sync will trigger display.
+            // Prevents ANR from withContext(Dispatchers.Main) blocking.
         }
     }
 
