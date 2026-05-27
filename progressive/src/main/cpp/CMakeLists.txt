@@ -197,6 +197,7 @@ add_library(
     src/slash_command.cpp
     src/sliding_sync.cpp
     src/sqlite_wrapper.cpp
+    src/sqlite_store.cpp
     src/typing_monitor.cpp
     src/unified_push.cpp
     src/url_preview.cpp
