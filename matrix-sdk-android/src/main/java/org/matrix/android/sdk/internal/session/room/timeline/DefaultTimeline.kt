@@ -144,9 +144,7 @@ internal class DefaultTimeline(
     }
 
     override fun start(rootThreadEventId: String?) {
-        // FIXME: loadRoomMembersIfNeeded() loads ALL members for public rooms
-        // causing GC storm + ANR on devices with limited RAM + 134MB native .so
-        // timelineScope.launch { loadRoomMembersIfNeeded() }
+        // loadRoomMembersIfNeeded() disabled — prevents GC storm on public rooms
         startTimelineJob = timelineScope.launch {
             sequencer.post {
                 if (isStarted.compareAndSet(false, true)) {
@@ -193,7 +191,10 @@ internal class DefaultTimeline(
         timelineScope.launch {
             startTimelineJob?.join()
             val postSnapshot = loadMore(count, direction, fetchOnServerIfNeeded = true)
+            // Only post snapshot if we successfully loaded events
             if (postSnapshot) {
+                // Post snapshot with a 500ms delay to let GC/UI settle
+                delay(500L)
                 postSnapshot()
             }
         }
@@ -228,7 +229,16 @@ internal class DefaultTimeline(
         val baseLogMessage = "loadMore(count: $count, direction: $direction, roomId: $roomId, fetchOnServer: $fetchOnServerIfNeeded)"
         Timber.v("$baseLogMessage started")
         if (!isStarted.get()) {
-            throw IllegalStateException("You should call start before using timeline")
+            Timber.w("$baseLogMessage : timeline not started yet, waiting...")
+            // Wait up to 5s for start to complete (race condition with sequencer)
+            val deadline = System.currentTimeMillis() + 5000L
+            while (!isStarted.get() && System.currentTimeMillis() < deadline) {
+                delay(50L)
+            }
+            if (!isStarted.get()) {
+                Timber.e("$baseLogMessage : timeline still not started, aborting")
+                return false
+            }
         }
         val currentState = getPaginationState(direction)
         if (!currentState.hasMoreToLoad) {
@@ -285,7 +295,7 @@ internal class DefaultTimeline(
         loadMore(
                 count = strategyDependencies.timelineSettings.initialSize,
                 direction = Timeline.Direction.BACKWARDS,
-                fetchOnServerIfNeeded = false
+                fetchOnServerIfNeeded = true
         )
 
         Timber.v("$baseLogMessage finished")
