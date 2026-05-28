@@ -170,8 +170,6 @@ std::string hmacSha256(const std::string& key, const std::string& message) {
         iKeyPad[i] = keyBlock[i] ^ 0x36;
     }
 
-    auto innerHash = sha256Raw(reinterpret_cast<const uint8_t*>(iKeyPad.data() + message.size()), 0);
-    // Actually: sha256Hex(iKeyPad + message)
     std::string inner = iKeyPad + message;
     auto innerRaw = sha256Raw(reinterpret_cast<const uint8_t*>(inner.data()), inner.size());
     std::string outer = oKeyPad + std::string(innerRaw.begin(), innerRaw.end());

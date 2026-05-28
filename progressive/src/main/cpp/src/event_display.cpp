@@ -24,7 +24,7 @@ DisplayEventType classifyEvent(const std::string& eventType, const std::string& 
     if (eventType == "m.room.topic") return DisplayEventType::RoomTopic;
     if (eventType == "m.room.avatar") return DisplayEventType::RoomAvatar;
     if (eventType == "m.room.encryption") return DisplayEventType::Encryption;
-    if (eventType == "m.room.redaction" || eventType == "m.room.redaction")
+    if (eventType == "m.room.redaction")
         return DisplayEventType::Redaction;
     if (eventType.find("m.call.") == 0) return DisplayEventType::Call;
     if (eventType == "m.widget") return DisplayEventType::Widget;
