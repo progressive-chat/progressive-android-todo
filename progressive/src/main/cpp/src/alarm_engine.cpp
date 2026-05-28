@@ -1,4 +1,5 @@
 #include "progressive/alarm_engine.hpp"
+#include "progressive/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
@@ -6,19 +7,6 @@
 #include <ctime>
 
 namespace progressive {
-
-static std::string escapeJsonStr(const std::string& s) {
-    std::string out;
-    for (char c : s) {
-        switch (c) {
-            case '"': out += "\\\""; break;
-            case '\\': out += "\\\\"; break;
-            case '\n': out += "\\n"; break;
-            default: out += c;
-        }
-    }
-    return out;
-}
 
 AlarmManager::AlarmManager() {}
 
@@ -236,18 +224,18 @@ std::string AlarmManager::alarmsToJson() const {
         const auto& a = alarms_[i];
         os << "{";
         os << "\"id\":\"" << a.id << "\"";
-        os << ",\"note\":\"" << escapeJsonStr(a.note) << "\"";
+        os << ",\"note\":\"" << escapeJson(a.note) << "\"";
         os << ",\"triggerAtMs\":" << a.triggerAtMs;
         os << ",\"createdAtMs\":" << a.createdAtMs;
         os << ",\"repeat\":" << static_cast<int>(a.repeat);
         os << ",\"preAction\":" << static_cast<int>(a.preAction);
-        os << ",\"preActionParam\":\"" << escapeJsonStr(a.preActionParam) << "\"";
+        os << ",\"preActionParam\":\"" << escapeJson(a.preActionParam) << "\"";
         os << ",\"ttsEnabled\":" << (a.ttsEnabled ? "true" : "false");
         os << ",\"ttsDelaySeconds\":" << a.ttsDelaySeconds;
         os << ",\"enabled\":" << (a.enabled ? "true" : "false");
         os << ",\"snoozed\":" << (a.snoozed ? "true" : "false");
         os << ",\"snoozeUntilMs\":" << a.snoozeUntilMs;
-        os << ",\"ringtoneUri\":\"" << escapeJsonStr(a.ringtoneUri) << "\"";
+        os << ",\"ringtoneUri\":\"" << escapeJson(a.ringtoneUri) << "\"";
         os << "}";
     }
     os << "]";

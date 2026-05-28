@@ -64,7 +64,7 @@ class MatrixToUserFragment :
                 avatarRenderer.render(item.invoke(), views.matrixToCardAvatar)
             }
             is Fail -> {
-                // TODO display some error copy?
+                // Error handled by sharedViewModel (dismisses sheet silently)
                 sharedViewModel.handle(MatrixToAction.FailedToResolveUser)
             }
         }
@@ -81,7 +81,7 @@ class MatrixToUserFragment :
             is Fail -> {
                 views.matrixToCardButtonLoading.isVisible = false
                 views.matrixToCardSendMessageButton.isVisible = true
-                // TODO display some error copy?
+                // Error handled by sharedViewModel (dismisses sheet silently)
                 sharedViewModel.handle(MatrixToAction.FailedToStartChatting)
             }
             is Loading -> {

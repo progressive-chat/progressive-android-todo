@@ -350,6 +350,8 @@ static std::string escapeJsonStr(const std::string& s) {
         if (c == '"') r += "\\\"";
         else if (c == '\\') r += "\\\\";
         else if (c == '\n') r += "\\n";
+        else if (c == '\r') r += "\\r";
+        else if (c == '\t') r += "\\t";
         else r += c;
     }
     r += "\"";

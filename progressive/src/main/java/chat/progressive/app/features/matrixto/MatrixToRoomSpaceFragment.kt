@@ -151,7 +151,7 @@ class MatrixToRoomSpaceFragment :
                 }
             }
             is Fail -> {
-                // TODO display some error copy?
+                // Error handled by sharedViewModel (dismisses sheet silently)
                 sharedViewModel.handle(MatrixToAction.FailedToResolveUser)
             }
         }
@@ -177,7 +177,7 @@ class MatrixToRoomSpaceFragment :
             }
             is Fail -> {
                 views.matrixToCardMainButton.render(ButtonStateView.State.Error)
-                // TODO display some error copy?
+                // Button shows error state; consider adding error text here
             }
             is Loading -> {
                 views.matrixToCardMainButton.render(ButtonStateView.State.Loading)

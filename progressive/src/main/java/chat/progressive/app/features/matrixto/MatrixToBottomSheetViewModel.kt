@@ -238,9 +238,11 @@ class MatrixToBottomSheetViewModel @AssistedInject constructor(
         when (action) {
             is MatrixToAction.StartChattingWithUser -> handleStartChatting(action)
             MatrixToAction.FailedToResolveUser -> {
+                // Dismiss the sheet; consider showing a toast with error message
                 _viewEvents.post(MatrixToViewEvents.Dismiss)
             }
             MatrixToAction.FailedToStartChatting -> {
+                // Dismiss the sheet; consider showing a toast with error message
                 _viewEvents.post(MatrixToViewEvents.Dismiss)
             }
             is MatrixToAction.JoinSpace -> handleJoinSpace(action)

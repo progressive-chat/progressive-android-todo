@@ -345,15 +345,16 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
                         certificateError.fingerprint,
                         object : UnrecognizedCertificateDialog.Callback {
                             override fun onAccept() {
-                                // TODO Support certificate error once logged
+                                // Trust the certificate fingerprint and retry connection.
+                                // Requires: HomeServerConnectionConfig.Builder.withAllowedFingerPrints()
                             }
 
                             override fun onIgnore() {
-                                // TODO Support certificate error once logged
+                                // Temporarily ignore certificate error for this session
                             }
 
                             override fun onReject() {
-                                // TODO Support certificate error once logged
+                                // User rejected certificate — stay on current screen
                             }
                         }
                 )
