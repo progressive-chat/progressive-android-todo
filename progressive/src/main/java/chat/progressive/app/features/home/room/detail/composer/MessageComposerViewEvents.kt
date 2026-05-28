@@ -32,7 +32,7 @@ sealed class MessageComposerViewEvents : ProgressiveViewEvents {
 
     data class OpenRoomMemberProfile(val userId: String) : MessageComposerViewEvents()
 
-    // TODO Remove
+    // Placeholder for commands that are not yet implemented client-side
     object SlashCommandNotImplemented : SendMessageResult()
 
     data class ShowRoomUpgradeDialog(val newVersion: String, val isPublic: Boolean) : MessageComposerViewEvents()

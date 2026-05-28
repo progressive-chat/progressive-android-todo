@@ -47,18 +47,33 @@ LanguageResult detectLanguageByAlphabet(const std::string& text) {
         {"de", "German",      0x0041, 0x007A, 0}, // same as English, differentiated by umlauts
     };
 
-    // Count special chars for German
+    // Count special chars for German — search for UTF-8 encoded umlauts in the text
     int deCount = 0;
-    std::string umlauts = "\u00C4\u00E4\u00D6\u00F6\u00DC\u00FC\u00DF"; // ÄäÖöÜüß
-    for (unsigned char c : text) {
-        if (umlauts.find(std::string(1, c)) != std::string::npos) deCount++;
+    // Ä (C3 84), ä (C3 A4), Ö (C3 96), ö (C3 B6), Ü (C3 9C), ü (C3 BC), ß (C3 9F)
+    static const std::string dePatterns[] = {
+        "\xC3\x84", "\xC3\xA4", "\xC3\x96", "\xC3\xB6",
+        "\xC3\x9C", "\xC3\xBC", "\xC3\x9F"
+    };
+    for (const auto& p : dePatterns) {
+        size_t pos = 0;
+        while ((pos = text.find(p, pos)) != std::string::npos) {
+            deCount++;
+            pos += p.size();
+        }
     }
 
-    // Count special chars for Ukrainian vs Russian
+    // Count special chars for Ukrainian vs Russian — search for UTF-8 encoded chars
     int uaCount = 0;
-    std::string uaChars = "\u0404\u0454\u0406\u0456\u0407\u0457"; // ЄєІіЇї
-    for (unsigned char c : text) {
-        if (uaChars.find(std::string(1, c)) != std::string::npos) uaCount++;
+    // Є (D0 84), є (D1 94), І (D0 86), і (D1 96), Ї (D0 87), ї (D1 97)
+    static const std::string uaPatterns[] = {
+        "\xD0\x84", "\xD1\x94", "\xD0\x86", "\xD1\x96", "\xD0\x87", "\xD1\x97"
+    };
+    for (const auto& p : uaPatterns) {
+        size_t pos = 0;
+        while ((pos = text.find(p, pos)) != std::string::npos) {
+            uaCount++;
+            pos += p.size();
+        }
     }
 
     // Find the script with most characters

@@ -33,8 +33,9 @@ fun Session.startSyncing(context: Context) {
                     try {
                         ContextCompat.startForegroundService(applicationContext, it)
                     } catch (ex: Throwable) {
-                        // TODO
-                        Timber.e(ex)
+                        // Foreground service start may fail if app is in background
+                        // or if foreground service restrictions apply
+                        Timber.e(ex, "Failed to start foreground sync service")
                     }
                 }
     } else {

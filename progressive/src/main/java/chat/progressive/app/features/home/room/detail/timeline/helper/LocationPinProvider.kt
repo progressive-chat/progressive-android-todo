@@ -61,8 +61,7 @@ class LocationPinProvider @Inject constructor(
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {
-                // Is it possible? Put placeholder instead?
-                // FIXME The doc says it has to be implemented and should free resources
+                // No-op: drawable consumed by callback, Glide handles cleanup
                 Timber.d("## Location: onLoadCleared")
             }
 

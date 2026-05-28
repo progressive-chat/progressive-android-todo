@@ -437,7 +437,7 @@ class ProgressiveSettingsSecurity :
 
     private fun refreshKeysManagementSection() {
         // If crypto is not enabled parent section will be removed
-        // TODO notice that this will not work when no network
+        // Note: key backup management requires network connectivity
         manageBackupPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             context?.let {
                 startActivity(KeysBackupManageActivity.intent(it))

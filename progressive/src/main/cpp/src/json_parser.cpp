@@ -23,11 +23,19 @@ std::string parseJsonStringValue(const std::string& json, const std::string& key
         ++pos;
     if (pos >= json.size()) return {};
 
-    // Handle string value: "xxx"
+    // Handle string value: handles escaped quotes (\") within strings
     if (json[pos] == '"') {
         ++pos;
-        auto end = json.find('"', pos);
-        if (end == std::string::npos) return {};
+        auto end = pos;
+        while (end < json.size()) {
+            if (json[end] == '\\' && end + 1 < json.size()) {
+                end += 2; // skip escaped char
+                continue;
+            }
+            if (json[end] == '"') break;
+            ++end;
+        }
+        if (end >= json.size()) return {};
         return json.substr(pos, end - pos);
     }
 

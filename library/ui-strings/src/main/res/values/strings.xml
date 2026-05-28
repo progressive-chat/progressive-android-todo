@@ -563,6 +563,10 @@
     <!-- External application -->
     <string name="error_no_external_application_found">Sorry, no external application has been found to complete this action.</string>
 
+    <!-- Account expired -->
+    <string name="error_account_expired_title">Account Expired</string>
+    <string name="error_account_expired_message">Your account has expired or been deactivated on the server. You will be signed out.</string>
+
     <!-- Authentication -->
     <string name="auth_login">Log in</string>
     <string name="auth_login_sso">Sign in with single sign-on</string>

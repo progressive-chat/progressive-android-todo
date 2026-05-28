@@ -98,8 +98,12 @@ abstract class SpaceChildInfoItem : ProgressiveEpoxyModel<SpaceChildInfoItem.Hol
         holder.joinButton.onClick {
             // local echo
             holder.joinButton.isEnabled = false
-            // FIXME It may lead to crash if the view is gone
-            holder.view.postDelayed({ holder.joinButton.isEnabled = true }, 400)
+            // Guard against crash if view is detached before callback fires
+            holder.view.postDelayed({
+                if (holder.view.isAttachedToWindow) {
+                    holder.joinButton.isEnabled = true
+                }
+            }, 400)
             buttonClickListener?.invoke(it)
         }
     }

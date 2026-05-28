@@ -144,7 +144,7 @@ open class LoginActivity : ProgressiveActivity<ActivityLoginBinding>(), Unlocked
                             // findViewById<View?>(R.id.loginSplashTitle)?.let { ft.addSharedElement(it, ViewCompat.getTransitionName(it) ?: "") }
                             // No transition here now actually
                             // findViewById<View?>(R.id.loginSplashSubmit)?.let { ft.addSharedElement(it, ViewCompat.getTransitionName(it) ?: "") }
-                            // TODO Disabled because it provokes a flickering
+                            // Custom animations disabled: they cause visual flickering.
                             // ft.setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim)
                         })
             is LoginViewEvents.OnServerSelectionDone -> onServerSelectionDone(loginViewEvents)

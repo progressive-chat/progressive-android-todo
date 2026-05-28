@@ -244,19 +244,8 @@ class ProgressiveSettingsGeneral :
         // Contacts
         setContactsPreferences()
 
-        // clear cache
+        // clear cache — restarts app to clear all cached data
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_CLEAR_CACHE_PREFERENCE_KEY)!!.let {
-            /*
-            TODO
-            MXSession.getApplicationSizeCaches(activity, object : SimpleApiCallback<Long>() {
-                override fun onSuccess(size: Long) {
-                    if (null != activity) {
-                        it.summary = TextUtils.formatFileSize(activity, size)
-                    }
-                }
-            })
-             */
-
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 displayLoadingView()
                 MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = true))
@@ -391,21 +380,8 @@ class ProgressiveSettingsGeneral :
     // ==============================================================================================================
 
     private fun setContactsPreferences() {
-        /* TODO
-        // Permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // on Android >= 23, use the system one
-            mContactSettingsCategory.removePreference(findPreference(ContactsManager.CONTACTS_BOOK_ACCESS_KEY))
-        }
-        // Phonebook country
-        mContactPhonebookCountryPreference.summary = PhoneNumberUtils.getHumanCountryCode(PhoneNumberUtils.getCountryCode(activity))
-
-        mContactPhonebookCountryPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val intent = CountryPickerActivity.getIntent(activity, true)
-            startActivityForResult(intent, REQUEST_PHONEBOOK_COUNTRY)
-            true
-        }
-         */
+        // Phonebook country picker — not yet wired to a country picker activity
+        // TODO: integrate CountryPickerActivity when dependency is available
     }
 
     // ==============================================================================================================

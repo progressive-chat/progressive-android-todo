@@ -621,7 +621,7 @@ class HomeActivity :
             try {
                 ProgressiveNative.ensureLoaded()
                 val mode = ProgressiveNative.nativeNotifGetMode()
-                item.title = if (mode == 1) "☀️ Day mode" else "🌙 Night mode"
+                item.title = if (mode == 1) "🔕 Quiet" else "🔔 All"
             } catch (_: Throwable) { }
         }
     }
@@ -632,8 +632,8 @@ class HomeActivity :
             val currentMode = ProgressiveNative.nativeNotifGetMode()
             val newMode = if (currentMode == 1) 0 else 1
             ProgressiveNative.nativeNotifSetMode(newMode)
-            val msg = if (newMode == 1) "Night mode ON — only alarms & keywords ping"
-                        else "Night mode OFF — all notifications restored"
+            val msg = if (newMode == 1) "🔕 Quiet mode — only alarms & keywords"
+                        else "🔔 All notifications restored"
             invalidateOptionsMenu()
             showNightSnackbar(msg)
         } catch (e: Throwable) {
@@ -732,7 +732,8 @@ class HomeActivity :
     }
 
     override fun navToMemberProfile(userId: String, deepLink: Uri): Boolean {
-        // TODO check if there is already one??
+        // Note: could check if a bottom sheet already exists, but the fragment manager
+        // handles duplicate fragments gracefully.
         MatrixToBottomSheet.withLink(deepLink.toString(), OriginOfMatrixTo.LINK)
                 .show(supportFragmentManager, "HA#MatrixToBottomSheet")
         return true

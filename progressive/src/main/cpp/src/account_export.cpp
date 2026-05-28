@@ -9,7 +9,16 @@ namespace progressive {
 std::string accountToJson(const AccountData& data) {
     auto esc = [](const std::string& s) -> std::string {
         std::string out;
-        for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
+        for (char c : s) {
+            switch (c) {
+                case '"':  out += "\\\""; break;
+                case '\\': out += "\\\\"; break;
+                case '\n': out += "\\n"; break;
+                case '\r': out += "\\r"; break;
+                case '\t': out += "\\t"; break;
+                default:   out += c;
+            }
+        }
         return out;
     };
     std::ostringstream json;

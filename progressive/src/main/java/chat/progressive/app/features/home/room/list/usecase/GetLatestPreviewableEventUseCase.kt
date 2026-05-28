@@ -33,8 +33,8 @@ class GetLatestPreviewableEventUseCase @Inject constructor(
     fun execute(roomId: String): TimelineEvent? {
         val room = sessionHolder.getSafeActiveSession()?.getRoom(roomId) ?: return null
         val roomSummary = room.roomSummary() ?: return null
-        // FIXME Observing live broadcasts results in many db requests,
-        //  to prevent performances issues, we only enable this mechanism if the voice broadcast flag is enabled
+        // Note: Observing live voice broadcasts triggers multiple DB requests.
+        // To prevent performance issues, this is only enabled when the voice broadcast flag is active.
         return if (progressivePreferences.isVoiceBroadcastEnabled()) {
             getCallEvent(roomSummary)
                     ?: getLiveVoiceBroadcastEvent(room)

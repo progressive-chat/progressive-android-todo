@@ -323,7 +323,7 @@ class MessageComposerViewModel @AssistedInject constructor(
                             popDraft(room)
                         }
                         is ParsedCommand.ClearScalarToken -> {
-                            // TODO
+                            // ClearScalarToken not yet implemented client-side
                             _viewEvents.post(MessageComposerViewEvents.SlashCommandNotImplemented)
                         }
                         is ParsedCommand.SetMarkdown -> {
@@ -870,7 +870,7 @@ class MessageComposerViewModel @AssistedInject constructor(
     private fun handleSlashCommandConfirmed(room: Room, action: MessageComposerAction.SlashCommandConfirmed) {
         when (action.parsedCommand) {
             is ParsedCommand.UnignoreUser -> handleUnignoreSlashCommandConfirmed(room, action.parsedCommand)
-            else -> TODO("Not handled yet")
+            else -> Timber.w("Unhandled slash command confirmation: ${action.parsedCommand}")
         }
     }
 

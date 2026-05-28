@@ -45,8 +45,9 @@ void ModuleLoader::scanDirectory(const std::string& dirPath) {
             std::string fullPath = dirPath + "/" + name;
 
             if (isProgressiveModule(fullPath)) {
-                // Extract module name: libprogressive_messagecontextmenu.so → messagecontextmenu
-                std::string moduleName = name.substr(14, name.size() - 17); // strip "libprogressive_" and ".so"
+                // Extract module name: "libprogressive_foo.so" → "foo"
+                // "libprogressive_" = 15 chars, ".so" = 3 chars
+                std::string moduleName = name.substr(15, name.size() - 18);
                 ModuleInfo info;
                 info.name = moduleName;
                 info.soPath = fullPath;

@@ -16,8 +16,8 @@ bool tlsBridgeInit(void* jniEnv) {
     // Cache the JavaVM
     if (env->GetJavaVM(&gJvm) != JNI_OK) return false;
 
-    // Find the bridge class — defined in ProgressiveNative.kt as companion
-    jclass localClass = env->FindClass("im/vector/app/features/jumptodate/ProgressiveNative");
+    // Find the bridge class — calls back into ProgressiveNative.kt via JNI
+    jclass localClass = env->FindClass("chat/progressive/app/native/ProgressiveNative");
     if (!localClass) return false;
 
     gBridgeClass = static_cast<jclass>(env->NewGlobalRef(localClass));

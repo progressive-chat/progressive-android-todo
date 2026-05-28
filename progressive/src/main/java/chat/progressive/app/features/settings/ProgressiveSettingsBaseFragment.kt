@@ -122,8 +122,7 @@ abstract class ProgressiveSettingsBaseFragment : PreferenceFragmentCompat(), Mav
      * ========================================================================================== */
 
     protected fun notImplemented() {
-        // Snackbar cannot be display on PreferenceFragment. TODO It's maybe because the show() method is not used...
-        // Snackbar.make(requireView(), CommonStrings.not_implemented, Snackbar.LENGTH_SHORT)
+        // PreferenceFragment doesn't support Snackbar; use Toast instead
         activity?.toast(CommonStrings.not_implemented)
     }
 

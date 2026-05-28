@@ -103,8 +103,7 @@
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:key="SETTINGS_12_24_TIMESTAMPS_KEY"
-            android:title="@string/settings_12_24_timestamps"
-            app:isPreferenceVisible="@bool/false_not_implemented" />
+            android:title="@string/settings_12_24_timestamps" />
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:defaultValue="true"
@@ -144,8 +143,7 @@
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:key="SETTINGS_VIBRATE_ON_MENTION_KEY"
-            android:title="@string/settings_vibrate_on_mention"
-            app:isPreferenceVisible="@bool/false_not_implemented" />
+            android:title="@string/settings_vibrate_on_mention" />
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:defaultValue="true"
@@ -157,8 +155,7 @@
 
     <chat.progressive.app.core.preference.ProgressivePreferenceCategory
         android:key="SETTINGS_HOME_DISPLAY_KEY"
-        android:title="@string/settings_home_display"
-        app:isPreferenceVisible="@bool/false_not_implemented">
+        android:title="@string/settings_home_display">
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:defaultValue="true"
@@ -173,8 +170,7 @@
     </chat.progressive.app.core.preference.ProgressivePreferenceCategory>
 
     <chat.progressive.app.core.preference.ProgressivePreferenceCategory
-        android:title="@string/settings_media"
-        app:isPreferenceVisible="@bool/false_not_implemented">
+        android:title="@string/settings_media">
 
         <chat.progressive.app.core.preference.ProgressiveBasePreference
             android:key="SETTINGS_MEDIA_SAVING_PERIOD_KEY"

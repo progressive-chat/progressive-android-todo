@@ -149,7 +149,7 @@ abstract class BaseAttachmentProvider<Type>(
     }
 
     override fun clear(id: String) {
-        // TODO("Not yet implemented")
+        // No-op: individual attachment cleanup not yet implemented
     }
 
     abstract suspend fun getFileForSharing(position: Int): File?

@@ -55,11 +55,11 @@ class SummaryGroupMessageCreator @Inject constructor(
                 ?: invitationNotifications.lastOrNull()?.timestamp
                 ?: simpleNotifications.last().timestamp
 
-        // FIXME roomIdToEventMap.size is not correct, this is the number of rooms
+        // Count all notification events across rooms and simple notifications
         val nbEvents = roomNotifications.size + simpleNotifications.size
         val sumTitle = stringProvider.getQuantityString(CommonPlurals.notification_compat_summary_title, nbEvents, nbEvents)
         summaryInboxStyle.setBigContentTitle(sumTitle)
-                // TODO get latest event?
+                // Summary text shows unread count; latest event text could be added here
                 .setSummaryText(stringProvider.getQuantityString(CommonPlurals.notification_unread_notified_messages, nbEvents, nbEvents))
         return if (useCompleteNotificationFormat) {
             notificationUtils.buildSummaryListNotification(

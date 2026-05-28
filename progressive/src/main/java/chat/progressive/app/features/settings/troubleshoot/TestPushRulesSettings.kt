@@ -51,16 +51,7 @@ class TestPushRulesSettings @Inject constructor(
 
         if (oneOrMoreRuleIsOff) {
             description = stringProvider.getString(CommonStrings.settings_troubleshoot_test_bing_settings_failed)
-            // TODO
-//                quickFix = object : TroubleshootQuickFix(CommonStrings.settings_troubleshoot_test_bing_settings_quickfix) {
-//                    override fun doFix() {
-//                        val activity = fragment.activity
-//                        if (activity is ProgressiveSettingsInteraction) {
-//                            activity.requestHighlightPreferenceKeyOnResume(ProgressiveBasePreferences.SETTINGS_NOTIFICATION_ADVANCED_PREFERENCE_KEY)
-//                        }
-//                        activity?.supportFragmentManager?.popBackStack()
-//                    }
-//                }
+            // Quick fix disabled: requires ProgressiveSettingsInteraction and fragment refs not available here
             status = TestStatus.FAILED
         } else {
             description = if (oneOrMoreRuleAreSilent) {

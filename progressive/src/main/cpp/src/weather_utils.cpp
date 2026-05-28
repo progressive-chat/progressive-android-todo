@@ -29,8 +29,14 @@ static std::string extractJsonValue(const std::string& json, const std::string& 
     }
     if (pos == std::string::npos) return "";
     pos += search.size();
-    auto end = json.find('"', pos);
-    if (end == std::string::npos) return "";
+    // Find closing quote, skipping escaped characters
+    auto end = pos;
+    while (end < json.size()) {
+        if (json[end] == '\\' && end + 1 < json.size()) { end += 2; continue; }
+        if (json[end] == '"') break;
+        ++end;
+    }
+    if (end >= json.size()) return "";
     return json.substr(pos, end - pos);
 }
 

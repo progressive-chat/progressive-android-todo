@@ -163,12 +163,6 @@ class RoomListViewModel @AssistedInject constructor(
 
     private fun handleToggleSection(roomSection: RoomsSection) {
         roomSection.isExpanded.postValue(!roomSection.isExpanded.value.orFalse())
-        /* TODO Cleanup if it is working
-        sections.find { it.sectionName == roomSection.sectionName }
-                ?.let { section ->
-                    section.isExpanded.postValue(!section.isExpanded.value.orFalse())
-                }
-         */
     }
 
     private fun handleFilter(action: RoomListAction.FilterWith) {

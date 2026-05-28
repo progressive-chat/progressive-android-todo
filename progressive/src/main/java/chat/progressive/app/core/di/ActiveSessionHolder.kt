@@ -111,10 +111,4 @@ class ActiveSessionHolder @Inject constructor(
     }
 
     fun isWaitingForSessionInitialization() = activeSessionReference.get() == null && authenticationService.hasAuthenticatedSessions()
-
-    // TODO Stop sync ?
-//    fun switchToSession(sessionParams: SessionParams) {
-//        val newActiveSession = authenticationService.getSession(sessionParams)
-//        activeSession.set(newActiveSession)
-//    }
 }

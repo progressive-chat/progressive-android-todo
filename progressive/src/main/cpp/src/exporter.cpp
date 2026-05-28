@@ -1,25 +1,10 @@
 #include "progressive/exporter.hpp"
+#include "progressive/string_utils.hpp"
 #include <sstream>
 #include <ctime>
 #include <cstring>
 
 namespace progressive {
-
-std::string escapeJson(const std::string& input) {
-    std::string out;
-    out.reserve(input.size());
-    for (char c : input) {
-        switch (c) {
-            case '"':  out += "\\\""; break;
-            case '\\': out += "\\\\"; break;
-            case '\n': out += "\\n"; break;
-            case '\r': out += "\\r"; break;
-            case '\t': out += "\\t"; break;
-            default:   out += c;
-        }
-    }
-    return out;
-}
 
 std::string formatEventHtml(const ExportEvent& event, bool isContinuation) {
     std::ostringstream html;

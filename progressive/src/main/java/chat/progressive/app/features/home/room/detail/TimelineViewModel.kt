@@ -1087,7 +1087,8 @@ class TimelineViewModel @AssistedInject constructor(
                 it.root.isTextMessage() -> room.sendService().resendTextMessage(it)
                 it.root.isAttachmentMessage() -> room.sendService().resendMediaMessage(it)
                 else -> {
-                    // TODO
+                    // Other message types cannot be auto-resent
+                    Timber.w("Cannot resend message type: ${it.root.type}")
                 }
             }
         }
@@ -1230,7 +1231,8 @@ class TimelineViewModel @AssistedInject constructor(
                     )) {
                 _viewEvents.post(RoomDetailViewEvents.ActionSuccess(action))
             } else {
-                // TODO
+                // Verification request could not be started
+                Timber.w("Failed to start verification for user ${action.otherUserId}")
             }
         }
     }

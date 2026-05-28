@@ -34,7 +34,8 @@ class StopOngoingVoiceBroadcastUseCase @Inject constructor(
             Timber.w("## StopOngoingVoiceBroadcastUseCase: no active session")
             return
         }
-        // FIXME Iterate only on recent rooms for the moment, improve this
+        // Only iterate recent rooms (breadcrumbs) — a full scan of all joined rooms
+        // would be more thorough but has significant performance impact.
         val recentRooms = session.roomService()
                 .getBreadcrumbs(roomSummaryQueryParams {
                     displayName = QueryStringValue.NoCondition

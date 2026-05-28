@@ -928,20 +928,7 @@ class NotificationUtils @Inject constructor(
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_MUTABLE
             )
         } else {
-            /*
-            TODO
-            if (!LockScreenActivity.isDisplayingALockScreenActivity()) {
-                // start your activity for Android M and below
-                val quickReplyIntent = Intent(context, LockScreenActivity::class.java)
-                quickReplyIntent.putExtra(LockScreenActivity.EXTRA_ROOM_ID, roomId)
-                quickReplyIntent.putExtra(LockScreenActivity.EXTRA_SENDER_NAME, senderName ?: "")
-
-                // the action must be unique else the parameters are ignored
-                quickReplyIntent.action = QUICK_LAUNCH_ACTION
-                quickReplyIntent.data = createIgnoredUri($roomId")
-                return PendingIntent.getActivity(context, 0, quickReplyIntent, PendingIntentCompat.FLAG_IMMUTABLE)
-            }
-             */
+            // Pre-N devices: no quick reply action available
         }
         return null
     }

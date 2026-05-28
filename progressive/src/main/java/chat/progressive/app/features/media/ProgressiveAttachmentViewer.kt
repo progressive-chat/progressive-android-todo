@@ -159,8 +159,8 @@ class ProgressiveAttachmentViewer : AttachmentViewerActivity(), AttachmentIntera
     @Suppress("OVERRIDE_DEPRECATION")
     override fun onBackPressed() {
         if (currentPosition == initialIndex) {
-            // show back the transition view
-            // TODO, we should track and update the mapping
+            // Show transition view; mapping between positions and shared elements
+            // should be tracked and updated for smooth transitions between images.
             transitionImageContainer.isVisible = true
         }
         isAnimatingOut = true

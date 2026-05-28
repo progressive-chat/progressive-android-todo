@@ -21,6 +21,9 @@ import chat.progressive.app.core.utils.openUrlInChromeCustomTab
 import im.vector.app.features.analytics.plan.MobileScreen
 import chat.progressive.app.features.version.VersionProvider
 import chat.progressive.lib.strings.CommonStrings
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import chat.progressive.app.features.MainActivity
+import chat.progressive.app.features.MainActivityArgs
 import org.matrix.android.sdk.api.Matrix
 import javax.inject.Inject
 
@@ -108,14 +111,32 @@ class ProgressiveSettingsHelp :
         // Legacy init sync
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_LEGACY_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // progressivePreferences.didAskLegacyInitSync() — FIXME: restore when accessible
+            context?.let { ctx ->
+                MaterialAlertDialogBuilder(ctx)
+                    .setTitle("Legacy Init Sync")
+                    .setMessage("This will clear the cache and perform a full re-sync from scratch. This may take a long time. Continue?")
+                    .setPositiveButton(CommonStrings.ok) { _, _ ->
+                        MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = true))
+                    }
+                    .setNegativeButton(CommonStrings.later, null)
+                    .show()
+            }
             true
         }
 
         // Optimized init sync
         findPreference<ProgressiveBasePreference>(ProgressiveBasePreferences.SETTINGS_DO_OPTIMIZED_INIT_SYNC)!!
                 .onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // progressivePreferences.didAskOptimizedInitSync() — FIXME: restore when accessible
+            context?.let { ctx ->
+                MaterialAlertDialogBuilder(ctx)
+                    .setTitle("Optimized Init Sync")
+                    .setMessage("This will perform a smart incremental sync, only downloading new data. Continue?")
+                    .setPositiveButton(CommonStrings.ok) { _, _ ->
+                        MainActivity.restartApp(requireActivity(), MainActivityArgs(clearCache = false))
+                    }
+                    .setNegativeButton(CommonStrings.later, null)
+                    .show()
+            }
             true
         }
     }

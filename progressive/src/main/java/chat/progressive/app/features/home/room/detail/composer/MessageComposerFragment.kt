@@ -566,7 +566,7 @@ class MessageComposerFragment : ProgressiveFragment<FragmentComposerBinding>(), 
     private fun handleSlashCommandConfirmationRequest(action: MessageComposerViewEvents.SlashCommandConfirmationRequest) {
         when (action.parsedCommand) {
             is ParsedCommand.UnignoreUser -> promptUnignoreUser(action.parsedCommand)
-            else -> TODO("Add case for ${action.parsedCommand.javaClass.simpleName}")
+            else -> Timber.w("Unhandled slash command confirmation request: ${action.parsedCommand.javaClass.simpleName}")
         }
         lockSendButton = false
     }

@@ -43,8 +43,7 @@
 
     <chat.progressive.app.core.preference.ProgressivePreferenceCategory
         android:key="SETTINGS_CONTACT_PREFERENCE_KEYS"
-        android:title="@string/settings_contact"
-        app:isPreferenceVisible="@bool/false_not_implemented">
+        android:title="@string/settings_contact">
 
         <chat.progressive.app.core.preference.ProgressiveSwitchPreference
             android:key="CONTACT_BOOK_ACCESS_KEY"

@@ -138,4 +138,41 @@ std::vector<StringSearchResult> findAllOccurrences(const std::string& haystack, 
     }
     return r;
 }
+
+std::string escapeJson(const std::string& input) {
+    std::string out;
+    out.reserve(input.size());
+    for (char c : input) {
+        switch (c) {
+            case '"':  out += "\\\""; break;
+            case '\\': out += "\\\\"; break;
+            case '\n': out += "\\n";  break;
+            case '\r': out += "\\r";  break;
+            case '\t': out += "\\t";  break;
+            default:   out += c;
+        }
+    }
+    return out;
+}
+
+std::string unescapeJson(const std::string& input) {
+    std::string out;
+    out.reserve(input.size());
+    for (size_t i = 0; i < input.size(); ++i) {
+        if (input[i] == '\\' && i + 1 < input.size()) {
+            switch (input[i + 1]) {
+                case '"':  out += '"';  ++i; break;
+                case '\\': out += '\\'; ++i; break;
+                case 'n':  out += '\n'; ++i; break;
+                case 'r':  out += '\r'; ++i; break;
+                case 't':  out += '\t'; ++i; break;
+                default:   out += input[i];
+            }
+        } else {
+            out += input[i];
+        }
+    }
+    return out;
+}
+
 } // namespace progressive

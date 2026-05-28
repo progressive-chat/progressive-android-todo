@@ -309,7 +309,7 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
             is GlobalError.InvalidToken -> handleInvalidToken(globalError)
             is GlobalError.ConsentNotGivenError -> displayConsentNotGivenDialog(globalError)
             is GlobalError.CertificateError -> handleCertificateError(globalError)
-            GlobalError.ExpiredAccount -> Unit // TODO Handle account expiration
+            GlobalError.ExpiredAccount -> handleExpiredAccount()
             is GlobalError.InitialSyncRequest -> handleInitialSyncRequest(globalError)
         }
     }
@@ -377,6 +377,22 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
         )
     }
 
+    private fun handleExpiredAccount() {
+        if (mainActivityStarted) return
+        mainActivityStarted = true
+        MaterialAlertDialogBuilder(this)
+                .setTitle(CommonStrings.error_account_expired_title)
+                .setMessage(CommonStrings.error_account_expired_message)
+                .setPositiveButton(CommonStrings.ok) { _, _ ->
+                    MainActivity.restartApp(
+                            this,
+                            MainActivityArgs(clearCredentials = true, isUserLoggedOut = true)
+                    )
+                }
+                .setCancelable(false)
+                .show()
+    }
+
     override fun onDestroy() {
         removeOnMultiWindowModeChangedListener(onMultiWindowModeChangedListener)
         super.onDestroy()
@@ -388,10 +404,6 @@ abstract class ProgressiveActivity<VB : ViewBinding> : AppCompatActivity(), Mave
             Activity.RESULT_OK -> {
                 Timber.v("Pin ok, unlock app")
                 pinLocker.unlock()
-
-                // Cancel any new started PinActivity, after a screen rotation for instance
-                // FIXME I cannot use this anymore :/
-                // finishActivity(PinActivity.PIN_REQUEST_CODE)
             }
             else -> {
                 if (pinLocker.getLiveState().value != PinLocker.State.UNLOCKED) {

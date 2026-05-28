@@ -135,9 +135,8 @@ class CallRingPlayerOutgoing(
                         AudioAttributes.Builder()
                                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                                 .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
-                                // TODO Change to ?
-                                // .setContentType(AudioAttributes.CONTENT_TYPE_UNKNOWN)
-                                // .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                                // Note: USAGE_NOTIFICATION_RINGTONE could be used
+                                // for traditional ringtone behavior if needed.
                                 .build()
                 )
             } else {
