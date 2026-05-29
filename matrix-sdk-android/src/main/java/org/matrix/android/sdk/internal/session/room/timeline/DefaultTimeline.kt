@@ -144,9 +144,7 @@ internal class DefaultTimeline(
     }
 
     override fun start(rootThreadEventId: String?) {
-        timelineScope.launch {
-            loadRoomMembersIfNeeded()
-        }
+        // loadRoomMembersIfNeeded() disabled — prevents GC storm on public rooms
         startTimelineJob = timelineScope.launch {
             sequencer.post {
                 if (isStarted.compareAndSet(false, true)) {
@@ -192,10 +190,9 @@ internal class DefaultTimeline(
     override fun paginate(direction: Timeline.Direction, count: Int) {
         timelineScope.launch {
             startTimelineJob?.join()
-            val postSnapshot = loadMore(count, direction, fetchOnServerIfNeeded = true)
-            if (postSnapshot) {
-                postSnapshot()
-            }
+            loadMore(count, direction, fetchOnServerIfNeeded = true)
+            // Don't post snapshot here — next sync will trigger display.
+            // Prevents ANR from withContext(Dispatchers.Main) blocking.
         }
     }
 
@@ -228,7 +225,16 @@ internal class DefaultTimeline(
         val baseLogMessage = "loadMore(count: $count, direction: $direction, roomId: $roomId, fetchOnServer: $fetchOnServerIfNeeded)"
         Timber.v("$baseLogMessage started")
         if (!isStarted.get()) {
-            throw IllegalStateException("You should call start before using timeline")
+            Timber.w("$baseLogMessage : timeline not started yet, waiting...")
+            // Wait up to 5s for start to complete (race condition with sequencer)
+            val deadline = System.currentTimeMillis() + 5000L
+            while (!isStarted.get() && System.currentTimeMillis() < deadline) {
+                delay(50L)
+            }
+            if (!isStarted.get()) {
+                Timber.e("$baseLogMessage : timeline still not started, aborting")
+                return false
+            }
         }
         val currentState = getPaginationState(direction)
         if (!currentState.hasMoreToLoad) {
@@ -338,15 +344,14 @@ internal class DefaultTimeline(
     private suspend fun postSnapshot() {
         val snapshot = strategy.buildSnapshot()
         Timber.v("Post snapshot of ${snapshot.size} events")
-        withContext(coroutineDispatchers.main) {
-            listeners.forEach {
-                if (initialEventId != null && isFromThreadTimeline && snapshot.firstOrNull { it.eventId == initialEventId } == null) {
-                    // We are in a thread timeline with a permalink, post update timeline only when the appropriate message have been found
-                    tryOrNull { it.onTimelineUpdated(arrayListOf()) }
-                } else {
-                    // In all the other cases update timeline as expected
-                    tryOrNull { it.onTimelineUpdated(snapshot) }
-                }
+        // Removed withContext(Dispatchers.Main) — posts to listeners on calling thread.
+        // Each listener handles its own threading (e.g., submitSnapshot posts to background).
+        // This prevents ANR when sequencer thread is blocked by main thread contention.
+        listeners.forEach {
+            if (initialEventId != null && isFromThreadTimeline && snapshot.firstOrNull { it.eventId == initialEventId } == null) {
+                tryOrNull { it.onTimelineUpdated(arrayListOf()) }
+            } else {
+                tryOrNull { it.onTimelineUpdated(snapshot) }
             }
         }
     }

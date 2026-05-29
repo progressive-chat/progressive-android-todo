@@ -12,7 +12,7 @@ plugins {
 
 android {
 
-    namespace "im.vector.lib.ui.styles"
+    namespace "chat.progressive.lib.ui.styles"
 
     compileSdk versions.compileSdk
     defaultConfig {
