@@ -6,6 +6,11 @@
 
 namespace progressive {
 
+// Helper: safe tolower for unsigned char (avoids UB on negative values)
+static inline char safeToLower(char c) {
+    return static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+}
+
 // ---- SpellChecker ----
 
 void SpellChecker::loadDictionary(const std::string& words) {
@@ -13,21 +18,21 @@ void SpellChecker::loadDictionary(const std::string& words) {
     std::string word;
     while (stream >> word) {
         // Convert to lowercase for case-insensitive comparison
-        std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+        std::transform(word.begin(), word.end(), word.begin(), safeToLower);
         dictionary_.insert(word);
     }
 }
 
 bool SpellChecker::isKnown(const std::string& word) const {
     auto lower = word;
-    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+    std::transform(lower.begin(), lower.end(), lower.begin(), safeToLower);
     return dictionary_.find(lower) != dictionary_.end();
 }
 
 std::vector<SpellCandidate> SpellChecker::suggest(const std::string& word, int maxResults) const {
     std::vector<SpellCandidate> candidates;
     auto lower = word;
-    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+    std::transform(lower.begin(), lower.end(), lower.begin(), safeToLower);
 
     if (word.size() < 2) return candidates;
 
