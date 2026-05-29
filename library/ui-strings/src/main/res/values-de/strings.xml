@@ -3032,4 +3032,31 @@
     <string name="labs_enable_cache_manager_summary">App-Cache verwalten</string>
     <string name="labs_enable_chat_export">Chat-Export</string>
     <string name="labs_enable_chat_export_summary">Nachrichten als HTML/JSON exportieren</string>
+
+    <string name="labs_enable_chat_pushdown">Chat-Verschiebung</string>
+    <string name="labs_enable_chat_pushdown_summary">Chat bei Tastatur nach unten verschieben</string>
+    <string name="labs_enable_chunked_upload">Teilweiser Upload</string>
+    <string name="labs_enable_chunked_upload_summary">Dateien in Teilen hochladen</string>
+    <string name="labs_enable_custom_timezone">Eigene Zeitzone</string>
+    <string name="labs_enable_custom_timezone_summary">Zeitzone manuell auswählen</string>
+    <string name="labs_enable_deleted_archive">Gelöscht-Archiv</string>
+    <string name="labs_enable_deleted_archive_summary">Gelöschte Nachrichten speichern</string>
+    <string name="labs_enable_desync_detector">Desync-Erkennung</string>
+    <string name="labs_enable_desync_detector_summary">Desynchronisation zwischen Servern erkennen</string>
+    <string name="labs_enable_duplicate_names">Doppelte Namen</string>
+    <string name="labs_enable_duplicate_names_summary">Doppelte Anzeigenamen anzeigen</string>
+    <string name="labs_enable_e2e_search">E2E-Suche</string>
+    <string name="labs_enable_e2e_search_summary">In verschlüsselten Nachrichten suchen</string>
+    <string name="labs_enable_emoji_blacklist">Emoji-Blacklist</string>
+    <string name="labs_enable_emoji_blacklist_summary">Nachrichten mit verbotenen Emojis blockieren</string>
+    <string name="labs_enable_event_link_resolve">Ereignislink-Auflösung</string>
+    <string name="labs_enable_event_link_resolve_summary">Matrix-Ereignislinks auflösen</string>
+    <string name="labs_enable_expanded_preview">Erweiterte Vorschau</string>
+    <string name="labs_enable_expanded_preview_summary">Erweiterte Nachrichtenvorschau anzeigen</string>
+    <string name="labs_enable_expired_files">Abgelaufene Dateien</string>
+    <string name="labs_enable_expired_files_summary">Abgelaufene Mediendateien anzeigen</string>
+    <string name="labs_enable_hide_invitation">Einladungen ausblenden</string>
+    <string name="labs_enable_hide_invitation_summary">Unerwünschte Einladungen ausblenden</string>
+    <string name="labs_enable_i2p">I2P-Unterstützung</string>
+    <string name="labs_enable_i2p_summary">Verbindung über I2P-Netzwerk</string>
 </resources>
