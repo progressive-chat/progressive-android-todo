@@ -1937,6 +1937,10 @@ class ProgressiveBasePreferences @Inject constructor(
 
     fun getTodoVoiceButtonPreset(): String {
         return defaultPrefs.getString(SETTINGS_TODO_VOICE_BUTTON_PRESET, "vertical_split") ?: "vertical_split"
+<<<<<<< Updated upstream
+=======
+    }
+>>>>>>> Stashed changes
 
     // === Progressive Labs setters ===
 
