@@ -3237,4 +3237,63 @@
     <string name="labs_enable_user_mask_summary">Скрытие реального ID пользователя</string>
     <string name="labs_enable_user_messages_list">Список сообщений</string>
     <string name="labs_enable_user_messages_list_summary">Список всех сообщений пользователя</string>
+
+    <string name="labs_enable_yggdrasil">Поддержка Yggdrasil</string>
+    <string name="labs_enable_yggdrasil_summary">Подключение через сеть Yggdrasil</string>
+    <string name="labs_keyword_filter">Фильтр ключевых слов</string>
+    <string name="labs_keyword_filter_summary">Фильтрация сообщений по ключевым словам</string>
+    <string name="labs_send_original_size">Отправка оригинала</string>
+    <string name="labs_send_original_size_summary">Отправлять медиа без сжатия</string>
+    <string name="labs_skip_avatar_crop">Без обрезки аватара</string>
+    <string name="labs_skip_avatar_crop_summary">Пропускать обрезку аватара</string>
+    <string name="labs_skip_preview_generation">Без превью</string>
+    <string name="labs_skip_preview_generation_summary">Пропускать генерацию превью</string>
+    <string name="labs_strip_exif">Удалять EXIF</string>
+    <string name="labs_strip_exif_summary">Удалять метаданные из изображений</string>
+
+    <string name="llm_anthropic_endpoint">Конечная точка Anthropic</string>
+    <string name="llm_anthropic_endpoint_hint">https://api.anthropic.com/v1/messages</string>
+    <string name="llm_provider">Провайдер LLM</string>
+    <string name="llm_provider_anthropic">Anthropic (Claude)</string>
+    <string name="llm_provider_openai">OpenAI (GPT)</string>
+
+    <string name="masquerade_name">Имя маскировки</string>
+    <string name="masquerade_name_hint">Отображаемое имя клиента</string>
+
+    <string name="network_stats_title">Сетевая статистика</string>
+    <string name="notif_keywords_add">Добавить ключевое слово</string>
+
+    <string name="power_level_owner">Владелец</string>
+    <string name="profile_hide_mxid">Скрыть MXID</string>
+
+    <string name="read_receipts_max_visible">Макс. видимых отчётов</string>
+    <string name="room_cached_events">Кэшировано событий</string>
+    <string name="room_created">Комната создана</string>
+    <string name="room_full_history">Полная история</string>
+    <string name="room_member_power_level_owner_in">Владелец в %s</string>
+    <string name="room_mirror_create">Создать зеркало</string>
+    <string name="room_mirror_doll_desc">Описание DOLL</string>
+    <string name="room_mirror_use_dolls">Использовать DOLL</string>
+    <string name="room_participants_leave_last_admin">Нельзя покинуть комнату как последний администратор</string>
+    <string name="room_profile_section_more_report">Пожаловаться</string>
+    <string name="room_profile_section_more_report_success_content">Жалоба отправлена</string>
+    <string name="room_version_label">Версия комнаты</string>
+
+    <string name="settings_push_gateway_info_summary">Информация о Push Gateway</string>
+    <string name="settings_push_gateway_info_title">Push Gateway</string>
+
+    <string name="timezone_select">Выбор часового пояса</string>
+    <string name="translate_action">Перевести</string>
+    <string name="translate_api_endpoint">Конечная точка API перевода</string>
+    <string name="translate_api_endpoint_hint">https://api.openai.com/v1/chat/completions</string>
+    <string name="translate_api_token">Токен API перевода</string>
+    <string name="translate_api_token_hint">sk-...</string>
+    <string name="translate_target_language">Целевой язык</string>
+    <string name="translate_target_language_default">Авто (по умолчанию русский)</string>
+
+    <string name="user_mask_mxid_hint">Маскированный MXID</string>
+    <string name="verify_now">Проверить сейчас</string>
+    <string name="verify_this_session_content">Проверить эту сессию</string>
+    <string name="view_download_replacement_app_subtitle">Для подключения необходимо новое приложение</string>
+    <string name="view_download_replacement_app_title">Скачать новое приложение</string>
 </resources>
