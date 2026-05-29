@@ -2975,4 +2975,35 @@
     <string name="error_mas_not_supported_subtitle">Téléchargez %1$s pour utiliser %2$s avec votre compte, ou choisissez un autre serveur d’accueil.</string>
     <string name="view_download_replacement_app_title">Télécharger %1$s</string>
     <string name="view_download_replacement_app_subtitle">Plus rapide, plus sécurisé et fourni avec des outils de collaboration efficaces.</string>
+
+    <string name="command_description_agent">Lancer l\'agent IA</string>
+    <string name="command_description_hide_emoji">Masquer les messages avec emoji</string>
+    <string name="command_description_jump_to_date">Aller à la date</string>
+    <string name="command_description_llm">Demander au modèle de langage</string>
+    <string name="command_description_llmp">Demander au LLM (privé)</string>
+    <string name="command_description_schedule">Planifier un message</string>
+    <string name="command_description_smsagent">Agent SMS</string>
+    <string name="command_description_translate">Traduire le message</string>
+    <string name="command_description_weather">Afficher la météo</string>
+    <string name="command_description_web">Recherche web</string>
+    <string name="all_messages_title">Tous les messages</string>
+    <string name="all_threads_title">Tous les fils</string>
+    <string name="deleted_messages_title">Messages supprimés</string>
+    <string name="auto_replace_add">Ajouter un remplacement</string>
+    <string name="auto_replace_pattern">Motif</string>
+    <string name="auto_replace_replacement">Remplacement</string>
+    <string name="cache_delete_by_room">Supprimer le cache du salon</string>
+    <string name="cache_delete_older_than">Supprimer le cache plus ancien que</string>
+    <string name="desync_check_interval">Intervalle de vérif. désynchronisation</string>
+    <string name="desync_warning_title">Alerte désynchronisation</string>
+    <string name="avatar_removed_on">Avatar supprimé le %s</string>
+    <string name="hide_language_dialog">Masquer la boîte de dialogue</string>
+    <string name="hide_language_this_user_only">Masquer pour cet utilisateur</string>
+    <string name="invite_hidden_list">Invitations masquées</string>
+    <string name="invite_hide_action">Masquer l\'invitation</string>
+    <string name="how_you_can_help">Comment aider</string>
+    <string name="jump_to_source">Aller à la source</string>
+    <string name="jumptoroom_prompt">Saisir l\'ID ou l\'adresse du salon</string>
+    <string name="error_account_expired_title">Compte expiré</string>
+    <string name="error_account_expired_message">Votre compte a expiré. Veuillez vous reconnecter.</string>
 </resources>
