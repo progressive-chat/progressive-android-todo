@@ -35,10 +35,10 @@ import chat.progressive.application.databinding.ActivityDebugMenuBinding
 import chat.progressive.lib.core.utils.timer.Clock
 import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkDefaultActivity
 import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkTestActivity
-import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeDarkProgressiveActivity
 import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightDefaultActivity
 import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightTestActivity
-import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightActivity
+import chat.progressive.lib.ui.styles.debug.DebugMaterialThemeLightProgressiveActivity
 import chat.progressive.lib.ui.styles.debug.DebugProgressiveButtonStylesDarkActivity
 import chat.progressive.lib.ui.styles.debug.DebugProgressiveButtonStylesLightActivity
 import chat.progressive.lib.ui.styles.debug.DebugProgressiveTextViewDarkActivity
@@ -100,7 +100,7 @@ class DebugMenuActivity : ProgressiveActivity<ActivityDebugMenuBinding>() {
             startActivity(Intent(this, DebugMaterialThemeLightTestActivity::class.java))
         }
         views.debugTestMaterialThemeLightVector.setOnClickListener {
-            startActivity(Intent(this, DebugMaterialThemeLightActivity::class.java))
+            startActivity(Intent(this, DebugMaterialThemeLightProgressiveActivity::class.java))
         }
         views.debugTestMaterialThemeDarkDefault.setOnClickListener {
             startActivity(Intent(this, DebugMaterialThemeDarkDefaultActivity::class.java))
@@ -109,7 +109,7 @@ class DebugMenuActivity : ProgressiveActivity<ActivityDebugMenuBinding>() {
             startActivity(Intent(this, DebugMaterialThemeDarkTestActivity::class.java))
         }
         views.debugTestMaterialThemeDarkVector.setOnClickListener {
-            startActivity(Intent(this, DebugMaterialThemeDarkActivity::class.java))
+            startActivity(Intent(this, DebugMaterialThemeDarkProgressiveActivity::class.java))
         }
         views.debugTestCrash.setOnClickListener { testCrash() }
         views.debugScanQrCode.setOnClickListener { scanQRCode() }
