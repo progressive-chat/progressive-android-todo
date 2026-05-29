@@ -1,6 +1,6 @@
-include ':vector-app'
-include ':vector'
-include ':vector-config'
+include ':progressive-app'
+include ':progressive'
+include ':progressive-config'
 
 include ':library:core-utils'
 include ':library:ui-strings'

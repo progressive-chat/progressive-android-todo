@@ -563,6 +563,10 @@
     <!-- External application -->
     <string name="error_no_external_application_found">Sorry, no external application has been found to complete this action.</string>
 
+    <!-- Account expired -->
+    <string name="error_account_expired_title">Account Expired</string>
+    <string name="error_account_expired_message">Your account has expired or been deactivated on the server. You will be signed out.</string>
+
     <!-- Authentication -->
     <string name="auth_login">Log in</string>
     <string name="auth_login_sso">Sign in with single sign-on</string>
@@ -3010,6 +3014,9 @@
       <string name="command_description_web">Search the web via configured search engine</string>
       <string name="command_description_hide_emoji">Hide all emoji in the current room</string>
       <string name="command_description_smsagent">Send message AND run agent task (alarms, reminders, automation)</string>
+      <string name="command_description_schedule">Schedule a message for future delivery (HH:MM message)</string>
+      <string name="command_description_translate">Translate text using LLM (lang text)</string>
+      <string name="command_description_weather">Get weather forecast for a city</string>
       <string name="labs_enable_jump_to_date">Jump to date (/jumptodate)</string>
      <string name="labs_enable_jump_to_date_summary">Enable /jumptodate slash command and date separator jump menu. Requires server support for MSC3030.</string>
      <string name="labs_enable_jump_to_source">Jump to source</string>
