@@ -12,12 +12,12 @@ import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.extensions.cleanup
 import chat.progressive.app.core.extensions.configureWith
-import chat.progressive.app.core.platform.ProgressiveBaseActivity
+import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.databinding.FragmentGenericRecyclerBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DebugFeaturesSettingsActivity : ProgressiveBaseActivity<FragmentGenericRecyclerBinding>() {
+class DebugFeaturesSettingsActivity : ProgressiveActivity<FragmentGenericRecyclerBinding>() {
 
     @Inject lateinit var debugFeatures: DebugProgressiveFeatures
     @Inject lateinit var debugFeaturesStateFactory: DebugFeaturesStateFactory

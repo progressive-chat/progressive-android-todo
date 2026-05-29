@@ -19,7 +19,7 @@ import androidx.core.content.getSystemService
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.R
 import chat.progressive.app.core.extensions.registerStartForActivityResult
-import chat.progressive.app.core.platform.ProgressiveBaseActivity
+import chat.progressive.app.core.platform.ProgressiveActivity
 import chat.progressive.app.core.utils.PERMISSIONS_FOR_TAKING_PHOTO
 import chat.progressive.app.core.utils.checkPermissions
 import chat.progressive.app.core.utils.registerForPermissionsResult
@@ -47,7 +47,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DebugMenuActivity : ProgressiveBaseActivity<ActivityDebugMenuBinding>() {
+class DebugMenuActivity : ProgressiveActivity<ActivityDebugMenuBinding>() {
 
     override fun getBinding() = ActivityDebugMenuBinding.inflate(layoutInflater)
     override fun getCoordinatorLayout() = views.coordinatorLayout

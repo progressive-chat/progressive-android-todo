@@ -21,7 +21,7 @@ import chat.progressive.lib.ui.styles.R
 import chat.progressive.lib.ui.styles.databinding.ActivityDebugMaterialThemeBinding
 import chat.progressive.lib.ui.styles.dialogs.MaterialProgressDialog
 
-// Rendering is not the same with ProgressiveBaseActivity
+// Rendering is not the same with ProgressiveActivity
 abstract class DebugMaterialThemeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

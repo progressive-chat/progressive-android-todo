@@ -13,7 +13,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import chat.progressive.lib.ui.styles.databinding.ActivityDebugTextViewBinding
 
-// Rendering is not the same with ProgressiveBaseActivity
+// Rendering is not the same with ProgressiveActivity
 abstract class DebugProgressiveTextViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

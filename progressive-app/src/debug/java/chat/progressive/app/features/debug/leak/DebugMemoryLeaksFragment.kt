@@ -15,12 +15,12 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import dagger.hilt.android.AndroidEntryPoint
 import chat.progressive.app.core.epoxy.onClick
-import chat.progressive.app.core.platform.ProgressiveBaseFragment
+import chat.progressive.app.core.platform.ProgressiveFragment
 import chat.progressive.application.databinding.FragmentDebugMemoryLeaksBinding
 
 @AndroidEntryPoint
 class DebugMemoryLeaksFragment :
-        ProgressiveBaseFragment<FragmentDebugMemoryLeaksBinding>() {
+        ProgressiveFragment<FragmentDebugMemoryLeaksBinding>() {
 
     private val viewModel: DebugMemoryLeaksViewModel by fragmentViewModel()
 
