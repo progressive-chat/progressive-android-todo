@@ -1,4 +1,5 @@
 #include "progressive/device_manager.hpp"
+#include "progressive/string_utils.hpp"
 #include "progressive/json_parser.hpp"
 #include <sstream>
 #include <algorithm>
@@ -124,7 +125,7 @@ std::string formatDeviceStats(const DeviceStats& stats) {
 
 std::string managedDeviceInfoToJson(const ManagedDeviceInfo& device) {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+        return escapeJson(s);
     };
     std::ostringstream json;
     json << R"({"deviceId": ")" << esc(device.deviceId) << R"(")";
@@ -200,7 +201,7 @@ SessionRename validateSessionRename(const std::string& sessionId, const std::str
 
 std::string buildSessionRenameBody(const std::string& sessionId, const std::string& newName) {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+        return escapeJson(s);
     };
     return R"({"session_id": ")" + esc(sessionId) + R"(", "display_name": ")" + esc(newName) + R"("})";
 }

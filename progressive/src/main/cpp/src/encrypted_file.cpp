@@ -1,4 +1,5 @@
 #include "progressive/encrypted_file.hpp"
+#include "progressive/string_utils.hpp"
 #include <sstream>
 
 namespace progressive {
@@ -151,7 +152,7 @@ std::string extractFileIv(const EncFileInfo& info) { return info.iv; }
 
 std::string encryptedFileKeyToJson(const EncryptedFileKey& key) {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+        return escapeJson(s);
     };
     std::ostringstream json;
     json << R"({"valid": )" << (key.isValid() ? "true" : "false") << ",";
@@ -164,7 +165,7 @@ std::string encryptedFileKeyToJson(const EncryptedFileKey& key) {
 
 std::string encryptedFileInfoToJson(const EncFileInfo& info) {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out; for (char c : s) { if (c == '"') out += "\\\""; else out += c; } return out;
+        return escapeJson(s);
     };
     std::ostringstream json;
     json << R"({"valid": )" << (info.isValid() ? "true" : "false") << ",";

@@ -1,4 +1,5 @@
 #include "progressive/draft_manager_full.hpp"
+#include "progressive/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <ctime>
@@ -177,9 +178,7 @@ void FullDraftManager::clearAll() { drafts_.clear(); }
 
 std::string FullDraftManager::draftToJson(const UserDraft& draft) const {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out;
-        for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
-        return out;
+        return escapeJson(s);
     };
 
     std::ostringstream os;

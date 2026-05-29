@@ -1,4 +1,5 @@
 #include "progressive/draft_manager.hpp"
+#include "progressive/string_utils.hpp"
 #include <sstream>
 #include <chrono>
 #include <algorithm>
@@ -45,9 +46,7 @@ std::vector<std::string> DraftManager::getRoomsWithDrafts() const {
 
 std::string DraftManager::exportJson() const {
     auto esc = [](const std::string& s) -> std::string {
-        std::string out;
-        for (char c : s) { if (c == '"') out += "\\\""; else out += c; }
-        return out;
+        return escapeJson(s);
     };
     std::ostringstream json;
     json << "[";
